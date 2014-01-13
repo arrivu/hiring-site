@@ -63,6 +63,13 @@
         <%- end -%>
       </li>
       <%- end -%>
+      <li id="courses_menu_item" class="menu-item">
+        <%- if show_home_menu? -%>
+            <%= render(:partial => 'shared/home_menu1') %>
+        <%- else  -%>
+            <a href="<%= dashboard_path %>" class="menu-item-no-drop"><%= t 'links.home', 'Home' %></a>
+        <%- end -%>
+      </li>
       <li id="assignments_menu_item" class="menu-item">
       <%
       # this will cache the assignments menu for 3 minutes.  the way it is right now it does 3 really expensive queries every page load.

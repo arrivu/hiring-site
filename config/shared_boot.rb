@@ -45,11 +45,11 @@ RAILS_DEFAULT_LOGGER = config.logger if CANVAS_RAILS2
 
 # RailsLTS configuration (doesn't apply to rails 3)
 if CANVAS_RAILS2
-  config.rails_lts_options = {
-    disable_xml_parsing: true,
-    # this is also taken care of below, since it defaults to false in rails3 as well
-    escape_html_entities_in_json: true,
-  }
+  #config.rails_lts_options = {
+  #  disable_xml_parsing: true,
+  #  # this is also taken care of below, since it defaults to false in rails3 as well
+  #  escape_html_entities_in_json: true,
+  #}
 end
 
 # Activate observers that should always be running
