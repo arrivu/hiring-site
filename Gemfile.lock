@@ -6,14 +6,6 @@ GIT
       metaclass (~> 0.0.1)
 
 GIT
-  remote: git://github.com/deivid-rodriguez/byebug.git
-  revision: 11c5cf5c561173a5279805e94431fc8fc8fa82c7
-  specs:
-    byebug (2.5.0)
-      columnize (~> 0.3)
-      debugger-linecache (~> 1.2)
-
-GIT
   remote: git://github.com/instructure/encrypted_cookie_store.git
   revision: d078a875eb510de9b0a75baa97e9332c4480c97e
   ref: d078a875eb510de9b0a75baa97e9332c4480c97e
@@ -87,7 +79,6 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     colored (1.2)
-    columnize (0.3.6)
     compass (0.12.2)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -100,14 +91,8 @@ GEM
       addressable
     cssmin (1.0.3)
     daemons (1.1.0)
-    debugger (1.5.0)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.2.0)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.4)
     diff-lcs (1.1.3)
-    docile (1.1.1)
+    docile (1.1.2)
     dress_code (1.0.2)
       colored
       mustache
@@ -146,7 +131,7 @@ GEM
       libxml-ruby (~> 2.0)
     hashery (1.3.0)
     highline (1.6.1)
-    hoe (3.7.3)
+    hoe (3.7.4)
       rake (>= 0.8, < 11.0)
     htmlentities (4.3.1)
     i18n (0.6.8)
@@ -335,7 +320,6 @@ DEPENDENCIES
   bluecloth (= 2.0.10)
   builder (= 3.0.0)
   bundler (= 1.5.2)
-  byebug!
   canvas_connect (= 0.3.2)
   canvas_webex (= 0.7)
   cassandra-cql (= 1.2.1)!
@@ -344,7 +328,6 @@ DEPENDENCIES
   compass-rails (= 1.0.3)
   crocodoc-ruby (= 0.0.1)
   daemons (= 1.1.0)
-  debugger (= 1.5.0)
   diff-lcs (= 1.1.3)
   dress_code (= 1.0.2)
   embedly (= 1.5.5)

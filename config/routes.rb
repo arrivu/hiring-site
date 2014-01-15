@@ -14,30 +14,30 @@ else
 end
 
 routes.draw do
-  resources :submission_comments, :only => :destroy
-
-  match 'inbox' => 'context#mark_inbox_as_read', :as => :mark_inbox_as_read, :via => :delete
-  match 'inbox' => 'context#inbox', :as => :inbox
-  match 'inbox/:id' => 'context#destroy_inbox_item', :as => :destroy_inbox_item, :via => :delete
-  match 'inbox/:id' => 'context#inbox_item', :as => :inbox_item
-
-  match 'conversations/discussion_replies' => 'context#discussion_replies', :as => :discussion_replies
-  match 'conversations/unread' => 'conversations#index', :as => :conversations_unread, :redirect_scope => 'unread'
-  match 'conversations/starred' => 'conversations#index', :as => :conversations_starred, :redirect_scope => 'starred'
-  match 'conversations/sent' => 'conversations#index', :as => :conversations_sent, :redirect_scope => 'sent'
-  match 'conversations/archived' => 'conversations#index', :as => :conversations_archived, :redirect_scope => 'archived'
-  match 'conversations/find_recipients' => 'search#recipients'
-
-  match 'search/recipients' => 'search#recipients', :as => :search_recipients
-  match 'conversations/mark_all_as_read' => 'conversations#mark_all_as_read', :as => :conversations_mark_all_as_read, :via => :post
-  match 'conversations/watched_intro' => 'conversations#watched_intro', :as => :conversations_watched_intro, :via => :post
-  match 'conversations/batches' => 'conversations#batches', :as => :conversation_batches
-  match 'conversations/toggle_new_conversations' => 'conversations#toggle_new_conversations', :as => :toggle_new_conversations, :via => :post
-  resources :conversations, :only => [:index, :show, :update, :create, :destroy] do
-    match 'add_recipients' => 'conversations#add_recipients', :as => :add_recipients, :via => :post
-    match 'add_message' => 'conversations#add_message', :as => :add_message, :via => :post
-    match 'remove_messages' => 'conversations#remove_messages', :as => :remove_messages, :via => :post
-  end
+  #resources :submission_comments, :only => :destroy
+  #
+  #match 'inbox' => 'context#mark_inbox_as_read', :as => :mark_inbox_as_read, :via => :delete
+  #match 'inbox' => 'context#inbox', :as => :inbox
+  #match 'inbox/:id' => 'context#destroy_inbox_item', :as => :destroy_inbox_item, :via => :delete
+  #match 'inbox/:id' => 'context#inbox_item', :as => :inbox_item
+  #
+  #match 'conversations/discussion_replies' => 'context#discussion_replies', :as => :discussion_replies
+  #match 'conversations/unread' => 'conversations#index', :as => :conversations_unread, :redirect_scope => 'unread'
+  #match 'conversations/starred' => 'conversations#index', :as => :conversations_starred, :redirect_scope => 'starred'
+  #match 'conversations/sent' => 'conversations#index', :as => :conversations_sent, :redirect_scope => 'sent'
+  #match 'conversations/archived' => 'conversations#index', :as => :conversations_archived, :redirect_scope => 'archived'
+  #match 'conversations/find_recipients' => 'search#recipients'
+  #
+  #match 'search/recipients' => 'search#recipients', :as => :search_recipients
+  #match 'conversations/mark_all_as_read' => 'conversations#mark_all_as_read', :as => :conversations_mark_all_as_read, :via => :post
+  #match 'conversations/watched_intro' => 'conversations#watched_intro', :as => :conversations_watched_intro, :via => :post
+  #match 'conversations/batches' => 'conversations#batches', :as => :conversation_batches
+  #match 'conversations/toggle_new_conversations' => 'conversations#toggle_new_conversations', :as => :toggle_new_conversations, :via => :post
+  #resources :conversations, :only => [:index, :show, :update, :create, :destroy] do
+  #  match 'add_recipients' => 'conversations#add_recipients', :as => :add_recipients, :via => :post
+  #  match 'add_message' => 'conversations#add_message', :as => :add_message, :via => :post
+  #  match 'remove_messages' => 'conversations#remove_messages', :as => :remove_messages, :via => :post
+  #end
 
   # So, this will look like:
   # http://instructure.com/register/5R32s9iqwLK75Jbbj0
@@ -68,12 +68,12 @@ routes.draw do
     end
   end
 
-  concern :groups do
-    resources :groups
-    resources :group_categories, :only => [:create, :update, :destroy]
-    match 'group_unassigned_members' => 'groups#unassigned_members', :as => :group_unassigned_members, :via => :get
-    match 'group_unassigned_members.:format' => 'groups#unassigned_members', :as => :group_unassigned_members, :via => :get
-  end
+  #concern :groups do
+  #  resources :groups
+  #  resources :group_categories, :only => [:create, :update, :destroy]
+  #  match 'group_unassigned_members' => 'groups#unassigned_members', :as => :group_unassigned_members, :via => :get
+  #  match 'group_unassigned_members.:format' => 'groups#unassigned_members', :as => :group_unassigned_members, :via => :get
+  #end
 
   concern :files do
     resources :files do
@@ -125,17 +125,17 @@ routes.draw do
     match 'chat.:format' => 'context#chat', :as => :formatted_chat
   end
 
-  concern :announcements do
-    resources :announcements
-    match 'announcements/external_feeds' => 'announcements#create_external_feed', :as => :announcements_external_feeds, :via => :post
-    match 'announcements/external_feeds/:id' => 'announcements#destroy_external_feed', :as => :announcements_external_feed, :via => :delete
-  end
-
-  concern :discussions do
-    resources :discussion_topics, :only => [:index, :new, :show, :edit, :destroy]
-    match 'discussion_topics/:id/:extras' => 'discussion_topics#show', :as => :map, :extras => /.+/
-    resources :discussion_entries
-  end
+  #concern :announcements do
+  #  resources :announcements
+  #  match 'announcements/external_feeds' => 'announcements#create_external_feed', :as => :announcements_external_feeds, :via => :post
+  #  match 'announcements/external_feeds/:id' => 'announcements#destroy_external_feed', :as => :announcements_external_feed, :via => :delete
+  #end
+  #
+  #concern :discussions do
+  #  resources :discussion_topics, :only => [:index, :new, :show, :edit, :destroy]
+  #  match 'discussion_topics/:id/:extras' => 'discussion_topics#show', :as => :map, :extras => /.+/
+  #  resources :discussion_entries
+  #end
 
   concern :wikis do
     ####
@@ -196,7 +196,7 @@ routes.draw do
   # There are some helper methods like the before_filter :get_context in application_controller
   # and the application_helper method :context_url to make retrieving
   # these contexts, and also generating context-specific urls, easier.
-  resources :courses do
+  resources :courses ,:path => :projects do
     # DEPRECATED
     match 'self_enrollment/:self_enrollment' => 'courses#self_enrollment', :as => :self_enrollment, :via => :get
     match 'self_unenrollment/:self_unenrollment' => 'courses#self_unenrollment', :as => :self_unenrollment, :via => :post
@@ -247,71 +247,71 @@ routes.draw do
     match 'attendance/:user_id' => 'gradebooks#attendance', :as => :attendance_user
     concerns :zip_file_imports
     # DEPRECATED old migration emails pointed the user to this url, leave so the controller can redirect
-    match 'imports/list' => 'content_imports#index', :as => :import_list
-    # DEPRECATED
-    match 'imports' => 'content_imports#intro', :as => :imports
+    #match 'imports/list' => 'content_imports#index', :as => :import_list
+    ## DEPRECATED
+    #match 'imports' => 'content_imports#intro', :as => :imports
     resource :gradebook_upload
     match 'grades' => 'gradebooks#grade_summary', :as => :grades, :id => nil
     match 'grading_rubrics' => 'gradebooks#grading_rubrics', :as => :grading_rubrics
     match 'grades/:id' => 'gradebooks#grade_summary', :as => :student_grades
-    concerns :announcements
-    concerns :chats
-    match 'calendar' => 'calendars#show', :as => :old_calendar
+    #concerns :announcements
+    #concerns :chats
+    #match 'calendar' => 'calendars#show', :as => :old_calendar
     match 'locks' => 'courses#locks', :as => :locks
-    concerns :discussions
-    resources :assignments do
-      resources :submissions do
-        match 'turnitin/resubmit' => 'submissions#resubmit_to_turnitin', :as => :resubmit_to_turnitin, :via => :post
-        match 'turnitin/:asset_string' => 'submissions#turnitin_report', :as => :turnitin_report
-      end
-      match 'rubric' => 'assignments#rubric', :as => :rubric
-      resource :rubric_association, :path => :rubric do
-        resources :rubric_assessments, :path => :assessments
-      end
-
-      match 'peer_reviews' => 'assignments#peer_reviews', :as => :peer_reviews, :via => :get
-      match 'assign_peer_reviews' => 'assignments#assign_peer_reviews', :as => :assign_peer_reviews, :via => :post
-      match 'peer_reviews/:id' => 'assignments#delete_peer_review', :as => :delete_peer_review, :via => :delete
-      match 'peer_reviews/:id' => 'assignments#remind_peer_review', :as => :remind_peer_review, :via => :post
-      match 'peer_reviews/users/:reviewer_id' => 'assignments#assign_peer_review', :as => :assign_peer_review, :via => :post
-      match 'mute' => 'assignments#toggle_mute', :as => :mute, :via => :put
-
-      collection do
-        get :syllabus
-        get :submissions
-      end
-
-      member do
-        get :list_google_docs
-      end
-    end
+    #concerns :discussions
+    #resources :assignments do
+    #  resources :submissions do
+    #    match 'turnitin/resubmit' => 'submissions#resubmit_to_turnitin', :as => :resubmit_to_turnitin, :via => :post
+    #    match 'turnitin/:asset_string' => 'submissions#turnitin_report', :as => :turnitin_report
+    #  end
+    #  match 'rubric' => 'assignments#rubric', :as => :rubric
+    #  resource :rubric_association, :path => :rubric do
+    #    resources :rubric_assessments, :path => :assessments
+    #  end
+    #
+    #  match 'peer_reviews' => 'assignments#peer_reviews', :as => :peer_reviews, :via => :get
+    #  match 'assign_peer_reviews' => 'assignments#assign_peer_reviews', :as => :assign_peer_reviews, :via => :post
+    #  match 'peer_reviews/:id' => 'assignments#delete_peer_review', :as => :delete_peer_review, :via => :delete
+    #  match 'peer_reviews/:id' => 'assignments#remind_peer_review', :as => :remind_peer_review, :via => :post
+    #  match 'peer_reviews/users/:reviewer_id' => 'assignments#assign_peer_review', :as => :assign_peer_review, :via => :post
+    #  match 'mute' => 'assignments#toggle_mute', :as => :mute, :via => :put
+    #
+    #  collection do
+    #    get :syllabus
+    #    get :submissions
+    #  end
+    #
+    #  member do
+    #    get :list_google_docs
+    #  end
+    #end
 
     resources :grading_standards, :only => ["index", "create", "update", "destroy"]
-    resources :assignment_groups do
-      match 'reorder' => 'assignment_groups#reorder_assignments', :as => :reorder_assignments
-      collection do
-        post :reorder
-      end
-    end
+    #resources :assignment_groups do
+    #  match 'reorder' => 'assignment_groups#reorder_assignments', :as => :reorder_assignments
+    #  collection do
+    #    post :reorder
+    #  end
+    #end
 
-    match 'external_tools/sessionless_launch' => 'external_tools#sessionless_launch', :as => :external_tools_sessionless_launch
-    resources :external_tools do
-      match 'resource_selection' => 'external_tools#resource_selection', :as => :resource_selection
-      match 'homework_submission' => 'external_tools#homework_submission', :as => :homework_submission
-      match 'finished' => 'external_tools#finished', :as => :finished
-      collection do
-        get :retrieve
-        get :homework_submissions
-      end
-    end
+    #match 'external_tools/sessionless_launch' => 'external_tools#sessionless_launch', :as => :external_tools_sessionless_launch
+    #resources :external_tools do
+    #  match 'resource_selection' => 'external_tools#resource_selection', :as => :resource_selection
+    #  match 'homework_submission' => 'external_tools#homework_submission', :as => :homework_submission
+    #  match 'finished' => 'external_tools#finished', :as => :finished
+    #  collection do
+    #    get :retrieve
+    #    get :homework_submissions
+    #  end
+    #end
 
-    resources :submissions
-    resources :calendar_events
+    #resources :submissions
+    #resources :calendar_events
 
     concerns :files, :file_images, :relative_files, :folders
-    concerns :groups
+    #concerns :groups
     concerns :wikis
-    concerns :conferences
+    #concerns :conferences
     concerns :question_banks
 
     match 'quizzes/publish'   => 'quizzes#publish',   :as => :quizzes_publish
@@ -351,7 +351,7 @@ routes.draw do
       match 'lockdown_browser_required' => 'quizzes#lockdown_browser_required', :as => :lockdown_browser_required
     end
 
-    resources :collaborations
+    #resources :collaborations
     resources :gradebook_uploads
     resources :rubrics
     resources :rubric_associations do
@@ -378,30 +378,30 @@ routes.draw do
       match 'reorder' => 'outcome_groups#reorder', :as => :reorder
     end
 
-    resources :context_modules, :path => :modules do
-      match 'items' => 'context_modules#add_item', :as => :add_item, :via => :post
-      match 'reorder' => 'context_modules#reorder_items', :as => :reorder, :via => :post
-      match 'collapse' => 'context_modules#toggle_collapse', :as => :toggle_collapse
-      match 'prerequisites/:code' => 'context_modules#content_tag_prerequisites_needing_finishing', :as => :prerequisites_needing_finishing
-      match 'items/last' => 'context_modules#module_redirect', :as => :last_redirect, :last => 1
-      match 'items/first' => 'context_modules#module_redirect', :as => :first_redirect, :first => 1
-      collection do
-        post :reorder
-        get :progressions
-      end
-    end
+    #resources :context_modules, :path => :modules do
+    #  match 'items' => 'context_modules#add_item', :as => :add_item, :via => :post
+    #  match 'reorder' => 'context_modules#reorder_items', :as => :reorder, :via => :post
+    #  match 'collapse' => 'context_modules#toggle_collapse', :as => :toggle_collapse
+    #  match 'prerequisites/:code' => 'context_modules#content_tag_prerequisites_needing_finishing', :as => :prerequisites_needing_finishing
+    #  match 'items/last' => 'context_modules#module_redirect', :as => :last_redirect, :last => 1
+    #  match 'items/first' => 'context_modules#module_redirect', :as => :first_redirect, :first => 1
+    #  collection do
+    #    post :reorder
+    #    get :progressions
+    #  end
+    #end
 
-    resources :content_exports, :only => ["create", "index", "destroy", "show"]
-    match 'modules/items/assignment_info' => 'context_modules#content_tag_assignment_data', :as => :context_modules_assignment_info, :via => :get
-    match 'modules/items/:id' => 'context_modules#item_redirect', :as => :context_modules_item_redirect, :via => :get
-    match 'modules/items/sequence/:id' => 'context_modules#item_details', :as => :context_modules_item_details, :via => :get
-    match 'modules/items/:id' => 'context_modules#remove_item', :as => :context_modules_remove_item, :via => :delete
-    match 'modules/items/:id' => 'context_modules#update_item', :as => :context_modules_update_item, :via => :put
+    #resources :content_exports, :only => ["create", "index", "destroy", "show"]
+    #match 'modules/items/assignment_info' => 'context_modules#content_tag_assignment_data', :as => :context_modules_assignment_info, :via => :get
+    #match 'modules/items/:id' => 'context_modules#item_redirect', :as => :context_modules_item_redirect, :via => :get
+    #match 'modules/items/sequence/:id' => 'context_modules#item_details', :as => :context_modules_item_details, :via => :get
+    #match 'modules/items/:id' => 'context_modules#remove_item', :as => :context_modules_remove_item, :via => :delete
+    #match 'modules/items/:id' => 'context_modules#update_item', :as => :context_modules_update_item, :via => :put
     match 'confirm_action' => 'courses#confirm_action', :as => :confirm_action
     match 'copy' => 'courses#copy', :as => :start_copy, :via => :get
     match 'copy' => 'courses#copy_course', :as => :copy_course, :via => :post
     concerns :media
-    match 'user_notes' => 'user_notes#user_notes', :as => :user_notes
+    #match 'user_notes' => 'user_notes#user_notes', :as => :user_notes
     match 'switch_role/:role' => 'courses#switch_role', :as => :switch_role
     match 'details/sis_publish' => 'courses#sis_publish_status', :as => :sis_publish_status, :via => :get
     match 'details/sis_publish' => 'courses#publish_to_sis', :as => :publish_to_sis, :via => :post
@@ -411,7 +411,7 @@ routes.draw do
     match 'student_view' => 'courses#student_view', :as => :student_view, :via => :post
     match 'student_view' => 'courses#leave_student_view', :as => :student_view, :via => :delete
     match 'test_student' => 'courses#reset_test_student', :as => :test_student, :via => :delete
-    match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
+    #match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
   end
 
   match 'quiz_statistics/:quiz_statistics_id/files/:file_id/download' => 'files#show', :as => :quiz_statistics_download, :download => '1'
@@ -468,51 +468,51 @@ routes.draw do
     match 'files/:id/:verifier' => 'files#assessment_question_show', :as => :verified_file, :download => '1'
   end
 
-  resources :eportfolios, :except => [:index] do
-    match 'reorder_categories' => 'eportfolios#reorder_categories', :as => :reorder_categories
-    match ':eportfolio_category_id/reorder_entries' => 'eportfolios#reorder_entries', :as => :reorder_entries
-    resources :categories, :controller => :eportfolio_categories
-    resources :entries, :controller => :eportfolio_entries do
-      resources :page_comments, :path => :comments, :only => ["create", "destroy"]
-      match 'files/:attachment_id' => 'eportfolio_entries#attachment', :as => :view_file, :via => :get
-      match 'submissions/:submission_id' => 'eportfolio_entries#submission', :as => :preview_submission, :via => :get
-    end
+  #resources :eportfolios, :except => [:index] do
+  #  match 'reorder_categories' => 'eportfolios#reorder_categories', :as => :reorder_categories
+  #  match ':eportfolio_category_id/reorder_entries' => 'eportfolios#reorder_entries', :as => :reorder_entries
+  #  resources :categories, :controller => :eportfolio_categories
+  #  resources :entries, :controller => :eportfolio_entries do
+  #    resources :page_comments, :path => :comments, :only => ["create", "destroy"]
+  #    match 'files/:attachment_id' => 'eportfolio_entries#attachment', :as => :view_file, :via => :get
+  #    match 'submissions/:submission_id' => 'eportfolio_entries#submission', :as => :preview_submission, :via => :get
+  #  end
+  #
+  #  match 'export' => 'eportfolios#export', :as => :export_portfolio
+  #  match 'export.:format' => 'eportfolios#export', :as => :formatted_export_portfolio
+  #  match ':category_name' => 'eportfolio_categories#show', :as => :named_category, :via => :get
+  #  match ':category_name/:entry_name' => 'eportfolio_entries#show', :as => :named_category_entry, :via => :get
+  #end
 
-    match 'export' => 'eportfolios#export', :as => :export_portfolio
-    match 'export.:format' => 'eportfolios#export', :as => :formatted_export_portfolio
-    match ':category_name' => 'eportfolio_categories#show', :as => :named_category, :via => :get
-    match ':category_name/:entry_name' => 'eportfolio_entries#show', :as => :named_category_entry, :via => :get
-  end
-
-  resources :groups do
-    concerns :users
-    match 'remove_user/:id' => 'groups#remove_user', :as => :remove_user, :via => :delete
-    match 'add_user' => 'groups#add_user', :as => :add_user
-    match 'accept_invitation/:uuid' => 'groups#accept_invitation', :as => :accept_invitation, :via => :get
-    match 'members.:format' => 'groups#context_group_members', :as => :members, :via => :get
-    match 'members' => 'groups#context_group_members', :as => :members, :via => :get
-    match 'undelete' => 'context#undelete_index', :as => :undelete_items
-    match 'undelete/:asset_string' => 'context#undelete_item', :as => :undelete_item
-    concerns :announcements
-    concerns :discussions
-    resources :calendar_events
-    concerns :chats
-    concerns :files, :file_images, :relative_files, :folders
-    concerns :zip_file_imports
-
-    resources :external_tools, :only => [:show] do
-      collection do
-        get :retrieve
-      end
-    end
-
-    concerns :wikis
-    concerns :conferences
-    concerns :media
-
-    resources :collaborations
-    match 'calendar' => 'calendars#show', :as => :old_calendar
-  end
+  #resources :groups do
+  #  concerns :users
+  #  match 'remove_user/:id' => 'groups#remove_user', :as => :remove_user, :via => :delete
+  #  match 'add_user' => 'groups#add_user', :as => :add_user
+  #  match 'accept_invitation/:uuid' => 'groups#accept_invitation', :as => :accept_invitation, :via => :get
+  #  match 'members.:format' => 'groups#context_group_members', :as => :members, :via => :get
+  #  match 'members' => 'groups#context_group_members', :as => :members, :via => :get
+  #  match 'undelete' => 'context#undelete_index', :as => :undelete_items
+  #  match 'undelete/:asset_string' => 'context#undelete_item', :as => :undelete_item
+  #  concerns :announcements
+  #  concerns :discussions
+  #  resources :calendar_events
+  #  concerns :chats
+  #  concerns :files, :file_images, :relative_files, :folders
+  #  concerns :zip_file_imports
+  #
+  #  resources :external_tools, :only => [:show] do
+  #    collection do
+  #      get :retrieve
+  #    end
+  #  end
+  #
+  #  concerns :wikis
+  #  concerns :conferences
+  #  concerns :media
+  #
+  #  resources :collaborations
+  #  match 'calendar' => 'calendars#show', :as => :old_calendar
+  #end
 
   resources :accounts do
     match 'settings' => 'accounts#settings', :as => :settings
@@ -549,9 +549,9 @@ routes.draw do
     match 'users/:user_id' => 'accounts#remove_user', :as => :delete_user, :via => :delete
     resources :users
     resources :account_notifications, :only => [:create, :destroy]
-    concerns :announcements
-    resources :assignments
-    resources :submissions
+    #concerns :announcements
+    #resources :assignments
+    #resources :submissions
     match 'account_authorization_configs' => 'account_authorization_configs#update_all', :as => :update_all_authorization_configs, :via => :put
     match 'account_authorization_configs' => 'account_authorization_configs#destroy_all', :as => :remove_all_authorization_configs, :via => :delete
     resources :account_authorization_configs
@@ -591,7 +591,7 @@ routes.draw do
 
     concerns :files, :file_images, :relative_files, :folders
     concerns :media
-    concerns :groups
+    #concerns :groups
 
     resources :outcomes
     match 'courses' => 'accounts#courses', :as => :courses
@@ -652,7 +652,7 @@ routes.draw do
       match 'download' => 'folders#download', :as => :download
     end
 
-    resources :calendar_events
+    #resources :calendar_events
     match 'external_tools/:id' => 'users#external_tool', :as => :external_tool
     resources :rubrics
     resources :rubric_associations do
@@ -741,23 +741,23 @@ routes.draw do
 
   resources :plugins, :only => [:index, :show, :update]
 
-  match 'calendar' => 'calendars#show', :as => :calendar, :via => :get
-  match 'calendar2' => 'calendars#show2', :as => :calendar2, :via => :get
-  match 'course_sections/:course_section_id/calendar_events/:id' => 'calendar_events#show', :as => :course_section_calendar_event, :via => :get
-  match 'switch_calendar/:preferred_calendar' => 'calendars#switch_calendar', :as => :switch_calendar, :via => :post
+  #match 'calendar' => 'calendars#show', :as => :calendar, :via => :get
+  #match 'calendar2' => 'calendars#show2', :as => :calendar2, :via => :get
+  #match 'course_sections/:course_section_id/calendar_events/:id' => 'calendar_events#show', :as => :course_section_calendar_event, :via => :get
+  #match 'switch_calendar/:preferred_calendar' => 'calendars#switch_calendar', :as => :switch_calendar, :via => :post
   match 'files' => 'files#full_index', :as => :files, :via => :get
   match 'files/s3_success/:id' => 'files#s3_success', :as => :s3_success
   match 'files/:id/public_url.:format' => 'files#public_url', :as => :public_url
   match 'files/preflight' => 'files#preflight', :as => :file_preflight
   match 'files/pending' => 'files#create_pending', :as => :file_create_pending
-  resources :assignments, :only => [:index] do
-    resources :files, :only => [] do
-      match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'
-      match 'scribd_render' => 'files#scribd_render', :as => :scribd_render, :via => :post
-    end
-  end
+  #resources :assignments, :only => [:index] do
+  #  resources :files, :only => [] do
+  #    match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'
+  #    match 'scribd_render' => 'files#scribd_render', :as => :scribd_render, :via => :post
+  #  end
+  #end
 
-  resources :appointment_groups, :only => [:index, :show]
+  #resources :appointment_groups, :only => [:index, :show]
 
   match 'errors' => 'info#record_error', :as => :errors, :via => :post
   match 'record_js_error' => 'info#record_js_error', :as => :record_js_error, :via => :get
@@ -796,7 +796,7 @@ routes.draw do
   # assignments at the top level (without a context) -- we have some specs that
   # assert these routes exist, but just 404. I'm not sure we ever actually want
   # top-level assignments available, maybe we should change the specs instead.
-  resources :assignments, :only => ["index", "show"]
+  #resources :assignments, :only => ["index", "show"]
 
   resources :files do
     match 'download' => 'files#show', :as => :download, :download => '1'
@@ -928,7 +928,7 @@ routes.draw do
     end
 
     post '/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files',
-      :action => :create_file, :controller => :submission_comments_api
+         :action => :create_file, :controller => :submission_comments_api
 
     scope(:controller => :gradebook_history_api) do
       get "courses/:course_id/gradebook_history/days", :action => :days, :path_name => 'gradebook_history'
