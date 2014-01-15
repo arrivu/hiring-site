@@ -472,7 +472,7 @@
 
         <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
             <fieldset>
-              <legend>Course License</legend>
+              <legend>Project License</legend>
               <% f.fields_for :settings do |settings| %>
                   <div>
                     <%= settings.check_box :private_license_enable, :checked => @account.settings[:private_license_enable] %>

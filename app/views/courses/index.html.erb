@@ -12,7 +12,7 @@
       <button type="button"
               id="start_new_course"
               class="element_toggler btn button-sidebar-wide"
-              aria-controls="new_course_form"><%= t('start_new_course', 'Start a New Course') %></button>
+              aria-controls="new_course_form"><%= t('start_new_course', 'Start a New Project') %></button>
       <%= render :partial => 'shared/new_course_form' %>
     </div>
   <% end %>
@@ -21,7 +21,7 @@
 <% jammit_css :context_list %>
 
 <% unless @current_enrollments.empty? %>
-  <h2><%= t('headings.my_courses', %{My Courses}) %></h2>
+  <h2><%= t('headings.my_courses', %{My Projects}) %></h2>
   <ul class="unstyled_list context_list current_enrollments">
     <% @current_enrollments.each do |enrollment| %>
       <%= render :partial => "shared/current_enrollment", :object => enrollment %>
