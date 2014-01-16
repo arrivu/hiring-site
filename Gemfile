@@ -38,7 +38,9 @@ source 'http://rubygems.org/'
     gem 'bcrypt-ruby', '3.0.1'
     gem 'builder', '3.0.0'
 # enforce the version of bundler itself, to avoid any surprises
-    gem 'bundler', '1.3.5'
+
+
+    gem 'bundler', '1.5.2'
     gem 'canvas_connect', '0.3.2'
     gem 'canvas_webex', '0.7'
     gem 'daemons', '1.1.0'
@@ -83,7 +85,9 @@ source 'http://rubygems.org/'
 # oauth gem, with rails3 fixes rolled in
     gem 'oauth-instructure', '0.4.9', :require => 'oauth'
     gem 'rack', CANVAS_RAILS2 ? '1.1.3' : '1.4.5'
-    gem 'rake', '10.1.0'
+
+    gem 'rake', '10.1.1'
+
     gem 'rdoc', '3.12'
     gem 'ratom-instructure', '0.6.9', :require => "atom" # custom gem until necessary changes are merged into mainstream
     gem 'rdiscount', '1.6.8'
@@ -168,10 +172,11 @@ source 'http://rubygems.org/'
       # Option to DISABLE_RUBY_DEBUGGING is helpful IDE-based debugging.
       # The ruby debug gems conflict with the IDE-based debugger gem.
       # Set this option in your dev environment to disable.
-      unless ENV['DISABLE_RUBY_DEBUGGING']
-        gem 'byebug', :github => 'deivid-rodriguez/byebug', :platforms => :ruby_20
-        gem 'debugger', '1.5.0', :platforms => :ruby_19
-      end
+
+      #unless ENV['DISABLE_RUBY_DEBUGGING']
+      #  gem 'byebug', :github => 'deivid-rodriguez/byebug', :platforms => :ruby_20
+      #  gem 'debugger', '1.5.0', :platforms => :ruby_19
+      #end
     end
 
     group :development, :test do
@@ -214,6 +219,7 @@ source 'http://rubygems.org/'
     Dir[File.join(File.dirname(__FILE__), 'vendor/plugins/*/Gemfile')].each do |g|
       eval(File.read(g))
     end
+
 gem 'subdomain-fu', '0.5.4'
 gem 'rack-cors', :require => 'rack/cors'
 
