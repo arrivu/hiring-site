@@ -38,7 +38,7 @@
       <% else %>
         <div class="secondary-button-group rs-margin-lr rs-margin-top rs-margin-bottom">
           <a href="#" class="btn button-sidebar-wide wizard_popup_link  <%= 'auto_open' if @context.created? || @context.claimed? %>"><i class="icon-question"></i> <%= t('links.course_setup', %{Project Setup Checklist}) %></a>
-          <a class="btn button-sidebar-wide" href="<%= context_url(@context, :new_context_discussion_topic_url, :is_announcement => true) %>"><i class="icon-announcement"></i> <%= t('links.new_announcement', %{New Announcement}) %></a>
+          <a class="btn button-sidebar-wide" href="<%#= context_url(@context, :new_context_discussion_topic_url, :is_announcement => true) %>"><i class="icon-announcement"></i> <%= t('links.new_announcement', %{New Announcement}) %></a>
         </div>
       <% end %>
     <% end %>

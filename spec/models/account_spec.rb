@@ -844,7 +844,7 @@ describe Account do
   context "manually created courses account" do
     it "should still work with existing manually created courses accounts" do
       acct = Account.default
-      sub = acct.sub_accounts.create!(:name => "Manually-Created Courses")
+      sub = acct.sub_accounts.create!(:name => "Manually-Created Projects")
       manual_courses_account = acct.manually_created_courses_account
       manual_courses_account.id.should == sub.id
       acct.reload.settings[:manually_created_courses_account_id].should == sub.id

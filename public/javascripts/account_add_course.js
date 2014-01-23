@@ -13,7 +13,7 @@ require([
     event.preventDefault();
     $("#add_course_form :text").val("");
     $("#add_course_dialog").dialog({
-      title: I18n.t('add_course_dialog_title', "Add a New Course"),
+      title: I18n.t('add_course_dialog_title', "Add a New Project"),
       width: 500
     }).fixDialogButtons();
     $("#add_course_form :text:visible:first").focus().select();

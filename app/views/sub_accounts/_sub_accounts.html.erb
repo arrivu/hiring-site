@@ -20,7 +20,7 @@
         <% end %>
       </span>
       <div style="<%= hidden unless account && course_count > 0 %>" class="courses_count">
-        <%= t('account_courses', 'Course', :count => course_count) if account %>
+        <%= t('account_courses', 'Project', :count => course_count) if account %>
       </div>
       <div style="<%= hidden unless account && sub_account_count > 0 %>" class="sub_accounts_count">
         <%= t('account_sub_accounts', "Sub-Account", :count => sub_account_count) if account %>
