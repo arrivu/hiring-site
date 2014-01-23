@@ -743,7 +743,7 @@ class CoursesController < ApplicationController
              :USERS_URL => "/api/v1/courses/#{ @context.id }/users",
              :ALL_ROLES => @all_roles,
              :COURSE_ROOT_URL => "/courses/#{ @context.id }",
-             :SEARCH_URL => search_recipients_url,
+             #:SEARCH_URL => search_recipients_url,
              :CONTEXTS => @contexts,
              :USER_PARAMS => {:include => ['email', 'enrollments', 'locked', 'observed_users']},
              :PERMISSIONS => {

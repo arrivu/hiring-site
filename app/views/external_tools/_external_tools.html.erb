@@ -13,7 +13,7 @@
   <% end %>
   <%= render :partial => 'external_tools/external_tool' %>
   <div id="external_tools_dialog" style="display: none;">
-    <a href="<%= context_url(@context, :context_external_tools_url) %>" class="external_tools_url" style="display: none;">&nbsp;</a>
+    <!--<a href="<%#= context_url(@context, :context_external_tools_url) %>" class="external_tools_url" style="display: none;">&nbsp;</a>-->
     <% form_for :external_tool, :url => '.', :html => {:id => 'external_tool_form'} do |f| %>
     <table class="formtable">
       <tbody>

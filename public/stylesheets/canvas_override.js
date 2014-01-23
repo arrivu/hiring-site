@@ -1,0 +1,4 @@
+$(document).ready(function(){
+  var n=$("#footer"),e="<ul style='width:45%;margin:0px auto;'><li class='menu-item'><a href='https://edison.instructure.com/courses/772285/wiki/system-requirements?module_item_id=4583555' class='menu-item-no-drop' style='font-weight:bold;font-size: 18px;' target='_blank'>System Requirements</a></li><li class='menu-item'><a href='https://edison.instructure.com/courses/772285/wiki/system-requirements?module_item_id=4583555' class='menu-item-no-drop' target='_blank' style='font-weight:bold;font-size: 18px !important;'>Faculty/Staff Support</a></li><li class='menu-item'  ><a href='https://edison.instructure.com/courses/772285/wiki/system-requirements?module_item_id=4583555' class='menu-item-no-drop' target='_blank' style='font-weight:bold;font-size: 18px;'>Student Support</a></li></ul></br>";$(e).insertBefore($(n)),document.getElementById("image").innerHTML = '<img src="image2.png" />';}
+  
+  );

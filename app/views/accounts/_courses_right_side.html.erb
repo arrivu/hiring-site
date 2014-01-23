@@ -1,11 +1,11 @@
 <% if can_do @account, @current_user, :read_course_list %>
   <% term_count =  @root_account.enrollment_terms.active.count %>
   <% if term_count > 1 || @associated_courses_count > 0  %>
-    <h2><%= t(:course_filtering, "Course Filtering")%></h2>
+    <h2><%= t(:course_filtering, "Project Filtering")%></h2>
     <div class="rs-margin-lr rs-margin-bottom">
       <form method="get">
         <% if term_count > 1 %>
-          <label for="enrollment_term"><%= before_label(t(:enrollment_term_label, "Show courses from the term")) %></label><br />
+          <label for="enrollment_term"><%= before_label(t(:enrollment_term_label, "Show projects from the term")) %></label><br />
           <select name="enrollment_term_id">
             <option value="" <%= 'selected' unless @term %>><%= t(:all_terms, "All Terms") %></option>
             <% @root_account.enrollment_terms.active.order(EnrollmentTerm.nulls(:first, :start_at)).each do |term| %>
@@ -24,7 +24,7 @@
     </div>
 
     <% if @associated_courses_count > 0 %>
-      <h2><%= t(:filter_label, "Find a Course") %></h2>
+      <h2><%= t(:filter_label, "Find a Project") %></h2>
       <div class="rs-margin-lr rs-margin-bottom">
         <%= form_for :course, :url => account_courses_path(@account), :html => {:id => "new_course", :class => "form-inline", :method => :get} do |f| -%>
           <fieldset class="input-append">

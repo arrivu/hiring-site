@@ -775,8 +775,8 @@ module ApplicationHelper
       :collection             => map_courses_for_menu(courses),
       :collection_size        => all_courses_count,
       :more_link_for_over_max => courses_path,
-      :title                  => t('#menu.my_courses', "My Courses"),
-      :link_text              => raw(t('#layouts.menu.view_all_enrollments', 'View all courses')),
+      :title                  => t('#menu.my_courses', "My Projects"),
+      :link_text              => raw(t('#layouts.menu.view_all_enrollments', 'View all projects')),
       :edit                   => t("#menu.customize", "Customize")
     }
   end

@@ -1,0 +1,46 @@
+#header{background:url("header_bg.png?v1") repeat-x scroll center transparent}#header-logo,#header.no-user #header-logo{background: url("logo.png?v1") no-repeat scroll 0 0 transparent;
+bottom: 5px;
+height: 55px;
+left: 12px;
+width: 170px;
+background-size: 160px 55px;
+position: absolute;
+text-indent: -9999px;}#header-logo-secondary{display:none;background:url("logo.png") no-repeat;width:135px;height:26px;right:26px;bottom:6px;position:absolute}#menu{margin-left:200px}.menu-item .menu-item-title,.menu-item .menu-item-no-drop{color:#1e5a83;text-shadow:none}#header-logo.original,#header.no-user #header-logo.original{bottom:12px}#header-inner{padding-top:26px;position:relative}#identity{margin:0;padding:0;list-style:none;float:right;font-size:12px;margin-right:13px;margin-bottom:4px;padding:0 11px;background: #2E88BC;box-shadow:rgba(0,0,0,0.3) 1px 1px 1px;border-bottom-left-radius:6px;border-bottom-right-radius:5px;border:1px solid rgba(0,0,0,0.3);border-top:0}body.modal #modal-box{background-color:transparent !important;}#modal-box.login-box{background-color:transparent !important}body.modal #modal-box.login-box{height:435px;width:610px;color:#fff;font-weight:bold;background: url('login_bg.jpg');background-size: 100% 100%;}body.modal #modal-box.login-box a{color:#fff !important}body.modal #modal-box .button,body.modal #login-box .button{background-color:#2a488e !important;background-image:none !important;border-color:#2a488e}#login_form .btn-primary,#login_form .btn-primary:hover{background-color:#4183c4;background-image:none;border:none !important}body.modal #modal-box.login-box h1,body.modal #modal-box.login-box .h1{height:140px;margin:0 0 70px;background-color:transparent;background-image:url("logo.png?v1");background-size:250px 85px;background-repeat:no-repeat;background-position:68px 25px;text-indent:-999em} 
+#footer .footer-logo {
+background-color: transparent;
+background-image: url("canvas_instructure_logo.png");
+background-repeat: no-repeat;
+background-position: left bottom;
+display: inline-block;
+height: 65px;
+margin: 0 20px 0 0;
+width: 140px;
+float: left;
+}
+#footer-links{margin: 25px 0px 0px 0px;
+float: right;display:none;}
+#footer-link {
+margin: 25px 0px 0px 0px;
+float: left;
+}
+#footer-link a {
+border-left: 1px solid #5c5c5c;
+color: #5c5c5c;
+padding-right: 2px;
+padding-left: 5px;
+}
+#footer-link a:first-child {
+border-left: none;
+}
+#footer-link a{color:#1e5a83;}
+
+#unauthorized_holder {
+box-shadow: 0 4px 20px -2px #000;
+margin: 30px auto 20px;
+width: 650px;
+height: 560px;
+}
+#header.no-user {
+background-position: 0 -25px;
+min-height: 68px;
+}
