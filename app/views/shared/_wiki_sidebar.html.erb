@@ -26,12 +26,12 @@
   </div>
   <% end %>
   <div id="editor_tabs_2">
-    <%= @context.is_a?(Group) ? t('group_links', 'Link to other content in the group.') : t('course_links', 'Link to other content in the course.') %>
+    <%= @context.is_a?(Group) ? t('group_links', 'Link to other content in the group.') : t('course_links', 'Link to other content in the project.') %>
     <% if @context.is_a?(Course) || @context.is_a?(Group) %>
-      <a href="<%= context_url(@context, :retrieve_context_external_tools_url, :url => "{{ url }}") %>" id="external_tool_retrieve_url" style="display: none;">&nbsp;</a>
+      <a href="<%#= context_url(@context, :retrieve_context_external_tools_url, :url => "{{ url }}") %>" id="external_tool_retrieve_url" style="display: none;">&nbsp;</a>
     <% end %>
     <% if @context.is_a?(Course) %>
-      <a href="<%= context_url(@context, :context_external_tool_resource_selection_url, "{{ id }}", :editor => '1') %>" id="context_external_tool_resource_selection_url" style="display: none;">&nbsp;</a>
+      <a href="<%#= context_url(@context, :context_external_tool_resource_selection_url, "{{ id }}", :editor => '1') %>" id="context_external_tool_resource_selection_url" style="display: none;">&nbsp;</a>
     <% end %>
     <%= t('click_links', %{Click any page to insert a link to that page.}) %>
     <div id="pages_accordion">
@@ -61,12 +61,12 @@
       <% end %>
       <% if @context.respond_to?(:assignments) %>
       <div>
-        <div class="header"><a href="#"><%= t('links_to.assignments', %{Assignments}) %></a></div>
+        <!--<div class="header"><a href="#"><%#= t('links_to.assignments', %{Assignments}) %></a></div>-->
          <div>
             <ul class="wiki_pages page_list">
-              <li title="<%= t('insert.assignments', %{Click to insert a link to this assignment}) %>"><%= link_to t('links.assignments', "Assignment List"), context_url(@context, :context_assignments_url) %></li>
+              <li title="<%= t('insert.assignments', %{Click to insert a link to this assignment}) %>"><%#= link_to t('links.assignments', "Assignment List"), context_url(@context, :context_assignments_url) %></li>
               <% for assignment in @wiki_sidebar_data[:active_assignments].select{|a| !a.new_record?} %>
-                <li title="<%= t('insert.assignments', %{Click to insert a link to this assignment}) %>"><%= link_to assignment.title, context_url(@context, :context_assignment_url, assignment) %></li>
+                <li title="<%= t('insert.assignments', %{Click to insert a link to this assignment}) %>"><%#= link_to assignment.title, context_url(@context, :context_assignment_url, assignment) %></li>
               <% end %>
             </ul>
          </div>
@@ -74,10 +74,10 @@
       <% end %>
       <% if @context.respond_to?(:quizzes) %>
       <div>
-        <div class="header"><a href="#"><%= t('links_to.quizzes', %{Quizzes}) %></a></div>
+        <div class="header"><a href="#"><%= t('links_to.quizzes', %{Assessments}) %></a></div>
          <div>
             <ul class="wiki_pages page_list">
-              <li title="<%= t('insert.quizzes', %{Click to insert a link to this quiz}) %>"><%= link_to t('links.quizzes', "Quiz List"), context_url(@context, :context_quizzes_url) %></li>
+              <li title="<%= t('insert.quizzes', %{Click to insert a link to this quiz}) %>"><%= link_to t('links.quizzes', "Assessment List"), context_url(@context, :context_quizzes_url) %></li>
               <% for quiz in @wiki_sidebar_data[:active_quizzes].select{|a| !a.new_record?} %>
                 <li title="<%= t('insert.quizzes', %{Click to insert a link to this quiz}) %>"><%= link_to quiz.title, context_url(@context, :context_quiz_url, quiz) %></li>
               <% end %>
@@ -87,12 +87,12 @@
       <% end %>
       <% if @context.respond_to?(:announcements) %>
       <div>
-        <div class="header"><a href="#"><%= t('links_to.announcements', %{Announcements}) %></a></div>
+        <!--<div class="header"><a href="#"><%#= t('links_to.announcements', %{Announcements}) %></a></div>-->
          <div>
             <ul class="wiki_pages page_list">
-              <li title="<%= t('insert.announcements', %{Click to insert a link to this announcement}) %>"><%= link_to t('links.announcements', "Announcements List"), context_url(@context, :context_announcements_url) %></li>
+              <li title="<%= t('insert.announcements', %{Click to insert a link to this announcement}) %>"><%#= link_to t('links.announcements', "Announcements List"), context_url(@context, :context_announcements_url) %></li>
               <% for announcement in @wiki_sidebar_data[:active_discussion_topics].select{|d| d.is_a?(Announcement) } %>
-                <li title="<%= t('insert.announcements', %{Click to insert a link to this announcement}) %>"><%= link_to announcement.title, context_url(@context, :context_announcement_url, announcement) %></li>
+                <li title="<%= t('insert.announcements', %{Click to insert a link to this announcement}) %>"><%#= link_to announcement.title, context_url(@context, :context_announcement_url, announcement) %></li>
               <% end %>
             </ul>
          </div>
@@ -101,12 +101,12 @@
 
       <% if @context.respond_to?(:discussion_topics) %>
       <div>
-        <div class="header"><a href="#"><%= t('links_to.discussions', %{Discussions}) %></a></div>
+        <!--<div class="header"><a href="#"><%#= t('links_to.discussions', %{Discussions}) %></a></div>-->
          <div>
             <ul class="wiki_pages page_list">
-              <li title="<%= t('insert.discussions', %{Click to insert a link to this topic}) %>"><%= link_to t('links.discussions', "Discussion Index"), context_url(@context, :context_discussion_topics_url) %></li>
+              <li title="<%= t('insert.discussions', %{Click to insert a link to this topic}) %>"><%#= link_to t('links.discussions', "Discussion Index"), context_url(@context, :context_discussion_topics_url) %></li>
               <% for discussion_topic in @wiki_sidebar_data[:active_discussion_topics] %>
-                <li title="<%= t('insert.discussions', %{Click to insert a link to this topic}) %>"><%= link_to discussion_topic.title, context_url(@context, :context_discussion_topic_url, discussion_topic) %></li>
+                <li title="<%= t('insert.discussions', %{Click to insert a link to this topic}) %>"><%#= link_to discussion_topic.title, context_url(@context, :context_discussion_topic_url, discussion_topic) %></li>
               <% end %>
             </ul>
          </div>
@@ -115,12 +115,12 @@
 
       <% if @context.respond_to?(:context_modules) %>
       <div>
-        <div class="header"><a href="#"><%= t('links_to.modules', %{Modules}) %></a></div>
+        <!--<div class="header"><a href="#"><%#= t('links_to.modules', %{Modules}) %></a></div>-->
           <div>
             <ul class="wiki_pages page_list">
-              <li title="<%= t('insert.modules', %{Click to insert a link to this module}) %>"><%= link_to t('links.modules', "Modules List"), context_url(@context, :context_context_modules_url) %></li>
+              <li title="<%= t('insert.modules', %{Click to insert a link to this module}) %>"><%#= link_to t('links.modules', "Modules List"), context_url(@context, :context_context_modules_url) %></li>
               <% for m in @wiki_sidebar_data[:active_context_modules] %>
-                <li title="<%= t('insert.modules', %{Click to insert a link to this module}) %>"><%= link_to m.name, context_url(@context, :context_context_module_url, m) %></li>
+                <li title="<%= t('insert.modules', %{Click to insert a link to this module}) %>"><%#= link_to m.name, context_url(@context, :context_context_module_url, m) %></li>
               <% end %>
             </ul>
           </div>
@@ -128,23 +128,23 @@
       <% end %>
       
       <div>
-        <div class="header"><a href="#"><%= @context.is_a?(Group) ? t('links_to.nav.group', 'Group Navigation') : t('links_to.nav.course', 'Course Navigation') %></a></div>
+        <div class="header"><a href="#"><%= @context.is_a?(Group) ? t('links_to.nav.group', 'Group Navigation') : t('links_to.nav.course', 'Project Navigation') %></a></div>
          <div>
             <ul class="wiki_pages page_list">
               <% if @context.respond_to?(:assignments) %>
-                <li title="<%= t('insert.assignments_page', %{Click to insert a link to the assignments page}) %>"><%= link_to t('links.assignments_page', "Assignment List"), context_url(@context, :context_assignments_url) %></li>
+                <li title="<%= t('insert.assignments_page', %{Click to insert a link to the assignments page}) %>"><%#= link_to t('links.assignments_page', "Assignment List"), context_url(@context, :context_assignments_url) %></li>
               <% end %>
               <% if @context.respond_to?(:wiki) %>
                 <li title="<%= t('insert.wiki_pages_index', %{Click to insert a link to the wiki}) %>"><%= link_to t('links.wiki_pages_index', "Wiki Home"), context_url(@context, :context_wiki_pages_url) %></li>
               <% end %>
               <% if @context.respond_to?(:discussion_topics) %>
-                <li title="<%= t('insert.discussions_page', %{Click to insert a link to the discussions page}) %>"><%= link_to t('links.discussions_page', "Discussions Index"), context_url(@context, :context_discussion_topics_url) %></li>
+                <li title="<%= t('insert.discussions_page', %{Click to insert a link to the discussions page}) %>"><%#= link_to t('links.discussions_page', "Discussions Index"), context_url(@context, :context_discussion_topics_url) %></li>
               <% end %>
               <% if @context.respond_to?(:assignments) %>
-                <li title="<%= t('insert.syllabus_page', %{Click to insert a link to the syllabus}) %>"><%= link_to t('links.syllabus', "Course Syllabus"), context_url(@context, :syllabus_context_assignments_url) %></li>
+                <li title="<%= t('insert.syllabus_page', %{Click to insert a link to the syllabus}) %>"><%#= link_to t('links.syllabus', "Course Syllabus"), context_url(@context, :syllabus_context_assignments_url) %></li>
               <% end %>
               <% if @context.respond_to?(:announcements) %>
-                <li title="<%= t('insert.announcements_page', %{Click to insert a link to the announcements page}) %>"><%= link_to t('links.announcements_page', "Announcement List"), context_url(@context, :context_announcements_url) %></li>
+                <li title="<%= t('insert.announcements_page', %{Click to insert a link to the announcements page}) %>"><%#= link_to t('links.announcements_page', "Announcement List"), context_url(@context, :context_announcements_url) %></li>
               <% end %>
               <% if @context.respond_to?(:attachments) %>
                 <li title="<%= t('insert.files_page', %{Click to insert a link to the files page}) %>"><%= link_to t('links.files_page', "Files Index"), context_url(@context, :context_files_url) %></li>
@@ -154,13 +154,13 @@
                 <li title="<%= t('insert.collaborations_page', %{Click to insert a link to the collaborations page}) %>"><%= link_to t('links.collaborations_page', "Collaborations"), collaborations_url %></li>
               <% end %>
               <% if @context.is_a?(Course) %>
-                <li title="<%= t('insert.grades_page', %{Click to insert a link to the grades page}) %>"><%= link_to t('links.grades_page', "Grades"), context_url(@context, :context_grades_url) %></li>
+                <li title="<%= t('insert.grades_page', %{Click to insert a link to the grades page}) %>"><%= link_to t('links.grades_page', "Results"), context_url(@context, :context_grades_url) %></li>
               <% end %>
               <% if @context.respond_to?(:users) %>
                 <li title="<%= t('insert.users_page', %{Click to insert a link to the people page}) %>"><%= link_to t('links.users_page', "People"), context_url(@context, :context_users_url) %></li>
               <% end %>
               <% if @context.respond_to?(:context_modules) %>
-                <li title="<%= t('insert.modules_page', %{Click to insert a link to the modules page}) %>"><%= link_to t('links.modules_page', "Modules"), context_url(@context, :context_context_modules_url) %></li>
+                <li title="<%= t('insert.modules_page', %{Click to insert a link to the modules page}) %>"><%#= link_to t('links.modules_page', "Modules"), context_url(@context, :context_context_modules_url) %></li>
               <% end %>
             </ul>
          </div>

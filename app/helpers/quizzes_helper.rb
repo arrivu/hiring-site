@@ -57,9 +57,9 @@ module QuizzesHelper
   def render_quiz_type(quiz_type)
     case quiz_type
     when "practice_quiz"
-      I18n.t('#quizzes.practice_quiz', "Practice Quiz")
+      I18n.t('#quizzes.practice_quiz', "Practice Assessment")
     when "assignment"
-      I18n.t('#quizzes.graded_quiz', "Graded Quiz")
+      I18n.t('#quizzes.graded_quiz', "Graded Assessment")
     when "graded_survey"
       I18n.t('#quizzes.graded_survey', "Graded Survey")
     when "survey"

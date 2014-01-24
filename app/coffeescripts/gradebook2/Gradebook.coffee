@@ -851,7 +851,7 @@ define [
       # I can't find and if I change it, the layout gets messed up.
       @parentColumns = [{
         id: 'student'
-        name: I18n.t 'student_name', 'Student Name'
+        name: I18n.t 'student_name', 'Candidate Name'
         field: 'display_name'
         width: 150
         cssClass: "meta-cell"

@@ -104,7 +104,7 @@ class Quiz < ActiveRecord::Base
     if !self.available? && !self.survey?
       self.points_possible = self.current_points_possible
     end
-    self.title = t(:default_title, "Unnamed Quiz") if self.title.blank?
+    self.title = t(:default_title, "Unnamed Assessment") if self.title.blank?
     self.quiz_type ||= "assignment"
     self.last_assignment_id = self.assignment_id_was if self.assignment_id_was
     if (!graded? && self.assignment_id) || (self.assignment_id_was && self.assignment_id != self.assignment_id_was)
@@ -703,7 +703,7 @@ class Quiz < ActiveRecord::Base
   
   def quiz_title
     result = self.title
-    result = t(:default_title, "Unnamed Quiz") if result == "undefined" || !result
+    result = t(:default_title, "Unnamed Assessment") if result == "undefined" || !result
     result = self.assignment.title if self.assignment
     result
   end

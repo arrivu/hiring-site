@@ -445,7 +445,7 @@ define([
     $(".reset_course_content_button").click(function(event) {
       event.preventDefault();
       $("#reset_course_content_dialog").dialog({
-        title: I18n.t('titles.reset_course_content_dialog_help', "Reset Course Content"),
+        title: I18n.t('titles.reset_course_content_dialog_help', "Reset Project Content"),
         width: 500
       });
 

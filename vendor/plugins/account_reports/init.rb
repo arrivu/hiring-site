@@ -22,7 +22,7 @@ require 'canvas/account_reports/default'
 Rails.configuration.to_prepare do
   Canvas::AccountReports.add_account_reports 'default', 'Default', {
     'grade_export_csv'=> {
-      :title => 'Grade Export',
+      :title => 'Result Export',
       :description_partial => true,
       :parameters_partial => true,
       :parameters => {
@@ -164,7 +164,7 @@ Rails.configuration.to_prepare do
       }
     },
     'student_assignment_outcome_map_csv'=> {
-      :title => 'Student Competency',
+      :title => 'Candidate Competency',
       :parameters_partial => 'grade_export_csv_parameters',
       :description_partial => true,
       :parameters => {
@@ -179,7 +179,7 @@ Rails.configuration.to_prepare do
       }
     },
     'students_with_no_submissions_csv'=> {
-      :title => 'Students with no submissions',
+      :title => 'Candidates with no submissions',
       :description_partial => true,
       :parameters_partial => 'term_and_date_pickers_parameters',
       :parameters => {

@@ -321,7 +321,7 @@ class ContextController < ApplicationController
         :SECTIONS => sections.map { |s| { :id => s.id.to_s, :name => s.name } },
         :USER_LISTS_URL => polymorphic_path([@context, :user_lists], :format => :json),
         :ENROLL_USERS_URL => course_enroll_users_url(@context),
-        :SEARCH_URL => search_recipients_url,
+        #:SEARCH_URL => search_recipients_url,
         :COURSE_ROOT_URL => "/courses/#{ @context.id }",
         :CONTEXTS => @contexts,
         :resend_invitations_url => course_re_send_invitations_url(@context),

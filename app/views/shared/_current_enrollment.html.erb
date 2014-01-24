@@ -15,7 +15,7 @@
     <span class="name ellipsis" title="<%= current_enrollment.long_name %>">
       <%= current_enrollment.long_name %>
       <% if current_enrollment.admin? && (current_enrollment.course.created? || current_enrollment.course.claimed?) %>
-        <%= image_tag "hammer.png", :title => t('course_unpublished', "This course hasn't been published yet"), :alt => "Unpublished", :class => "unpublished_icon" %>
+        <%= image_tag "hammer.png", :title => t('course_unpublished', "This project hasn't been published yet"), :alt => "Unpublished", :class => "unpublished_icon" %>
       <% end %>
     </span>
     
@@ -24,14 +24,14 @@
     <% end %>
     
     <%
-       message = t('enrolled_as_student', "Enrolled as a student")
+       message = t('enrolled_as_student', "Enrolled as a candidate")
        case current_enrollment.type
        when 'TeacherEnrollment'
-         message = t('enrolled_as_teacher', "Enrolled as a teacher")
+         message = t('enrolled_as_teacher', "Enrolled as a hiring manager")
        when 'TaEnrollment'
-         message = t('enrolled_as_ta', "Enrolled as a TA")
+         message = t('enrolled_as_ta', "Enrolled as a Interviewer")
        when 'ObserverEnrollment'
-         message = t('enrolled_as_observer', "Enrolled as an observer")
+         message = t('enrolled_as_observer', "Enrolled as an HR")
        when 'DesignerEnrollment'
          message = t('enrolled_as_designer', "Enrolled as a designer")
        end

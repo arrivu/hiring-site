@@ -743,7 +743,7 @@ class CoursesController < ApplicationController
              :USERS_URL => "/api/v1/courses/#{ @context.id }/users",
              :ALL_ROLES => @all_roles,
              :COURSE_ROOT_URL => "/courses/#{ @context.id }",
-             :SEARCH_URL => search_recipients_url,
+             #:SEARCH_URL => search_recipients_url,
              :CONTEXTS => @contexts,
              :USER_PARAMS => {:include => ['email', 'enrollments', 'locked', 'observed_users']},
              :PERMISSIONS => {
@@ -1553,7 +1553,7 @@ class CoursesController < ApplicationController
           if params[:update_default_pages]
             @course.wiki.update_default_wiki_page_roles(@course.default_wiki_editing_roles, @default_wiki_editing_roles_was)
           end
-          flash[:notice] = t('notices.updated', 'Course was successfully updated.')
+          flash[:notice] = t('notices.updated', 'Project was successfully updated.')
           format.html { redirect_to((!params[:continue_to] || params[:continue_to].empty?) ? course_url(@course) : params[:continue_to]) }
           format.json do
             if api_request?

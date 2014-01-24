@@ -2,7 +2,7 @@
   jammit_css :quizzes, :tinymce
   js_bundle :quizzes_bundle
   js_env :QUIZZES => {:QUIZ => true}
-  content_for :page_title, (@quiz.quiz_title || !@quiz.quiz_title.empty? ? @quiz.quiz_title : t(:default_page_title, 'New Quiz'))
+  content_for :page_title, (@quiz.quiz_title || !@quiz.quiz_title.empty? ? @quiz.quiz_title : t(:default_page_title, 'New Assessment'))
 %>
 
 <%
@@ -16,10 +16,10 @@
   <%= render :partial => "shared/wiki_sidebar" %>
 
   <ul class="page-action-list">
-    <li><%= link_to t('new_assignment', 'New Assignment'),
+    <li><%#= link_to t('new_assignment', 'New Assignment'),
             new_course_assignment_url(@context),
             :class => 'icon-assignment' %></li>
-    <li><%= link_to t('new_discussion', 'New Discussion'),
+    <li><%#= link_to t('new_discussion', 'New Discussion'),
             new_course_discussion_topic_url(@context),
             :class => 'icon-discussion-new' %></li>
   </ul>
@@ -96,7 +96,7 @@
 
   <% if @context.feature_enabled?(:draft_state) %>
   <div class="title">
-    <label for="quiz_title" class="screenreader-only"><%= t('quiz_title', 'Quiz Title') %></label>
+    <label for="quiz_title" class="screenreader-only"><%= t('quiz_title', 'Assessment Title') %></label>
     <%= text_field :quiz, :title, :placeholder => "Quiz Title", :maxlength => "254" %>
   </div>
   <% else %>
@@ -158,14 +158,14 @@
       <%= form_tag context_url(@context, :context_quiz_url, @quiz.id), {:method => :put, :id => "quiz_options_form", :class => 'form-horizontal bootstrap-form'} do %>
         <div style="position: relative;">
           <div style="margin: 15px 0 25px;">
-            <%= before_label(:quiz_instructions, "Quiz Instructions") %>
+            <%= before_label(:quiz_instructions, "Assessment Instructions") %>
             <a style="float: right; font-size: 0.8em; cursor: pointer;" href="#" class="toggle_description_views_link"><%= t('links.switch_views', "Switch Views") %></a>
             <textarea id="quiz_description" style="display: block;width: 100%;margin: 0px auto;height: 125px"><%= @quiz.description %></textarea>
           </div>
 
           <fieldset>
             <div class="control-group">
-              <label class="control-label" for="quiz_assignment_id"><%= t(:quiz_type, "Quiz Type") %></label>
+              <label class="control-label" for="quiz_assignment_id"><%= t(:quiz_type, "Assessment Type") %></label>
               <div class="controls">
                 <select name="quiz[quiz_type]" id="quiz_assignment_id">
                   <option value="practice_quiz"><%= render_quiz_type('practice_quiz') %></option>
@@ -237,7 +237,7 @@
                   </label>
                   <div class="options" id="multiple_attempts_suboptions">
                     <div>
-                      <label for="keep_score_select" class="inline"><%= t(:score_to_keep, "Quiz Score to Keep") %></label>
+                      <label for="keep_score_select" class="inline"><%= t(:score_to_keep, "Assessment Score to Keep") %></label>
                       <%= select(:quiz, :scoring_policy, [[render_score_to_keep('keep_highest'), 'keep_highest'], [render_score_to_keep('keep_latest'), 'keep_latest']], {}, :id => 'keep_score_select') %>
                     </div>
                     <div style="margin-top:5px">
@@ -255,7 +255,7 @@
                   <label class="checkbox" for="never_hide_results">
                     <input type="hidden" name="quiz[hide_results][never]" value="0"/>
                     <input type="checkbox" name="quiz[hide_results][never]" value="1" id="never_hide_results" <%= 'checked' if @quiz.hide_results != 'always' %> />
-                    <%= t('labels.never_hide_results', "Let Students See Their Quiz Responses") %>
+                    <%= t('labels.never_hide_results', "Let Candidates See Their Assessment Responses") %>
                   </label>
                   <div class="show_quiz_results_options options">
                     <div id="hide_results_only_after_last_holder">
@@ -269,7 +269,7 @@
                     <div>
                       <label class="checkbox">
                         <%= check_box :quiz, :show_correct_answers %>
-                        <%= t(:show_correct_answers, "Let Students See The Correct Answers") %>
+                        <%= t(:show_correct_answers, "Let Candidates See The Correct Answers") %>
                       </label>
                     </div>
 
@@ -318,7 +318,7 @@
                   </div>
                 </div>
 
-                <p class="option-caption"><strong><%= t('labels.restrict_quiz', "Quiz Restrictions") %></strong></p>
+                <p class="option-caption"><strong><%= t('labels.restrict_quiz', "Assessment Restrictions") %></strong></p>
 
                 <!-- Quiz Restrictions -->
                 <div class="option-group">
@@ -425,7 +425,7 @@
       <div class="span6 notify">
         <label for="quiz_notify_of_update" class="checkbox">
           <input type="checkbox" name="quiz[notify_of_update]" id="quiz_notify_of_update" value="1" />
-          <%= t('labels.quiz_notify', 'Notify users this quiz has changed') %>
+          <%= t('labels.quiz_notify', 'Notify users this assessment has changed') %>
         </label>
       </div>
       <div class="span6">
@@ -443,7 +443,7 @@
       <div class="span6" style="text-align:left; line-height:28px;">
         <label for="quiz_notify_of_update" class="checkbox">
           <input type="checkbox" name="quiz[notify_of_update]" id="quiz_notify_of_update" value="1" />
-          <%= t('labels.quiz_notify', 'Notify users this quiz has changed') %>
+          <%= t('labels.quiz_notify', 'Notify users this assessment has changed') %>
         </label>
       </div>
       <div class="span6">
