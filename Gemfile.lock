@@ -70,7 +70,7 @@ GEM
       adobe_connect (~> 1.0.0)
       rake (>= 0.9.6)
     canvas_webex (0.7)
-    childprocess (0.3.9)
+    childprocess (0.4.0)
       ffi (~> 1.0, >= 1.0.11)
     chunky_png (1.2.9)
     coderay (1.1.0)
@@ -131,7 +131,7 @@ GEM
       libxml-ruby (~> 2.0)
     hashery (1.3.0)
     highline (1.6.1)
-    hoe (3.7.4)
+    hoe (3.8.0)
       rake (>= 0.8, < 11.0)
     htmlentities (4.3.1)
     i18n (0.6.8)
@@ -268,7 +268,6 @@ GEM
     soap4r-middleware (0.8.3)
       soap4r-ruby1.9 (= 2.0.0)
     soap4r-ruby1.9 (2.0.0)
-    sqlite3-ruby (1.3.2)
     statsd-ruby (1.0.0)
     subdomain-fu (0.5.4)
     subexec (0.0.4)
@@ -403,7 +402,6 @@ DEPENDENCIES
   simplecov
   simplecov-rcov
   soap4r-middleware (= 0.8.3)
-  sqlite3-ruby (= 1.3.2)
   statsd-ruby (= 1.0.0)
   subdomain-fu (= 0.5.4)
   syck (= 1.0.1)

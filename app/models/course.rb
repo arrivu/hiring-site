@@ -2186,7 +2186,7 @@ class Course < ActiveRecord::Base
     result[:default_start_at] = DateTime.parse(options[:new_start_date]) rescue self.real_start_date
     result[:default_conclude_at] = DateTime.parse(options[:new_end_date]) rescue self.real_end_date
     Time.use_zone(result[:time_zone] || Time.zone) do
-      # convert times
+      #convert times
       [:default_start_at, :default_conclude_at].each do |k|
         old_time = result[k]
         new_time = Time.utc(old_time.year, old_time.month, old_time.day, (old_time.hour rescue 0), (old_time.min rescue 0)).in_time_zone
@@ -2410,7 +2410,7 @@ class Course < ActiveRecord::Base
   TAB_HOME = 0
   TAB_SYLLABUS = 1
   TAB_PAGES = 2
-  #TAB_ASSIGNMENTS = 3
+  TAB_ASSIGNMENTS = 3
   TAB_QUIZZES = 4
   TAB_GRADES = 5
   TAB_PEOPLE = 6
@@ -2429,8 +2429,9 @@ class Course < ActiveRecord::Base
     [
         { :id => TAB_HOME, :label => t('#tabs.home', "Home"), :css_class => 'home', :href => :course_path },
         { :id => TAB_ANNOUNCEMENTS, :label => t('#tabs.announcements', "Announcements"), :css_class => 'announcements', :href => :course_path },
-      #  { :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_path },
+        { :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_path },
         { :id => TAB_DISCUSSIONS, :label => t('#tabs.discussions', "Discussions"), :css_class => 'discussions', :href => :course_path },
+
         { :id => TAB_GRADES, :label => t('#tabs.grades', "Grades"), :css_class => 'grades', :href => :course_grades_path },
         { :id => TAB_PEOPLE, :label => t('#tabs.people', "People"), :css_class => 'people', :href => :course_users_path },
         { :id => TAB_CHAT, :label => t('#tabs.chat', "Chat"), :css_class => 'chat', :href => :course_chat_path },
@@ -2439,9 +2440,11 @@ class Course < ActiveRecord::Base
         { :id => TAB_SYLLABUS, :label => t('#tabs.syllabus', "Syllabus"), :css_class => 'syllabus', :href => :course_path },
         { :id => TAB_OUTCOMES, :label => t('#tabs.outcomes', "Outcomes"), :css_class => 'outcomes', :href => :course_path },
         { :id => TAB_QUIZZES, :label => t('#tabs.quizzes', "Quizzes"), :css_class => 'quizzes', :href => :course_quizzes_path },
+
         { :id => TAB_MODULES, :label => t('#tabs.modules', "Modules"), :css_class => 'modules', :href => :course_path },
-        { :id => TAB_CONFERENCES, :label => t('#tabs.conferences', "Conferences"), :css_class => 'conferences', :href => :course_path },
-        { :id => TAB_COLLABORATIONS, :label => t('#tabs.collaborations', "Collaborations"), :css_class => 'collaborations', :href => :course_path },
+        { :id => TAB_CONFERENCES, :label => t('#tabs.conferences', "Conferences"), :css_class => 'conferences', :href => :course_conferences_path },
+        { :id => TAB_COLLABORATIONS, :label => t('#tabs.collaborations', "Collaborations"), :css_class => 'collaborations', :href => :course_collaborations_path },
+
         { :id => TAB_SETTINGS, :label => t('#tabs.settings', "Settings"), :css_class => 'settings', :href => :course_settings_path },
     ]
   end
@@ -2498,14 +2501,14 @@ class Course < ActiveRecord::Base
           external_tabs.delete_if {|t| t[:id] == tab[:id] }
           tab
         else
-          # Remove any tabs we don't know about in default_tabs (in case we removed them or something, like Groups)
+        #Remove any tabs we don't know about in default_tabs (in case we removed them or something, like Groups)
           nil
         end
       end
       tabs.compact!
       tabs += default_tabs
       tabs += external_tabs
-      # Ensure that Settings is always at the bottom
+      #Ensure that Settings is always at the bottom
       tabs.delete_if {|t| t[:id] == TAB_SETTINGS }
       tabs << settings_tab
 
@@ -2513,7 +2516,7 @@ class Course < ActiveRecord::Base
         tab[:hidden_unused] = true if tab[:id] == TAB_MODULES && !active_record_types[:modules]
         tab[:hidden_unused] = true if tab[:id] == TAB_FILES && !active_record_types[:files]
         tab[:hidden_unused] = true if tab[:id] == TAB_QUIZZES && !active_record_types[:quizzes]
-        #tab[:hidden_unused] = true if tab[:id] == TAB_ASSIGNMENTS && !active_record_types[:assignments]
+        tab[:hidden_unused] = true if tab[:id] == TAB_ASSIGNMENTS && !active_record_types[:assignments]
         tab[:hidden_unused] = true if tab[:id] == TAB_PAGES && !active_record_types[:pages] && !allow_student_wiki_edits
         tab[:hidden_unused] = true if tab[:id] == TAB_CONFERENCES && !active_record_types[:conferences] && !self.grants_right?(user, nil, :create_conferences)
         tab[:hidden_unused] = true if tab[:id] == TAB_ANNOUNCEMENTS && !active_record_types[:announcements]
@@ -2543,7 +2546,7 @@ class Course < ActiveRecord::Base
         end
         tabs.delete_if{ |t| t[:visibility] == 'admins' } unless self.grants_right?(user, opts[:session], :manage_content)
         if self.grants_rights?(user, opts[:session], :manage_content, :manage_assignments).values.any?
-          #tabs.detect { |t| t[:id] == TAB_ASSIGNMENTS }[:manageable] = true
+          tabs.detect { |t| t[:id] == TAB_ASSIGNMENTS }[:manageable] = true
           tabs.detect { |t| t[:id] == TAB_SYLLABUS }[:manageable] = true
           tabs.detect { |t| t[:id] == TAB_QUIZZES }[:manageable] = true
         end

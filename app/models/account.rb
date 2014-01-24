@@ -1265,7 +1265,7 @@ class Account < ActiveRecord::Base
 
   def manually_created_courses_account
     return self.root_account.manually_created_courses_account unless self.root_account?
-    display_name = t('#account.manually_created_courses', "Manually-Created Courses")
+    display_name = t('#account.manually_created_courses', "Manually-Created Projects")
     acct = manually_created_courses_account_from_settings
     if acct.blank?
       transaction do

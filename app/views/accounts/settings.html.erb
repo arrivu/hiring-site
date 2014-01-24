@@ -117,24 +117,24 @@
                           <td>
                             <%= settings.select :self_enrollment, [
                                     [t(:never_allow_self_enrollment_option, 'Never'), ''],
-                                    [t(:self_enroll_for_manually_created_courses_option, 'For Manually-Created Courses'), 'manually_created'],
+                                    [t(:self_enroll_for_manually_created_courses_option, 'For Manually-Created Projects'), 'manually_created'],
                                     [t(:self_enroll_for_any_courses_option, 'For Any Courses'), 'any']
                             ], :selected => @account.settings[:self_enrollment] %>
                           </td>
                         </tr>
                         <tr>
                           <td colspan="2"><%= settings.check_box :prevent_course_renaming_by_teachers, :checked => @account.settings[:prevent_course_renaming_by_teachers] %>
-                            <%= settings.label :prevent_course_renaming_by_teachers, :en => "Don't let teachers rename their courses" %>
+                            <%= settings.label :prevent_course_renaming_by_teachers, :en => "Don't let Hiring Manager rename their projects" %>
                           </td>
                         </tr>
                         <tr>
                           <td colspan="2"><%= settings.check_box :allow_sending_scores_in_emails, :checked => @account.settings[:allow_sending_scores_in_emails] != false %>
-                            <%= settings.label :allow_sending_scores_in_emails, :en => "Students can opt-in to receiving scores in email notifications" %>
+                            <%= settings.label :allow_sending_scores_in_emails, :en => "Candidates can opt-in to receiving scores in email notifications" %>
                           </td>
                         </tr>
                         <tr>
                           <td colspan="2"><%= settings.check_box :restrict_student_future_view, :checked => @account.settings[:restrict_student_future_view] %>
-                            <%= settings.label :restrict_student_future_view, :en => "Restrict students from viewing courses before start date" %>
+                            <%= settings.label :restrict_student_future_view, :en => "Restrict candidates from viewing projects before start date" %>
                           </td>
                         </tr>
                     <% end %>
@@ -472,7 +472,7 @@
 
         <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
             <fieldset>
-              <legend>Course License</legend>
+              <legend>Project License</legend>
               <% f.fields_for :settings do |settings| %>
                   <div>
                     <%= settings.check_box :private_license_enable, :checked => @account.settings[:private_license_enable] %>
@@ -484,12 +484,12 @@
 
         <% if @account.root_account? && !@account.site_admin? %>
             <fieldset>
-              <legend><%= t(:create_courses_title, "Who Can Create New Courses") %></legend>
-              <div style="font-size: 0.8em;"><%= t(:create_courses_description, "(Account Administrators can always create courses)") %></div>
+              <legend><%= t(:create_courses_title, "Who Can Create New Projects") %></legend>
+              <div style="font-size: 0.8em;"><%= t(:create_courses_description, "(Account Administrators can always create projects)") %></div>
               <%= f.fields_for :settings do |settings| %>
                   <div>
                     <%= settings.check_box :teachers_can_create_courses, :checked => @account.teachers_can_create_courses? %>
-                    <%= settings.label :teachers_can_create_courses, :en => "Teachers" %>
+                    <%= settings.label :teachers_can_create_courses, :en => "Hiring Manager" %>
                   </div>
                   <div>
                     <%= settings.check_box :no_enrollments_can_create_courses, :checked => @account.no_enrollments_can_create_courses? %>
@@ -497,7 +497,7 @@
                   </div>
                   <div>
                     <%= settings.check_box :students_can_create_courses, :checked => @account.students_can_create_courses? %>
-                    <%= settings.label :students_can_create_courses, :en => "Students" %>
+                    <%= settings.label :students_can_create_courses, :en => "Candidates" %>
                   </div>
               <% end %>
             </fieldset>

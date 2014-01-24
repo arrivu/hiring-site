@@ -78,7 +78,7 @@
     <input type="hidden" name="account_id" value="<%= @account.id %>"/>
     <table class="formtable">
       <tr>
-        <td><%= f.blabel :name, :en => "Course Name" %></td>
+        <td><%= f.blabel :name, :en => "Project Name" %></td>
         <td><%= f.text_field :name, :style => "width: 200px;" %></td>
       </tr><tr>
         <td><%= f.blabel :course_code, :en => "Reference Code" %></td>
@@ -93,7 +93,7 @@
         <td colspan="2">
           <div class="button-container">
             <button type="button" class="btn dialog_closer"><%= t("#buttons.cancel", "Cancel") %></button>
-            <button type="submit" class="btn btn-primary"><%= t(:add_course_button, "Add Course") %></button>
+            <button type="submit" class="btn btn-primary"><%= t(:add_course_button, "Add Project") %></button>
           </div>
         </td>
       </tr>

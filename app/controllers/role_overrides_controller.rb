@@ -488,7 +488,7 @@ class RoleOverridesController < ApplicationController
   def course_permissions(context) 
     site_admin = {:group_name => t('site_admin_permissions', "Site Admin Permissions"), :group_permissions => []}
     account = {:group_name => t('account_permissions', "Account Permissions"), :group_permissions => []}
-    course = {:group_name => t('course_permissions',  "Course & Account Permissions"), :group_permissions => []}
+    course = {:group_name => t('course_permissions',  "Project & Account Permissions"), :group_permissions => []}
  
     base_role_names = RoleOverride.enrollment_types.map do |enrollment_type|
       enrollment_type[:base_role_name]
@@ -541,7 +541,7 @@ class RoleOverridesController < ApplicationController
     # Add group_names
     site_admin = {:group_name => t('site_admin_permissions', "Site Admin Permissions"), :group_permissions => []}
     account = {:group_name => t('account_permissions', "Account Permissions"), :group_permissions => []}
-    course = {:group_name => t('course_permissions',  "Course & Account Permissions"), :group_permissions => []}
+    course = {:group_name => t('course_permissions',  "Project & Account Permissions"), :group_permissions => []}
     admin_tools = {:group_name => t('admin_tools_permissions',  "Admin Tools"), :group_permissions => []}
  
     # Add group_permissions

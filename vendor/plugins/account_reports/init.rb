@@ -112,7 +112,7 @@ Rails.configuration.to_prepare do
       }
     },
     'recently_deleted_courses_csv'=> {
-      :title => 'Recently Deleted Courses',
+      :title => 'Recently Deleted Projects',
       :description_partial => true,
       :parameters_partial => 'term_selector_parameters',
       :parameters => {
@@ -202,7 +202,7 @@ Rails.configuration.to_prepare do
       }
     },
     'unpublished_courses_csv'=> {
-      :title => 'Unpublished Courses',
+      :title => 'Unpublished Projects',
       :description_partial => true,
       :parameters_partial => 'term_selector_parameters',
       :parameters => {
@@ -213,7 +213,7 @@ Rails.configuration.to_prepare do
       }
     },
     'unused_courses_csv'=> {
-      :title => 'Unused Courses',
+      :title => 'Unused Projects',
       :description_partial => true,
       :parameters_partial => 'term_selector_parameters',
       :parameters => {
