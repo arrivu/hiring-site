@@ -1,10 +1,10 @@
 <%
   js_bundle :grade_summary, :rubric_assessment
   jammit_css :grade_summary
-  content_for :page_title, join_title(t(:page_title, "Grades for %{student}", :student => @presenter.student_name), @context.name)
+  content_for :page_title, join_title(t(:page_title, "Results for %{student}", :student => @presenter.student_name), @context.name)
 %>
 
-<h1 class="screenreader-only"><%= t(:page_title, "Grades for %{student}", :student => @presenter.student_name) %></h1>
+<h1 class="screenreader-only"><%= t(:page_title, "Results for %{student}", :student => @presenter.student_name) %></h1>
 
 <% content_for :right_side do %>
   <div class="rs-margin-all">
@@ -59,7 +59,7 @@
   <%= t :print_grades, "Print grades" %>
 </a>
 <h2>
-<% ot('headers.grades', "Grades For %{student}", :student => capture { %>
+<% ot('headers.grades', "Results For %{student}", :student => capture { %>
  <% unless @presenter.multiple_observed_students?  %>
    <%= @presenter.student_name %>
  <% else %>
@@ -337,7 +337,7 @@
 <%= render :partial => "shared/rubric_criterion_dialog" %>
 <input type="text" style="width: 40px; display: none;" id="grade_entry"/>
 <a href="#" id="revert_score_template" class="revert_score_link" title="<%= t('titles.revert_score', "Revert to original score") %>"><%= image_tag "back.png", :alt => "" %></a>
-<a href="<%= context_url(@context, :context_assignment_submission_url, "{{ assignment_id }}", @presenter.student_id) %>" class="update_submission_url" style="display: none;">&nbsp;</a>
+<!--<a href="<%#= context_url(@context, :context_assignment_submission_url, "{{ assignment_id }}", @presenter.student_id) %>" class="update_submission_url" style="display: none;">&nbsp;</a>-->
 <% if @context.grading_standard_enabled? %>
   <% js_block do %>
   <script>

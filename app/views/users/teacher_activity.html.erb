@@ -85,7 +85,7 @@
   <% end %>
   <% if params[:student_id] %>
     <div>
-      <%= link_to(t('links.view_full_course', 'View the full Student Interaction Report for %{course}', :course => course.name), user_course_teacher_activity_url(@teacher, course), :class => 'view_full_link') %>
+      <%= link_to(t('links.view_full_course', 'View the full Candidate Interaction Report for %{course}', :course => course.name), user_course_teacher_activity_url(@teacher, course), :class => 'view_full_link') %>
     </div>
   <% end %>
   <br/>

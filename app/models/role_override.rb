@@ -50,7 +50,7 @@ class RoleOverride < ActiveRecord::Base
       {:base_role_name => 'StudentEnrollment', :name => 'StudentEnrollment', :label => lambda { t('roles.student', 'Candidate') }, :plural_label => lambda { t('roles.students', 'Candidates') } },
       {:base_role_name => 'TeacherEnrollment', :name => 'TeacherEnrollment', :label => lambda { t('roles.teacher', 'Hiring Manager') }, :plural_label => lambda { t('roles.teachers', 'Hiring Managers') } },
       {:base_role_name => 'TaEnrollment', :name => 'TaEnrollment', :label => lambda { t('roles.ta', 'Interviewer') }, :plural_label => lambda { t('roles.tas', 'Interviewers') } },
-      {:base_role_name => 'DesignerEnrollment', :name => 'DesignerEnrollment', :label => lambda { t('roles.designer', 'Designer') }, :plural_label => lambda { t('roles.designers', 'Designers') } },
+      #{:base_role_name => 'DesignerEnrollment', :name => 'DesignerEnrollment', :label => lambda { t('roles.designer', 'Designer') }, :plural_label => lambda { t('roles.designers', 'Designers') } },
       {:base_role_name => 'ObserverEnrollment', :name => 'ObserverEnrollment', :label => lambda { t('roles.observer', 'HR') }, :plural_label => lambda { t('roles.observers', 'HRs') } }
     ].freeze
 

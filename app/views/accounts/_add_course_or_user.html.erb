@@ -23,14 +23,14 @@
         <td><%= f.blabel :name, :full_name, :en => "Full Name" %></td>
         <td>
           <%= f.text_field :name %>
-          <div class="hint-text"><%= t :full_name_description, 'This name will be used by teachers for grading.' %></div>
+          <div class="hint-text"><%= t :full_name_description, 'This name will be used by hiring managers for result.' %></div>
         </td>
       </tr>
       <tr>
         <td><%= f.blabel :short_name, :en => "Display Name" %></td>
         <td>
           <%= f.text_field :short_name %>
-          <div class="hint-text"><%= t(:display_name_help, "People will see this name in discussions, messages and comments.") %></div>
+          <div class="hint-text"><%= t(:display_name_help, "People will see this name in projects.") %></div>
         </td>
       </tr>
       <tr>

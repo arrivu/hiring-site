@@ -6,7 +6,7 @@
     <span class="name ellipsis" title="<%= enrollment.long_name %>">
       <%= enrollment.long_name %>
       <% if enrollment.course.created? || enrollment.course.claimed? %>
-        <%= image_tag "hammer.png", :title => t('course_not_published', "This course hasn't been published yet"), :alt => t('unpublished', "Unpublished"), :class => "unpublished_icon" %>
+        <%= image_tag "hammer.png", :title => t('course_not_published', "This project hasn't been published yet"), :alt => t('unpublished', "Unpublished"), :class => "unpublished_icon" %>
       <% end %>
     </span>
 
@@ -19,17 +19,17 @@
       <%= 
         case enrollment.class.to_s
         when 'TeacherEnrollment'
-          t('roles_teacher', "Enrolled as a Teacher.")
+          t('roles_teacher', "Enrolled as a Hiring Manager.")
         when 'StudentEnrollment'
-          t('roles_student', "Enrolled as a Student.")
+          t('roles_student', "Enrolled as a Candidate.")
         when 'TaEnrollment'
-          t('roles_ta', "Enrolled as a TA.")
+          t('roles_ta', "Enrolled as a Interviewer.")
         when 'ObserverEnrollment'
-          t('roles_observer', "Enrolled as an Observer.")
+          t('roles_observer', "Enrolled as an HR.")
         when 'DesignerEnrollment'
           t('roles_designer', "Enrolled as a Designer.")
         else
-          t('roles_student', "Enrolled as a Student.")
+          t('roles_student', "Enrolled as a Candidate.")
         end
       %>
 
@@ -40,7 +40,7 @@
   </a>
   <% if enrollment.admin? && can_do(enrollment.user, @current_user, :read_reports) %>
     <div style='clear:left'>
-      <%= link_to(t('links.teacher_activity', 'See Student Interactions Report'), user_course_teacher_activity_url(enrollment.user_id, enrollment.course_id)) %>
+      <%= link_to(t('links.teacher_activity', 'See Candidate Interactions Report'), user_course_teacher_activity_url(enrollment.user_id, enrollment.course_id)) %>
     </div>
   <% end %>
   <span class="clear"></span>
