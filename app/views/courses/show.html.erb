@@ -38,9 +38,8 @@
       <% else %>
         <div class="secondary-button-group rs-margin-lr rs-margin-top rs-margin-bottom">
 
-          <!--<a href="#" class="btn button-sidebar-wide wizard_popup_link  <%= 'auto_open' if @context.created? || @context.claimed? %>"><i class="icon-question"></i> <%= t('links.course_setup', %{Course Setup Checklist}) %></a>-->
+          <!--<a href="#" class="btn button-sidebar-wide wizard_popup_link  <%#= 'auto_open' if @context.created? || @context.claimed? %>"><i class="icon-question"></i> <%#= t('links.course_setup', %{Project Setup Checklist}) %></a>-->
           <!--<a class="btn button-sidebar-wide" href="<%#= context_url(@context, :new_context_discussion_topic_url, :is_announcement => true) %>"><i class="icon-announcement"></i> <%#= t('links.new_announcement', %{New Announcement}) %></a>-->
-
         </div>
       <% end %>
     <% end %>
@@ -218,16 +217,16 @@ $(document).ready(function() {
 <% end %>
 <% if @context.created? || @context.claimed? %>
   <div class="reminder" style='text-align:center;'>
-  <h2><%= t('headings.unpublished', %{This Course is Unpublished}) %></h2>
-  <div class="body"><%= t 'teachers_only', "Only teachers can see this course until it is *published*", :wrapper => (can_do(@context, @current_user, :update) ? '<a href="#" class="publish_course_in_wizard_link"><b>\1</b></a>' : '\1') %>
+  <h2><%= t('headings.unpublished', %{This Project is Unpublished}) %></h2>
+  <div class="body"><%= t 'teachers_only', "Only hiring manager can see this project until it is " %><a href="<%= course_path(@context) %>">*published*</a>
   </div>
   </div>
 <% end %>
 <% if @context.has_open_course_imports? %>
   <div class="reminder" style="text-align: center;">
-    <h2><%= t('headings.importing', 'This course is being imported') %></h2>
+    <h2><%= t('headings.importing', 'This project is being imported') %></h2>
     <div class="body">
-      <p><%= t 'importing', 'Course copy/migration in progress. This means some content may be temporarily unavailable.' %></p>
+      <p><%= t 'importing', 'Project copy/migration in progress. This means some content may be temporarily unavailable.' %></p>
     </div>
   </div>
 <% end %>
@@ -259,18 +258,18 @@ $(document).ready(function() {
       <h2><%= t('headings.set_layout', %{Set Home Page Layout}) %></h2>
 
       <p>
-      <label for="edit_course_home_content_select"><strong><%= t('labels.select_content', %{When people visit the course page, show them}) %></strong></label>
+      <label for="edit_course_home_content_select"><strong><%= t('labels.select_content', %{When people visit the project page, show them}) %></strong></label>
       <select name="course[default_view]" id="edit_course_home_content_select">
         <option value="feed" <%= 'selected' if @context.default_view == 'feed' %>><%= t('options.recent_activity_dashboard', %{the Recent Activity Dashboard}) %></option>
         <option value="wiki" <%= 'selected' if @context.default_view == 'wiki' %>><%= t('options.custom_page', %{a Page I'll Design Myself}) %></option>
-        <option value="modules" <%= 'selected' if @context.default_view == 'modules' %>><%= t('options.modules', %{the Course Modules/Sections}) %></option>
-        <option value="assignments" <%= 'selected' if @context.default_view == 'assignments' %>><%= t('options.assignments', %{the Assignment List}) %></option>
-        <option value="syllabus" <%= 'selected' if @context.default_view == 'syllabus' %>><%= t('options.syllabus', %{the Assignments with Syllabus}) %></option>
+        <option value="modules" <%= 'selected' if @context.default_view == 'modules' %>><%= t('options.modules', %{the Project Modules/Sections}) %></option>
+        <!--<option value="assignments" <%#= 'selected' if @context.default_view == 'assignments' %>><%#= t('options.assignments', %{the Assignment List}) %></option>-->
+        <!--<option value="syllabus" <%#= 'selected' if @context.default_view == 'syllabus' %>><%#= t('options.syllabus', %{the Assignments with Syllabus}) %></option>-->
       </select>
       </p>
       <div class="select_details ui-state-highlight ui-corner-all" style="display: none; padding: 1em; font-size: 12px;">
         <div class="feed_details options_details">
-          <%= mt 'details.recent_activity_dashboard', "The **recent activity dashboard** lets participants see the most recent conversations, announcements, discussions, and interactions for this course.  It's very similar to the dashboard page users see when they first log in, but only shows content for this specific course." %>
+          <%= mt 'details.recent_activity_dashboard', "The **recent activity dashboard** lets participants see the most recent activities for this project.  It's very similar to the dashboard page users see when they first log in, but only shows content for this specific project." %>
         </div>
         <div class="wiki_details options_details">
           <%= mt 'details.custom_page', "You can **design your own course home page** and include whatever links, images or rich media you like." %>
@@ -341,11 +340,11 @@ $(document).ready(function() {
   <% end %>
 </div>
 <% if @context.public_license? %>
-  <div class="public-license" style="margin-top: 20px;">
-    <a href="<%= @context.license_url %>"><%= image_tag "cc/#{@context.license}.png", :style => "float: left; padding-right: 5px;" %></a>
-    <span style="font-size: 0.8em; display: block; line-height: 1.5em;"><%= t 'license_notice', %{This project content is offered under a %{license_type} license.  Content in this course can be considered under this license unless otherwise noted.}, :license_type => content_tag('b', link_to(@context.readable_license, @context.license_url)) %></span>
-    <div class="clear"></div>
-  </div>
+  <!--<div class="public-license" style="margin-top: 20px;">-->
+    <!--<a href="<%#= @context.license_url %>"><%#= image_tag "cc/#{@context.license}.png", :style => "float: left; padding-right: 5px;" %></a>-->
+    <!--<span style="font-size: 0.8em; display: block; line-height: 1.5em;"><%#= t 'license_notice', %{This project content is offered under a %{license_type} license.  Content in this project can be considered under this license unless otherwise noted.}, :license_type => content_tag('b', link_to(@context.readable_license, @context.license_url)) %></span>-->
+    <!--<div class="clear"></div>-->
+  <!--</div>-->
 <% end %>
 <%= render :partial => "course_wizard_box" %>
 

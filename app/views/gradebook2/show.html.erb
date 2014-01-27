@@ -31,9 +31,9 @@
       </a></li>
       <% end %>
       <% if @gradebook_is_editable %>
-        <li><a class="dialog_opener" role="button" aria-controls="assignment_group_weights_dialog" href="<%= context_url(@context, :context_assignments_url) %>"><%= t('set_group_weights', 'Set Group Weights') %></a></li>
+        <li><a class="dialog_opener" role="button" aria-controls="assignment_group_weights_dialog" href="<%#= context_url(@context, :context_assignments_url) %>"><%= t('set_group_weights', 'Set Group Weights') %></a></li>
       <% end %>
-      <li><a class="student_names_toggle" href="#" role="button"><%= t('hide_student_names', 'Hide Student Names') %></a></li>
+      <li><a class="student_names_toggle" href="#" role="button"><%= t('hide_student_names', 'Hide Candidate Names') %></a></li>
       <li><a data-arrange-columns-by="due_date" href="#"><label><%= t('arrange_columns_by_due_date', 'Arrange columns by due date') %><input type="radio" name="arrange-columns-by" /></label></a></li>
       <li><a data-arrange-columns-by="assignment_group" href="#"><label><%= t('arrange_columns_by_group', 'Arrange columns by assignment group') %><input type="radio" name="arrange-columns-by" /></label></a></li>
       <li><a href="#"><label><%= t('show_attendance_columns', 'Show Attendance Columns') %> <input type="checkbox" id="show_attendance" /></label></a></li>
@@ -41,7 +41,7 @@
       <li><a href="#"><label><%= t('show_concluded_enrollments', "Show Concluded Enrollments") %><input type="checkbox" id="show_concluded_enrollments" /></label></a></li>
     </ul>
     <div class="gradebook_filter">
-      <% placeholder = t('filter_by_student', 'Filter by student name or secondary ID') %>
+      <% placeholder = t('filter_by_student', 'Filter by candidate name or secondary ID') %>
       <input type="text" class="search-query" placeholder="<%= placeholder %>" aria-label="<%= placeholder %>">
     </div>
   </div>

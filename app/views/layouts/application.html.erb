@@ -88,7 +88,7 @@
         total_shown = 0
         if assignment_sets.any?{ |k, v| @current_user.send(k).length > 0 }
       -%>
-        <a href="/assignments" class="menu-item-title"><%= t('menu.assignments', 'Assignments') %><span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
+        <a href="/assignments" class="menu-item-title"><%= t('menu.assignments', 'Assesments') %><span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
         <div class="menu-item-drop">
           <table cellspacing="0">
             <tr>
@@ -98,7 +98,7 @@
                     total_shown += set.length
                    %><%= render(:partial => "shared/menu_section", :locals => {
                                 :max_to_show => max_to_show,
-                                :more_link_for_over_max => assignments_path,
+                                #:more_link_for_over_max => assignments_path,
                                 :collection => set,
                                 :collection_size => total_shown >= max_to_show ? @current_user.send(k, limit: nil).size : set.length,
                                 :partial => "shared/menu_assignment",

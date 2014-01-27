@@ -1,9 +1,9 @@
-<% content_for :page_title, t('titles.copy_course', 'Copy Course') %>
-<% add_crumb t('#crumbs.copy_course', 'Copy Course') %>
+<% content_for :page_title, t('titles.copy_course', 'Copy Project') %>
+<% add_crumb t('#crumbs.copy_course', 'Copy Project') %>
 
 <h2><%= t'headings.copy_course', 'Copy %{course}', :course => @context.name %></h2>
 <p>
-  <%= t('details', %{Please enter the details for the new course.}) %>
+  <%= t('details', %{Please enter the details for the new project.}) %>
 </p>
 <%= form_for :course, :url => course_copy_course_url(@context), :html => {:id => "copy_course_form", :class => "form-horizontal"} do |f| %>
 
@@ -13,7 +13,7 @@
   </div>
 
   <div class="control-group">
-    <label class="control-label"><strong><%= t('course_code', 'Course Code') %></strong></label>
+    <label class="control-label"><strong><%= t('course_code', 'Project Code') %></strong></label>
     <div class="controls"><%= f.text_field :course_code, :value => @context.course_code %></div>
   </div>
   <div class="control-group">
@@ -52,7 +52,7 @@
 
   <div class='form-actions'>
     <a href="<%= context_url(@context, :context_url) %>" class="btn button-secondary"><%= t '#buttons.cancel', 'Cancel' %></a>
-    <button type="submit" class="btn btn-primary"><%= t('buttons.create_course', %{Create Course}) %></button>
+    <button type="submit" class="btn btn-primary"><%= t('buttons.create_course', %{Create Project}) %></button>
   </div>
 
 <% end %>

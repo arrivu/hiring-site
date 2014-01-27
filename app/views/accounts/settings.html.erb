@@ -44,15 +44,15 @@
       <li><a href="#tab-notifications" id="tab-notifications-link"><%= t(:tab_notifications, "Notifications") %></a></li>
   <% end %>
   <li><a href="#tab-users" id="tab-users-link"><%= t(:tab_admins, "Admins") %></a></li>
-  <% if @account.root_account? %>
-      <li><a href="#tab-announcements" id="tab-announcements-link"><%= t(:tab_announcements, "Announcements") %></a></li>
-  <% end %>
+  <%# if @account.root_account? %>
+      <!--<li><a href="#tab-announcements" id="tab-announcements-link"><%#= t(:tab_announcements, "Announcements") %></a></li>-->
+  <%# end %>
   <% if !@available_reports.blank? %>
       <li><a href="#tab-reports" id="tab-reports-link"><%= t(:tab_reports, "Reports") %></a></li>
   <% end %>
-  <% if can_do(@context, @current_user, :manage_account_settings) %>
-      <li><a href="#tab-tools" id="tab-tools-link"><%= t(:tab_external_tools, "Apps") %></a></li>
-  <% end %>
+  <%# if can_do(@context, @current_user, :manage_account_settings) %>
+      <!--<li><a href="#tab-tools" id="tab-tools-link"><%#= t(:tab_external_tools, "Apps") %></a></li>-->
+  <%# end %>
   <% if @context.root_account.settings[:enable_alerts] && can_do(@context, @current_user, :manage_interaction_alerts) %>
       <li><a href="#tab-alerts" id="tab-alerts-link"><%= t(:tab_alerts, "Alerts") %></a></li>
   <% end %>
@@ -232,14 +232,14 @@
                         <%= settings.check_box :global_includes, :checked => @account.settings[:global_includes] %>
                         <%= settings.label :global_includes, :en => "Global CSS/JavaScript includes" %>
                       </div>
-                      <div>
-                        <%= settings.check_box :enable_scheduler, :checked => @account.settings[:enable_scheduler] %>
-                        <%= settings.label :enable_scheduler, :en => "Enable Calendar 2" %>
-                      </div>
-                      <div id="show_scheduler_checkbox">
-                        <%= settings.check_box :show_scheduler, :checked => @account.settings[:show_scheduler] %>
-                        <%= settings.label :show_scheduler, :en => "Enable Scheduler" %>
-                      </div>
+                      <!--<div>-->
+                        <!--<%#= settings.check_box :enable_scheduler, :checked => @account.settings[:enable_scheduler] %>-->
+                        <!--<%#= settings.label :enable_scheduler, :en => "Enable Calendar 2" %>-->
+                      <!--</div>-->
+                      <!--<div id="show_scheduler_checkbox">-->
+                        <!--<%#= settings.check_box :show_scheduler, :checked => @account.settings[:show_scheduler] %>-->
+                        <!--<%#= settings.label :show_scheduler, :en => "Enable Scheduler" %>-->
+                      <!--</div>-->
                       <div>
                         <%= settings.check_box :enable_profiles, :checked => @account.settings[:enable_profiles] %>
                         <%= settings.label :enable_profiles, :en => "Enable Profiles" %>
@@ -660,9 +660,9 @@
 </div>
 <% if @account.root_account? %>
     <div id="tab-announcements">
-      <h2><%= t(:global_announcements_title, "Global Announcements") %></h2>
+      <!--<h2><%#= t(:global_announcements_title, "Global Announcements") %></h2>-->
       <p>
-        <%= mt(:global_announcements_description,
+        <%#= mt(:global_announcements_description,
                "Global announcements are a way for you to post sticky messages on the dashboard " +
                        "of all users in your account.  They will appear on each user's " +
                        "dashboard for the given time period or until the user clicks the " +
@@ -703,7 +703,7 @@
         <% end %>
       </ul>
       <% if can_do(@account, @current_user, :manage_alerts) %>
-          <a href="#" class="btn btn-primary element_toggler" role="button" data-hide-while-target-shown="true" aria-controls="add_notification_form"><i class="icon-add"></i> <%= t(:add_announcement_link, "Add a New Announcement") %></a>
+          <!--<a href="#" class="btn btn-primary element_toggler" role="button" data-hide-while-target-shown="true" aria-controls="add_notification_form"><i class="icon-add"></i> <%#= t(:add_announcement_link, "Add a New Announcement") %></a>-->
           <%= form_for :account_notification, :url => account_account_notifications_url(@account), :html => {:id => "add_notification_form", :style => 'display: none;', :class => 'well', :role => "region" } do |f| %>
               <table class="formtable">
                 <tr>

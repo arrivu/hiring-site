@@ -219,7 +219,7 @@ tr.question td .number_answer.correct_answer {
     <% @submitted_users.each_with_index do |user, idx| %>
       <div class="user user_<%= user.id %>">
         <% if @quiz.survey? && @quiz.anonymous_submissions %>
-          <%= t(:student_n, "Student %{student_counter}", :student_counter => idx + 1) %>
+        <%= t(:student_n, "Student %{student_counter}", :student_counter => idx + 1) %>
         <% else %>
           <%= user.short_name %>
         <% end %>

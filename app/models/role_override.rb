@@ -47,11 +47,11 @@ class RoleOverride < ActiveRecord::Base
   ENROLLMENT_TYPES =
     [
       # StudentViewEnrollment permissions will mirror StudentPermissions
-      {:base_role_name => 'StudentEnrollment', :name => 'StudentEnrollment', :label => lambda { t('roles.student', 'Candidate') }, :plural_label => lambda { t('roles.students', 'Students') } },
-      {:base_role_name => 'TeacherEnrollment', :name => 'TeacherEnrollment', :label => lambda { t('roles.teacher', 'Hiring Manager') }, :plural_label => lambda { t('roles.teachers', 'Teachers') } },
-      {:base_role_name => 'TaEnrollment', :name => 'TaEnrollment', :label => lambda { t('roles.ta', 'Interviewer') }, :plural_label => lambda { t('roles.tas', 'TAs') } },
+      {:base_role_name => 'StudentEnrollment', :name => 'StudentEnrollment', :label => lambda { t('roles.student', 'Candidate') }, :plural_label => lambda { t('roles.students', 'Candidates') } },
+      {:base_role_name => 'TeacherEnrollment', :name => 'TeacherEnrollment', :label => lambda { t('roles.teacher', 'Hiring Manager') }, :plural_label => lambda { t('roles.teachers', 'Hiring Managers') } },
+      {:base_role_name => 'TaEnrollment', :name => 'TaEnrollment', :label => lambda { t('roles.ta', 'Interviewer') }, :plural_label => lambda { t('roles.tas', 'Interviewers') } },
       {:base_role_name => 'DesignerEnrollment', :name => 'DesignerEnrollment', :label => lambda { t('roles.designer', 'Designer') }, :plural_label => lambda { t('roles.designers', 'Designers') } },
-      {:base_role_name => 'ObserverEnrollment', :name => 'ObserverEnrollment', :label => lambda { t('roles.observer', 'HR') }, :plural_label => lambda { t('roles.observers', 'Observers') } }
+      {:base_role_name => 'ObserverEnrollment', :name => 'ObserverEnrollment', :label => lambda { t('roles.observer', 'HR') }, :plural_label => lambda { t('roles.observers', 'HRs') } }
     ].freeze
 
   def self.enrollment_types
@@ -107,66 +107,66 @@ class RoleOverride < ActiveRecord::Base
           'AccountAdmin'
         ]
       },
-      :read_forum => {
-        :label => lambda { t('permissions.read_forum', "View discussions") },
-        :available_to => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'TeacherlessStudentEnrollment',
-          'ObserverEnrollment',
-          'AccountAdmin',
-          'AccountMembership'
-        ],
-        :true_for => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'ObserverEnrollment',
-          'TeacherEnrollment',
-          'AccountAdmin'
-        ]
-      },
-      :post_to_forum => {
-        :label => lambda { t('permissions.post_to_forum', "Post to discussions") },
-        :available_to => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'TeacherlessStudentEnrollment',
-          'ObserverEnrollment',
-          'AccountAdmin',
-          'AccountMembership'
-        ],
-        :true_for => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'AccountAdmin'
-        ]
-      },
-      :moderate_forum => {
-        :label => lambda { t('permissions.moderate_form', "Moderate discussions ( delete / edit other's posts, lock topics)") },
-        :available_to => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'TeacherlessStudentEnrollment',
-          'ObserverEnrollment',
-          'AccountAdmin',
-          'AccountMembership'
-        ],
-        :true_for => [
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'AccountAdmin'
-        ]
-      },
+      #:read_forum => {
+      #  :label => lambda { t('permissions.read_forum', "View discussions") },
+      #  :available_to => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'TeacherlessStudentEnrollment',
+      #    'ObserverEnrollment',
+      #    'AccountAdmin',
+      #    'AccountMembership'
+      #  ],
+      #  :true_for => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'ObserverEnrollment',
+      #    'TeacherEnrollment',
+      #    'AccountAdmin'
+      #  ]
+      #},
+      #:post_to_forum => {
+      #  :label => lambda { t('permissions.post_to_forum', "Post to discussions") },
+      #  :available_to => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'TeacherlessStudentEnrollment',
+      #    'ObserverEnrollment',
+      #    'AccountAdmin',
+      #    'AccountMembership'
+      #  ],
+      #  :true_for => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'AccountAdmin'
+      #  ]
+      #},
+      #:moderate_forum => {
+      #  :label => lambda { t('permissions.moderate_form', "Moderate discussions ( delete / edit other's posts, lock topics)") },
+      #  :available_to => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'TeacherlessStudentEnrollment',
+      #    'ObserverEnrollment',
+      #    'AccountAdmin',
+      #    'AccountMembership'
+      #  ],
+      #  :true_for => [
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'AccountAdmin'
+      #  ]
+      #},
       :send_messages => {
         :label => lambda { t('permissions.send_messages', "Send messages to individual project members") },
         :available_to => [
@@ -245,26 +245,26 @@ class RoleOverride < ActiveRecord::Base
           'AccountAdmin'
         ]
       },
-      :create_collaborations => {
-        :label => lambda { t('permissions.create_collaborations', "Create candidate collaborations") },
-        :available_to => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'TeacherlessStudentEnrollment',
-          'ObserverEnrollment',
-          'AccountAdmin',
-          'AccountMembership'
-        ],
-        :true_for => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'AccountAdmin'
-        ]
-      },
+      #:create_collaborations => {
+      #  :label => lambda { t('permissions.create_collaborations', "Create candidate collaborations") },
+      #  :available_to => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'TeacherlessStudentEnrollment',
+      #    'ObserverEnrollment',
+      #    'AccountAdmin',
+      #    'AccountMembership'
+      #  ],
+      #  :true_for => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'AccountAdmin'
+      #  ]
+      #},
       :read_roster => {
         :label => lambda { t('permissions.read_roster', "See the list of users") },
         :available_to => [
@@ -286,7 +286,7 @@ class RoleOverride < ActiveRecord::Base
         ]
       },
       :view_all_grades => {
-        :label => lambda { t('permissions.view_all_grades', "View all grades") },
+        :label => lambda { t('permissions.view_all_grades', "View all results") },
         :available_to => [
           'TaEnrollment',
           'DesignerEnrollment',
@@ -301,7 +301,7 @@ class RoleOverride < ActiveRecord::Base
         ]
       },
       :manage_grades => {
-        :label => lambda { t('permissions.manage_grades', "Edit grades") },
+        :label => lambda { t('permissions.manage_grades', "Edit results") },
         :available_to => [
           'TaEnrollment',
           'TeacherEnrollment',
@@ -458,7 +458,7 @@ class RoleOverride < ActiveRecord::Base
         ]
       },
       :manage_assignments => {
-        :label => lambda { t('permissions.manage_assignments', "Manage (add / edit / delete) assignments and quizzes") },
+        :label => lambda { t('permissions.manage_assignments', "Manage (add / edit / delete) Assessments") },
         :available_to => [
           'TaEnrollment',
           'DesignerEnrollment',
@@ -486,7 +486,7 @@ class RoleOverride < ActiveRecord::Base
         :true_for => [ 'AccountAdmin' ]
       },
       :view_grade_changes => {
-        :label => lambda { t('permissions.view_grade_changes', "View Grade Change Logs") },
+        :label => lambda { t('permissions.view_grade_changes', "View Result Change Logs") },
         :admin_tool => true,
         :account_only => true,
         :available_to => [
@@ -582,12 +582,12 @@ class RoleOverride < ActiveRecord::Base
           'AccountAdmin'
         ]
       },
-      :manage_alerts => {
-        :label => lambda { t('permissions.manage_announcements', "Manage global announcements") },
-        :account_only => true,
-        :true_for => %w(AccountAdmin),
-        :available_to => %w(AccountAdmin AccountMembership),
-      },
+      #:manage_alerts => {
+      #  :label => lambda { t('permissions.manage_announcements', "Manage global announcements") },
+      #  :account_only => true,
+      #  :true_for => %w(AccountAdmin),
+      #  :available_to => %w(AccountAdmin AccountMembership),
+      #},
 
       :read_messages => {
         :label => lambda { t('permissions.read_messages', "View notifications sent to users") },

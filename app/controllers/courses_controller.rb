@@ -1553,7 +1553,7 @@ class CoursesController < ApplicationController
           if params[:update_default_pages]
             @course.wiki.update_default_wiki_page_roles(@course.default_wiki_editing_roles, @default_wiki_editing_roles_was)
           end
-          flash[:notice] = t('notices.updated', 'Course was successfully updated.')
+          flash[:notice] = t('notices.updated', 'Project was successfully updated.')
           format.html { redirect_to((!params[:continue_to] || params[:continue_to].empty?) ? course_url(@course) : params[:continue_to]) }
           format.json do
             if api_request?

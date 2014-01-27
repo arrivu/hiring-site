@@ -198,12 +198,12 @@ class Enrollment < ActiveRecord::Base
 
   def self.readable_types
     {
-      'TeacherEnrollment' => t('#enrollment.roles.teacher', "Teacher"),
-      'TaEnrollment' => t('#enrollment.roles.ta', "TA"),
+      'TeacherEnrollment' => t('#enrollment.roles.teacher', "Hiring manager"),
+      'TaEnrollment' => t('#enrollment.roles.ta', "Interviewer"),
       'DesignerEnrollment' => t('#enrollment.roles.designer', "Designer"),
-      'StudentEnrollment' => t('#enrollment.roles.student', "Student"),
-      'StudentViewEnrollment' => t('#enrollment.roles.student', "Student"),
-      'ObserverEnrollment' => t('#enrollment.roles.observer', "Observer")
+      'StudentEnrollment' => t('#enrollment.roles.student', "candidate"),
+      'StudentViewEnrollment' => t('#enrollment.roles.student', "candidate"),
+      'ObserverEnrollment' => t('#enrollment.roles.observer', "HR")
     }
   end
 
