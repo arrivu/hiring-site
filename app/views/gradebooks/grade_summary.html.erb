@@ -1,10 +1,10 @@
 <%
   js_bundle :grade_summary, :rubric_assessment
   jammit_css :grade_summary
-  content_for :page_title, join_title(t(:page_title, "Grades for %{student}", :student => @presenter.student_name), @context.name)
+  content_for :page_title, join_title(t(:page_title, "Evaluations for %{student}", :student => @presenter.student_name), @context.name)
 %>
 
-<h1 class="screenreader-only"><%= t(:page_title, "Grades for %{student}", :student => @presenter.student_name) %></h1>
+<h1 class="screenreader-only"><%= t(:page_title, "Evaluations for %{student}", :student => @presenter.student_name) %></h1>
 
 <% content_for :right_side do %>
   <div class="rs-margin-all">
@@ -41,7 +41,7 @@
       <%= render :partial => "courses/sidebar_weighting", :object => @presenter.groups %>
       <% unless @presenter.no_calculations? %>
         <div id="only_consider_graded_assignments_wrapper">
-          <label class="checkbox" for="only_consider_graded_assignments"><%= t('labels.only_graded', "Calculate based only on graded assignments") %>
+          <label class="checkbox" for="only_consider_graded_assignments"><%= t('labels.only_graded', "Calculate based only on evaluated assignments") %>
             <input type="checkbox" id="only_consider_graded_assignments" checked="true"/>
           </label>
         </div>
@@ -56,10 +56,10 @@
 <% end %>
 
 <a class="btn btn-small print-grades icon-printer" href="javascript:window.print()">
-  <%= t :print_grades, "Print grades" %>
+  <%= t :print_grades, "Print evaluations" %>
 </a>
 <h2>
-<% ot('headers.grades', "Grades For %{student}", :student => capture { %>
+<% ot('headers.grades', "Evaluations For %{student}", :student => capture { %>
  <% unless @presenter.multiple_observed_students?  %>
    <%= @presenter.student_name %>
  <% else %>
@@ -75,7 +75,7 @@
 </h2>
 <% if @presenter.has_courses_with_grades? %>
   <div style="margin-left: 10px;">
-  <%= t(:for_course, "For the course,") %>
+  <%= t(:for_course, "For the project,") %>
   <select id="course_url">
     <% @presenter.selectable_courses.each do |course| %>
       <%
@@ -148,7 +148,7 @@
               <% if @presenter.editable? || assignment.special_class %>
                 <span class="tooltip_text score_teaser">
                   <% if assignment.muted? %>
-                    <%= t(:student_mute_notification, "Instructor is working on grades") %>
+                    <%= t(:student_mute_notification, "Instructor is working on evaluations") %>
                   <% elsif assignment.special_class %>
                     <%= t(:percent, "Percent") %>
                   <% else %>
@@ -203,9 +203,9 @@
         </a>
         <a href="#" class="toggle_rubric_assessments_link tooltip" <% if !assignment_presenter.has_rubric_assessments? %>aria-hidden='true' role='presentation' tabindex='-1'<% end %> title="<%= t 'titles.view_rubric_evaluation', 'View Rubric Evaluation' %>" style="<%= 'visibility: hidden;' if !assignment_presenter.has_rubric_assessments? %>">
           <span class="tooltip_wrap right">
-            <span class="tooltip_text"><%= t(:see_rubric_results, "See rubric results") %></span>
+            <span class="tooltip_text"><%= t(:see_rubric_results, "See rubric evaluations") %></span>
           </span>
-          <%= image_tag "rubric.png", :alt => t('icons.rubric_results', 'See rubric results') %>
+          <%= image_tag "rubric.png", :alt => t('icons.rubric_results', 'See rubric evaluations') %>
         </a>
         <% if @presenter.turnitin_enabled? %>
           <%
@@ -331,13 +331,15 @@
   <% end %>
 </table>
 <% if @presenter.has_muted_assignments? %>
-  <small><%= image_tag "sound_mute.png", :alt => "" %><%= t(:student_mute_legend, "Your instructor is working on grades. While your instructor is working on grades, grade and comment information is unavailable.") %></small>
+  <small><%= image_tag "sound_mute.png", :alt => "" %><%= t(:student_mute_legend, "Your instructor is working on evaluations. While your instructor is working on evaluations, result and comment information is unavailable.") %></small>
 <% end %>
 <div id="total_groups_weight" style="display: none;"><%= @presenter.total_weight %></div>
 <%= render :partial => "shared/rubric_criterion_dialog" %>
 <input type="text" style="width: 40px; display: none;" id="grade_entry"/>
 <a href="#" id="revert_score_template" class="revert_score_link" title="<%= t('titles.revert_score', "Revert to original score") %>"><%= image_tag "back.png", :alt => "" %></a>
-<a href="<%#= context_url(@context, :context_assignment_submission_url, "{{ assignment_id }}", @presenter.student_id) %>" class="update_submission_url" style="display: none;">&nbsp;</a>
+
+<!--<a href="<%#= context_url(@context, :context_assignment_submission_url, "{{ assignment_id }}", @presenter.student_id) %>" class="update_submission_url" style="display: none;">&nbsp;</a>-->
+
 <% if @context.grading_standard_enabled? %>
   <% js_block do %>
   <script>

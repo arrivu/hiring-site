@@ -344,7 +344,7 @@ class ContextController < ApplicationController
       @users         = @context.participating_users.order_by_sortable_name.uniq
       @primary_users = { t('roster.group_members', 'Group Members') => @users }
       if course = @context.context.try(:is_a?, Course) && @context.context
-        @secondary_users = { t('roster.teachers_and_tas', 'Teachers & TAs') => course.instructors.order_by_sortable_name.uniq }
+        @secondary_users = { t('roster.teachers_and_tas', 'Hiring Manager & Interviewers') => course.instructors.order_by_sortable_name.uniq }
       end
     end
 
@@ -414,7 +414,7 @@ class ContextController < ApplicationController
       @user = @membership.user rescue nil
       if !@user
         if @context.is_a?(Course)
-          flash[:error] = t('no_user.course', "That user does not exist or is not currently a member of this course")
+          flash[:error] = t('no_user.course', "That user does not exist or is not currently a member of this project")
         elsif @context.is_a?(Group)
           flash[:error] = t('no_user.group', "That user does not exist or is not currently a member of this group")
         end

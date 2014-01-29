@@ -4,7 +4,7 @@
     <div class="form-inline pad-box-micro">
       <% group_name = t('labels.group_name', "Group Name") %>
       <%= form.text_field :name, :maxlength => "255", :'aria-labeled-by' => group_name, :placeholder => group_name %>
-      <span class="percent_weighting"><%= form.text_field(:group_weight, :class => 'span1 align-right') %> <%= t(:percent_of_total_grade, "% of total grade") %></span>
+      <span class="percent_weighting"><%= form.text_field(:group_weight, :class => 'span1 align-right') %> <%= t(:percent_of_total_grade, "% of total evaluation") %></span>
 
       <span class="pull-right">
         <button type="button" class="btn btn-small cancel_button"><%= t('#buttons.cancel', "Cancel") %></button>
@@ -33,7 +33,7 @@
 
       <span class="drop_scores">
         <span>
-        <%= t :drop_x_scores_for_each_student, "%{scores} scores for each student",
+        <%= t :drop_x_scores_for_each_student, "%{scores} scores for each candidate",
                 :scores => '<input type="text" class="drop_count align-right span1" name="scores_to_drop" title="#" size="2"/>'.html_safe %>
         </span>
       </span>
@@ -46,7 +46,7 @@
     </div>
 
     <div class="pad-box-micro">
-      <a href="#" class="add_rule_link btn"><%= t 'links.add_grading_rule', "Add grading rule" %></a>
+      <a href="#" class="add_rule_link btn"><%= t 'links.add_grading_rule', "Add evaluating rule" %></a>
     </div>
 
     <div class="clear"></div>

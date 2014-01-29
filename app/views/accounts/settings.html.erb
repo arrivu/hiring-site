@@ -118,7 +118,7 @@
                             <%= settings.select :self_enrollment, [
                                     [t(:never_allow_self_enrollment_option, 'Never'), ''],
                                     [t(:self_enroll_for_manually_created_courses_option, 'For Manually-Created Projects'), 'manually_created'],
-                                    [t(:self_enroll_for_any_courses_option, 'For Any Courses'), 'any']
+                                    [t(:self_enroll_for_any_courses_option, 'For Any Projects'), 'any']
                             ], :selected => @account.settings[:self_enrollment] %>
                           </td>
                         </tr>
@@ -538,7 +538,7 @@
                         </tr>
                         <tr>
                           <td><%= t 'notifications.subject', 'Subject' %></td>
-                          <td><%= t 'notifications.sample_subject', 'Grade Changed: Check In Survey, Testing Course' %></td>
+                          <td><%= t 'notifications.sample_subject', 'Grade Changed: Check In Survey, Testing Project' %></td>
                         </tr>
                         <tr>
                           <td><%= t 'notifications.email_date', 'Date' %></td>
@@ -578,7 +578,7 @@
                         </tr>
                         <tr>
                           <td><%= t 'notifications.subject', 'Subject' %></td>
-                          <td><%= t 'notifications.sample_subject', 'Grade Changed: Check In Survey, Testing Course' %></td>
+                          <td><%= t 'notifications.sample_subject', 'Grade Changed: Check In Survey, Testing Project' %></td>
                         </tr>
                         <tr>
                           <td><%= t 'notifications.email_date', 'Date' %></td>
@@ -611,7 +611,7 @@
                     <tr>
                       <td>
                         <b><%= t('notifications.external_services_warning_label', 'Pop-up Message Content:') %></b>
-                        <blockquote><%= t('notifications.external_services_warning', 'Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive Sublime course and group information outside of the institutional system.')%></blockquote>
+                        <blockquote><%= t('notifications.external_services_warning', 'Notice: Some notifications may contain confidential information. Selecting to receive notifications at an email other than your institution provided address may result in sending sensitive Sublime project and group information outside of the institutional system.')%></blockquote>
                       </td>
                     </tr>
                   </table>

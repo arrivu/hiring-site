@@ -1,15 +1,15 @@
 <%
   add_crumb @quiz.title, context_url(@context, :context_quiz_url, @quiz)
-  add_crumb t(:page_title, 'Moderate Quiz')
+  add_crumb t(:page_title, 'Moderate Assessment')
 %>
-<% content_for :page_title do %><%= t(:page_title, "Moderate Quiz") %><% end %>
+<% content_for :page_title do %><%= t(:page_title, "Moderate Assessment") %><% end %>
 
-<h2><%= t(:page_title, "Moderate Quiz") %></h2>
+<h2><%= t(:page_title, "Moderate Assessment") %></h2>
 <table id="students" class="<%= 'can_add_attempts' if @quiz.allowed_attempts < 0 %>">
   <thead>
     <tr>
       <th style="padding-left: 5px;"><input type="checkbox" id="check_all" title="<%= t('titles.select_deselect_all', "Select/Deselect All") %>"/></th>
-      <th><%= t('headers.student', "Student") %></th>
+      <th><%= t('headers.student', "Candidate") %></th>
       <th><%= t('headers.attempt', "Attempt") %></th>
       <th><%= t('headers.time', "Time") %></th>
       <th style="<%= hidden if @quiz.allowed_attempts < 0 %>"><%= t('headers.attempts_left', "Attempts Left") %></th>
@@ -24,7 +24,7 @@
     <% @students.each do |student| %>
       <% count += 1 %>
       <% submission = @submissions.detect{|s| s.user_id == student.id} %>
-      <% student_name = (@quiz.survey? && @quiz.anonymous_submissions) ? t(:student_n, "Student %{n}", :n => count) : student.last_name_first %>
+      <% student_name = (@quiz.survey? && @quiz.anonymous_submissions) ? t(:student_n, "Candidate %{n}", :n => count) : student.last_name_first %>
       <tr class="student <%= 'extendable' if submission && submission.extendable? %> <%= 'in_progress' if submission && submission.untaken? %> <%= 'manually_unlocked' if submission && submission.manually_unlocked %>" id="student_<%= student.id %>" data-started-at="<%= submission && submission.started_at && submission.started_at.iso8601 %>" data-end-at="<%= submission && submission.end_at && submission.end_at.iso8601 %>" data-user-id="<%= student.id %>">
         <td>
           <input type="checkbox" class="student_check" data-id="<%= student.id %>" title="<%= t('titles.select_user', "Select %{user}", :user => student_name) %>"/>
@@ -77,7 +77,7 @@
     <tr>
       <td colspan="5">
         <div class="button-container">
-          <button class="btn moderate_multiple_button" style="display: none;"><%= image_tag "edit.png" %><%= t('buttons.change_extensions_for_selected_students', "Change Extensions for %{n} Selected Students", :n => raw('<span id="checked_count">X</span>')) %></button>
+          <button class="btn moderate_multiple_button" style="display: none;"><%= image_tag "edit.png" %><%= t('buttons.change_extensions_for_selected_students', "Change Extensions for %{n} Selected Candidates", :n => raw('<span id="checked_count">X</span>')) %></button>
         </div>
       </td>
     </tr>
@@ -86,8 +86,8 @@
 <%= will_paginate(@students) %>
 
 <div id="extend_time_dialog" style="display: none;">
-  <h2><%= t('headers.extended_quiz_time', "Extend Quiz Time") %></h2>
-  <%= t(:extended_quiz_time_explanation, "You can give this student extra time on their current quiz attempt. How much time would you like to give them?") %>
+  <h2><%= t('headers.extended_quiz_time', "Extend Assessment Time") %></h2>
+  <%= t(:extended_quiz_time_explanation, "You can give this candidate extra time on their current assessment attempt. How much time would you like to give them?") %>
   <table>
     <tr>
       <th><%= before_label(:started, "Started") %></th>
@@ -114,7 +114,7 @@
   </div>
 </div>
 <div id="moderate_student_dialog" style="display: none;">
-  <h2><%= t('headers.student_extensions', "Student Extensions") %></h2>
+  <h2><%= t('headers.student_extensions', "Candidate Extensions") %></h2>
   <%= form_for :quiz, :url => "", :html => {:id => "moderate_student_form", :method => :post} do |f| %>
     <table>
       <% if @quiz.allowed_attempts > 0 %>
@@ -141,7 +141,7 @@
         <td colspan="2">
           <input type="hidden" name="manually_unlocked" value="0"/>
           <input type="checkbox" name="manually_unlocked" id="extension_manually_unlocked" value="1"/>
-          <label for="extension_manually_unlocked"><%= t('labels.manually_unlock', "Manually unlock the quiz for the next attempt") %></label>
+          <label for="extension_manually_unlocked"><%= t('labels.manually_unlock', "Manually unlock the assessment for the next attempt") %></label>
         </td>
       </tr>
       <tr>

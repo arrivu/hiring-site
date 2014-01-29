@@ -6,9 +6,9 @@
 <h1 class='screenreader-only'><%= @context.name %></h1>
 <% content_for :auto_discovery do %>
   <% if @context_enrollment %>
-    <%= auto_discovery_link_tag(:atom, feeds_course_format_path(@context_enrollment.feed_code, :atom), {:title => "Course Atom Feed"}) %>
+    <%= auto_discovery_link_tag(:atom, feeds_course_format_path(@context_enrollment.feed_code, :atom), {:title => "Project Atom Feed"}) %>
   <% elsif @context.available? %>
-    <%= auto_discovery_link_tag(:atom, feeds_course_format_path(@context.feed_code, :atom), {:title => "Course Atom Feed"}) %>
+    <%= auto_discovery_link_tag(:atom, feeds_course_format_path(@context.feed_code, :atom), {:title => "Project Atom Feed"}) %>
   <% end %>
 <% end %>
 
@@ -46,23 +46,23 @@
 
     <% if @context.available? && @context.self_enrollment && @context.open_enrollment && (!@context_enrollment || !@context_enrollment.active?) && !session["role_course_#{@context.id}"] %>
       <div class="rs-margin-lr rs-margin-top">
-        <a href="<%= enroll_url(@context.self_enrollment_code) %>" title="<%= t('links.join_course', %{Join this Course}) %>" class="btn button-sidebar-wide self_enrollment_link" data-open-as-dialog><i class="icon-user-add"></i>  <%= t('links.join_course', %{Join this Course}) %></a>
+        <a href="<%= enroll_url(@context.self_enrollment_code) %>" title="<%= t('links.join_course', %{Join this Project}) %>" class="btn button-sidebar-wide self_enrollment_link" data-open-as-dialog><i class="icon-user-add"></i>  <%= t('links.join_course', %{Join this Project}) %></a>
       </div>
     <% elsif @context_enrollment && @context_enrollment.self_enrolled && @context_enrollment.active? && (!session["role_course_#{@context.id}"]) %>
       <div class="rs-margin-lr rs-margin-top">
-        <a href="#" class="btn button-sidebar-wide self_unenrollment_link"><i class="icon-end"></i> <%= t('links.drop_course', %{Drop this Course}) %></a>
+        <a href="#" class="btn button-sidebar-wide self_unenrollment_link"><i class="icon-end"></i> <%= t('links.drop_course', %{Drop this Project}) %></a>
       </div>
       <div id="self_unenrollment_dialog" style="display: none;">
         <h2><i class="icon-warning"></i> <%= t('headings.confirm_unenroll', %{Confirm Unenrollment}) %></h2>
-        <%= t('details.confirm_unenroll', %{Are you sure you want to unenroll in this course?  You will no longer be able to see the course roster or communicate directly with the teachers, and you will no longer see course events in your stream and as notifications.}) %>
+        <%= t('details.confirm_unenroll', %{Are you sure you want to unenroll in this project?  You will no longer be able to see the project roster or communicate directly with the hiring manager, and you will no longer see project events in your stream and as notifications.}) %>
         <div class="button-container">
-          <a href="<%= course_self_unenrollment_path(@context, @context_enrollment.uuid) %>" class="btn btn-primary action"><i class="icon-end"></i> <span><%= t('links.drop_course', %{Drop this Course}) %></span></a>
+          <a href="<%= course_self_unenrollment_path(@context, @context_enrollment.uuid) %>" class="btn btn-primary action"><i class="icon-end"></i> <span><%= t('links.drop_course', %{Drop this Project}) %></span></a>
           <a href="#" class="btn dialog_closer"><%= t('#buttons.cancel', %{Cancel}) %></a>
         </div>
       </div>
     <% elsif temp_type = session["role_course_#{@context.id}"] %>
       <div class="rs-margin-lr rs-margin-top">
-        <%= image_tag "warning.png" %> <%= t 'acting_as', %{You are currently viewing this course with the role: %{enrollment_type}.  You will only have permissions and access available to users of this role.}, :enrollment_type => content_tag('strong', Enrollment.readable_type(temp_type)) %>
+        <%= image_tag "warning.png" %> <%= t 'acting_as', %{You are currently viewing this project with the role: %{enrollment_type}.  You will only have permissions and access available to users of this role.}, :enrollment_type => content_tag('strong', Enrollment.readable_type(temp_type)) %>
         <a class="btn button-sidebar-wide"><i class="icon-user"></i> <%= t('links.restore_role', %{Restore Role and Permissions}) %></a>
       </div>
     <% end %>
@@ -128,7 +128,7 @@ $(document).ready(function() {
   var $selfUnenrollmentDialog = $("#self_unenrollment_dialog");
   $(".self_unenrollment_link").click(function(event) {
     $selfUnenrollmentDialog.dialog({
-      title: <%= raw t('titles.drop_course', "Drop this Course").to_json %>,
+      title: <%= raw t('titles.drop_course', "Drop this Project").to_json %>,
     }).fixDialogButtons();
   });
   $selfUnenrollmentDialog.on('click', '.action', function() {
@@ -243,7 +243,7 @@ $(document).ready(function() {
   <select name="course[default_view]" id="edit_course_home_content_select">
     <option value="feed" <%= 'selected' if @context.default_view == 'feed' %>><%= t('draft_state.options.recent_activity_dashboard', %{Recent Activity Dashboard}) %></option>
     <option value="wiki" <%= 'selected' if @context.default_view == 'wiki' %>><%= t('draft_state.options.custom_page', %{Pages Front Page}) %></option>
-    <option value="modules" <%= 'selected' if @context.default_view == 'modules' %>><%= t('draft_state.options.modules', %{Course Modules}) %></option>
+    <option value="modules" <%= 'selected' if @context.default_view == 'modules' %>><%= t('draft_state.options.modules', %{Project Modules}) %></option>
     <option value="assignments" <%= 'selected' if @context.default_view == 'assignments' %>><%= t('draft_state.options.assignments', %{Assignments List}) %></option>
     <option value="syllabus" <%= 'selected' if @context.default_view == 'syllabus' %>><%= t('draft_state.options.syllabus', %{Syllabus}) %></option>
   </select>
@@ -272,19 +272,19 @@ $(document).ready(function() {
           <%= mt 'details.recent_activity_dashboard', "The **recent activity dashboard** lets participants see the most recent activities for this project.  It's very similar to the dashboard page users see when they first log in, but only shows content for this specific project." %>
         </div>
         <div class="wiki_details options_details">
-          <%= mt 'details.custom_page', "You can **design your own course home page** and include whatever links, images or rich media you like." %>
+          <%= mt 'details.custom_page', "You can **design your own project home page** and include whatever links, images or rich media you like." %>
         </div>
         <div class="modules_details options_details">
-          <%= mt 'details.modules', "You can organize your course into **modules or sections**, where each section contains a related set of files, assignments, pages, etc.  If you want, you can also sequence modules by defining criteria and prerequisites that need to be completed before each module is unlocked.
+          <%= mt 'details.modules', "You can organize your project into **modules or sections**, where each section contains a related set of files, assignments, pages, etc.  If you want, you can also sequence modules by defining criteria and prerequisites that need to be completed before each module is unlocked.
 
--This layout is probably best for courses that aren't based on a specific schedule like a term or semester." %>
+-This layout is probably best for project that aren't based on a specific schedule like a term or semester." %>
 </p>
       </div>
       <div class="assignments_details options_details">
-        <%= mt 'details.assignments', "This view shows the **list of assignments** for this course, with upcoming and recent assignments at the top." %>
+        <%= mt 'details.assignments', "This view shows the **list of assignments** for this project, with upcoming and recent assignments at the top." %>
       </div>
       <div class="syllabus_details options_details">
-        <%= mt 'details.syllabus', "The **syllabus view** lets you write up a description of course expectations or introduce the course with links, images, etc. and then also shows a calendar view of all assignments and course events." %>
+        <%= mt 'details.syllabus', "The **syllabus view** lets you write up a description of project expectations or introduce the project with links, images, etc. and then also shows a calendar view of all assignments and project events." %>
       </div>
     </div>
     <div class="button-container">
@@ -310,7 +310,7 @@ $(document).ready(function() {
             | 
           <% end %>
           <% if @course_home_view != 'feed' %>
-            <a href="<%= context_url(@context, :context_url, :view => 'feed') %>"><%= t('links.course_stream', %{See Course Stream}) %></a>
+            <a href="<%= context_url(@context, :context_url, :view => 'feed') %>"><%= t('links.course_stream', %{See Project Stream}) %></a>
           <% end %>
         </div>
       <% end %>

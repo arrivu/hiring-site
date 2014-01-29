@@ -56,21 +56,21 @@
       <div class="details" style="display: none;">
         <%= t 'instructions.wizard.details', %(There's a lot more that goes into an assignment than due dates and points.  If you
         want to type up a description of the assignment, allow file uploads, change the
-        grading type or a bunch of other things, click the assignment's name
+        evaluating type or a bunch of other things, click the assignment's name
         or click the %{edit_icon} icon and then "more options".), :edit_icon => '<i class="icon-edit"></i>'.html_safe %>
       </div>
     </li>
     <li class="option quiz_step">
-      <a href="#" class="icon-quiz"><%= t 'links.create_or_import_quiz', "Create/Import a Quiz" %></a>
+      <a href="#" class="icon-quiz"><%= t 'links.create_or_import_quiz', "Create/Import a Assessment" %></a>
       <div class="details" style="display: none;">
-        <%= t 'instructions.wizard.quizzes', 'Quizzes are special types of assignments.  You can create or import quizzes by
-        clicking the "Quizzes" link on the left sidebar.' %>
+        <%= t 'instructions.wizard.quizzes', 'Assessments are special types of assignments.  You can create or import assessments by
+        clicking the "Assessments" link on the left sidebar.' %>
       </div>
     </li>
     <li class="option introduction" style="display: none;">
       <a href="#" class="wizard_introduction"></a>
       <div class="details" style="display: none;">
-        <%= t 'instructions.wizard.overview', "This page is for setting up your course at a high level.  You can add assignments,
+        <%= t 'instructions.wizard.overview', "This page is for setting up your project at a high level.  You can add assignments,
         group them and then weight those groups.  The idea is to get yourself organized
         first, dive into the specifics second.  Even still, there's a lot you can do
         from here." %>

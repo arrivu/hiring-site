@@ -14,10 +14,10 @@ require [
       '': 'index'
 
     translations:
-      assignmentQuizzes: I18n.t('headers.assignment_quizzes', 'Assignment Quizzes')
-      practiceQuizzes:   I18n.t('headers.practice_quizzes', 'Practice Quizzes')
+      assignmentQuizzes: I18n.t('headers.assignment_quizzes', 'Assignment Assessments')
+      practiceQuizzes:   I18n.t('headers.practice_quizzes', 'Practice Assessments')
       surveys:           I18n.t('headers.surveys', 'Surveys')
-      toggleMessage:     I18n.t('toggle_message', 'toggle quiz visibility')
+      toggleMessage:     I18n.t('toggle_message', 'toggle assessment visibility')
 
     initialize: ->
       @allQuizzes = ENV.QUIZZES

@@ -25,7 +25,7 @@ define [
       'click .delete-item': 'onDelete'
 
     messages:
-      confirm: I18n.t('confirms.delete_quiz', 'Are you sure you want to delete this quiz?')
+      confirm: I18n.t('confirms.delete_quiz', 'Are you sure you want to delete this assessment?')
       multipleDates: I18n.t('multiple_due_dates', 'Multiple Dates')
 
     initialize: (options) ->

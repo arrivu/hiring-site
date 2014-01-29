@@ -54,12 +54,12 @@ define([
 
     $(".delete_quiz_link").click(function(event) {
       event.preventDefault();
-      var deleteConfirmMessage = I18n.t('confirms.delete_quiz', "Are you sure you want to delete this quiz?");
+      var deleteConfirmMessage = I18n.t('confirms.delete_quiz', "Are you sure you want to delete this assessment?");
       submittedCount = parseInt($('#quiz_details_wrapper').data('submitted-count'));
       if (submittedCount > 0) {
         deleteConfirmMessage += "\n\n" + I18n.t('confirms.delete_quiz_submissions_warning',
-          {'one': "Warning: 1 student has already taken this quiz. If you delete it, any completed submissions will be deleted and no longer appear in the gradebook.",
-           'other': "Warning: %{count} students have already taken this quiz. If you delete it, any completed submissions will be deleted and no longer appear in the gradebook."},
+          {'one': "Warning: 1 candidate has already taken this assessment. If you delete it, any completed submissions will be deleted and no longer appear in the results.",
+           'other': "Warning: %{count} candidates have already taken this assessment. If you delete it, any completed submissions will be deleted and no longer appear in the results."},
           {'count': submittedCount});
       }
       $("nothing").confirmDelete({
@@ -81,18 +81,18 @@ define([
           if (hasOpenedQuizDetails) {
             if (ENV.IS_SURVEY) {
               $quizResultsText.text(I18n.t('links.show_student_survey_results',
-                                           'Show Student Survey Results'));
+                                           'Show Candidate Survey Results'));
             } else {
               $quizResultsText.text(I18n.t('links.show_student_quiz_results',
-                                           'Show Student Quiz Results'));
+                                           'Show Candidate Assessment Results'));
             }
           } else {
             if (ENV.IS_SURVEY) {
               $quizResultsText.text(I18n.t('links.hide_student_survey_results',
-                                           'Hide Student Survey Results'));
+                                           'Hide Candidate Survey Results'));
             } else {
               $quizResultsText.text(I18n.t('links.hide_student_quiz_results',
-                                           'Hide Student Quiz Results'));
+                                           'Hide Candidate Assessment Results'));
             }
           }
           hasOpenedQuizDetails = !hasOpenedQuizDetails;
@@ -106,8 +106,8 @@ define([
         var submissionList = ENV.QUIZ_SUBMISSION_LIST;
         var unsubmittedStudents = submissionList.UNSUBMITTED_STUDENTS;
         var submittedStudents = submissionList.SUBMITTED_STUDENTS;
-        var haveTakenQuiz = I18n.t('students_who_have_taken_the_quiz', "Students who have taken the quiz");
-        var haveNotTakenQuiz = I18n.t('students_who_have_not_taken_the_quiz', "Students who have NOT taken the quiz");
+        var haveTakenQuiz = I18n.t('students_who_have_taken_the_quiz', "Candidates who have taken the assessment");
+        var haveNotTakenQuiz = I18n.t('students_who_have_not_taken_the_quiz', "Candidates who have NOT taken the assessment");
         var dialog = new MessageStudentsDialog({
           context: ENV.QUIZ.title,
           recipientGroups: [

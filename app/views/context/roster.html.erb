@@ -1,7 +1,7 @@
 <%
   add_crumb t('#crumbs.people', 'People'), context_url(@context, :context_users_url)
   @active_tab = 'people'
-  translated_title = @context.is_a?(Course) ? t('titles.course_roster', 'Course Roster') : t('titles.group_roster', 'Group Roster')
+  translated_title = @context.is_a?(Course) ? t('titles.course_roster', 'Project Roster') : t('titles.group_roster', 'Group Roster')
 
   content_for :page_title, join_title(translated_title, @context.name)
 %>

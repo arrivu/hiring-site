@@ -27,7 +27,7 @@ class GradebooksController < ApplicationController
   before_filter :require_user, only: %w(speed_grader speed_grader_settings)
   batch_jobs_in_actions :only => :update_submission, :batch => { :priority => Delayed::LOW_PRIORITY }
 
-  add_crumb(proc { t '#crumbs.grades', "Grades" }) { |c| c.send :named_context_url, c.instance_variable_get("@context"), :context_grades_url }
+  add_crumb(proc { t '#crumbs.grades', "Evaluations" }) { |c| c.send :named_context_url, c.instance_variable_get("@context"), :context_grades_url }
   before_filter { |c| c.active_tab = "grades" }
 
   def grade_summary
@@ -351,7 +351,7 @@ class GradebooksController < ApplicationController
 
   def submissions_zip_upload
     unless @context.allows_gradebook_uploads?
-      flash[:error] = t('errors.not_allowed', "This course does not allow score uploads.")
+      flash[:error] = t('errors.not_allowed', "This project does not allow score uploads.")
       redirect_to named_context_url(@context, :context_assignment_url, @assignment.id)
       return
     end
@@ -370,7 +370,7 @@ class GradebooksController < ApplicationController
 
   def speed_grader
     if !@context.allows_speed_grader?
-      flash[:notice] = t(:speed_grader_disabled, 'SpeedGrader is disabled for this course')
+      flash[:notice] = t(:speed_grader_disabled, 'SpeedGrader is disabled for this project')
       return redirect_to(course_gradebook_path(@context))
     end
 

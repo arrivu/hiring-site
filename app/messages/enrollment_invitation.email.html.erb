@@ -2,7 +2,7 @@
   <%= HostUrl.protocol %>://<%= HostUrl.context_host(asset.course) %>/<%= asset.course.class.to_s.downcase.pluralize %>/<%= asset.course_id %>?invitation=<%= asset.uuid %>
 <% end %>
 <% define_content :subject do %>
-  <%= t :subject, "Course Invitation" %>
+  <%= t :subject, "Project Invitation" %>
 <% end %>
 <% email = asset.user.email; login = (asset.user.pseudonym.unique_id rescue "none") %>
 
@@ -10,15 +10,15 @@
     <%=
         case asset.type
           when 'TeacherEnrollment'
-            t :body_teacher, "You've been invited to participate in the course, %{course}, as a teacher.", :course => asset.course.name
+            t :body_teacher, "You've been invited to participate in the project, %{course}, as a hiring manager.", :course => asset.course.name
           when 'TaEnrollment'
-            t :body_ta, "You've been invited to participate in the course, %{course}, as a TA.", :course => asset.course.name
+            t :body_ta, "You've been invited to participate in the project, %{course}, as a interviewer.", :course => asset.course.name
           when 'ObserverEnrollment'
-            t :body_observer, "You've been invited to participate in the course, %{course}, as an observer.", :course => asset.course.name
+            t :body_observer, "You've been invited to participate in the project, %{course}, as an HR.", :course => asset.course.name
           when 'DesignerEnrollment'
-            t :body_designer, "You've been invited to participate in the course, %{course}, as a designer.", :course => asset.course.name
+            t :body_designer, "You've been invited to participate in the project, %{course}, as a designer.", :course => asset.course.name
           else
-            t :body_student, "You've been invited to participate in the course, %{course}, as a student.", :course => asset.course.name
+            t :body_student, "You've been invited to participate in the project, %{course}, as a candidate.", :course => asset.course.name
         end
     %>
 </p>
@@ -42,6 +42,6 @@
     <% end %>
 </table>
 
-<p><a href="<%= content(:link) %>"><%= t(:link, "Click here to view the course page") %></a></p>
+<p><a href="<%= content(:link) %>"><%= t(:link, "Click here to view the project page") %></a></p>
 
 

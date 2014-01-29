@@ -1,15 +1,15 @@
 <%=
     case asset.type
     when 'TeacherEnrollment'
-      t :body_teacher, "%{user} accepted the teacher invitation for the course, %{course}", :user => asset.user.name, :course => asset.course.name
+      t :body_teacher, "%{user} accepted the hiring manager invitation for the project, %{course}", :user => asset.user.name, :course => asset.course.name
     when 'TaEnrollment'
-      t :body_ta, "%{user} accepted the TA invitation for the course, %{course}", :user => asset.user.name, :course => asset.course.name
+      t :body_ta, "%{user} accepted the interviewer invitation for the project, %{course}", :user => asset.user.name, :course => asset.course.name
     when 'ObserverEnrollment'
-      t :body_observer, "%{user} accepted the observer invitation for the course, %{course}", :user => asset.user.name, :course => asset.course.name
+      t :body_observer, "%{user} accepted the HR invitation for the project, %{course}", :user => asset.user.name, :course => asset.course.name
     when 'DesignerEnrollment'
-      t :body_designer, "%{user} accepted the designer invitation for the course, %{course}", :user => asset.user.name, :course => asset.course.name
+      t :body_designer, "%{user} accepted the designer invitation for the project, %{course}", :user => asset.user.name, :course => asset.course.name
     else
-      t :body_student, "%{user} accepted the student invitation for the course, %{course}", :user => asset.user.name, :course => asset.course.name
+      t :body_student, "%{user} accepted the candidate invitation for the project, %{course}", :user => asset.user.name, :course => asset.course.name
     end
 %>
 

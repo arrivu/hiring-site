@@ -54,7 +54,7 @@ define [
 
     actions:
       delete: ->
-        ok = window.confirm I18n.t('confirms.delete_quiz', 'Are you sure you want to delete this quiz?')
+        ok = window.confirm I18n.t('confirms.delete_quiz', 'Are you sure you want to delete this assessment?')
         quizzesController = @get('controllers.quizzes')
         if ok
           id = environment.get('courseId')

@@ -3,28 +3,28 @@
 <% end %>
 
 <% define_content :subject do %>
-  <%= t :subject, "Course Invitation" %>
+  <%= t :subject, "Project Invitation" %>
 <% end %>
 
 <% website = HostUrl.context_host(asset.course) %>
-<p><%= t :participate_in_class, "You've been invited to participate in a class at %{website}", :website => website %></p>
+<p><%= t :participate_in_class, "You've been invited to participate in a project at %{website}", :website => website %></p>
 <p>
 <%=
     case asset.type
     when 'TeacherEnrollment'
-      t :body_teacher, "The class is called %{course}, and you've been invited to participate as a teacher.",
+      t :body_teacher, "The project is called %{course}, and you've been invited to participate as a hiring manager.",
         :course => asset.course.name
     when 'TaEnrollment'
-      t :body_ta, "The class is called %{course}, and you've been invited to participate as a TA.",
+      t :body_ta, "The project is called %{course}, and you've been invited to participate as a interviewer.",
         :course => asset.course.name
     when 'ObserverEnrollment'
-      t :body_observer, "The class is called %{course}, and you've been invited to participate as a observer.",
+      t :body_observer, "The project is called %{course}, and you've been invited to participate as a HR.",
         :course => asset.course.name
     when 'DesignerEnrollment'
-      t :body_designer, "The class is called %{course}, and you've been invited to participate as a designer.",
+      t :body_designer, "The project is called %{course}, and you've been invited to participate as a designer.",
         :course => asset.course.name
     else
-      t :body_student, "The class is called %{course}, and you've been invited to participate as a student.",
+      t :body_student, "The project is called %{course}, and you've been invited to participate as a candidate.",
         :course => asset.course.name
     end
 %>
@@ -49,6 +49,6 @@
     <% end %>
 </table>
 
-<p><%= t :details, "You'll need to register with Sublime before you can participate in the class." %></p>
+<p><%= t :details, "You'll need to register with Sublime before you can participate in the project." %></p>
 
 <p><a href="<%= content :link %>"><%= t :link, "Click here to get started" %></a></p>

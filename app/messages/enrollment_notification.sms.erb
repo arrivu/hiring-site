@@ -1,15 +1,15 @@
 <%=
     case asset.type
     when 'TeacherEnrollment'
-      t :body_teacher, "You've been enrolled in the course as a teacher."
+      t :body_teacher, "You've been enrolled in the project as a hiring manager."
     when 'TaEnrollment'
-      t :body_ta, "You've been enrolled in the course as a TA."
+      t :body_ta, "You've been enrolled in the project as a interviewer."
     when 'ObserverEnrollment'
-      t :body_observer, "You've been enrolled in the course as an observer."
+      t :body_observer, "You've been enrolled in the project as an HR."
     when 'DesignerEnrollment'
-      t :body_designer, "You've been enrolled in the course as a designer."
+      t :body_designer, "You've been enrolled in the project as a designer."
     else
-      t :body_student, "You've been enrolled in the course as a student."
+      t :body_student, "You've been enrolled in the project as a candidate."
     end
 %>
 <% email = asset.user.email; login = (asset.user.pseudonym.unique_id rescue "none") %>

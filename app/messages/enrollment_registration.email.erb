@@ -3,22 +3,22 @@
 <% end %>
 
 <% define_content :subject do %>
-  <%= t :subject, "Course Invitation" %>
+  <%= t :subject, "Project Invitation" %>
 <% end %>
 
 <% website = HostUrl.context_host(asset.course) %>
 <%=
     case asset.type
     when 'TeacherEnrollment'
-      t :body_teacher, "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a teacher.", :website => website, :course => asset.course.name
+      t :body_teacher, "You've been invited to participate in a project at %{website}.  The project is called %{course}, and you've been invited to participate as a hiring manager.", :website => website, :course => asset.course.name
     when 'TaEnrollment'
-      t :body_ta, "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a TA.", :website => website, :course => asset.course.name
+      t :body_ta, "You've been invited to participate in a project at %{website}.  The project is called %{course}, and you've been invited to participate as a interviewer.", :website => website, :course => asset.course.name
     when 'ObserverEnrollment'
-      t :body_observer, "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a observer.", :website => website, :course => asset.course.name
+      t :body_observer, "You've been invited to participate in a project at %{website}.  The project is called %{course}, and you've been invited to participate as a HR.", :website => website, :course => asset.course.name
     when 'DesignerEnrollment'
-      t :body_designer, "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a designer.", :website => website, :course => asset.course.name
+      t :body_designer, "You've been invited to participate in a project at %{website}.  The project is called %{course}, and you've been invited to participate as a designer.", :website => website, :course => asset.course.name
     else
-      t :body_student, "You've been invited to participate in a class at %{website}.  The class is called %{course}, and you've been invited to participate as a student.", :website => website, :course => asset.course.name
+      t :body_student, "You've been invited to participate in a project at %{website}.  The project is called %{course}, and you've been invited to participate as a candidate.", :website => website, :course => asset.course.name
     end
 %>
 <% email = asset.user.email; login = (asset.user.pseudonym.unique_id rescue "none") %>
@@ -26,5 +26,5 @@
 <%= before_label :email, "Email" %> <%= asset.user.email %>
 <% if email != login %><%= before_label :username, "Username" %> <%= asset.user.pseudonym.unique_id rescue t(:none, "none") %><% end %>
 
-<%= t :details, "You'll need to register with Sublime before you can participate in the class.  To get started, visit the course page here:" %>
+<%= t :details, "You'll need to register with Sublime before you can participate in the project.  To get started, visit the project page here:" %>
 <%= content :link %>

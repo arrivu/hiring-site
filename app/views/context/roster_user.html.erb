@@ -9,7 +9,7 @@
   <h2><%= t 'links.more_about_this_user', "More About This User" %></h2>
   <div class="page-action-list" id="right_nav">
     <% if can_do(@membership, @current_user, :read_grades) && @membership.is_a?(StudentEnrollment) %>
-      <a href="<%= context_url(@context, :controller => :gradebooks, :action => :grade_summary, :id => @user.id) %>"><i class="icon-check-plus"></i> <%= t 'links.user_grades', "Grades" %></a>
+      <a href="<%= context_url(@context, :controller => :gradebooks, :action => :grade_summary, :id => @user.id) %>"><i class="icon-check-plus"></i> <%= t 'links.user_grades', "Results" %></a>
     <% end %>
     <% if can_do(@context, @current_user, :send_messages) %>
       <!--<a href="<%#= message_user_path(@user) %>"><i class="icon-email"></i> <%#= t 'links.message_user', "Send Message" %></a>-->

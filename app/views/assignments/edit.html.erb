@@ -4,13 +4,14 @@
   <% if can_do(@assignment, @current_user, :update) %>
     <ul class="page-action-list">
       <li>
-        <% link_to new_course_discussion_topic_url(@context) do %>
-          <i class="icon-discussion-new"></i> <%= t('new_discussion', "New Discussion") %>
-        <% end %>
+        <%# link_to new_course_discussion_topic_url(@context) do %>
+          <!--<i class="icon-discussion-new"></i>-->
+        <%#= t('new_discussion', "New Discussion") %>
+        <%# end %>
       </li>
       <li>
         <% link_to new_course_quiz_url(@context) do %>
-          <i class="icon-quiz"></i> <%= t('new_quiz', "New Quiz") %>
+          <i class="icon-quiz"></i> <%= t('new_quiz', "New Assessment") %>
         <% end %>
       </li>
     </ul>

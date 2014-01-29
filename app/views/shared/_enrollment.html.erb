@@ -39,28 +39,28 @@
         if enrollment.try(:limit_privileges_to_course_section)
           case enrollment.try(:type)
             when 'TeacherEnrollment'
-              t :enrolled_as_limited_teacher, "enrolled as a teacher with section-only access"
+              t :enrolled_as_limited_teacher, "enrolled as a hiring manager with section-only access"
             when 'TaEnrollment'
-              t :enrolled_as_limited_ta, "enrolled as a TA with section-only access"
+              t :enrolled_as_limited_ta, "enrolled as a interviewer with section-only access"
             when 'ObserverEnrollment'
-              t :enrolled_as_limited_observer, "enrolled as an observer with section-only access"
+              t :enrolled_as_limited_observer, "enrolled as an HR with section-only access"
             when 'DesignerEnrollment'
               t :enrolled_as_limited_designer, "enrolled as a designer with section-only access"
             else
-              t :enrolled_as_limited_student, "enrolled as a student with section-only access"
+              t :enrolled_as_limited_student, "enrolled as a candidate with section-only access"
             end
         else
           case enrollment.try(:type)
             when 'TeacherEnrollment'
-              t :enrolled_as_teacher, "enrolled as a teacher"
+              t :enrolled_as_teacher, "enrolled as a hiring manager"
             when 'TaEnrollment'
-              t :enrolled_as_ta, "enrolled as a TA"
+              t :enrolled_as_ta, "enrolled as a interviewer"
             when 'ObserverEnrollment'
-              t :enrolled_as_observer, "enrolled as an observer"
+              t :enrolled_as_observer, "enrolled as an HR"
             when 'DesignerEnrollment'
               t :enrolled_as_designer, "enrolled as a designer"
             else
-              t :enrolled_as_student, "enrolled as a student"
+              t :enrolled_as_student, "enrolled as a candidate"
             end
         end
       %>
@@ -76,7 +76,7 @@
         <span class="associated_user_id" style="display: none;"><%= enrollment.try_rescue(:associated_user_id) %></span>
       </div>
       <div class="associated_user unassociated" style="<%= hidden if enrollment.try_rescue(:associated_user_id) %>">
-        <a href="#" class="associated_user_link"><%= t 'links.link_to_a_student', "link to a student" %></a>
+        <a href="#" class="associated_user_link"><%= t 'links.link_to_a_student', "link to a candidate" %></a>
       </div>
       <span class="enrollment_id" style="display: none;"><%= enrollment.try_rescue(:id) %></span>
     </div>
@@ -89,7 +89,7 @@
           <div class="section_name"><%= enrollment.course_section.display_name %></div>
           <% unless lockedbysis %>
             <%= form_tag course_move_enrollment_url(@context, enrollment.id), {:class => "enrollment_course_section_form", :style => "display: none;"} do  %>
-              <select title="<%= t 'titles.course_section', "Course Section" %>" name="course_section_id" class="course_section_id">
+              <select title="<%= t 'titles.course_section', "Project Section" %>" name="course_section_id" class="course_section_id">
                 <% @context.course_sections.active.each do |section| %>
                   <option value="<%= section.id %>" class="option_for_section_<%= section.id %>" <%= "selected=selected" if enrollment.course_section_id==section.id %>><%= section.display_name %></option>
                 <% end %>
