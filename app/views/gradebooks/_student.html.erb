@@ -1,5 +1,5 @@
 <a class="display_name nobr" href="<%= context_url(@context, :context_url) %>/grades/<%= student.id %>"><%= student.name ? student.last_name_first : t(:new_student, "New Student") %></a>
-<span class="hidden_name nobr" style="display: none;"><%= t(:student, "Student") %></span>
+<span class="hidden_name nobr" style="display: none;"><%= t(:student, "Candidate") %></span>
 <%
   es = @enrollments_hash[student.id] if @context.course_sections.active.count > 1 && @enrollments_hash && @enrollments_hash[student.id]
   sections = Canvas::ICU.collate_by(es.map{ |e| e.course_section }.compact, &:display_name) if es

@@ -94,8 +94,8 @@
       <a href="<%= search_rubrics_url(:q => "") %>" style="display: none;"><%= image_tag "find.png" %> <%= t 'links.find_rubric', "Find Rubric" %></a>
       <% if rubric_association && !rubric_association.rubric_assessments.empty? %>
         <div class="editing" style="font-size: 0.8em;"><%= t 'messages.rubric_in_use',
-                                                             { :one => "Keep in mind that 1 student has already been assessed using this rubric.  Changing it will affect their evaluation.",
-                                                               :other => "Keep in mind that %{count} students have already been assessed using this rubric.  Changing it will affect their evaluations." },
+                                                             { :one => "Keep in mind that 1 candidate has already been assessed using this rubric.  Changing it will affect their evaluation.",
+                                                               :other => "Keep in mind that %{count} candidates have already been assessed using this rubric.  Changing it will affect their evaluations." },
                                                            :count => rubric_association.rubric_assessments.count %></div>
       <% end %>
     </div>
@@ -103,7 +103,7 @@
       <span class="title" tabindex="-1"><%= rubric.try(:title) || t(:rubric_title, "Title") %></span>
     </div>
     <div class="has-assessments-warning" style="<%= hidden unless edit_view && has_assessments %>">
-      <%= t 'messages.rubric_in_use2', "You've already rated students with this rubric.  Any major changes could affect their assessment results." %>
+      <%= t 'messages.rubric_in_use2', "You've already rated candidates with this rubric.  Any major changes could affect their assessment evaluations." %>
     </div>
   </div>
 <table class="rubric_table">
@@ -154,17 +154,17 @@
       <form id="edit_rubric_form" class="edit-rubric-form no-margin-bottom">
         <div class="rubric_custom_ratings" style="<%= hidden unless @assignment %>">
           <input type="checkbox" id="rubric_custom_rating" class="rubric_custom_rating" <%= 'checked' if rubric && rubric.free_form_criterion_comments %>/>
-          <label for="rubric_custom_rating"><%= t 'labels.custom_rating', "I'll write free-form comments when assessing students" %></label>
+          <label for="rubric_custom_rating"><%= t 'labels.custom_rating', "I'll write free-form comments when assessing candidates" %></label>
         </div>
         <% if show_grading %>
           <div class="rubric_grading" style="<%= hidden unless @assignment %>">
             <input type="checkbox" id="grading_rubric" class="grading_rubric_checkbox" <%= 'checked' if rubric_association && rubric_association.use_for_grading %>/>
-            <label for="grading_rubric"><%= t 'labels.grading_rubric', "Use this rubric for assignment grading" %></label>
+            <label for="grading_rubric"><%= t 'labels.grading_rubric', "Use this rubric for assignment evaluating" %></label>
           </div>
         <% end %>
         <div class="totalling_rubric" style="<%= hidden unless @assignment %>">
           <input type="checkbox" id="totalling_rubric" class="totalling_rubric_checkbox" <%= 'checked' if rubric_association && rubric_association.hide_score_total %>/>
-          <label for="totalling_rubric"><%= t 'labels.totallying_rubric', "Hide score total for assessment results" %></label>
+          <label for="totalling_rubric"><%= t 'labels.totallying_rubric', "Hide score total for assessment evaluations" %></label>
         </div>
         <div class="button-container">
           <button type="button" class="btn btn-small cancel_button"><%= t '#buttons.cancel', "Cancel" %></button>

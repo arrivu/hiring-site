@@ -57,7 +57,7 @@ $(document).ready(function() {
     });
   });
   $("#publish_quizzes_form").submit(function() {
-    $(this).find("button").attr('disabled', true).filter('.submit_button').text(I18n.t('buttons.publishing_quizzes', 'Publishing Quizzes...'));
+    $(this).find("button").attr('disabled', true).filter('.submit_button').text(I18n.t('buttons.publishing_quizzes', 'Publishing Assessments...'));
   });
   $("#publish_multiple_quizzes_dialog .cancel_button").click(function() {
     $("#publish_multiple_quizzes_dialog").dialog('close');

@@ -13,6 +13,7 @@
     <% end %>
   <% end %>
 
+
   <% #if can_do(@context, @current_user, :read) %>
     <% #link_to calendar_url_for(@context), :class => 'btn button-sidebar-wide', :id => 'course_calendar_link' do %>
       <!--<i class="icon-calendar-day"></i>-->
@@ -25,7 +26,7 @@
       <%= form_tag context_url(@context, :context_unconclude_url) do %>
         <button class="btn button-sidebar-wide" type="submit">
           <i class="icon-add"></i>
-          <%= t('buttons.unconclude', 'Un-Conclude Course') %>
+          <%= t('buttons.unconclude', 'Un-Conclude Project') %>
         </button>
       <% end %>
     <% elsif !@context.soft_concluded? %>
@@ -50,6 +51,7 @@
     <% end %>
   <% end %>
 
+
   <% #if can_do(@context, @current_user, :manage_content, :manage_files, :manage_quizzes) && !@domain_root_account.settings[:Sublime_course_import_disable] %>
     <% #link_to context_url(@context, :context_content_migrations_url), :class => 'btn button-sidebar-wide import_content' do %>
       <!--<i class="icon-download"></i>-->
@@ -68,6 +70,7 @@
     <% link_to context_url(@context, :course_reset_url), :class => 'btn button-sidebar-wide reset_course_content_button' do %>
       <i class="icon-reset"></i>
       <%= t('links.reset', 'Reset Project Content') %>
+
     <% end %>
 
     <div <%= hidden(true) %> id="reset_course_content_dialog">

@@ -37,6 +37,7 @@
         </div>
       <% else %>
         <div class="secondary-button-group rs-margin-lr rs-margin-top rs-margin-bottom">
+
           <!--<a href="#" class="btn button-sidebar-wide wizard_popup_link  <%#= 'auto_open' if @context.created? || @context.claimed? %>"><i class="icon-question"></i> <%#= t('links.course_setup', %{Project Setup Checklist}) %></a>-->
           <!--<a class="btn button-sidebar-wide" href="<%#= context_url(@context, :new_context_discussion_topic_url, :is_announcement => true) %>"><i class="icon-announcement"></i> <%#= t('links.new_announcement', %{New Announcement}) %></a>-->
         </div>
@@ -82,14 +83,14 @@
     <% locals = {:title => "Coming Up", :display_count => 3, :period => "the next week", :contexts_to_link_to => @context, :upcoming => true} %>
     <% if @current_user %>
       <% cache(safe_cache_key([@current_user, @contexts, 'course_upcoming_events' ])) do %>
-        <%= render :partial => "shared/event_list", :object => @current_user.upcoming_events(:contexts => @contexts), :locals => locals %>
+        <%#= render :partial => "shared/event_list", :object => @current_user.upcoming_events(:contexts => @contexts), :locals => locals %>
       <% end %>
     <% else %>
-      <%= render :partial => "shared/event_list", :object => [], :locals => locals %>
+      <%#= render :partial => "shared/event_list", :object => [], :locals => locals %>
     <% end %>
   <% end %>
   <% if @show_recent_feedback %>
-    <%= render :partial => "shared/event_list", :object => @recent_feedback, :locals => {:title => t('titles.recent_feedback', "Recent Feedback"), :display_count => 3, :period => t('period_name', "the last 2 weeks"), :contexts_to_link_to => @context, :is_recent_feedback => true} %>
+    <%#= render :partial => "shared/event_list", :object => @recent_feedback, :locals => {:title => t('titles.recent_feedback', "Recent Feedback"), :display_count => 3, :period => t('period_name', "the last 2 weeks"), :contexts_to_link_to => @context, :is_recent_feedback => true} %>
   <% end %>
 <% end %>
 

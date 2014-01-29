@@ -230,7 +230,7 @@ routes.draw do
     match 'link_enrollment' => 'courses#link_enrollment', :as => :link_enrollment
     match 'update_nav' => 'courses#update_nav', :as => :update_nav
     match 'enroll_users.:format' => 'courses#enroll_users', :as => :formatted_enroll_users
-    resource :gradebook do
+    resource :gradebook ,:path => :evaluation do
       match 'submissions_upload/:assignment_id' => 'gradebooks#submissions_zip_upload', :as => :submissions_upload, :via => :post
       collection do
         get :change_gradebook_version
@@ -551,7 +551,8 @@ routes.draw do
     resources :account_notifications, :only => [:create, :destroy]
     #concerns :announcements
     resources :assignments
-    #resources :submissions
+
+    resources :submissions
     match 'account_authorization_configs' => 'account_authorization_configs#update_all', :as => :update_all_authorization_configs, :via => :put
     match 'account_authorization_configs' => 'account_authorization_configs#destroy_all', :as => :remove_all_authorization_configs, :via => :delete
     resources :account_authorization_configs

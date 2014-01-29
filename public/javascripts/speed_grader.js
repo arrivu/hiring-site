@@ -128,7 +128,7 @@ define([
       snapshotCache = {},
       sectionToShow,
       header,
-      studentLabel = I18n.t("student", "Student"),
+      studentLabel = I18n.t("student", "Candidate"),
       groupLabel = I18n.t("group", "Group"),
       gradeeLabel = studentLabel,
       utils;
@@ -917,7 +917,7 @@ define([
         }
       }
       else if (!jsonData.studentsWithSubmissions.length) {
-        alert(I18n.t('alerts.no_active_students', "Sorry, there are either no active students in the course or none are gradable by you."))
+        alert(I18n.t('alerts.no_active_students', "Sorry, there are either no active candidates in the project or none are gradable by you."))
         window.history.back();
       } else {
         $("#speed_grader_loading").hide();

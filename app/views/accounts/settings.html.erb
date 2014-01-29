@@ -831,11 +831,11 @@
       </table>
     </div>
 <% end %>
-<% if can_do(@context, @current_user, :manage_account_settings) %>
-    <div id="tab-tools">
-      <%= render :partial => 'external_tools/external_tools', :object => @context.context_external_tools.active %>
-    </div>
-<% end %>
+<%# if can_do(@context, @current_user, :manage_account_settings) %>
+    <!--<div id="tab-tools">-->
+      <!--<%#= render :partial => 'external_tools/external_tools', :object => @context.context_external_tools.active %>-->
+    <!--</div>-->
+<%# end %>
 <% if @context.root_account.settings[:enable_alerts] && can_do(@context, @current_user, :manage_interaction_alerts) %>
     <div id="tab-alerts">
       <h2><%= t(:alerts_title, "Alerts") %></h2>

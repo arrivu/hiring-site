@@ -1,5 +1,7 @@
 <% @body_classes << 'assessing' if @body_classes %>
-<% content_for :page_title do %><%= join_title @quiz.readable_type, @quiz.quiz_title %><% end %>
+<% content_for :page_title do %>
+<%= join_title @quiz.readable_type, @quiz.quiz_title %>
+<% end %>
 
 <% content_for :meta_tags do %>
   <% if params[:persist_headless] %>
@@ -17,7 +19,7 @@
   <h2><%= @quiz.quiz_title || @quiz.readable_type %></h2>
   <% if @submission.preview? %>
     <% draft_preview_title = t('headers.draft_preview',
-            "This is a preview of the draft version of the quiz") %>
+            "This is a preview of the draft version of the assessment") %>
     <h3>
       <i class="icon-warning"><span class="screenreader-only"><%= draft_preview_title %></span></i>
       <%= draft_preview_title %>

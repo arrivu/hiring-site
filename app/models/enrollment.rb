@@ -198,6 +198,7 @@ class Enrollment < ActiveRecord::Base
 
   def self.readable_types
     {
+
       'TeacherEnrollment' => t('#enrollment.roles.teacher', "Hiring Manager"),
       'TaEnrollment' => t('#enrollment.roles.ta', "Interviewer"),
       'DesignerEnrollment' => t('#enrollment.roles.designer', "Designer"),

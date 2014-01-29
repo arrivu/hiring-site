@@ -67,7 +67,7 @@
             <% if @assignment.grade_as_group? %>
               <%= t('headers.no_group_submission', "This group does not have a submission for this assignment") %>
             <% else %>
-              <%= t('headers.no_submission', "This student does not have a submission for this assignment") %>
+              <%= t('headers.no_submission', "This Candidate does not have a submission for this assesment") %>
             <% end %>
           </h3>
         </div>
@@ -85,7 +85,6 @@
   <div id="right_side" class="full_height">
     <div class="full_height" id="width_resizer"></div>
     <div id="rightside_inner" class="full_height">
-
       <div id="submission_details" class="content_box">
         <div id="single_submission">
           <label><%= before_label(:submitted, "Submitted") %></label>

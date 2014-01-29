@@ -121,7 +121,7 @@ define([
               // Success callback
               function(data) {
                 lastSuccessfulSubmissionData = thisSubmissionData;
-                $lastSaved.text(I18n.t('saved_at', 'Quiz saved at %{t}', { t: $.friendlyDatetime(new Date()) }));
+                $lastSaved.text(I18n.t('saved_at', 'Assessment saved at %{t}', { t: $.friendlyDatetime(new Date()) }));
                 quizSubmission.currentlyBackingUp = false;
                 quizSubmission.inBackground = false;
                 if(repeat) {
@@ -367,7 +367,7 @@ define([
         if (!quizSubmission.navigatingToRelogin) {
           quizSubmission.updateSubmission(false, true);
           if(!quizSubmission.submitting && !quizSubmission.alreadyAcceptedNavigatingAway) {
-            return I18n.t('confirms.unfinished_quiz', "You're about to leave the quiz unfinished.  Continue anyway?");
+            return I18n.t('confirms.unfinished_quiz', "You're about to leave the assessment unfinished.  Continue anyway?");
           }
         }
       };

@@ -662,7 +662,7 @@ module ApplicationHelper
     if !attributes.empty?
       attributes.each do |attribute|
         res << %Q{ data-#{h attribute}="#{h(hash ? hash[attribute] : obj.send(attribute))}"}
-      end
+    end
     elsif hash
       res << hash.map { |key, value| %Q{data-#{h key}="#{h value}"} }.join(" ")
     end

@@ -128,7 +128,7 @@
           <div class="unread-grade">&nbsp;</div>
         <% end %>
         <% if assignment_presenter.is_assignment? %>
-          <a href="<%= context_url(@context, :context_assignment_submission_url, assignment, @presenter.student_id) %>"><%= assignment.title %></a>
+          <a href="<%#= context_url(@context, :context_assignment_submission_url, assignment, @presenter.student_id) %>"><%#= assignment.title %></a>
         <% else %>
           <%= assignment.title %>
         <% end %>
@@ -337,7 +337,9 @@
 <%= render :partial => "shared/rubric_criterion_dialog" %>
 <input type="text" style="width: 40px; display: none;" id="grade_entry"/>
 <a href="#" id="revert_score_template" class="revert_score_link" title="<%= t('titles.revert_score', "Revert to original score") %>"><%= image_tag "back.png", :alt => "" %></a>
+
 <!--<a href="<%#= context_url(@context, :context_assignment_submission_url, "{{ assignment_id }}", @presenter.student_id) %>" class="update_submission_url" style="display: none;">&nbsp;</a>-->
+
 <% if @context.grading_standard_enabled? %>
   <% js_block do %>
   <script>
