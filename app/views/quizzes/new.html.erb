@@ -84,9 +84,9 @@
 
   <% if @has_student_submissions %>
     <% has_student_submissions_title = t('warnings.has_student_submissions', <<-TEXT)
-      Students have either already taken or started taking this quiz, so be careful
-      about editing it.  If you change any quiz questions in a significant way, you
-      may want to consider regrading students who took the old version of the quiz.
+      Candidates have either already taken or started taking this assessment, so be careful
+      about editing it.  If you change any assessment questions in a significant way, you
+      may want to consider regrading candidates who took the old version of the assessment.
       TEXT
     %>
     <div class="alert alert-info" id="student_submissions_warning">
@@ -97,12 +97,12 @@
   <% if @context.feature_enabled?(:draft_state) %>
   <div class="title">
     <label for="quiz_title" class="screenreader-only"><%= t('quiz_title', 'Assessment Title') %></label>
-    <%= text_field :quiz, :title, :placeholder => "Quiz Title", :maxlength => "254" %>
+    <%= text_field :quiz, :title, :placeholder => "Assessment Title", :maxlength => "254" %>
   </div>
   <% else %>
   <div class="row-fluid">
     <div class="span6">
-    <%= text_field :quiz, :title, :placeholder => "Quiz Title", :maxlength => "254" %>
+    <%= text_field :quiz, :title, :placeholder => "Assessment Title", :maxlength => "254" %>
     </div>
     <div class="span6">
       <div class="admin-link-hover-area">
@@ -196,7 +196,7 @@
                 <div class="controls">
                   <%= text_field :quiz, :points_possible, :style => "width: 50px;" %> pts
                   <div style="font-size: 0.8em;">
-                    <%= t('hints.quiz_score', "students will automatically receive full credit once they take the survey") %>
+                    <%= t('hints.quiz_score', "candidates will automatically receive full credit once they take the survey") %>
                   </div>
                 </div>
             </div>
@@ -350,7 +350,7 @@
                     <div id="lockdown_browser_suboptions" class="options" style="display: none;">
                       <label class="checkbox" for="quiz_require_lockdown_browser_for_results">
                         <%= check_box :quiz, :require_lockdown_browser_for_results %>
-                        <%= t(:require_lockdown_browser_for_results, "Required to view quiz results") %>
+                        <%= t(:require_lockdown_browser_for_results, "Required to view assessment results") %>
                       </label>
                     </div>
                   </div>
@@ -463,7 +463,7 @@
 <div id="ip_filters_dialog" style="display: none;">
   <h2><%= t('headers.ip_filters', "What are Quiz IP Filters?") %></h2>
   <p class="explanation"><%= t(:ip_filters, <<-TEXT)
-  Quiz IP filters are a way to limit access to quizzes to
+  Assessment IP filters are a way to limit access to assessments to
   computers in a specified IP range.  Filters can be a comma-separated
   list of addresses, or an address followed by a mask
   ("192.168.217.1", "192.168.217.1/24" or "192.168.217.1/255.255.255.0").

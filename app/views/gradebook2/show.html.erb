@@ -1,10 +1,10 @@
 <%
-  content_for :page_title, "Results - #{@context.name}"
+  content_for :page_title, "Evaluations - #{@context.name}"
   @body_classes << "gradebook2 full-width"
   @show_left_side = false
   @show_embedded_chat = false
   if @context.old_gradebook_visible?
-    add_crumb t(:go_back_to_the_old_gradebook, "Go back to the old result", :version => 1), context_url(@context, :change_gradebook_version_context_gradebook_url, :reset => true), :id => 'change_gradebook_version_link_holder'
+    add_crumb t(:go_back_to_the_old_gradebook, "Go back to the old evaluation", :version => 1), context_url(@context, :change_gradebook_version_context_gradebook_url, :reset => true), :id => 'change_gradebook_version_link_holder'
   end
   jammit_css :slickgrid, :gradebook2
   js_bundle :gradebook2
@@ -19,7 +19,7 @@
     </button>
     <button id="gradebook_settings"><i class="icon-settings"></i></button>
     <ul style="display: none;" class="gradebook_drop_down ui-kyle-menu">
-      <li><a href="<%= context_url(@context, :context_gradebook_url) %>/history"><%= t('view_grading_history', 'View Grading History') %></a></li>
+      <li><a href="<%= context_url(@context, :context_gradebook_url) %>/history"><%= t('view_grading_history', 'View Evaluating History') %></a></li>
       <li><a href="<%= context_url(@context, :context_gradebook_url) %>.csv"><%= t('download_scores', 'Download Scores (.csv)') %></a></li>
       <% if @gradebook_is_editable && @context.allows_gradebook_uploads? %>
         <li><a class="gradebook_upload_link" href="#"><%= t('upload_scores', 'Upload Scores (from .csv)') %></a></li>
@@ -27,7 +27,7 @@
       <% if @context.allows_grade_publishing_by(@current_user) && can_do(@context, @current_user, :manage_grades) %>
       <li><a id="publish_to_sis" href="<%= context_url(@context, :context_details_url,
                                                        :anchor => 'tab-grade-publishing') %>">
-        <%= t('publish_to_sis', 'Publish grades to SIS') %>
+        <%= t('publish_to_sis', 'Publish evaluations to SIS') %>
       </a></li>
       <% end %>
       <% if @gradebook_is_editable %>

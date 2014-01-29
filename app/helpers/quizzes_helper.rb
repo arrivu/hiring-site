@@ -33,16 +33,16 @@ module QuizzesHelper
 
   def unpublished_quiz_warning
     I18n.t("#quizzes.warnings.unpublished_quiz",
-      '*This quiz is unpublished* Only teachers can see the quiz until ' +
+      '*This assessment is unpublished* Only hiring manager can see the assessment until ' +
       'it is published.',
       :wrapper => '<strong class=unpublished_quiz_warning>\1</strong>')
   end
 
   def unpublished_changes_warning
     I18n.t("#quizzes.warnings.unpublished_changes",
-      '*You have made unpublished changes to this quiz.* '+
-      'These changes will not appear for students until you publish or ' +
-      'republish the quiz.',
+      '*You have made unpublished changes to this assessment.* '+
+      'These changes will not appear for candidates until you publish or ' +
+      'republish the assessment.',
       :wrapper => '<strong class=unpublished_quiz_warning>\1</strong>')
   end
 
@@ -167,25 +167,25 @@ module QuizzesHelper
 
   def submitted_students_quiz_title(student_count)
     I18n.t('#quizzes.headers.submitted_students_quiz_title',
-      { :zero => "Students who have taken the quiz",
-        :one => "Students who have taken the quiz (%{count})",
-        :other => "Students who have taken the quiz (%{count})" },
+      { :zero => "Candidates who have taken the assessment",
+        :one => "Candidates who have taken the assessment (%{count})",
+        :other => "Candidates who have taken the assessment (%{count})" },
       { :count => student_count })
   end
 
   def submitted_students_survey_title(student_count)
     I18n.t('#quizzes.headers.submitted_students_survey_title',
-      { :zero => "Students who have taken the survey",
-        :one => "Students who have taken the survey (%{count})",
-        :other => "Students who have taken the survey (%{count})" },
+      { :zero => "Candidates who have taken the survey",
+        :one => "Candidates who have taken the survey (%{count})",
+        :other => "Candidates who have taken the survey (%{count})" },
       { :count => student_count })
   end
 
   def no_submitted_students_msg(quiz)
     if quiz.survey?
-      t('#quizzes.messages.no_submitted_students_survey', "No Students have taken the survey yet")
+      t('#quizzes.messages.no_submitted_students_survey', "No Candidates have taken the survey yet")
     else
-      t('#quizzes.messages.no_submitted_students_quiz', "No Students have taken the quiz yet")
+      t('#quizzes.messages.no_submitted_students_quiz', "No Candidates have taken the assessment yet")
     end
   end
 
@@ -199,25 +199,25 @@ module QuizzesHelper
 
   def unsubmitted_students_quiz_title(student_count)
     I18n.t('#quizzes.headers.unsubmitted_students_quiz_title',
-      { :zero => "Student who haven't taken the quiz",
-        :one => "Students who haven't taken the quiz (%{count})",
-        :other => "Students who haven't taken the quiz (%{count})" },
+      { :zero => "Candidates who haven't taken the assessment",
+        :one => "Candidates who haven't taken the assessment (%{count})",
+        :other => "Candidates who haven't taken the assessment (%{count})" },
       { :count => student_count })
   end
 
   def unsubmitted_students_survey_title(student_count)
     I18n.t('#quizzes.headers.unsubmitted_students_survey_title',
-      { :zero => "Student who haven't taken the survey",
-        :one => "Students who haven't taken the survey (%{count})",
-        :other => "Students who haven't taken the survey (%{count})" },
+      { :zero => "Candidates who haven't taken the survey",
+        :one => "Candidates who haven't taken the survey (%{count})",
+        :other => "Candidates who haven't taken the survey (%{count})" },
       { :count => student_count })
   end
 
   def no_unsubmitted_students_msg(quiz)
     if quiz.survey?
-      t('#quizzes.messages.no_unsubmitted_students_survey', "All Students have taken the survey")
+      t('#quizzes.messages.no_unsubmitted_students_survey', "All Candidates have taken the survey")
     else
-      t('#quizzes.messages.no_unsubmitted_students_quiz', "All Students have taken the quiz")
+      t('#quizzes.messages.no_unsubmitted_students_quiz', "All Candidates have taken the assessment")
     end
   end
 
@@ -488,19 +488,19 @@ module QuizzesHelper
   def take_poll_message(quiz=@quiz)
     quiz.survey? ?
       t('#quizzes.links.take_the_survey', 'Take the Survey') :
-      t('#quizzes.links.take_the_quiz', 'Take the Quiz')
+      t('#quizzes.links.take_the_quiz', 'Take the Assessment')
   end
 
   def retake_poll_message(quiz=@quiz)
     quiz.survey? ?
       t('#quizzes.links.take_the_survey_again', 'Take the Survey Again') :
-      t('#quizzes.links.take_the_quiz_again', 'Take the Quiz Again')
+      t('#quizzes.links.take_the_quiz_again', 'Take the Assessment Again')
   end
 
   def resume_poll_message(quiz=@quiz)
     quiz.survey? ?
       t('#quizzes.links.resume_survey', 'Resume Survey') :
-      t('#quizzes.links.resume_quiz', 'Resume Quiz')
+      t('#quizzes.links.resume_quiz', 'Resume Assessment')
   end
 
   def attachment_id_for(question)
@@ -523,7 +523,7 @@ module QuizzesHelper
     if quiz.survey?
       I18n.t('titles.edit_survey', 'Edit Survey')
     else
-      I18n.t('titles.edit_quiz', 'Edit Quiz')
+      I18n.t('titles.edit_quiz', 'Edit Assessment')
     end
   end
 
@@ -531,7 +531,7 @@ module QuizzesHelper
     if quiz.survey?
       I18n.t('titles.delete_survey', 'Delete Survey')
     else
-      I18n.t('titles.delete_quiz', 'Delete Quiz')
+      I18n.t('titles.delete_quiz', 'Delete Assessment')
     end
   end
 

@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class='center'>
-      <a id="assignment_url" href="<%= context_url(@context, :context_assignment_url, @assignment.id) %>"><%= @assignment.title %></a>
+      <!--<a id="assignment_url" href="<%#= context_url(@context, :context_assignment_url, @assignment.id) %>"><%#= @assignment.title %></a>-->
       (<span id="context_title" ><%= @context.short_name %></span>)
       <div class="due_at"><%= translated_due_date(@assignment) %></div>
     </div>
@@ -105,8 +105,8 @@
           <div id="submission_files_list">
             <div id="submission_file_hidden"  class="submission-file" style='display:none;'>
               <span class="turnitin_score_container"></span>
-              <a class="submission-file-download" title="<%= t('titles.download_file', "Download this file") %>" href="<%= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}") %>"><%= t('links.download_file', "Download File") %></a>
-              <a class="display_name no-hover" href="<%= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}", :inline => 1) %>" title="<%= t('titles.preview_file', "Preview this File") %>">???</a>
+              <!--<a class="submission-file-download" title="<%#= t('titles.download_file', "Download this file") %>" href="<%#= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}") %>"><%#= t('links.download_file', "Download File") %></a>-->
+              <!--<a class="display_name no-hover" href="<%#= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}", :inline => 1) %>" title="<%#= t('titles.preview_file', "Preview this File") %>">???</a>-->
             </div>
           </div>
           <div class="turnitin_info_container"></div>
@@ -194,7 +194,7 @@
               </div>
             </div>
             <div class="comment_attachment" id="comment_attachment_blank" style="display: none;">
-              <a href="<%= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{ submitter_id }}", :comment_id => "{{ comment_id }}", :download => "{{ id }}") %>"><span class="display_name">&nbsp;</span></a>
+              <!--<a href="<%#= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{ submitter_id }}", :comment_id => "{{ comment_id }}", :download => "{{ id }}") %>"><span class="display_name">&nbsp;</span></a>-->
             </div>
           </div>
 
@@ -259,9 +259,9 @@
     </div>
   </div>
 </div>
-<a style="display:none;" id="assignment_submission_url" href="<%= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submission_id}}") %>"></a>
-<a style="display:none;" id="assignment_submission_turnitin_report_url" href="<%= context_url(@context, :context_assignment_submission_turnitin_report_url, @assignment.id, "{{ user_id }}", "{{ asset_string }}") %>"></a>
-<a style="display:none;" id="assignment_submission_resubmit_to_turnitin_url" href="<%= context_url(@context, :context_assignment_submission_resubmit_to_turnitin_url, @assignment.id, "{{ user_id }}") %>"></a>
+<!--<a style="display:none;" id="assignment_submission_url" href="<%#= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submission_id}}") %>"></a>-->
+<!--<a style="display:none;" id="assignment_submission_turnitin_report_url" href="<%#= context_url(@context, :context_assignment_submission_turnitin_report_url, @assignment.id, "{{ user_id }}", "{{ asset_string }}") %>"></a>-->
+<!--<a style="display:none;" id="assignment_submission_resubmit_to_turnitin_url" href="<%#= context_url(@context, :context_assignment_submission_resubmit_to_turnitin_url, @assignment.id, "{{ user_id }}") %>"></a>-->
 <form id="settings_form" style="display:none; width:400px;" title="<%= t('titles.speedgrader_options', "Speedgrader Options") %>">
   <p>
     <label for="eg_sort_by"><%= t('labels.sort_by', "Sort student list") %></label>

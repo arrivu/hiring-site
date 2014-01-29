@@ -1,8 +1,8 @@
-<% user_name = @quiz.survey? && @quiz.anonymous_submissions ? t(:anonymous_username, "Student") : context_user_name(@context, @user) %>
+<% user_name = @quiz.survey? && @quiz.anonymous_submissions ? t(:anonymous_username, "Candidate") : context_user_name(@context, @user) %>
 <% user_name = t(:logged_out_user, "Logged Out User %{index}", :index => @logged_out_user_index) if !user_name && !@submission.user_id %>
 <% content_for :page_title, (@quiz.survey? ?
      join_title(t(:page_title_survey, "%{user}'s Survey History", :user => user_name), @quiz.quiz_title || t(:default_survey_name, "Survey %{course_name}", :course_name => @context.name)) :
-     join_title(t(:page_title_quiz, "%{user}'s Quiz History", :user => user_name), @quiz.quiz_title || t(:default_quiz_name, "Quiz %{course_name}", :course_name => @context.name)))
+     join_title(t(:page_title_quiz, "%{user}'s Assessment History", :user => user_name), @quiz.quiz_title || t(:default_quiz_name, "Assessment %{course_name}", :course_name => @context.name)))
 %>
 
 <% quizNavClass = 'quiz-nav' %>
@@ -51,7 +51,7 @@
           <% if @quiz.survey? %>
             <%= t(:latest_survey_results, "Here's the latest survey results for %{user}. You can modify the points for any question and add more comments, then click \"Update Scores\" at the bottom of the page.", :user => user_name) %>
           <% else %>
-            <%= t(:latest_quiz_results, "Here's the latest quiz results for %{user}. You can modify the points for any question and add more comments, then click \"Update Scores\" at the bottom of the page.", :user => user_name) %>
+            <%= t(:latest_quiz_results, "Here's the latest assessment results for %{user}. You can modify the points for any question and add more comments, then click \"Update Scores\" at the bottom of the page.", :user => user_name) %>
           <% end %>
         </p>
       </div>
@@ -61,7 +61,7 @@
           <% if @quiz.survey? %>
             <%= t('headers.survey_submissions', "Survey Submissions") %>
           <% else %>
-            <%= t('headers.quiz_submissions', "Quiz Submissions") %>
+            <%= t('headers.quiz_submissions', "Assessment Submissions") %>
           <% end %>
         </h2>
       <div class="rs-margin-lr">
@@ -93,18 +93,18 @@
             <% if can_do(@submission, @current_user, :add_attempts) %>
               <%= form_for :quiz_submission, :url => context_url(@context, :context_quiz_extensions_url, @quiz.id, @submission.user_id), :html => {:method => :post} do |f| %>
                 <input type="hidden" name="extra_attempts" value="<%= (@submission.extra_attempts || 0) + 1 %>"/>
-                <button type="submit" class="btn"><%= t('buttons.allow_extra_attempt', "allow this student an extra attempt") %></button>
+                <button type="submit" class="btn"><%= t('buttons.allow_extra_attempt', "allow this candidate an extra attempt") %></button>
               <% end %>
             <% end %>
           <% else %>
             <% if @quiz.survey? %>
               <%= t(:survey_unlimited_attempts, "This survey has unlimited attempts") %>
             <% else %>
-              <%= t(:quiz_unlimited_attempts, "This quiz has unlimited attempts") %>
+              <%= t(:quiz_unlimited_attempts, "This assessment has unlimited attempts") %>
             <% end %>
           <% end %>
         </div>
-        <a href="<%= context_url(@context, :context_quiz_url, @quiz) %>" class='no-hover icon-arrow-left'> <%= @quiz.survey? ? t('links.back_to_survey', "Back to Survey") : t('links.back_to_quiz', "Back to Quiz") %></a>
+        <a href="<%= context_url(@context, :context_quiz_url, @quiz) %>" class='no-hover icon-arrow-left'> <%= @quiz.survey? ? t('links.back_to_survey', "Back to Survey") : t('links.back_to_quiz', "Back to Assessment") %></a>
       </div>
     <% end %>
   <% end %>
@@ -117,7 +117,7 @@
     <% elsif @quiz.survey? %>
       <%= t(:unnamed_survey_results, "Survey Results for %{user}", :user => user_name) %>
     <% else %>
-      <%= t(:unnamed_quiz_results, "Quiz Results for %{user}", :user => user_name) %>
+      <%= t(:unnamed_quiz_results, "Assessment Results for %{user}", :user => user_name) %>
     <% end %>
   </h2>
 </header>
@@ -127,13 +127,13 @@
   <% if @quiz.survey? %>
     <%= t(:survey_not_yet_taken, "Survey hasn't been taken yet.") %>
   <% else %>
-    <%= t(:quiz_not_yet_taken, "Quiz hasn't been taken yet.") %>
+    <%= t(:quiz_not_yet_taken, "Assessment hasn't been taken yet.") %>
   <% end %>
 <% elsif @submission.untaken? %>
   <% if @quiz.survey? %>
     <%= t(:survey_not_yet_taken_or_in_progress, "Survey hasn't been taken yet or is currently in progress") %>
   <% else %>
-    <%= t(:quiz_not_yet_taken_or_in_progress, "Quiz hasn't been taken yet or is currently in progress") %>
+    <%= t(:quiz_not_yet_taken_or_in_progress, "Assessment hasn't been taken yet or is currently in progress") %>
   <% end %>
 <% else %>
   <%= form_tag context_url(@context, :context_quiz_quiz_submission_url, @quiz.id, @submission.id), {:method => :put, :id => "update_history_form"} do %>

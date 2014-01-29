@@ -93,7 +93,7 @@ class QuizzesController < ApplicationController
 
   def show
     if @quiz.deleted?
-      flash[:error] = t('errors.quiz_deleted', "That quiz has been deleted")
+      flash[:error] = t('errors.quiz_deleted', "That assessment has been deleted")
       redirect_to named_context_url(@context, :context_quizzes_url)
       return
     end
@@ -204,7 +204,7 @@ class QuizzesController < ApplicationController
         end
       end
       if @has_student_submissions = @quiz.has_student_submissions?
-        flash[:notice] = t('notices.has_submissions_already', "Keep in mind, some students have already taken or started taking this quiz")
+        flash[:notice] = t('notices.has_submissions_already', "Keep in mind, some candidates have already taken or started taking this assessment")
       end
 
       regrade_options = Hash[@quiz.current_quiz_question_regrades.map do |qqr|
@@ -228,7 +228,7 @@ class QuizzesController < ApplicationController
   def create
     if authorized_action(@context.quizzes.new, @current_user, :create)
       params[:quiz][:title] = nil if params[:quiz][:title] == "undefined"
-      params[:quiz][:title] ||= t(:default_title, "New Quiz")
+      params[:quiz][:title] ||= t(:default_title, "New Assessment")
       params[:quiz].delete(:points_possible) unless params[:quiz][:quiz_type] == 'graded_survey'
       params[:quiz][:access_code] = nil if params[:quiz][:access_code] == ""
       if params[:quiz][:quiz_type] == 'assignment' || params[:quiz][:quiz_type] == 'graded_survey'
@@ -266,7 +266,7 @@ class QuizzesController < ApplicationController
     n = Time.now.to_f
     if authorized_action(@quiz, @current_user, :update)
       params[:quiz] ||= {}
-      params[:quiz][:title] = t(:default_title, "New Quiz") if params[:quiz][:title] == "undefined"
+      params[:quiz][:title] = t(:default_title, "New Assessment") if params[:quiz][:title] == "undefined"
       params[:quiz].delete(:points_possible) unless params[:quiz][:quiz_type] == 'graded_survey'
       params[:quiz][:access_code] = nil if params[:quiz][:access_code] == ""
       if params[:quiz][:quiz_type] == 'assignment' || params[:quiz][:quiz_type] == 'graded_survey' #'new' && params[:quiz][:assignment_group_id]
@@ -326,14 +326,14 @@ class QuizzesController < ApplicationController
           @quiz.reload
           @quiz.update_quiz_submission_end_at_times if params[:quiz][:time_limit].present?
         end
-        flash[:notice] = t('notices.quiz_updated', "Quiz successfully updated")
+        flash[:notice] = t('notices.quiz_updated', "Assessment successfully updated")
         format.html { redirect_to named_context_url(@context, :context_quiz_url, @quiz) }
         format.json { render :json => @quiz.as_json(:include => {:assignment => {:include => :assignment_group}}) }
       end
     end
   rescue
     respond_to do |format|
-      flash[:error] = t('errors.quiz_update_failed', "Quiz failed to update")
+      flash[:error] = t('errors.quiz_update_failed', "Assessment failed to update")
       format.html { redirect_to named_context_url(@context, :context_quiz_url, @quiz) }
       format.json { render :json => @quiz.errors, :status => :bad_request }
     end
@@ -359,8 +359,8 @@ class QuizzesController < ApplicationController
       @quizzes.each(&:publish!)
 
       flash[:notice] = t('notices.quizzes_published',
-                         { :one => "1 quiz successfully published!",
-                           :other => "%{count} quizzes successfully published!" },
+                         { :one => "1 assessment successfully published!",
+                           :other => "%{count} assessments successfully published!" },
                          :count => @quizzes.length)
 
 
@@ -377,8 +377,8 @@ class QuizzesController < ApplicationController
       @quizzes.each(&:unpublish!)
 
       flash[:notice] = t('notices.quizzes_unpublished',
-                         { :one => "1 quiz successfully unpublished!",
-                           :other => "%{count} quizzes successfully unpublished!" },
+                         { :one => "1 assessment successfully unpublished!",
+                           :other => "%{count} assessments successfully unpublished!" },
                          :count => @quizzes.length)
 
       respond_to do |format|
@@ -483,7 +483,7 @@ class QuizzesController < ApplicationController
       end
       setup_attachments
       if @quiz.deleted?
-        flash[:error] = t('errors.quiz_deleted', "That quiz has been deleted")
+        flash[:error] = t('errors.quiz_deleted', "That assessment has been deleted")
         redirect_to named_context_url(@context, :context_quizzes_url)
         return
       end
@@ -493,7 +493,7 @@ class QuizzesController < ApplicationController
         return
       end
       if @quiz.muted? && !@quiz.grants_right?(@current_user, session, :grade)
-        flash[:notice] = t('notices.cant_view_submission_while_muted', "You cannot view the quiz history while the quiz is muted.")
+        flash[:notice] = t('notices.cant_view_submission_while_muted', "You cannot view the assessment history while the assessment is muted.")
         redirect_to named_context_url(@context, :context_quiz_url, @quiz)
         return
       end
@@ -686,7 +686,7 @@ class QuizzesController < ApplicationController
         redirect_to polymorphic_url([@context, @quiz, 'take'], quiz_redirect_params(:preview => params[:preview]))
       end
     else
-      flash[:error] = t('errors.no_more_attempts', "You have no quiz attempts left") unless @just_graded
+      flash[:error] = t('errors.no_more_attempts', "You have no assessment attempts left") unless @just_graded
       redirect_to named_context_url(@context, :context_quiz_url, @quiz, quiz_redirect_params)
     end
   end
@@ -694,7 +694,7 @@ class QuizzesController < ApplicationController
   def take_quiz
     return unless quiz_submission_active?
     @show_embedded_chat = false
-    flash[:notice] = t('notices.less_than_allotted_time', "You started this quiz near when it was due, so you won't have the full amount of time to take the quiz.") if @submission.less_than_allotted_time?
+    flash[:notice] = t('notices.less_than_allotted_time', "You started this assessment near when it was due, so you won't have the full amount of time to take the assessment.") if @submission.less_than_allotted_time?
     if params[:question_id] && !valid_question?(@submission, params[:question_id])
       redirect_to course_quiz_url(@context, @quiz) and return
     end
@@ -743,6 +743,6 @@ class QuizzesController < ApplicationController
 
   def set_download_submission_dialog_title
     js_env SUBMISSION_DOWNLOAD_DIALOG_TITLE: I18n.t('#quizzes.download_all_quiz_file_upload_submissions',
-                                                    'Download All Quiz File Upload Submissions')
+                                                    'Download All Assessment File Upload Submissions')
   end
 end

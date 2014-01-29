@@ -2410,28 +2410,28 @@ class Course < ActiveRecord::Base
   TAB_HOME = 0
   #TAB_SYLLABUS = 1
   TAB_PAGES = 1
-  #TAB_ASSIGNMENTS = 3
-  TAB_QUIZZES = 2
-  TAB_GRADES = 3
-  TAB_PEOPLE = 4
-  TAB_GROUPS = 5
+  TAB_ASSIGNMENTS = 2
+  TAB_QUIZZES = 3
+  TAB_GRADES = 4
+  TAB_PEOPLE = 5
+  TAB_GROUPS = 6
   #TAB_DISCUSSIONS = 8
-  TAB_CHAT = 6
-  TAB_MODULES = 7
-  TAB_FILES = 8
-  TAB_CONFERENCES = 9
-  TAB_SETTINGS = 10
-  TAB_ANNOUNCEMENTS = 11
-  TAB_OUTCOMES = 12
-  TAB_COLLABORATIONS = 13
+  TAB_CHAT = 7
+  TAB_MODULES = 8
+  TAB_FILES = 9
+  TAB_CONFERENCES = 10
+  TAB_SETTINGS = 11
+  TAB_ANNOUNCEMENTS = 12
+  TAB_OUTCOMES = 13
+  TAB_COLLABORATIONS = 14
 
   def self.default_tabs
     [
         { :id => TAB_HOME, :label => t('#tabs.home', "Home"), :css_class => 'home', :href => :course_path },
         #{ :id => TAB_ANNOUNCEMENTS, :label => t('#tabs.announcements', "Announcements"), :css_class => 'announcements', :href => :course_announcements_path },
-        #{ :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_assignments_path },
+        { :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_assignments_path },
         #{ :id => TAB_DISCUSSIONS, :label => t('#tabs.discussions', "Discussions"), :css_class => 'discussions', :href => :course_discussion_topics_path },
-        { :id => TAB_GRADES, :label => t('#tabs.grades', "Results"), :css_class => 'grades', :href => :course_grades_path },
+        { :id => TAB_GRADES, :label => t('#tabs.grades', "Evaluations"), :css_class => 'grades', :href => :course_grades_path },
         { :id => TAB_PEOPLE, :label => t('#tabs.people', "People"), :css_class => 'people', :href => :course_users_path },
         { :id => TAB_CHAT, :label => t('#tabs.chat', "Chat"), :css_class => 'chat', :href => :course_chat_path },
         #{ :id => TAB_PAGES, :label => t('#tabs.pages', "Pages"), :css_class => 'pages', :href => :course_wiki_pages_path },

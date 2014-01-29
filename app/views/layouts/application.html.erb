@@ -98,7 +98,7 @@
                     total_shown += set.length
                    %><%= render(:partial => "shared/menu_section", :locals => {
                                 :max_to_show => max_to_show,
-                                :more_link_for_over_max => assignments_path,
+                                #:more_link_for_over_max => assignments_path,
                                 :collection => set,
                                 :collection_size => total_shown >= max_to_show ? @current_user.send(k, limit: nil).size : set.length,
                                 :partial => "shared/menu_assignment",

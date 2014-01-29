@@ -1,8 +1,8 @@
-<% content_for :page_title do %><%= join_title t(:page_title, "Gradebook"), @context.name %><% end %>
+<% content_for :page_title do %><%= join_title t(:page_title, "Evaluations"), @context.name %><% end %>
 <% @body_classes << 'full-width' %>
 
 <h1 class='screenreader-only'>
-  <%= join_title t(:page_title, "Gradebook"), @context.name %>
+  <%= join_title t(:page_title, "Evaluations"), @context.name %>
 </h1>
 
 <%= render :partial => "gradebook" %>
@@ -22,12 +22,12 @@
     <li>
       <span class="keycode"><%= t('keycodes.next_student', "down") %></span>
       <span class="colon">:</span>
-      <span class="description"><%= t('keycode_descriptions.next_student', "Next Student") %></span>
+      <span class="description"><%= t('keycode_descriptions.next_student', "Next Candidate") %></span>
     </li>
     <li>
       <span class="keycode"><%= t('keycodes.previous_student', "up") %></span>
       <span class="colon">:</span>
-      <span class="description"><%= t('keycode_descriptions.previous_student', "Previous Student") %></span>
+      <span class="description"><%= t('keycode_descriptions.previous_student', "Previous Candidate") %></span>
     </li>
     <li>
       <span class="keycode"><%= t('keycodes.edit_cell', "enter") %></span>

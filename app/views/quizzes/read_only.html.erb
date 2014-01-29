@@ -2,7 +2,7 @@
   jammit_css :quizzes
   js_bundle :quizzes_bundle
   js_env :QUIZZES => {:QUIZ => true}
-  content_for :page_title, (@quiz.quiz_title || !@quiz.quiz_title.empty? ? @quiz.quiz_title : t(:default_page_title, 'New Quiz'))
+  content_for :page_title, (@quiz.quiz_title || !@quiz.quiz_title.empty? ? @quiz.quiz_title : t(:default_page_title, 'New Assessment'))
 %>
 <% content_for :right_side do %>
   <div class="rs-margin-all">
@@ -11,7 +11,7 @@
 <% end %>
 
 
-<h2><%= t('headers.quiz_details', "Quiz Details") %></h2>
+<h2><%= t('headers.quiz_details', "Quiz Assessment") %></h2>
 <div style="display: none;" id="quiz_urls">
   <a href="<%= context_url(@context, :context_quiz_url, @quiz.id) %>" class="update_quiz_url">&nbsp;</a>
   <a href="<%= context_url(@context, :context_quiz_quiz_questions_url, @quiz.id) %>" class="add_question_url">&nbsp;</a>
@@ -21,7 +21,7 @@
 
 
 <div style="margin-bottom: 25px;">
-  <%= before_label(:quiz_instructions, "Quiz Instructions") %>
+  <%= before_label(:quiz_instructions, "Assessment Instructions") %>
   <%= user_content(@quiz.description, @context.asset_string) %>
 </div>
 <div style="margin-bottom: 5px;">

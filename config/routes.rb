@@ -259,40 +259,40 @@ routes.draw do
     #match 'calendar' => 'calendars#show', :as => :old_calendar
     match 'locks' => 'courses#locks', :as => :locks
     #concerns :discussions
-    #resources :assignments do
-    #  resources :submissions do
-    #    match 'turnitin/resubmit' => 'submissions#resubmit_to_turnitin', :as => :resubmit_to_turnitin, :via => :post
-    #    match 'turnitin/:asset_string' => 'submissions#turnitin_report', :as => :turnitin_report
-    #  end
-    #  match 'rubric' => 'assignments#rubric', :as => :rubric
-    #  resource :rubric_association, :path => :rubric do
-    #    resources :rubric_assessments, :path => :assessments
-    #  end
-    #
-    #  match 'peer_reviews' => 'assignments#peer_reviews', :as => :peer_reviews, :via => :get
-    #  match 'assign_peer_reviews' => 'assignments#assign_peer_reviews', :as => :assign_peer_reviews, :via => :post
-    #  match 'peer_reviews/:id' => 'assignments#delete_peer_review', :as => :delete_peer_review, :via => :delete
-    #  match 'peer_reviews/:id' => 'assignments#remind_peer_review', :as => :remind_peer_review, :via => :post
-    #  match 'peer_reviews/users/:reviewer_id' => 'assignments#assign_peer_review', :as => :assign_peer_review, :via => :post
-    #  match 'mute' => 'assignments#toggle_mute', :as => :mute, :via => :put
-    #
-    #  collection do
-    #    get :syllabus
-    #    get :submissions
-    #  end
-    #
-    #  member do
-    #    get :list_google_docs
-    #  end
-    #end
+    resources :assignments do
+      resources :submissions do
+        match 'turnitin/resubmit' => 'submissions#resubmit_to_turnitin', :as => :resubmit_to_turnitin, :via => :post
+        match 'turnitin/:asset_string' => 'submissions#turnitin_report', :as => :turnitin_report
+      end
+      match 'rubric' => 'assignments#rubric', :as => :rubric
+      resource :rubric_association, :path => :rubric do
+        resources :rubric_assessments, :path => :assessments
+      end
+
+      match 'peer_reviews' => 'assignments#peer_reviews', :as => :peer_reviews, :via => :get
+      match 'assign_peer_reviews' => 'assignments#assign_peer_reviews', :as => :assign_peer_reviews, :via => :post
+      match 'peer_reviews/:id' => 'assignments#delete_peer_review', :as => :delete_peer_review, :via => :delete
+      match 'peer_reviews/:id' => 'assignments#remind_peer_review', :as => :remind_peer_review, :via => :post
+      match 'peer_reviews/users/:reviewer_id' => 'assignments#assign_peer_review', :as => :assign_peer_review, :via => :post
+      match 'mute' => 'assignments#toggle_mute', :as => :mute, :via => :put
+
+      collection do
+        get :syllabus
+        get :submissions
+      end
+
+      member do
+        get :list_google_docs
+      end
+    end
 
     resources :grading_standards, :only => ["index", "create", "update", "destroy"]
-    #resources :assignment_groups do
-    #  match 'reorder' => 'assignment_groups#reorder_assignments', :as => :reorder_assignments
-    #  collection do
-    #    post :reorder
-    #  end
-    #end
+    resources :assignment_groups do
+      match 'reorder' => 'assignment_groups#reorder_assignments', :as => :reorder_assignments
+      collection do
+        post :reorder
+      end
+    end
 
     #match 'external_tools/sessionless_launch' => 'external_tools#sessionless_launch', :as => :external_tools_sessionless_launch
     #resources :external_tools do
@@ -550,7 +550,7 @@ routes.draw do
     resources :users
     resources :account_notifications, :only => [:create, :destroy]
     #concerns :announcements
-    #resources :assignments
+    resources :assignments
     #resources :submissions
     match 'account_authorization_configs' => 'account_authorization_configs#update_all', :as => :update_all_authorization_configs, :via => :put
     match 'account_authorization_configs' => 'account_authorization_configs#destroy_all', :as => :remove_all_authorization_configs, :via => :delete
@@ -750,12 +750,12 @@ routes.draw do
   match 'files/:id/public_url.:format' => 'files#public_url', :as => :public_url
   match 'files/preflight' => 'files#preflight', :as => :file_preflight
   match 'files/pending' => 'files#create_pending', :as => :file_create_pending
-  #resources :assignments, :only => [:index] do
-  #  resources :files, :only => [] do
-  #    match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'
-  #    match 'scribd_render' => 'files#scribd_render', :as => :scribd_render, :via => :post
-  #  end
-  #end
+  resources :assignments, :only => [:index] do
+    resources :files, :only => [] do
+      match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'
+      match 'scribd_render' => 'files#scribd_render', :as => :scribd_render, :via => :post
+    end
+  end
 
   #resources :appointment_groups, :only => [:index, :show]
 
