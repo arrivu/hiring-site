@@ -632,7 +632,7 @@ class Course < ActiveRecord::Base
   def assert_defaults
     self.tab_configuration ||= [] unless self.tab_configuration == []
     self.name = nil if self.name && self.name.strip.empty?
-    self.name ||= t('missing_name', "Unnamed Course")
+    self.name ||= t('missing_name', "Unnamed Project")
     self.course_code = nil if self.course_code == "" || (self.name_changed? && self.course_code && self.name_was && self.name_was.start_with?(self.course_code))
     if !self.course_code && self.name
       res = []

@@ -718,7 +718,7 @@ define [
           if setting is 'show_concluded_enrollments' and @options.course_is_concluded and @show_concluded_enrollments
             $("##{setting}").prop('checked', true)
             $settingsMenu.menu("refresh")
-            return alert(I18n.t 'concluded_course_error_message', 'This is a concluded course, so only concluded enrollments are available.')
+            return alert(I18n.t 'concluded_course_error_message', 'This is a concluded project, so only concluded enrollments are available.')
           @[setting] = $(event.target).is(':checked')
           userSettings.contextSet setting, @[setting]
           window.location.reload() if setting is 'show_concluded_enrollments'
@@ -760,9 +760,9 @@ define [
         $wrapper.toggleClass('hide-students')
 
         if $wrapper.hasClass('hide-students')
-          $(this).text I18n.t('show_student_names', 'Show Student Names')
+          $(this).text I18n.t('show_student_names', 'Show Candidate Names')
         else
-          $(this).text I18n.t('hide_student_names', 'Hide Student Names')
+          $(this).text I18n.t('hide_student_names', 'Hide Candidate Names')
 
       @userFilter = new InputFilterView el: '.gradebook_filter input'
       @userFilter.on 'input', @onUserFilterInput

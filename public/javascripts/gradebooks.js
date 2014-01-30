@@ -1253,7 +1253,7 @@ define([
       });
       
       var show = $("#hide_students_option").attr('checked');
-      addOption('person', show ? I18n.t('show_student_name', 'Show Student Names') : I18n.t('hide_student_name', 'Hide Student Names'), function() {
+      addOption('person', show ? I18n.t('show_student_name', 'Show Candidate Names') : I18n.t('hide_student_name', 'Hide Candidate Names'), function() {
         $("#hide_students_option").attr('checked', !show).change();
       });
 

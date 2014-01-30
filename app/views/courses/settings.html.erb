@@ -185,7 +185,7 @@
       </tr>
       <tr>
         <td class="form-label">
-          <label><%= before_label('grading_scheme', %{Grading Scheme}) %></label>
+          <label><%= before_label('grading_scheme', %{Hiring Scheme}) %></label>
         </td>
         <td>
           <span class="course_info grading_scheme_set">
@@ -193,7 +193,7 @@
           </span>
           <div class="course_form">
             <%= f.check_box :grading_standard_enabled, :class => "grading_standard_checkbox" %>
-            <%= f.label :grading_standard_enabled, :en => "Enable project grading scheme" %>
+            <%= f.label :grading_standard_enabled, :en => "Enable project hiring scheme" %>
             <div class="grading_standard_link" style="margin-left: 20px;">
               <a href="#" class="edit_letter_grades_link"><%= @context.grading_standard_enabled? ? t('view_grading_scheme', "view grading scheme") : t('set_grading_scheme', "set grading scheme") %></a>
             </div>
