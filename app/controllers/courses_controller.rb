@@ -652,15 +652,15 @@ class CoursesController < ApplicationController
       @context.workflow_state = 'deleted'
       @context.sis_source_id = nil
       @context.save
-      flash[:notice] = t('notices.deleted', "Course successfully deleted")
+      flash[:notice] = t('notices.deleted', "Project successfully deleted")
     else
       return unless authorized_action(@context, @current_user, permission_for_event(params[:event]))
 
       @context.complete
       if @context.save
-        flash[:notice] = t('notices.concluded', "Course successfully concluded")
+        flash[:notice] = t('notices.concluded', "Project successfully concluded")
       else
-        flash[:notice] = t('notices.failed_conclude', "Course failed to conclude")
+        flash[:notice] = t('notices.failed_conclude', "Project failed to conclude")
       end
     end
     @current_user.touch
@@ -909,7 +909,7 @@ class CoursesController < ApplicationController
 
     if enrollment = fetch_enrollment
       if enrollment.state_based_on_date == :inactive && !ignore_restricted_courses
-        flash[:notice] = t('notices.enrollment_not_active', 'Your membership in the course, %{course}, is not yet activated', :course => @context.name)
+        flash[:notice] = t('notices.enrollment_not_active', 'Your membership in the project, %{course}, is not yet activated', :course => @context.name)
         return !!redirect_to(enrollment.workflow_state == 'invited' ? courses_url : dashboard_url)
       end
 
@@ -930,7 +930,7 @@ class CoursesController < ApplicationController
       @pending_enrollment = enrollment
 
       if @context.root_account.allow_invitation_previews?
-        flash[:notice] = t('notices.preview_course', "You've been invited to join this course.  You can look around, but you'll need to accept the enrollment invitation before you can participate.")
+        flash[:notice] = t('notices.preview_course', "You've been invited to join this project.  You can look around, but you'll need to accept the enrollment invitation before you can participate.")
       elsif params[:action] != "enrollment_invitation"
         # directly call the next action; it's just going to redirect anyway, so no need to have
         # an additional redirect to get to it
@@ -1129,7 +1129,7 @@ class CoursesController < ApplicationController
     end
 
     return if check_for_xlist
-    @unauthorized_message = t('unauthorized.invalid_link', "The enrollment link you used appears to no longer be valid.  Please contact the course instructor and make sure you're still correctly enrolled.") if params[:invitation]
+    @unauthorized_message = t('unauthorized.invalid_link', "The enrollment link you used appears to no longer be valid.  Please contact the project instructor and make sure you're still correctly enrolled.") if params[:invitation]
     claim_course if session[:claim_course_uuid] || params[:verification]
     @context.claim if @context.created?
     return if check_enrollment
@@ -1214,7 +1214,7 @@ class CoursesController < ApplicationController
       if @temp_enrollment
         session["role_course_#{@context.id}"] = params[:role]
         session[:session_affects_permissions] = true
-        flash[:notice] = t('notices.role_switched', "You have switched roles for this course.  You will now see the course in this new role: %{enrollment_type}", :enrollment_type => @temp_enrollment.readable_type)
+        flash[:notice] = t('notices.role_switched', "You have switched roles for this project.  You will now see the project in this new role: %{enrollment_type}", :enrollment_type => @temp_enrollment.readable_type)
       else
         flash[:error] = t('errors.invalid_role', "Invalid role type")
       end
@@ -1686,7 +1686,7 @@ class CoursesController < ApplicationController
       # destroy the exising student
       @fake_student = @context.student_view_student
       @fake_student.destroy
-      flash[:notice] = t('notices.reset_test_student', "The test student has been reset successfully.")
+      flash[:notice] = t('notices.reset_test_student', "The test candidate has been reset successfully.")
       enter_student_view
     end
   end

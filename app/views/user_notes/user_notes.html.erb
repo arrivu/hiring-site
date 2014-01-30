@@ -6,17 +6,17 @@
     <h1><%= t :page_title, "Faculty Journal" %></h1>
 <% end %>
 
-<p><%= @is_course ? t(:details_this_course, "Last Faculty Journal entries for students currently enrolled in this course.") :
-       t(:details_a_course, "Last Faculty Journal entries for students currently enrolled in a course.") %></p>
+<p><%= @is_course ? t(:details_this_course, "Last Faculty Journal entries for candidates currently enrolled in this project.") :
+       t(:details_a_course, "Last Faculty Journal entries for candidates currently enrolled in a project.") %></p>
 
 <%= will_paginate(@users, :style=>"margin-bottom: 1em;") %>
 
 <table id="syllabus">
   <thead>
     <tr>
-      <th><%= t 'headers.student', "Student" %></th>
+      <th><%= t 'headers.student', "Candidate" %></th>
       <th><%= t 'headers.last_entry', "Last Faculty Journal Entry" %></th>
-      <th><%= t 'headers.current_courses', "Current Courses" %></th>
+      <th><%= t 'headers.current_courses', "Current Projects" %></th>
     </tr>
   </thead>
   <% @users.each do |user| %>

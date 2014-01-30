@@ -34,14 +34,14 @@ define([
       var url = $standard.find(".update_grading_standard_url").attr('href');
       $standard.confirmDelete({
         url: url,
-        message: I18n.t('confirm.delete_grading_scheme', "Are you sure you want to delete this grading scheme?"),
+        message: I18n.t('confirm.delete_grading_scheme', "Are you sure you want to delete this evaluation scheme?"),
         success: function(data) {
           $(this).slideUp(function() {
             $(this).remove();
           });
         },
         error: function() {
-          $.flashError(I18n.t('errors.cannot_delete_grading_scheme', "There was a problem deleting this grading scheme"));
+          $.flashError(I18n.t('errors.cannot_delete_grading_scheme', "There was a problem deleting this evaluation scheme"));
         }
       });
     });

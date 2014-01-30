@@ -191,10 +191,10 @@ define([
         });
       });
       $("#moderate_student_form").data('ids', student_ids);
-      $("#moderate_student_dialog h2").text(I18n.t('extensions_for_students', {'one': "Extensions for 1 Student", 'other': "Extensions for %{count} Students"}, {'count': student_ids.length}));
+      $("#moderate_student_dialog h2").text(I18n.t('extensions_for_students', {'one': "Extensions for 1 Candidate", 'other': "Extensions for %{count} Candidates"}, {'count': student_ids.length}));
       $("#moderate_student_form").fillFormData(data);
       $("#moderate_student_dialog").dialog({
-        title: I18n.t('titles.student_extensions', "Student Extensions"),
+        title: I18n.t('titles.student_extensions', "Candidate Extensions"),
         width: 400
       }).fixDialogButtons();
     });
@@ -213,7 +213,7 @@ define([
       $("#moderate_student_form").find("button").attr('disabled', false);
       $("#moderate_student_dialog h2").text(I18n.t('extensions_for_student', "Extensions for %{student}", {'student': name}));
       $("#moderate_student_dialog").dialog({
-        title: I18n.t('titles.student_extensions', "Student Extensions"),
+        title: I18n.t('titles.student_extensions', "Candidate Extensions"),
         width: 400
       }).fixDialogButtons();
     });
@@ -293,7 +293,7 @@ define([
             if(ids.length == 1) {
               $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed', "Save Failed, please try again"));
             } else {
-              $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed_n_updates_lost', "Save Failed, %{n} Students were not updated", {'n': errors}));
+              $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed_n_updates_lost', "Save Failed, %{n} Candidates were not updated", {'n': errors}));
             }
           } else {
             $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save', "Save"));
@@ -346,7 +346,7 @@ define([
       data.time = parseInt(data.time, 10) || 0;
       if(data.time <= 0) { return; }
       if(data.time_type == 'extend_from_now' && data.time < $dialog.data('row').data('minutes_left')) {
-        var result = confirm(I18n.t('confirms.taking_time_away', "That would be less time than the student currently has.  Continue anyway?"));
+        var result = confirm(I18n.t('confirms.taking_time_away', "That would be less time than the candidate currently has.  Continue anyway?"));
         if(!result) { return; }
       }
       params[data.time_type] = data.time;

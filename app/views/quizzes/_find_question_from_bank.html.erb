@@ -3,7 +3,7 @@
   <a href="/<%= @quiz.context_url_prefix %>/question_banks/{{ question_bank_id }}/questions?inherited=1" class="question_bank_questions_url" style="display: none;">&nbsp;</a>
   <a href="<%= context_url(@context, :context_quiz_quiz_questions_url, @quiz.id) %>" class="add_questions_url" style="display: none;">&nbsp;</a>
   <div style="float: right; padding-right: 5px; line-height: 2.5em;">
-    <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Course Question Banks") %></a>
+    <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Project Question Banks") %></a>
   </div>
   <div class="clear"></div>
   <div class="message" style="display: none;"></div>
@@ -34,13 +34,13 @@
               <li class="found_question blank" style="display: none;">
                 <input type="checkbox"/>
                 <label class="question_name"></label>
-                <div class="already_added_message"><%= t(:already_added, "this question is already on the quiz") %></div>
+                <div class="already_added_message"><%= t(:already_added, "this question is already on the assessment") %></div>
                 <div class="question_text"></div>
               </li>
             </ul>
             <a href="#" class="page_link"><%= t('links.more_questions', "more questions") %></a>
             <div class="button-container quiz_group_select_holder">
-              <label for="quiz_group_select"><%= before_label(:add_questions_to_group, "Add questions to the quiz group") %></label>
+              <label for="quiz_group_select"><%= before_label(:add_questions_to_group, "Add questions to the assessment group") %></label>
               <select class="quiz_group_select" id="quiz_group_select">
                 <option value="none"><%= t('options.no_group', "[ No Group ]") %></option>
                 <option class="bottom" value="new"><%= t('options.new_group', "[ New Group ]") %></option>
@@ -59,12 +59,12 @@
 <div id="find_bank_dialog" style="display: none;">
   <a href="<%= context_url(@context, :context_question_banks_url, :include_bookmarked => '1', :inherited => '1') %>" class="find_question_banks_url" style="display: none;">&nbsp;</a>
   <div style="float: right; padding-right: 5px; line-height: 2.5em;">
-    <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Course Question Banks") %></a>
+    <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Project Question Banks") %></a>
   </div>
   <div class="clear"></div>
   <div class="message" style="display: none;"></div>
   <div class="find_banks">
-    <%= t(:select_a_question_bank, "Select a question bank from the list below to link it to the this quiz as a question group.") %>
+    <%= t(:select_a_question_bank, "Select a question bank from the list below to link it to the this assessment as a question group.") %>
     <ul class="side_tabs bank_list unstyled_list">
       <li class="bank blank" style="display: none;">
         <span class="title"><%= t('headers.bank_name', "Bank Name") %></span>

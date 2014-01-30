@@ -83,9 +83,9 @@ ul.quiz_list li.quiz div.description {
   <ul class="quiz_list" id="unpublished_quizzes">
     <%= render :partial => "quiz_summary", :collection => @unpublished_quizzes, :locals => {:unpublished => true} %>
   </ul>
-  <div title="<%= t('headers.publish_multiple_quizzes', "Publish Multiple Quizzes") %>" id="publish_multiple_quizzes_dialog" style="display: none;">
+  <div title="<%= t('headers.publish_multiple_quizzes', "Publish Multiple Assessments") %>" id="publish_multiple_quizzes_dialog" style="display: none;">
     <%= form_tag context_url(@context, :context_quizzes_publish_url), :id => "publish_quizzes_form" do %>
-      <%= before_label(:publish_multiple_quizzes, "Select the quizzes you would like to publish at this time") %>
+      <%= before_label(:publish_multiple_quizzes, "Select the assessments you would like to publish at this time") %>
       <ul class="quiz_list unstyled_list">
         <li class="quiz_item blank" style="display: none;">
           <input type="checkbox" value="1" name="quizzes[]" class="id"/>
@@ -124,7 +124,7 @@ ul.quiz_list li.quiz div.description {
 
 <% if (@quizzes.any?{|q| q.lock_at || q.unlock_at} || @context.try_rescue(:module_based?)) && !can_do(@context, @current_user, :manage_content) %>
   <a href="<%= context_url(@context, :context_locks_url) %>" id="quiz_locks_url" style="display: none;">&nbsp;</a>
-  <%= image_tag "lock_small.png", :style => "display: none;", :class => "content_lock_icon", :id => "quiz_lock_icon", :title => t('titles.this_quiz_is_locked', "This quiz is currently locked.  Click for more details."), :alt => "locked" %>
-  <a href="<%= context_url(@context, :context_context_modules_url) %>" id="context_modules_url" style="display: none;">&nbsp;</a>
+  <%= image_tag "lock_small.png", :style => "display: none;", :class => "content_lock_icon", :id => "quiz_lock_icon", :title => t('titles.this_quiz_is_locked', "This assessment is currently locked.  Click for more details."), :alt => "locked" %>
+  <!--<a href="<%#= context_url(@context, :context_context_modules_url) %>" id="context_modules_url" style="display: none;">&nbsp;</a>-->
 <% end %>
 <% end %>

@@ -129,7 +129,7 @@ tr.question td .number_answer.correct_answer {
   <% if !@context.large_roster? %>
     <h2><%= @quiz.survey? ?
       t('headers.users_have_taken_this_survey', "%{count} users have taken this survey", :count => @statistics[:unique_submission_count]) :
-      t('headers.users_have_taken_this_quiz', "%{count} users have taken this quiz", :count => @statistics[:unique_submission_count]) %></h2>
+      t('headers.users_have_taken_this_quiz', "%{count} users have taken this assessment", :count => @statistics[:unique_submission_count]) %></h2>
     <div class="rs-margin-lr rs-margin-bottom">
       <table id="statistics_summary">
         <tr>
@@ -165,7 +165,7 @@ tr.question td .number_answer.correct_answer {
       <% if (@statistics && @statistics[:multiple_attempts_exist]) || @context.large_roster? %>
         <%= @quiz.survey? ?
           t(:survey_all_version_disclaimer, "This report is showing survey statistics based on all attempts for all users.") :
-          t(:quiz_all_version_disclaimer, "This report is showing quiz statistics based on all attempts for all users.") %><br/>
+          t(:quiz_all_version_disclaimer, "This report is showing assessment statistics based on all attempts for all users.") %><br/>
       <% end %>
       <div style="margin-top: 5px;">
         <% if (@statistics && @statistics[:multiple_attempts_exist]) || @context.large_roster? %>
@@ -176,7 +176,7 @@ tr.question td .number_answer.correct_answer {
       <% if (@statistics && @statistics[:multiple_attempts_exist]) || @context.large_roster? %>
         <%= @quiz.survey? ?
           t(:survey_latest_version_disclaimer, "This report is showing survey statistics based on the latest attempt for each user.") :
-          t(:quiz_latest_version_disclaimer, "This report is showing quiz statistics based on the latest attempt for each user.") %><br/>
+          t(:quiz_latest_version_disclaimer, "This report is showing assessment statistics based on the latest attempt for each user.") %><br/>
       <% end %>
       <div style="margin-top: 5px;">
         <% if (@statistics && @statistics[:multiple_attempts_exist]) || @context.large_roster? %>
@@ -189,7 +189,7 @@ tr.question td .number_answer.correct_answer {
 <% end %>
 
 <% if !@context.large_roster? %>
-  <h2><%= @quiz.survey? ? t('headers.survey_statistics', "Survey Statistics") : t('headers.quiz_statistics', "Quiz Statistics") %></h2>
+  <h2><%= @quiz.survey? ? t('headers.survey_statistics', "Survey Statistics") : t('headers.quiz_statistics', "Assessment Statistics") %></h2>
   <table id="statistics">
   <% @statistics[:questions].each do |question_type, data| %>
     <% if question_type == 'group' %>
@@ -238,5 +238,5 @@ tr.question td .number_answer.correct_answer {
   </div>
 
 <% else %>
-  <p><%= t(:class_too_large, "This course is too large to display statistics. They can still be downloaded from the right hand sidebar.") %></p>
+  <p><%= t(:class_too_large, "This project is too large to display statistics. They can still be downloaded from the right hand sidebar.") %></p>
 <% end %>

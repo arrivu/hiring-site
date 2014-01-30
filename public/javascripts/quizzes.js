@@ -2119,7 +2119,7 @@ define([
       }
       $dialog.data('add_source', '');
       $dialog.dialog({
-        title: I18n.t('titles.find_quiz_question', "Find Quiz Question"),
+        title: I18n.t('titles.find_quiz_question', "Find Assessment Question"),
         open: function() {
           if ($dialog.find(".selected_side_tab").length == 0) {
             $dialog.find(".bank:not(.blank):first").click();
@@ -2987,7 +2987,7 @@ define([
     $(".delete_quiz_link").click(function(event) {
       event.preventDefault();
       $(this).parents(".quiz").confirmDelete({
-        message: I18n.t('confirms.delete_quiz', "Are you sure you want to delete this quiz?"),
+        message: I18n.t('confirms.delete_quiz', "Are you sure you want to delete this assessment?"),
         url: $(this).attr('href'),
         success: function() { window.location.replace(ENV.QUIZZES_URL); }
       });
@@ -3292,7 +3292,7 @@ define([
       }
       $("#calc_helper_methods").change();
       $("#help_with_equations_dialog").dialog({
-        title: I18n.t('titles.help_with_formulas', "Help with Quiz Question Formulas"),
+        title: I18n.t('titles.help_with_formulas', "Help with Assessment Question Formulas"),
         width: 500
       });
     });

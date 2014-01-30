@@ -164,7 +164,7 @@ class Quiz < ActiveRecord::Base
   end
   
   def readable_type
-    self.survey? ? t('types.survey', "Survey") : t('types.quiz', "Quiz")
+    self.survey? ? t('types.survey', "Survey") : t('types.quiz', "Assessment")
   end
   
   def valid_ip?(ip)

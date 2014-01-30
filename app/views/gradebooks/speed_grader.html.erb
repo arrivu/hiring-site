@@ -271,7 +271,7 @@
   </p>
   <p<% if @assignment.quiz && @assignment.quiz.survey? && @assignment.quiz.anonymous_submissions %> style="display: none;"<% end %>>
     <input type="checkbox" id="hide_student_names" name="hide_student_names"/>
-    <label for="hide_student_names"><%= t('labels.hide_names', "Hide student names in the SpeedGrader") %></label>
+    <label for="hide_student_names"><%= t('labels.hide_names', "Hide candidate names in the SpeedGrader") %></label>
   </p>
 
   <p <% unless @assignment.quiz %>class=hidden<% end %>>
