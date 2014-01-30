@@ -94,7 +94,7 @@
       <a href="<%= search_rubrics_url(:q => "") %>" style="display: none;"><%= image_tag "find.png" %> <%= t 'links.find_rubric', "Find Rubric" %></a>
       <% if rubric_association && !rubric_association.rubric_assessments.empty? %>
         <div class="editing" style="font-size: 0.8em;"><%= t 'messages.rubric_in_use',
-                                                             { :one => "Keep in mind that 1 student has already been assessed using this rubric.  Changing it will affect their evaluation.",
+                                                             { :one => "Keep in mind that 1 student has already been assessed using this rubric.  Changing it will affect their Hiring outcomes.",
                                                                :other => "Keep in mind that %{count} students have already been assessed using this rubric.  Changing it will affect their evaluations." },
                                                            :count => rubric_association.rubric_assessments.count %></div>
       <% end %>

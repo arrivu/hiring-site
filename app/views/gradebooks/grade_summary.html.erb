@@ -1,10 +1,10 @@
 <%
   js_bundle :grade_summary, :rubric_assessment
   jammit_css :grade_summary
-  content_for :page_title, join_title(t(:page_title, "Evaluations for %{student}", :student => @presenter.student_name), @context.name)
+  content_for :page_title, join_title(t(:page_title, "Hiring outcomes for %{student}", :student => @presenter.student_name), @context.name)
 %>
 
-<h1 class="screenreader-only"><%= t(:page_title, "Evaluations for %{student}", :student => @presenter.student_name) %></h1>
+<h1 class="screenreader-only"><%= t(:page_title, "Hiring outcomes for %{student}", :student => @presenter.student_name) %></h1>
 
 <% content_for :right_side do %>
   <div class="rs-margin-all">
@@ -56,10 +56,10 @@
 <% end %>
 
 <a class="btn btn-small print-grades icon-printer" href="javascript:window.print()">
-  <%= t :print_grades, "Print evaluations" %>
+  <%= t :print_grades, "Print Hiring outcomes " %>
 </a>
 <h2>
-<% ot('headers.grades', "Evaluations For %{student}", :student => capture { %>
+<% ot('headers.grades', "Hiring outcomes For %{student}", :student => capture { %>
  <% unless @presenter.multiple_observed_students?  %>
    <%= @presenter.student_name %>
  <% else %>
@@ -148,7 +148,7 @@
               <% if @presenter.editable? || assignment.special_class %>
                 <span class="tooltip_text score_teaser">
                   <% if assignment.muted? %>
-                    <%= t(:student_mute_notification, "Instructor is working on evaluations") %>
+                    <%= t(:student_mute_notification, "Instructor is working on Hiring outcomes") %>
                   <% elsif assignment.special_class %>
                     <%= t(:percent, "Percent") %>
                   <% else %>
@@ -201,11 +201,11 @@
           </span>
           <i class="icon-check-plus standalone-icon"></i>
         </a>
-        <a href="#" class="toggle_rubric_assessments_link tooltip" <% if !assignment_presenter.has_rubric_assessments? %>aria-hidden='true' role='presentation' tabindex='-1'<% end %> title="<%= t 'titles.view_rubric_evaluation', 'View Rubric Evaluation' %>" style="<%= 'visibility: hidden;' if !assignment_presenter.has_rubric_assessments? %>">
+        <a href="#" class="toggle_rubric_assessments_link tooltip" <% if !assignment_presenter.has_rubric_assessments? %>aria-hidden='true' role='presentation' tabindex='-1'<% end %> title="<%= t 'titles.view_rubric_evaluation', 'View Rubric Hiring outcomes' %>" style="<%= 'visibility: hidden;' if !assignment_presenter.has_rubric_assessments? %>">
           <span class="tooltip_wrap right">
-            <span class="tooltip_text"><%= t(:see_rubric_results, "See rubric evaluations") %></span>
+            <span class="tooltip_text"><%= t(:see_rubric_results, "See rubric Hiring outcomes") %></span>
           </span>
-          <%= image_tag "rubric.png", :alt => t('icons.rubric_results', 'See rubric evaluations') %>
+          <%= image_tag "rubric.png", :alt => t('icons.rubric_results', 'See rubric Hiring outcomes') %>
         </a>
         <% if @presenter.turnitin_enabled? %>
           <%
@@ -331,7 +331,7 @@
   <% end %>
 </table>
 <% if @presenter.has_muted_assignments? %>
-  <small><%= image_tag "sound_mute.png", :alt => "" %><%= t(:student_mute_legend, "Your instructor is working on evaluations. While your instructor is working on evaluations, result and comment information is unavailable.") %></small>
+  <small><%= image_tag "sound_mute.png", :alt => "" %><%= t(:student_mute_legend, "Your instructor is working on Hiring outcomes. While your instructor is working on Hiring outcomes, result and comment information is unavailable.") %></small>
 <% end %>
 <div id="total_groups_weight" style="display: none;"><%= @presenter.total_weight %></div>
 <%= render :partial => "shared/rubric_criterion_dialog" %>

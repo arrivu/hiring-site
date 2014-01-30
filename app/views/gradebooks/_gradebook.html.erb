@@ -117,7 +117,7 @@
     </div>
     <div style="text-align: left;">
       <input type="checkbox" name="overwrite_existing_grades" id="submission_overwrite_existing_grades"/>
-      <label for="submission_overwrite_existing_grades"><%= t(:overwrite, "Overwrite already-entered evaluations") %></label>
+      <label for="submission_overwrite_existing_grades"><%= t(:overwrite, "Overwrite already-entered hiring outcome") %></label>
     </div>
     <div class="button-container">
       <button type="submit" class="btn"><%= t('buttons.set_grade', "Set Result") %></button>
@@ -146,7 +146,7 @@
     <input type="hidden" name="_method" value="POST"/>
     <input type="hidden" name="assignment_id" class="assignment_id" value="10"/>
     <div style="font-size: 0.8em;">
-      <%= t(:curve_average, "Enter an average evaluation for the curve for *the assignment*. The chart shows a best attempt at curving the evaluation based on current project scores.", :wrapper => '<span class="assignment_title" style="font-weight: bold;">\1</span>') %>
+      <%= t(:curve_average, "Enter an average hiring outcome for the curve for *the assignment*. The chart shows a best attempt at curving the hiring outcome based on current project scores.", :wrapper => '<span class="assignment_title" style="font-weight: bold;">\1</span>') %>
     </div>
     <div style="min-height: 100px;">
     <table cellpadding="0" cellspacing="0" style="margin: 2px auto;">

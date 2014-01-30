@@ -27,7 +27,7 @@ class GradebooksController < ApplicationController
   before_filter :require_user, only: %w(speed_grader speed_grader_settings)
   batch_jobs_in_actions :only => :update_submission, :batch => { :priority => Delayed::LOW_PRIORITY }
 
-  add_crumb(proc { t '#crumbs.grades', "Evaluations" }) { |c| c.send :named_context_url, c.instance_variable_get("@context"), :context_grades_url }
+  add_crumb(proc { t '#crumbs.grades', "Hiring Outcome" }) { |c| c.send :named_context_url, c.instance_variable_get("@context"), :context_grades_url }
   before_filter { |c| c.active_tab = "grades" }
 
   def grade_summary

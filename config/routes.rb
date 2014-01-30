@@ -316,7 +316,7 @@ routes.draw do
 
     match 'quizzes/publish'   => 'quizzes#publish',   :as => :quizzes_publish
     match 'quizzes/unpublish' => 'quizzes#unpublish', :as => :quizzes_unpublish
-    resources :quizzes do
+    resources :quizzes, :path => :assesments do
       match 'managed_quiz_data' => 'quizzes#managed_quiz_data', :as => :managed_quiz_data
       match 'submission_versions' => 'quizzes#submission_versions', :as => :submission_versions
       match 'history' => 'quizzes#history', :as => :history
@@ -378,25 +378,25 @@ routes.draw do
       match 'reorder' => 'outcome_groups#reorder', :as => :reorder
     end
 
-    #resources :context_modules, :path => :modules do
-    #  match 'items' => 'context_modules#add_item', :as => :add_item, :via => :post
-    #  match 'reorder' => 'context_modules#reorder_items', :as => :reorder, :via => :post
-    #  match 'collapse' => 'context_modules#toggle_collapse', :as => :toggle_collapse
-    #  match 'prerequisites/:code' => 'context_modules#content_tag_prerequisites_needing_finishing', :as => :prerequisites_needing_finishing
-    #  match 'items/last' => 'context_modules#module_redirect', :as => :last_redirect, :last => 1
-    #  match 'items/first' => 'context_modules#module_redirect', :as => :first_redirect, :first => 1
-    #  collection do
-    #    post :reorder
-    #    get :progressions
-    #  end
-    #end
+    resources :context_modules, :path => :modules do
+      match 'items' => 'context_modules#add_item', :as => :add_item, :via => :post
+      match 'reorder' => 'context_modules#reorder_items', :as => :reorder, :via => :post
+      match 'collapse' => 'context_modules#toggle_collapse', :as => :toggle_collapse
+      match 'prerequisites/:code' => 'context_modules#content_tag_prerequisites_needing_finishing', :as => :prerequisites_needing_finishing
+      match 'items/last' => 'context_modules#module_redirect', :as => :last_redirect, :last => 1
+      match 'items/first' => 'context_modules#module_redirect', :as => :first_redirect, :first => 1
+      collection do
+        post :reorder
+        get :progressions
+      end
+    end
 
-    #resources :content_exports, :only => ["create", "index", "destroy", "show"]
-    #match 'modules/items/assignment_info' => 'context_modules#content_tag_assignment_data', :as => :context_modules_assignment_info, :via => :get
-    #match 'modules/items/:id' => 'context_modules#item_redirect', :as => :context_modules_item_redirect, :via => :get
-    #match 'modules/items/sequence/:id' => 'context_modules#item_details', :as => :context_modules_item_details, :via => :get
-    #match 'modules/items/:id' => 'context_modules#remove_item', :as => :context_modules_remove_item, :via => :delete
-    #match 'modules/items/:id' => 'context_modules#update_item', :as => :context_modules_update_item, :via => :put
+    resources :content_exports, :only => ["create", "index", "destroy", "show"]
+    match 'modules/items/assignment_info' => 'context_modules#content_tag_assignment_data', :as => :context_modules_assignment_info, :via => :get
+    match 'modules/items/:id' => 'context_modules#item_redirect', :as => :context_modules_item_redirect, :via => :get
+    match 'modules/items/sequence/:id' => 'context_modules#item_details', :as => :context_modules_item_details, :via => :get
+    match 'modules/items/:id' => 'context_modules#remove_item', :as => :context_modules_remove_item, :via => :delete
+    match 'modules/items/:id' => 'context_modules#update_item', :as => :context_modules_update_item, :via => :put
     match 'confirm_action' => 'courses#confirm_action', :as => :confirm_action
     match 'copy' => 'courses#copy', :as => :start_copy, :via => :get
     match 'copy' => 'courses#copy_course', :as => :copy_course, :via => :post
