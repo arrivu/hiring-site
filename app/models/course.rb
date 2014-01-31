@@ -2424,10 +2424,12 @@ class Course < ActiveRecord::Base
   TAB_ANNOUNCEMENTS = 12
   TAB_OUTCOMES = 13
   TAB_COLLABORATIONS = 14
+  TAB_INVITATIONS = 15
 
   def self.default_tabs
     [
         { :id => TAB_HOME, :label => t('#tabs.home', "Home"), :css_class => 'home', :href => :course_path },
+        { :id => TAB_INVITATIONS, :label => t('#tabs.invitations', "Invitations"), :css_class => 'invitations', :href => :course_invitations_path },
 
         #{ :id => TAB_ANNOUNCEMENTS, :label => t('#tabs.announcements', "Announcements"), :css_class => 'announcements', :href => :course_announcements_path },
         { :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_assignments_path },

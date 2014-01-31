@@ -197,6 +197,7 @@ routes.draw do
   # and the application_helper method :context_url to make retrieving
   # these contexts, and also generating context-specific urls, easier.
   resources :courses ,:path => :projects do
+    resources :invitations
     # DEPRECATED
     match 'self_enrollment/:self_enrollment' => 'courses#self_enrollment', :as => :self_enrollment, :via => :get
     match 'self_unenrollment/:self_unenrollment' => 'courses#self_unenrollment', :as => :self_unenrollment, :via => :post
