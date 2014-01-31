@@ -78,7 +78,7 @@ en-AU:
         auth_base: "CAS URL"
         auth_type: Type
         login_handle_name: "Login Label"
-      login_handle_name_description: "The label used for unique login identifiers. Examples: Login, Username, Student ID, etc."
+      login_handle_name_description: "The label used for unique login identifiers. Examples: Login, Username, Candidate ID, etc."
       save_button: "Save Authentication Settings"
     deprecated_fail: "Can't use both deprecated and current version of create at the same time."
     index: 
@@ -108,7 +108,7 @@ en-AU:
       labels: 
         change_password_url: "Forgot Password URL"
         login_handle_name: "Login Label"
-      login_handle_name_description: "The label used for unique login identifiers. Examples: Login, Username, Student ID, etc."
+      login_handle_name_description: "The label used for unique login identifiers. Examples: Login, Username, Candidate ID, etc."
       remove_secondary_ldap_link: (Remove)
       save_button: "Save LDAP Settings"
       secondary_ldap_label: "Secondary LDAP"
@@ -194,7 +194,7 @@ en-AU:
       log_out_url: "Log Out URL"
       login_attribute: "Login Attribute"
       login_handle_name: "Login Label"
-      login_handle_name_description: "The label used for unique login identifiers. Examples: Login, Username, Student ID, etc."
+      login_handle_name_description: "The label used for unique login identifiers. Examples: Login, Username, Candidate ID, etc."
       no_discovery_url: "None set"
       position: Position
       refresh_debugging: Refresh
@@ -407,6 +407,7 @@ en-AU:
             description: 
               header: Example
             text: "This report shows student involvment in their courses. The resulting csv file will have one row per enrollment and will show the student sis id, student name, phone number, email address, course name, last submission, days since last submission(LDA), cuurent grade percentage, and their term start date."
+
     confirm_delete_user: 
       confirm_delete: "Are you sure you want to delete this user from the account %{account}? This will remove the user's data (including grades) from all courses and groups. This process cannot be undone."
       delete_button: "Delete %{user}"
@@ -424,8 +425,8 @@ en-AU:
       sis_id_label: "SIS ID"
       statistics_link: Statistics
       student_count: 
-        one: "1 Student"
-        other: "%{count} Students"
+        one: "1 Candidate"
+        other: "%{count} Candidates"
       teachers_label: Teachers
     course_add_failed_message: "Adding Course Failed, please try again"
     course_added_message: "%{course} successfully added!"
@@ -457,6 +458,7 @@ en-AU:
           description: 
             header: Example
             text: "This report shows the student final grade results for all students in a given term. The resulting csv file will have one row per enrollment, and will show the current and final grade that is displayed in the course gradebook."
+
     custom_grade_export_csv_parameters: 
       account_reports: 
         ross: 
@@ -467,7 +469,7 @@ en-AU:
         edison: 
           description: 
             header: Example
-            text: "This report shows the learning outcome results for all students. The resulting csv file will have one row per user-outcome-result pair, and will show the details of the result including the associated assignment."
+            text: "This report shows the learning outcome results for all candidates. The resulting csv file will have one row per user-outcome-result pair, and will show the details of the result including the associated assignment."
     custom_outcomes_csv_parameters: 
       account_reports: 
         edison: 
@@ -508,6 +510,7 @@ en-AU:
           description: 
             header: Example
             text: "This report shows the student final grade results for all students in a given term. The resulting csv file will have one row per enrollment, and will show the current and final grade that is displayed in the course gradebook."
+
     group_type: group
     include_deleted_parameter: 
       account_reports: 
@@ -546,7 +549,7 @@ en-AU:
         outcomes: 
           description: 
             header: Example
-            text: "This report shows the learning outcome results for all students. The resulting csv file will have one row per user-outcome-result pair, and will show the details of the result including the associated assignment."
+            text: "This report shows the learning outcome results for all candidates. The resulting csv file will have one row per user-outcome-result pair, and will show the details of the result including the associated assignment."
     outcome_results_csv_parameters: 
       account_reports: 
         outcomes: 
@@ -666,7 +669,7 @@ en-AU:
         report_last_run: "Last Run"
         report_name: Name
       help_link_available_to_all_admins: Admins
-      help_link_available_to_all_students: Students
+      help_link_available_to_all_students: Candidates
       help_link_available_to_all_teachers: Teachers
       help_link_available_to_all_users: Users
       if_you_would_like_to_link_to_your_own_campus_support_website_in_the_help_dialog_you_can_do_that_here: "If you would like to link to your own campus support website in the help dialog you can do that here"
@@ -677,7 +680,7 @@ en-AU:
         admins_can_change_passwords: "Password setting by admins"
         admins_can_view_notifications: "Admins can view notifications"
         allow_invitation_previews: "Invitation Previews"
-        allow_sending_scores_in_emails: "Students can opt-in to receiving scores in email notifications"
+        allow_sending_scores_in_emails: "Candidates can opt-in to receiving scores in email notifications"
         allow_sis_import: "SIS imports"
         canvas_authentication: "Canvas Authentication"
         default_language: "Default Language"
@@ -709,12 +712,13 @@ en-AU:
         outgoing_email_default_name_option_default: "Default Canvas Setting"
         prevent_course_renaming_by_teachers: "Don't let teachers rename their courses"
         restrict_student_future_view: "Restrict students from viewing courses before start date"
+
         self_enrollment: "Allow Self-Enrollment"
         self_registration: "Self Registration"
         show_scheduler: "Enable Scheduler"
         sis_source_id: "SIS ID"
         start_at: Starts
-        students_can_create_courses: Students
+        students_can_create_courses: Candidates
         sub_account_includes: "Let sub-accounts define additional includes"
         subject: Subject
         teachers_can_create_courses: Teachers
@@ -792,8 +796,8 @@ en-AU:
       tab_reports: Reports
       tab_settings: Settings
       transifex_message: "Join the [Canvas Translation Community](%{transifex_url})"
-      turnitin_comments_help: "these comments will be shown to students when submitting a Turnitin-enabled assignment"
-      turnitin_pledge_help: "students must check a box acknowledging that they agree with this pledge"
+      turnitin_comments_help: "these comments will be shown to candidates when submitting a Turnitin-enabled assignment"
+      turnitin_pledge_help: "candidates must check a box acknowledging that they agree with this pledge"
       turnitin_settings_title: "Turnitin Settings"
       update_settings_button: "Update Settings"
     show: 
@@ -897,7 +901,7 @@ en-AU:
         courses: Courses
         generated_at: Generated
         media_storage: Media
-        students: Students
+        students: Candidates
         teachers: Teachers
         uploaded_storage: Uploaded
         users: Users
@@ -927,13 +931,15 @@ en-AU:
           description: 
             header: Example
           student_activity: 
+
             text: "This report shows all the activity from students enrolled in a given course or all courses in a given term. Resulting csv file will have one row per student activity and will have the following headers; section id, section sis id, section name, course id, course sis id, course name, user id, user sis id, content type, content, times viewed, times participated, last viewed. The times viewed and times participated are counters from the beginning of time until the time the report was generated."
+
     student_assignment_outcome_map_csv_description: 
       account_reports: 
         student_assignment_map: 
           description: 
             header: Example
-            text: "This report shows the learning outcome results for all students. The resulting csv file will have one row per user-outcome-result pair, and will show the details of the result including the associated assignment. This report only shows outcome results for assignments and does not include outcomes tied to question banks."
+            text: "This report shows the learning outcome results for all candidates. The resulting csv file will have one row per user-outcome-result pair, and will show the details of the result including the associated assignment. This report only shows outcome results for assignments and does not include outcomes tied to question banks."
     student_ip_csv_description: 
       account_reports: 
         dubspot: 
@@ -945,7 +951,7 @@ en-AU:
           description: 
             header: Example
           student_login: 
-            text: "This report shows the students that have not logged in since a given date."
+            text: "This report shows the candidates that have not logged in since a given date."
     student_login_csv_parameters: 
       account_reports: 
         bucks: 
@@ -959,14 +965,18 @@ en-AU:
           description: 
             header: Example
           student_submissions: 
+
             text: "This is a report of all students enrolled in a course in a given term that have submitted an assignment. This report contains one row per student submission."
+
     students_with_no_submissions_csv_description: 
       account_reports: 
         default: 
           students_with_no_submissions: 
             description: 
               header: Example
+
             text: "This is a report of all students enrolled in a course in a given term that have not submitted an assignment between the given date range in a course. This report contains one row per student enrollment that meet the criteria."
+
     submission_data_csv_description: 
       account_reports: 
         submission_data: 
@@ -1023,7 +1033,9 @@ en-AU:
         default: 
           zero_activity: 
             header: Example
+
             text: "This report shows all the students enrolled in any courses in a given term. Resulting csv file will have one row per user enrollment that have not visited the course since the date."
+
   activerecord: 
     errors: 
       full_messages: 
@@ -1082,16 +1094,16 @@ en-AU:
       recipients: "Send a notification to"
       repetition_description: "Re-send alert every %{count} days until resolved"
     alerts: 
-      alerts_description_account: "An alert is generated for each student that meets all of the criteria. They are checked every day, and notifications will be sent to the student, teacher, and/or account admin until the triggering problem is resolved."
-      alerts_description_course: "An alert is generated for each student that meets all of the criteria. They are checked every day, and notifications will be sent to the student and/or the teacher until the triggering problem is resolved."
+      alerts_description_account: "An alert is generated for each candidate that meets all of the criteria. They are checked every day, and notifications will be sent to the candidate, teacher, and/or account admin until the triggering problem is resolved."
+      alerts_description_course: "An alert is generated for each candidate that meets all of the criteria. They are checked every day, and notifications will be sent to the candidate and/or the teacher until the triggering problem is resolved."
       buttons: 
         add_alert: "Add Alert"
-      description: "A teacher has not interacted with the student for %{count} days"
+      description: "A teacher has not interacted with the candidate for %{count} days"
       option: "No Teacher Interaction"
       remove: "Remove this item"
-      the_student: "The Student"
+      the_student: "The Candidate"
       the_teacher: "The Teacher"
-      title: "Days since a teacher has interacted with the student"
+      title: "Days since a teacher has interacted with the candidate"
       ungraded_count_description: "More than %{count} submissions have not been graded"
       ungraded_count_option: "Ungraded Submissions (Count)"
       ungraded_count_title: "Number of submissions that have not been graded"
@@ -1189,7 +1201,7 @@ en-AU:
       quota_exceeded_course: "Course storage quota exceeded"
       quota_exceeded_group: "Group storage quota exceeded"
       quota_exceeded_user: "User storage quota exceeded"
-      student_view_unauthorized: "You cannot access this functionality in student view."
+      student_view_unauthorized: "You cannot access this functionality in candidate view."
       unauthorized: 
         generic: "You are not authorized to perform this action"
         not_started_yet: "The course you are trying to access has not started yet.  It will start %{date}."
@@ -1309,7 +1321,7 @@ en-AU:
     muting_assignment: "Muting Assignment..."
     unmute_assignment: "Unmute Assignment"
     unmute_button: "Unmute Assignment"
-    unmute_dialog: "This assignment is currently muted. That means students can't see their grades and feedback. Would you like to unmute now?"
+    unmute_dialog: "This assignment is currently muted. That means candidates can't see their grades and feedback. Would you like to unmute now?"
     unmuting_assignment: "Unmuting Assignment..."
   assignments: 
     add_another_never_drop_rule: "Add another assignment"
@@ -1333,7 +1345,7 @@ en-AU:
       tooltips: 
         assignment_is_quiz: "This assignment is a quiz, so points possible comes from the questions and can't be set manually."
     add_assignment_group_form: 
-      drop_x_scores_for_each_student: "%{scores} scores for each student"
+      drop_x_scores_for_each_student: "%{scores} scores for each candidate"
       labels: 
         assignments: Assignments
         group_name: "Group Name"
@@ -1543,9 +1555,9 @@ en-AU:
         one: "1 Ungraded Re-submission"
         other: "%{count} Ungraded Re-submissions"
       reupload_instructions: |-
-          If you made changes to the student submission files you downloaded
+          If you made changes to the candidate submission files you downloaded
           before, just zip them back up and upload the zip with the form below.
-          Students will see the modified files in their comments for the submission.
+          Candidates will see the modified files in their comments for the submission.
           
           *Make sure you don't change the names of the submission files so we can recognize them.*
       titles: 
@@ -1561,7 +1573,7 @@ en-AU:
         points: Points
       view_grading_levels: "View Grading Levels"
     group_category_selector: 
-      grade_group_students_individually: "Assign Grades to Each Student Individually"
+      grade_group_students_individually: "Assign Grades to Each Candidate Individually"
       group_category_options: "New Group Category"
       group_set: "Group Set"
       is_group_assignment: "This is a Group Assignment"
@@ -1645,19 +1657,19 @@ en-AU:
         assign_peer_reviews: "Assign Peer Reviews"
       descriptions: 
         automatically_assign_reviews: "You can assign peer reviews to those users who have submitted but don't already have reviews assigned by clicking the button below."
-      details: "To the left you can see the list of students for this assignment, and also which student submissions (if any) they have been assigned to review."
+      details: "To the left you can see the list of candidates for this assignment, and also which candidate submissions (if any) they have been assigned to review."
       links: 
         assign_peer_review: "Give %{student} another submission to assess"
         back_to_assignment: "Back to Assignment"
       messages: 
         cancel_peer_review: "Cancel this peer review?"
-        no_students_found: "No Students Found"
+        no_students_found: "No Candidates Found"
       none_assigned: "None Assigned"
       not_yet_submitted: "not yet submitted"
       options: 
-        select_student: "[ Select Student ]"
-      overview: "Student peer reviews will be considered complete when students have commented at least once on the page."
-      overview_with_rubric: "Student peer reviews will be considered complete when students have commented at least once on the page and filled out the rubric form for the assignment."
+        select_student: "[ Select Candidate ]"
+      overview: "Candidate peer reviews will be considered complete when candidates have commented at least once on the page."
+      overview_with_rubric: "Candidate peer reviews will be considered complete when candidates have commented at least once on the page and filled out the rubric form for the assignment."
       page_title: "Peer Reviews"
       reviews_per_user: "%{count} reviews per user"
       submitted: submitted
@@ -1856,8 +1868,8 @@ en-AU:
           exclude_quoted: "Quoted Material"
           internet_check: "Internet Database"
           journal_check: "Journals, Periodicals, and Publications"
-          student_paper_check: "Other Student Papers"
-        originality_report_visibility: "Students Can See the Originality Report"
+          student_paper_check: "Other Candidate Papers"
+        originality_report_visibility: "Candidates Can See the Originality Report"
         originality_report_visible_after_due_date: "After the Due Date"
         originality_report_visible_after_grading: "After the assignment is graded"
         originality_report_visible_immediately: Immediately
@@ -2109,18 +2121,20 @@ en-AU:
     last_formula_row: "the last formula row will be used to compute the final answer"
     sample_final_answer: "This value is an example final answer for this question type"
   calendar: 
-    appointment_group_deletion_details: "Deleting it will also delete any appointments that have been signed up for by students."
+    appointment_group_deletion_details: "Deleting it will also delete any appointments that have been signed up for by candidates."
     appointment_group_list: 
       location: "Location:"
       message_groups: "Message Groups Who..."
-      message_students: "Message Students Who..."
+      message_students: "Message Candidates Who..."
       scheduler_explanation_student_header: "You do not have any appointment groups to sign up for"
-      scheduler_explanation_student_paragraph_1: "Teachers can use this scheduler tool to schedule things for their students to sign up for. Things like: \"office hours\", \"group presentation time-slots\" or \"lunch with an alumnus\"."
+      scheduler_explanation_student_paragraph_1: "Teachers can use this scheduler tool to schedule things for their candidates to sign up for. Things like: \"office hours\", \"group presentation time-slots\" or \"lunch with an alumnus\"."
       scheduler_explanation_student_paragraph_2: "None of your teachers have made any appointments you can sign up for so there is not anything for you do to now. You will be notified if anyone does create something so you can come sign up for it."
       scheduler_explanation_teacher_header: "You have not created any appointment groups, and there are none you can sign up for"
+
       scheduler_explanation_teacher_paragraph_1: "This is the Scheduler Tool. You can use it to create appointment groups for your students to sign up for."
       scheduler_explanation_teacher_paragraph_2: "For example, lets say you want to go over the midterm paper assignment with each of the students in your course. You would create a new appointment group, specify the dates and times that you're available, tell it to split that time into 15 minute blocks and only allow one student per time-block."
       scheduler_explanation_teacher_paragraph_3: "Then students would get notified and see that they need to sign up for one of the specified time blocks. They will be shown a calendar with the available time blocks overlaid on top of everything on their other calendars so they can pick a time that works for them."
+
       scheduler_explanation_teacher_paragraph_4: "*Get started now by clicking the \"Create an appointment group\" button to the right *"
       x_groups_have_signed_up: "%{participant_count} groups have signed up"
       x_people_have_signed_up: "%{participant_count} people have signed up"
@@ -2167,7 +2181,7 @@ en-AU:
       date: Date
       details: "Details:"
       group_category: "Group Category"
-      group_signup: "Have students sign up in groups."
+      group_signup: "Have candidates sign up in groups."
       location: Location
       name: Name
       time_range: "Time Range"
@@ -2225,7 +2239,7 @@ en-AU:
         reserve: Reserve
         unreserve: Un-reserve
       location: Location
-      message_students: "Message students"
+      message_students: "Message candidates"
       slots_available: "Slots available"
     event_event_title: "Event Title:"
     event_on_this_day: "There is an event on this day"
@@ -2236,7 +2250,7 @@ en-AU:
       all_users: "All users"
       message_groups: "Message Groups"
       message_label: "Message:"
-      message_students: "Message Students"
+      message_students: "Message Candidates"
       registered_groups: "Groups who have already signed up"
       registered_users: "Users who have already signed up"
       send_message_to: "Send a message to..."
@@ -2557,8 +2571,8 @@ en-AU:
     index: 
       description_rs: |-
           Free online web tools like [Google Docs](%{google_url}) and [EtherPad](%{etherpad_url})
-          are an excellent place for students to work on group projects or papers, take shared notes, etc.
-          Teacher *or* students can set up group collaborations.
+          are an excellent place for candidates to work on group projects or papers, take shared notes, etc.
+          Teacher *or* candidates can set up group collaborations.
       description_student: |-
           **What do we mean by collaborations?**  We're talking about web-based tools for
           working together on a shared document.  You can use resources like
@@ -2568,7 +2582,7 @@ en-AU:
           up without having to swap emails.
       description_teacher: |-
           **What do we mean by collaborations?**  We're talking about web-based tools that most
-          likely your students are already familiar with.  Students can use resources like
+          likely your candidates are already familiar with.  Candidates can use resources like
           [Google Docs](%{google_url}) and [EtherPad](%{etherpad_url})
           to work collaboratively on tasks like group papers or note-taking.  This page gives them
           (and you) an easy place to keep track of those collaborations, and also to set them
@@ -2975,7 +2989,7 @@ en-AU:
     new_roster_user: 
       completed_enrollment: "completed *%{completed_at}*"
       confirm: 
-        conclude_student: "Are you sure you want to conclude this student's enrollment?"
+        conclude_student: "Are you sure you want to conclude this candidate's enrollment?"
         delete_enrollment: "Are you sure you want to delete this student's enrollment?"
       enrolled_as: "Enrolled as a %{enrollment_type}"
       enrollment_change_failed: "Enrollment privilege change failed, please try again"
