@@ -26,7 +26,7 @@ define [
     # Get the I18n display text to use for the group name.
     getGroupDisplayName: (groupName) =>
       switch groupName
-        when 'Course' then I18n.t('groups.course', 'Course Activities')
+        when 'Course' then I18n.t('groups.course', 'Project Activities')
         when 'Discussions' then I18n.t('groups.discussions', 'Discussions')
         when 'Communication' then I18n.t('groups.communication', 'Conversations')
         when 'Scheduling' then I18n.t('groups.scheduling', 'Scheduling')

@@ -5,9 +5,6 @@ class Invitation < ActiveRecord::Base
 
   attr_accessible :access_code
 
-
-
-
   # default key length: 10 characters
   mattr_accessor :unique_key_length
   self.unique_key_length = 10

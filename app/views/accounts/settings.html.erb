@@ -62,7 +62,7 @@
   <% if can_do(@context, @current_user, :manage_account_settings) %>
       <li><a href="#tab-sms" id="tab-sms-settings-link">SMS Settings</a></li>
   <% end %>
-  s
+
   <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
       <% if can_do(@context, @current_user, :manage_account_settings) %>
           <li><a href="#tab-plugins" id="tab-plugin-link">Plugins</a></li>

@@ -198,6 +198,7 @@ routes.draw do
   # these contexts, and also generating context-specific urls, easier.
   resources :courses ,:path => :projects do
     resources :invitations
+    match 'candidatelist' => 'invitations#index'
     # DEPRECATED
     match 'self_enrollment/:self_enrollment' => 'courses#self_enrollment', :as => :self_enrollment, :via => :get
     match 'self_unenrollment/:self_unenrollment' => 'courses#self_unenrollment', :as => :self_unenrollment, :via => :post
@@ -829,6 +830,18 @@ routes.draw do
   # the way ApiRouteSet works. For now we get around it by defining methods
   # inline in the routes file, but getting concerns working would rawk.
   ApiRouteSet::V1.draw(self) do
+
+    scope(:controller => :invitations) do
+      def et_routes(context)
+        get "#{context}s/:#{context}_id/get_candidates", :action => :get_candidates, :path_name => "#{context}_get_candidates"
+        post "#{context}s/:#{context}_id/invitations", :action => :create, :path_name => "#{context}_invitations_create"
+        put "#{context}s/:#{context}_id/invitations/:invitation_id", :action => :update, :path_name => "#{context}_invitations_update"
+        delete "#{context}s/:#{context}_id/invitations/:invitation_id", :action => :destroy, :path_name => "#{context}_invitations_delete"
+      end
+      et_routes("course")
+      et_routes("account")
+    end
+
     scope(:controller => :courses) do
       get 'courses', :action => :index
       put 'courses/:id', :action => :update
