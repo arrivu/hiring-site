@@ -13,19 +13,29 @@
       <span style="font-size: 0.8em; font-weight: normal;">(<%= t(:assignment_points_possible, "pt", :count => q.assignment.points_possible) %>)</span>
     <% end %>
   </div>
+  <% if q.available? %>
+  <div style="border-bottom: 1px solid #ccc;float: right;">
+    <a href="<%= course_quiz_invitations_path(@context,q) %>">
+      <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
+    </a>
 
+  </div>
+      <br/>
+  <% end %>
   <div class="description user_content">
     <% if q.available? %>
       <div style="float: right; margin: 0 0 0 20px;">
-        <div style="border-bottom: 1px solid #ccc;">
+
+          <div style="float: right; margin: 0 0 0 20px;">
           <% if submission %>
             <%= before_label(:latest_submission, "Latest Submission") %>
           <% elsif q.survey? %>
             <%= before_label(:survey_details, "Survey Details") %>
           <% else %>
-            <%= before_label(:quiz_details, "Quiz Details") %>
+            <%= before_label(:quiz_details, "Assessment Details") %>
           <% end %>
         </div>
+
         <% if submission && submission.completed? %>
           <%= datetime_string(submission.finished_at) %><br/>
           <% if q.muted? %>

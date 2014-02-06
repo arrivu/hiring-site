@@ -197,8 +197,6 @@ routes.draw do
   # and the application_helper method :context_url to make retrieving
   # these contexts, and also generating context-specific urls, easier.
   resources :courses ,:path => :projects do
-    resources :invitations
-    match 'candidatelist' => 'invitations#index'
     # DEPRECATED
     match 'self_enrollment/:self_enrollment' => 'courses#self_enrollment', :as => :self_enrollment, :via => :get
     match 'self_unenrollment/:self_unenrollment' => 'courses#self_unenrollment', :as => :self_unenrollment, :via => :post
@@ -351,6 +349,7 @@ routes.draw do
       match 'take/questions/:question_id' => 'quizzes#show', :as => :question, :take => '1'
       match 'moderate' => 'quizzes#moderate', :as => :moderate
       match 'lockdown_browser_required' => 'quizzes#lockdown_browser_required', :as => :lockdown_browser_required
+      resources :invitations
     end
 
     #resources :collaborations
@@ -833,10 +832,10 @@ routes.draw do
 
     scope(:controller => :invitations) do
       def et_routes(context)
-        get "#{context}s/:#{context}_id/get_candidates", :action => :get_candidates, :path_name => "#{context}_get_candidates"
-        post "#{context}s/:#{context}_id/invitations", :action => :create, :path_name => "#{context}_invitations_create"
-        put "#{context}s/:#{context}_id/invitations/:invitation_id", :action => :update, :path_name => "#{context}_invitations_update"
-        delete "#{context}s/:#{context}_id/invitations/:invitation_id", :action => :destroy, :path_name => "#{context}_invitations_delete"
+        post "#{context}s/:#{context}_id/quizzes/:id/invitations", :action => :create, :path_name => "#{context}_invitations_create"
+        get "#{context}s/:#{context}_id/quizzes/:id/invitations", :action => :get_candidates, :path_name => "#{context}_invitations"
+        put "#{context}s/:#{context}_id/quizzes/:id/invitations/:invitation_id", :action => :update, :path_name => "#{context}_invitations_update"
+        delete "#{context}s/:#{context}_id/quizzes/:id/invitations/:invitation_id", :action => :destroy, :path_name => "#{context}_invitations_delete"
       end
       et_routes("course")
       et_routes("account")

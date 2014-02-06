@@ -15,7 +15,7 @@ environment_configuration(defined?(config) && config) do |config|
   else
     config.consider_all_requests_local = true
   end
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
   config.action_view.cache_template_loading = false
 
   # run rake js:build to build the optimized JS if set to true
