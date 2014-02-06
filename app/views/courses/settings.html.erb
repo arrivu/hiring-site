@@ -213,32 +213,32 @@
           </span>
           <span class="course_info readable_license"><%= @context.readable_license %></span>
         </td>
-      </tr><tr>
-        <td class="form-label"><label><%= before_label('course_visibility', %{Visibility}) %></label></td>
-        <td colspan="3">
-          <span class="course_form">
-            <%= f.check_box :public_syllabus %>
-            <%= f.label :public_syllabus, :en => "Make the syllabus for this project publicly visible" %>
-          </span>
-          <div>
-            <span class="course_form">
-              <%= f.check_box :is_public, :class => "is_public_checkbox" %>
-              <%= f.label :is_public, :en => "Make this project publicly visible" %>
-              <span class="aside checklabelfix"><%= t('help.public_course', %{(candidate data will remain private)}) %></span>
-            </span>
-          </div>
-          <span class="course_info is_public"><%= @context.is_public ? t('public_course', 'Public') : t('private_course', 'Private') %></span>
-          <div class="public_options">
-            <span class="course_form">
-              <%= f.check_box :indexed %>
-              <%= f.label :indexed, :en => "Include this project in the public project index" %>
-            </span>
-            <span class="course_info indexed">
-              <%= @context.indexed ? t('indexed_course', "Included in public project index") : "" %>
-            </span>
-          </div>
-        </td>
-      </tr><tr>
+      <!--</tr><tr>-->
+        <!--<td class="form-label"><label><%#= before_label('course_visibility', %{Visibility}) %></label></td>-->
+        <!--<td colspan="3">-->
+          <!--<span class="course_form">-->
+            <!--<%#= f.check_box :public_syllabus %>-->
+            <!--<%#= f.label :public_syllabus, :en => "Make the syllabus for this project publicly visible" %>-->
+          <!--</span>-->
+          <!--<div>-->
+            <!--<span class="course_form">-->
+              <!--<%#= f.check_box :is_public, :class => "is_public_checkbox" %>-->
+              <!--<%#= f.label :is_public, :en => "Make this project publicly visible" %>-->
+              <!--<span class="aside checklabelfix"><%#= t('help.public_course', %{(candidate data will remain private)}) %></span>-->
+            <!--</span>-->
+          <!--</div>-->
+          <!--<span class="course_info is_public"><%#= @context.is_public ? t('public_course', 'Public') : t('private_course', 'Private') %></span>-->
+          <!--<div class="public_options">-->
+            <!--<span class="course_form">-->
+              <!--<%#= f.check_box :indexed %>-->
+              <!--<%#= f.label :indexed, :en => "Include this project in the public project index" %>-->
+            <!--</span>-->
+            <!--<span class="course_info indexed">-->
+              <!--<%#= @context.indexed ? t('indexed_course', "Included in public project index") : "" %>-->
+            <!--</span>-->
+          <!--</div>-->
+        <!--</td>-->
+      <!--</tr><tr>-->
         <td></td>
         <td colspan="3">
           <span class="self_enrollment_message" style="<%= hidden unless @context.self_enrollment %>">

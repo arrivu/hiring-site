@@ -2432,7 +2432,7 @@ class Course < ActiveRecord::Base
         #{ :id => TAB_ANNOUNCEMENTS, :label => t('#tabs.announcements', "Announcements"), :css_class => 'announcements', :href => :course_announcements_path },
         { :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_assignments_path },
         #{ :id => TAB_DISCUSSIONS, :label => t('#tabs.discussions', "Discussions"), :css_class => 'discussions', :href => :course_discussion_topics_path },
-        { :id => TAB_GRADES, :label => t('#tabs.grades', "Hiring Outcomes"), :css_class => 'grades', :href => :course_grades_path },
+        { :id => TAB_GRADES, :label => t('#tabs.grades', "Ratings"), :css_class => 'grades', :href => :course_grades_path },
         { :id => TAB_PEOPLE, :label => t('#tabs.people', "People"), :css_class => 'people', :href => :course_users_path },
         { :id => TAB_CHAT, :label => t('#tabs.chat', "Chat"), :css_class => 'chat', :href => :course_chat_path },
         #{ :id => TAB_PAGES, :label => t('#tabs.pages', "Pages"), :css_class => 'pages', :href => :course_wiki_pages_path },

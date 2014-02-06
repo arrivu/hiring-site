@@ -47,6 +47,8 @@ require [
   'vendor/jquery.pageless'
   'vendor/jquery.scrollTo'
   'compiled/badge_counts'
+  'jquery'
+  'jquery.mmenu'
 ], (Backbone, courseList, helpDialog, tours) ->
   courseList.init()
   helpDialog.initTriggers()
@@ -71,4 +73,7 @@ require [
   $('body').on 'click', '[data-pushstate]', (event) ->
     event.preventDefault()
     Backbone.history.navigate $(this).attr('href'), yes
+
+  $( document ).ready ->
+    $('#left-side').mmenu()
 

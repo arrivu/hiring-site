@@ -230,7 +230,7 @@ routes.draw do
     match 'link_enrollment' => 'courses#link_enrollment', :as => :link_enrollment
     match 'update_nav' => 'courses#update_nav', :as => :update_nav
     match 'enroll_users.:format' => 'courses#enroll_users', :as => :formatted_enroll_users
-    resource :gradebook ,:path => :evaluation do
+    resource :gradebook ,:path => :evaluations do
       match 'submissions_upload/:assignment_id' => 'gradebooks#submissions_zip_upload', :as => :submissions_upload, :via => :post
       collection do
         get :change_gradebook_version
@@ -669,8 +669,8 @@ routes.draw do
     resources :user_notes
     match 'manageable_courses' => 'users#manageable_courses', :as => :manageable_courses
     match 'outcomes' => 'outcomes#user_outcome_results', :as => :outcomes
-    match 'teacher_activity/course/:course_id' => 'users#teacher_activity', :as => :course_teacher_activity
-    match 'teacher_activity/student/:student_id' => 'users#teacher_activity', :as => :student_teacher_activity
+    match 'hiring_manager_activity/project/:course_id' => 'users#teacher_activity', :as => :course_teacher_activity
+    match 'hiring_manager_activity/candidate/:student_id' => 'users#teacher_activity', :as => :student_teacher_activity
     match 'media_download' => 'users#media_download', :as => :media_download
     resources :messages, :only => [:index, :create] do
       match 'html_message' => 'messages#html_message', :as => :html_message, :via => :get

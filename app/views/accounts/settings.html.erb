@@ -62,7 +62,6 @@
   <% if can_do(@context, @current_user, :manage_account_settings) %>
       <li><a href="#tab-sms" id="tab-sms-settings-link">SMS Settings</a></li>
   <% end %>
-  s
   <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
       <% if can_do(@context, @current_user, :manage_account_settings) %>
           <li><a href="#tab-plugins" id="tab-plugin-link">Plugins</a></li>
@@ -212,7 +211,7 @@
                             <%= f.label :enable_user_notes, :en => "Faculty Journal" %>
                           </div>
                           <div>
-                            <%= settings.check_box :enable_eportfolios, :checked => @account.settings[:enable_eportfolios] != false %>
+                            <%= settings.check_box :enable_eportfolios, :checked => @account.settings[:enable_eportfolios] != true %>
                             <%= settings.label :enable_eportfolios, :en => "ePortfolios" %>
                           </div>
                           <div>
