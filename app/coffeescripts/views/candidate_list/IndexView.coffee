@@ -17,8 +17,11 @@ define [
       'click #add_candidates' : "addCandidates"
       'click #send_invitations' : "sendInvitations"
 
+    afterRender: ->
+      @addCandidateRow
+
     sendInvitations:(event) ->
-      alert("ok")
+#      alert("ok")
 #      if document.getElementById("dataTable")?
 #        table = document.getElementById("dataTable")
 #        rows = table.getElementsByTagName("tr")
@@ -43,7 +46,9 @@ define [
         col = undefined
 
         while col = row.cells[j]
-          console.log row[i].cells[j]
+#          console.log row[i].cells[j]
+          console.log($('.candidate_name').val())
+          console.log($('.candidateemail').val())
           j++
         i++
 
@@ -69,28 +74,11 @@ define [
           $('#candidate_list').append(addCandidatesItemView.render().el)
 
     addRow: (event) ->
-      table = document.getElementById("dataTable")
-      rowCount = table.rows.length
-      row = table.insertRow(rowCount)
-      cell1 = row.insertCell(0)
-      element1 = document.createElement("input")
-      element1.type = "checkbox"
-      element1.name = "chkbox[]"
-      element1.checked = "checked"
-      cell1.appendChild element1
-      cell2 = row.insertCell(1)
-      element3 = document.createElement("input")
-      element3.type = "text"
-      element3.name = "txtbox[]"
-      element3.placeholder="Candidate Name"
-      cell2.appendChild element3
-      cell3 = row.insertCell(2)
-      element2 = document.createElement("input")
-      element2.type = "text"
-      element2.name = "txtbox[]"
-      element2.placeholder="Candidate Email"
-      cell3.appendChild element2
-      return
+      @addCandidateRow
+
+    addCandidateRow: ->
+      addCandidatesItemView = new AddCandidatesItemView
+      $('#dataTable').append(addCandidatesItemView.render().el)
 
     deleteRow: (event) ->
       table = document.getElementById("dataTable")

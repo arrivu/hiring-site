@@ -7,7 +7,6 @@ class InvitationsController < ApplicationController
     return unless authorized_action(@domain_root_account, @current_user, [:create_courses, :manage_courses])
     js_env(:COURSE_ID => @context.id)
     js_env(:QUIZZ_ID => params[:quiz_id].to_i)
-
   end
 
   def get_candidates
@@ -17,7 +16,6 @@ class InvitationsController < ApplicationController
       respond_to do |format|
         format.json  { render :json => @students.to_json(:include => :pseudonyms)}
       end
-
     end
   end
 
