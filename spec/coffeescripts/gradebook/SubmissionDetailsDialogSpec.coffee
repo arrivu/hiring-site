@@ -9,7 +9,7 @@ define [
 
     setup: ->
       @assignment = new Assignment(id: 1)
-      @user       = new User(assignment_1: {}, id: 1, name: 'Test student')
+      @user       = new User(assignment_1: {}, id: 1, name: 'Test Candidate')
 
     teardown: ->
       $('.submission_details_dialog').remove()

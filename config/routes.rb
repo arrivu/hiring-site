@@ -215,7 +215,7 @@ routes.draw do
     match 'limit_user_grading/:id' => 'courses#limit_user', :as => :limit_user_grading, :via => :post
     match 'conclude_user/:id' => 'courses#conclude_user', :as => :conclude_user_enrollment, :via => :delete
     match 'unconclude_user/:id' => 'courses#unconclude_user', :as => :unconclude_user_enrollment, :via => :post
-    resources :sections, :except => ["index", "edit", "new"] do
+    resources :sections,:path => :batches, :except => ["index", "edit", "new"] do
       match 'crosslist/confirm/:new_course_id' => 'sections#crosslist_check', :as => :confirm_crosslist
       match 'crosslist' => 'sections#crosslist', :as => :crosslist, :via => :post
       match 'crosslist' => 'sections#uncrosslist', :as => :uncrosslist, :via => :delete

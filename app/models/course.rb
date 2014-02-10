@@ -2514,7 +2514,7 @@ class Course < ActiveRecord::Base
         tab[:hidden_unused] = true if tab[:id] == TAB_MODULES && !active_record_types[:modules]
         tab[:hidden_unused] = true if tab[:id] == TAB_FILES && !active_record_types[:files]
         tab[:hidden_unused] = true if tab[:id] == TAB_QUIZZES && !active_record_types[:quizzes]
-        #tab[:hidden_unused] = true if tab[:id] == TAB_ASSIGNMENTS && !active_record_types[:assignments]
+        tab[:hidden_unused] = true if tab[:id] == TAB_ASSIGNMENTS && !active_record_types[:assignments]
         tab[:hidden_unused] = true if tab[:id] == TAB_PAGES && !active_record_types[:pages] && !allow_student_wiki_edits
         tab[:hidden_unused] = true if tab[:id] == TAB_CONFERENCES && !active_record_types[:conferences] && !self.grants_right?(user, nil, :create_conferences)
         tab[:hidden_unused] = true if tab[:id] == TAB_ANNOUNCEMENTS && !active_record_types[:announcements]
@@ -2544,7 +2544,7 @@ class Course < ActiveRecord::Base
         end
         tabs.delete_if{ |t| t[:visibility] == 'admins' } unless self.grants_right?(user, opts[:session], :manage_content)
         if self.grants_rights?(user, opts[:session], :manage_content, :manage_assignments).values.any?
-          #tabs.detect { |t| t[:id] == TAB_ASSIGNMENTS }[:manageable] = true
+          tabs.detect { |t| t[:id] == TAB_ASSIGNMENTS }[:manageable] = true
           #tabs.detect { |t| t[:id] == TAB_SYLLABUS }[:manageable] = true
           tabs.detect { |t| t[:id] == TAB_QUIZZES }[:manageable] = true
         end
@@ -2773,7 +2773,7 @@ class Course < ActiveRecord::Base
     if self.student_view_students.active.count == 0
       fake_student = nil
       User.skip_updating_account_associations do
-        fake_student = User.new(:name => t('student_view_student_name', "Test Student"))
+        fake_student = User.new(:name => t('student_view_student_name', "Test Candidate"))
         fake_student.preferences[:fake_student] = true
         fake_student.workflow_state = 'registered'
         fake_student.save

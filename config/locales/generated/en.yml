@@ -4284,7 +4284,7 @@ en:
       unpublished: Unpublished
       unpublished_with_message: "Unpublished: %{message}"
     missing_name: "Unnamed Course"
-    student_view_student_name: "Test Student"
+    student_view_student_name: "Test Candidate"
     wiki_permissions: 
       all: Anyone
       only_teachers: "Only Teachers"
@@ -4623,7 +4623,7 @@ en:
       invitation_cancelled: "Invitation canceled."
       login_to_accept: "You'll need to log in before you can accept the enrollment."
       preview_course: "You've been invited to join this course.  You can look around, but you'll need to accept the enrollment invitation before you can participate."
-      reset_test_student: "The test student has been reset successfully."
+      reset_test_student: "The test candidate has been reset successfully."
       role_restored: "Your default role and permissions have been restored"
       role_switched: "You have switched roles for this course.  You will now see the course in this new role: %{enrollment_type}"
       unconcluded: "Course un-concluded"
@@ -7585,7 +7585,7 @@ en:
       student_view: 
         leave: "Leave Student View"
         reset: "Reset Student"
-        reset_explanation: "Resetting the test student will clear all history for this student, %{line_break}allowing you to view the course as a brand new student."
+        reset_explanation: "Resetting the test candidate will clear all history for this student, %{line_break}allowing you to view the course as a brand new student."
         warning_title: "You are currently logged into Student View"
     head: 
       default_page_title: "Sublime LMS"

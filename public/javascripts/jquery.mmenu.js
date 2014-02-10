@@ -998,15 +998,15 @@ define(['jquery'], function( $ ) {
 			return false;
 		} 
 
-		var $panels = $('.' + _c.panel, $m),
-			$current = $panels.filter( '.' + _c.current );
-		
-		$panels
-			.removeClass( _c.highest )
-			.removeClass( _c.current )
-			.not( $opening )
-			.not( $current )
-			.addClass( _c.hidden );
+//		var $panels = $('.' + _c.panel, $m),
+//			$current = $panels.filter( '.' + _c.current );
+//
+//		$panels
+//			.removeClass( _c.highest )
+//			.removeClass( _c.current )
+//			.not( $opening )
+//			.not( $current )
+//			.addClass( _c.hidden );
 
 		if ( $opening.hasClass( _c.opened ) )
 		{
