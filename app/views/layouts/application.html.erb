@@ -32,8 +32,12 @@
     #breadcrumbs{width: 100%;
         position: absolute;}
     #content{width: 97%;
-        position: absolute ;}
-</style>
+        top: 25px; position: absolute;}
+    #breadcrumbs ul .home a i {
+        margin-right: -5px;
+        vertical-align: text-bottom;
+        margin-top: 7px;
+    }</style>
 <% content_for :head do %>
   <%= include_common_stylesheets %>
   <% if @eportfolio_view === true %>
@@ -46,9 +50,9 @@
 <div id="header" class="no-print <%= 'no-user' unless @current_user %>">
   <div id="header-inner">
     <a href="#content" id="skip_navigation_link"><%= t 'links.skip_to_content', "Skip To Content" %></a>
+    <a id='hideshow' value='hide/show' style="cursor: pointer;"><%= image_tag "menu.png", :style=> "width: 25px;height: 20px;margin: -17px 10px;" %> </a>
 
-
-    <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
+    <a id="header-logo" href="<%= root_url %>" style="left: 45px;"><%= t 'links.dashboard', "My Dashboard" %></a>
     <b id="header-logo-secondary"></b>
     <!--<div id="topbar">-->
       <!--<%# if (identity = yield :identity) %>-->
@@ -196,9 +200,7 @@
     </div>
         </div>
     <% end %>
-    <div id="main">
-      <!--<a href="#menu1"><i class="icon icon-outdent"></i></a>-->
-
+<div id="main" style="min-height: 750px;">
       <div id="right-side-wrapper">
         <aside id="right-side" role="complementary">
           <%= right_side %>
@@ -207,9 +209,7 @@
       <div id="not_right_side">
         <div id="content-wrapper">
          <div id="margin">
-           <a id='hideshow' value='hide/show' style="margin:4px;"><i class="icon icon-collapse"></i> </a>
-
-           <%= render_crumbs %>
+            <%= render_crumbs %>
           <div id="content" role="main" class="container-fluid">
             <%= yield %>
           </div>
