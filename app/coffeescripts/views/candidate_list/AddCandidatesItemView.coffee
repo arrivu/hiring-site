@@ -8,7 +8,6 @@ define [
 
     template: template
     tagName: 'tr'
-    className: 'candidate_list_item'
 
     initialize: ->
       super

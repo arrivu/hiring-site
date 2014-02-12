@@ -3,7 +3,7 @@ require [
   'underscore'
 ],(IndexView, _) ->
   app = new IndexView
-    el: '#content'
+    el: '#send_invitations'
   app.render()
 
 

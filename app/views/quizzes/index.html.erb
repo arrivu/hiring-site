@@ -28,8 +28,7 @@
 %>
 
 <% else %>
-
-<% js_bundle :quizzes_index_legacy %>
+<% js_bundle :quizzes_index_legacy ,:candidate_invitation %>
 
 <% content_for :right_side do %>
   <% if can_do(@context.quizzes.new, @current_user, :create) %>
@@ -127,4 +126,7 @@ ul.quiz_list li.quiz div.description {
   <%= image_tag "lock_small.png", :style => "display: none;", :class => "content_lock_icon", :id => "quiz_lock_icon", :title => t('titles.this_quiz_is_locked', "This assessment is currently locked.  Click for more details."), :alt => "locked" %>
   <!--<a href="<%#= context_url(@context, :context_context_modules_url) %>" id="context_modules_url" style="display: none;">&nbsp;</a>-->
 <% end %>
+<div id="send_invitations">
+
+</div>
 <% end %>
