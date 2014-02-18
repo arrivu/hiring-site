@@ -3,7 +3,8 @@ require [
   'compiled/views/CandidateInvitations/IndexView'
   'compiled/views/CandidateInvitations/CandidatesCollectionView'
   'compiled/views/InputFilterView'
-],(CandidateCollection, IndexView, CandidatesCollectionView, InputFilterView) ->
+  'jquery'
+],(CandidateCollection, IndexView, CandidatesCollectionView, InputFilterView, $) ->
 
   # Collections
   candidateCollection = new CandidateCollection
@@ -16,11 +17,11 @@ require [
   inputFilterView = new InputFilterView
     collection: candidateCollection
 
-
   @app = new IndexView
     el: "#content"
     sections: ENV.COURSE_SECTION_LIST
     candidateView: candidateCollectionView
+    collection: candidateCollection
     inputFilterView: inputFilterView
 
   @app.render()

@@ -19,14 +19,12 @@ class InvitationsController < ApplicationController
 
       search_params = params.slice(:search_term, :enrollment_role, :enrollment_type)
       search_term = search_params[:search_term].presence
-
-      if search_term
-        users = UserSearch.for_user_in_context(search_term, @context, @current_user, session, search_params)
-      else
-        users = UserSearch.scope_for(@context, @current_user, search_params)
-      end
       @quiz = Quiz.find(params[:id])
-      students = @context.participating_students.order_by_sortable_name
+      if search_term
+        students = UserSearch.for_user_in_context(search_term, @context, @current_user, session, search_params)
+      else
+        students = @context.participating_students.order_by_sortable_name
+      end
       students = Api.paginate(students, self, api_v1_course_invitations_url(@context,@quiz))
 
       render :json => students.map { |u|
@@ -37,8 +35,13 @@ class InvitationsController < ApplicationController
 
   def create
     if authorized_action(@context, @current_user, :read_roster)
+      @quiz = Quiz.find(params[:quiz_id])
+      params[:login_ids].each do |login_id|
+        candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
+        @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
+      end
       respond_to do |format|
-        format.json  { render :json }
+        format.json  { render :json => @invitation }
       end
     end
   end
