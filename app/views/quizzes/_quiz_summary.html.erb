@@ -16,7 +16,7 @@
 
   <% if q.available? %>
   <div style="border-bottom: 1px solid #ccc;float: right;">
-    <a href="#" class="send_invitation" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
+    <a href="<%= course_quiz_invitations_path(@context,q) %>" class="send_invitation" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
       <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
     </a>
 

@@ -23,25 +23,13 @@ define [
       candidateCollection = new CandidateCollection
       candidateCollection.on 'sync', @getCandidateItem,candidateCollection
       candidateCollection.url = "/api/v1/courses/"+course_id+"/quizzes/"+quiz_id+"/invitations"
+      candidateCollection.setParam('per_page', 2)
       candidateCollection.fetch()
       addCandidatesView = new AddCandidatesView
         collection: candidateCollection
         el: '#render_popup'
       addCandidatesView.render()
 
-#    getCandidateItem: (collection)  ->
-#      console.log(collection)
-#
-#      for model in collection.models
-#        candidate_name = model.attributes.user.name
-#        console.log(model.attributes.user.pseudonyms)
-#        for pseudonym in model.attributes.user.pseudonyms
-#          candidate_email = pseudonym.pseudonym.unique_id
-#          addCandidatesItemView = new AddCandidatesItemView
-#            name: candidate_name
-#            email: candidate_email
-#          addCandidatesItemView.render()
-#          $('#add_candidates_list').append(addCandidatesItemView.render().el)
 
 
     sendInvitationConfirm: (event) ->

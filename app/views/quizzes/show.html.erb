@@ -36,7 +36,7 @@
             <a href="<%= context_url(@context, :context_quiz_moderate_url, @quiz.id) %>">
               <i class="icon-settings"><span class="screenreader-only"><%= qos_moderate_title %></span></i> <%= qos_moderate_title %>
             </a>
-            <a href="<%= course_quiz_invitations_path(@context,@quiz) %>"  data-id="<%= q.id %>" class="send_invitations">
+            <a href="<%= course_quiz_invitations_path(@context,@quiz) %>"  data-id="<%= @quiz.id %>" class="send_invitations">
               <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
             </a>
             <%= render :partial => 'quizzes/download_file_upload_submissions' %>

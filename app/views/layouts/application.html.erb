@@ -36,6 +36,43 @@
 <% end %>
 <%= render :partial => "layouts/head" %>
 <%= render :partial => 'shared/flash_notices' %>
+<%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js" %>
+<style>
+
+    .table-condensed th, .table-condensed td {
+        padding: 4px 5px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .table th {
+        font-weight: bold;
+    }
+    .table-striped {
+        border: 1px solid #dddddd;
+    }
+    .prev, .next {
+        width: 50px;
+        text-align: center;
+        margin-right: 10px;
+        user-select: none;
+        -o-user-select:none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .prev, .next {
+        border: 1px solid green;
+        cursor: pointer;
+    }
+
+    .prev.disabled, .next.disabled {
+        border: 1px solid red;
+        cursor: default;
+    }
+
+
+</style>
 
 <div id="header" class="no-print <%= 'no-user' unless @current_user %>">
   <div id="header-inner">

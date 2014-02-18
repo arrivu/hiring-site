@@ -1,9 +1,20 @@
-<div id="add_candidates_list" style="width:85%;margin:0 auto;">
+<div id="add_candidates_list" style="width:90%;margin:0 auto;">
 
-<TABLE class="candidate_list_items table table-hover table-striped table-condensed table-vertically-center" id="candidate_list" style="width:70%;margin:0 auto;">
- <tr><td></td><td>Candidate Name</td><td>Email</td><tr>
-<tbody>
+    <!--<br/>-->
 
-</tbody>
-</TABLE>
+    <!--Select Batch <select name="enrollment_batch" data-view="batchSelect"></select>-->
+    <!--<TABLE class="candidate_list_items table table-hover table-striped table-condensed table-vertically-center" id="candidate_list" style="width:50%;margin:0 auto;">-->
+    <table data-provide="pagination" data-pager="#pager" id="results" class="candidate_list_items table table-hover table-striped table-condensed table-vertically-center" align="center">
+        <thead>
+        <tr>
+            <th>Select</th>
+            <th>Candidate Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </TABLE>
+    <div class="paginatedLoadingIndicator" style="display: none"></div>
 </div>
