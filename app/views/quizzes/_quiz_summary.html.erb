@@ -14,10 +14,20 @@
     <% end %>
   </div>
 
+  <% if q.available? %>
+  <div style="border-bottom: 1px solid #ccc;float: right;">
+    <a href="#" class="send_invitation" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
+      <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
+    </a>
+
+  </div>
+      <br/>
+  <% end %>
   <div class="description user_content">
     <% if q.available? %>
       <div style="float: right; margin: 0 0 0 20px;">
-        <div style="border-bottom: 1px solid #ccc;">
+
+          <div style="float: right; margin: 0 0 0 20px;">
           <% if submission %>
             <%= before_label(:latest_submission, "Latest Submission") %>
           <% elsif q.survey? %>
@@ -26,6 +36,7 @@
             <%= before_label(:quiz_details, "Assesments Details") %>
           <% end %>
         </div>
+
         <% if submission && submission.completed? %>
           <%= datetime_string(submission.finished_at) %><br/>
           <% if q.muted? %>

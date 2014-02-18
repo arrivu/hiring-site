@@ -349,6 +349,9 @@ routes.draw do
       match 'take/questions/:question_id' => 'quizzes#show', :as => :question, :take => '1'
       match 'moderate' => 'quizzes#moderate', :as => :moderate
       match 'lockdown_browser_required' => 'quizzes#lockdown_browser_required', :as => :lockdown_browser_required
+      resources :invitations
+        match 'accept' => 'invitations#accept_code', :as => :accept
+        match 'register' => 'invitations#optional_register', :as => :register
     end
 
     #resources :collaborations
@@ -828,6 +831,18 @@ routes.draw do
   # the way ApiRouteSet works. For now we get around it by defining methods
   # inline in the routes file, but getting concerns working would rawk.
   ApiRouteSet::V1.draw(self) do
+
+    scope(:controller => :invitations) do
+      def et_routes(context)
+        post "#{context}s/:#{context}_id/quizzes/:id/invitations", :action => :create, :path_name => "#{context}_invitations_create"
+        get "#{context}s/:#{context}_id/quizzes/:id/invitations", :action => :get_candidates, :path_name => "#{context}_invitations"
+        put "#{context}s/:#{context}_id/quizzes/:id/invitations/:invitation_id", :action => :update, :path_name => "#{context}_invitations_update"
+        delete "#{context}s/:#{context}_id/quizzes/:id/invitations/:invitation_id", :action => :destroy, :path_name => "#{context}_invitations_delete"
+      end
+      et_routes("course")
+      et_routes("account")
+    end
+
     scope(:controller => :courses) do
       get 'courses', :action => :index
       put 'courses/:id', :action => :update

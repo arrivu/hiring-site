@@ -39,13 +39,13 @@
           <label for="assignment_submission_types"><%= t('labels.type', 'type') %>:</label>
           <select name="assignment[submission_types]" class="assignment_submission_types span8" id="assignment_submission_types">
             <option value="" class="current_submission_types"><%= t 'options.assignment', "Assignment" %></option>
-            <option value="discussion_topic"><%= t 'options.discussion', "Discussion" %></option>
-            <option value="online_quiz"><%= t 'options.quiz', "Quiz" %></option>
-            <option value="external_tool"><%= t 'options.external_tool', "External Tool" %></option>
-            <% if feature_enabled?(:attendance) %>
-              <option value="attendance"><%= t 'options.attendance', "Attendance" %></option>
-            <% end %>
-            <option value="not_graded"><%= t 'options.not_graded', "Not Graded" %></option>
+            <!--<option value="discussion_topic"><%#= t 'options.discussion', "Discussion" %></option>-->
+            <option value="online_quiz"><%= t 'options.quiz', "Assessment" %></option>
+            <!--<option value="external_tool"><%#= t 'options.external_tool', "External Tool" %></option>-->
+            <%# if feature_enabled?(:attendance) %>
+              <!--<option value="attendance"><%#= t 'options.attendance', "Attendance" %></option>-->
+            <%# end %>
+            <!--<option value="not_graded"><%#= t 'options.not_graded', "Not Graded" %></option>-->
           </select>
         </div>
         

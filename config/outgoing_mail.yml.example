@@ -6,7 +6,7 @@ development:
   authentication: "plain" # plain, login, or cram_md5
   domain: "example.com"
   outgoing_address: "canvas@example.com"
-  default_name: "Instructure Canvas"
+  default_name: "Sublime Hiring"
 
 # or to use sendmail --
 #
@@ -24,7 +24,7 @@ production:
   authentication: "plain" # plain, login, or cram_md5
   domain: "example.com"
   outgoing_address: "canvas@example.com"
-  default_name: "Instructure Canvas"
+  default_name: "Sublime Hiring"
 
 # If receiving mail from multiple inboxes (see incoming_mail.yml.example),
 # you'll want to include those addresses in a reply_to_addresses array so
@@ -39,7 +39,7 @@ multiple_inboxes:
   authentication: "plain" # plain, login, or cram_md5
   domain: "example.com"
   outgoing_address: "canvas@example.com"
-  default_name: "Instructure Canvas"
+  default_name: "Sublime Hiring"
   reply_to_addresses:
   - "canvas1@example.com"
   - "canvas2@example.com"

@@ -29,15 +29,21 @@
 
 -%>
 <style>
-    #breadcrumbs{width: 100%;
-        position: absolute;}
+    #breadcrumbs {
+        width: 100%;
+        position: absolute;
+    }
     #content{width: 97%;
         top: 25px; position: absolute;}
     #breadcrumbs ul .home a i {
         margin-right: -5px;
         vertical-align: text-bottom;
         margin-top: 7px;
-    }</style>
+    }
+    select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
+        height: 31px !important;
+    }
+</style>
 <% content_for :head do %>
   <%= include_common_stylesheets %>
   <% if @eportfolio_view === true %>
@@ -50,7 +56,9 @@
 <div id="header" class="no-print <%= 'no-user' unless @current_user %>">
   <div id="header-inner">
     <a href="#content" id="skip_navigation_link"><%= t 'links.skip_to_content', "Skip To Content" %></a>
+   <%if @show_left_side == true %>
     <a id='hideshow' value='hide/show' style="cursor: pointer;"><%= image_tag "menu.png", :style=> "width: 25px;height: 20px;margin: -17px 10px;" %> </a>
+        <%end%>
 
     <a id="header-logo" href="<%= root_url %>" style="left: 45px;"><%= t 'links.dashboard', "My Dashboard" %></a>
     <b id="header-logo-secondary"></b>

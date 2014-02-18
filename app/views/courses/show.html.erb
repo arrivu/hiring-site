@@ -218,7 +218,15 @@ $(document).ready(function() {
 <% if @context.created? || @context.claimed? %>
   <div class="reminder" style='text-align:center;'>
   <h2><%= t('headings.unpublished', %{This Project is Unpublished}) %></h2>
-  <div class="body"><%= t 'teachers_only', "Only hiring manager can see this project until it is " %><a href="<%= course_path(@context) %>">*published*</a>
+  <div class="body"><%= t 'teachers_only', "Only hiring manager can see this project until it is " %>
+    <% if @current_user %>
+        <%= form_for @context, :url => course_path(@context), :html => {:method => :put} do |f| %>
+            <input type="hidden" name="course[event]" value="offer"/>
+            <div class="button-container" style="text-align: center;">
+              <button type="submit" class="btn btn-large"><%= t('buttons.publish', %{Publish Project}) %></button>
+            </div>
+        <% end %>
+    <% end %>
   </div>
   </div>
 <% end %>

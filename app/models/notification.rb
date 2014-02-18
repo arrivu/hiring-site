@@ -187,17 +187,17 @@ class Notification < ActiveRecord::Base
     when 'All Submissions'
       FREQ_NEVER
     when 'Announcement'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Calendar'
       FREQ_NEVER
     when 'Student Appointment Signups'
       FREQ_NEVER
     when 'Appointment Availability'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Appointment Signups'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Appointment Cancelations'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Course Content'
       FREQ_NEVER
     when 'Files'
@@ -205,43 +205,43 @@ class Notification < ActiveRecord::Base
     when 'Discussion'
       FREQ_NEVER
     when 'DiscussionEntry'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Due Date'
-      FREQ_WEEKLY
+      FREQ_NEVER
     when 'Grading'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Grading Policies'
-      FREQ_WEEKLY
+      FREQ_NEVER
     when 'Invitation'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Late Grading'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Membership Update'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Other'
       FREQ_DAILY
     when 'Registration'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Migration'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Submission Comment'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Reminder'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'TestImmediately'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'TestDaily'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'TestWeekly'
-      FREQ_WEEKLY
+      FREQ_NEVER
     when 'TestNever'
       FREQ_NEVER
     when 'Conversation Message'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Added To Conversation'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     else
-      FREQ_DAILY
+      FREQ_NEVER
     end
   end
   
@@ -352,7 +352,7 @@ class Notification < ActiveRecord::Base
       when 'Announcement'
         t(:announcement_display, 'Announcement')
       when 'Course Content'
-        t(:course_content_display, 'Course Content')
+        t(:course_content_display, 'Project Content')
       when 'Files'
         t(:files_display, 'Files')
       when 'Discussion'
