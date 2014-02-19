@@ -17,11 +17,13 @@ class InvitationsController < ApplicationController
       #backcompat limit param
       params[:per_page] ||= params.delete(:limit)
 
-      search_params = params.slice(:search_term, :enrollment_role, :enrollment_type)
+      search_params = params.slice(:search_term, :course_section_id, :enrollment_type)
       search_term = search_params[:search_term].presence
       @quiz = Quiz.find(params[:id])
       if search_term
         students = UserSearch.for_user_in_context(search_term, @context, @current_user, session, search_params)
+      elsif params[:course_section_id]
+        students = CourseSection.find(params[:course_section_id]).students.active
       else
         students = @context.participating_students.order_by_sortable_name
       end

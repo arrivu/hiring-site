@@ -7,14 +7,12 @@
             aria-label='Search Candidate'
             >
 
-    <select name="course_section_id" id="course_section_id">
-        {{#each sections}}
-            <option value="{{id}}">{{name}}</option>
-        {{/each}}
+    <select name="course_section_id" id="course_section_id" data-view="sectionSelect">
+
     </select>
 
 
-    <a id="send_all_invitations" class="btn pull-right btn-primary icon-invitation" title='When you send invitations the selected candidates get email with code to take the assessments' disabled data-tooltip>
+    <a id="send_all_invitations" class="btn btn-primary pull-right icon-invitation" title='When you send invitations the selected candidates get email with code to take the assessments' data-tooltip>
         Send Invitation
     </a>
 

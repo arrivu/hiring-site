@@ -5,6 +5,7 @@ define [
   'str/htmlEscape'
   'jst/CandidateInvitations/IndexView'
   'compiled/views/ValidatedMixin'
+  'compiled/jquery.rails_flash_notifications'
 ], (I18n,Backbone, $, htmlEscape, template, ValidatedMixin) ->
 
   class IndexView extends Backbone.View
@@ -14,6 +15,8 @@ define [
     @child 'candidateView', '[data-view=candidateView]'
 
     @child 'inputFilterView', '[data-view=inputFilter]'
+
+    @child 'sectionSelectView', '[data-view=sectionSelect]'
 
     @optionProperty 'sections'
 
@@ -61,8 +64,14 @@ define [
       @collection.create
         login_ids: login_id
         type: "POST"
-      #      this.$el.parent().find('.btn-primary').removeClass('ui-state-hover')
+      ,
+        silent: true
+        success: (response) ->
+          $.flashMessage "Send Invitation Successfully!"
 
+        error: (response) ->
+          $.flashMessage "There is some error while saving reward! " + response
+      return false
 
     onFail: (xhr) =>
       return if xhr.statusText is 'abort'
