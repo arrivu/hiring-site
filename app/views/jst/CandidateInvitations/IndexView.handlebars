@@ -1,0 +1,24 @@
+<div class="form-inline clearfix" style="margin-bottom: 13px;">
+    <input
+            type="text"
+            name="search_term"
+            data-view="inputFilter"
+            placeholder='Search Candidates'
+            aria-label='Search Candidate'
+            >
+
+    <select name="course_section_id" id="course_section_id">
+        {{#each sections}}
+            <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select>
+
+
+    <a class="btn pull-right btn-primary icon-invitation" title='When you send invitations the selected candidates get email with code to take the assessments' disabled data-tooltip>
+        Send Invitation
+    </a>
+
+
+</div>
+<div data-view="candidateView"></div>
+

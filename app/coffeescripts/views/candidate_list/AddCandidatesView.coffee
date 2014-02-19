@@ -1,30 +1,32 @@
 define [
   'jquery'
-  'underscore'
-  'Backbone'
+  'compiled/views/PaginatedCollectionView'
   'jst/candidate_list/AddCandidates'
   'compiled/views/candidate_list/AddCandidatesItemView'
-  'compiled/collections/CandidateCollection'
   'compiled/jquery/fixDialogButtons'
-], ($,_, Backbone, template, AddCandidatesItemView,CandidateCollection) ->
+], ($,PaginatedCollectionView, template, AddCandidatesItemView) ->
 
-  class AddCandidatesView extends Backbone.View
+  class AddCandidatesView extends PaginatedCollectionView
 
     template: template
     className: 'candidate_list_items'
+    itemView: AddCandidatesItemView
 
-    onCollectionSync: (collection) ->
-      for model in collection.models
-        candidate_name = model.attributes.user.name
-        console.log(model.attributes.user.pseudonyms)
-        for pseudonym in model.attributes.user.pseudonyms
-          candidate_email = pseudonym.pseudonym.unique_id
-          addCandidatesItemView = new AddCandidatesItemView
-            name: candidate_name
-            email: candidate_email
-          $('.candidate_list_items').append(addCandidatesItemView.render().el)
+#    onCollectionSync: (collection) ->
+#      for model in collection.models
+#        candidate_name = model.attributes.user.name
+#        console.log(model.attributes.user.pseudonyms)
+#        for pseudonym in model.attributes.user.pseudonyms
+#          candidate_email = pseudonym.pseudonym.unique_id
+#          pseudonym_id = pseudonym.pseudonym.id
+#          addCandidatesItemView = new AddCandidatesItemView
+#            name: candidate_name
+#            email: candidate_email
+#            pseudonymId: pseudonym_id
+#          $('.candidate_list_items').append(addCandidatesItemView.render().el)
 
     afterRender: ->
+      super
       @$el.dialog
         title: 'Candidates selected to send invitations'
         width: 800
@@ -34,44 +36,37 @@ define [
           class: "btn-success send_invitation_confirm"
           text:  'Confirm'
           'data-text-while-loading': 'Sending Invitations...'
-#          click: => @submit()
+          click: => @submit()
         ]
-        console.log(@collection)
-        @collection.on 'sync', @onCollectionSync,@collection
+#        console.log(@collection)
+#        @collection.on 'sync', @onCollectionSync,@collection
 
+      @$el.submit (e) =>
+        @submit()
+        return false
+      this
 
-#          $('.candidate_list_items').append(addCandidatesItemView.render().el)
+    submit: ->
+      values = new Array()
+      $.each $("input[name='chkbox[]']:checked").closest("td").siblings("td"), ->
+        values.push $(this).text()
+        return
 
+      str = values.join(",")
+      myarray = str.split(",")
+      email_array = new Array()
+      i = 0
 
-#    renderHeader: ->
-#      @$el.find('thead tr').html "<th>Candidate Name</th><th>Candidate Email</th>"
-#      @$('#candidate_list').append view.render().el
-#
-#    renderTable: =>
-#      console.log(@collection)
-#      for model in @collection.models
-#        candidate_name = model.attributes.user.name
-#        console.log(model.attributes.user.pseudonyms)
-#        for pseudonym in model.attributes.user.pseudonyms
-#          candidate_email = pseudonym.pseudonym.unique_id
-#          addCandidatesItemView = new AddCandidatesItemView
-#            name: candidate_name
-#            email: candidate_email
-#          $('.candidate_list_items').append(addCandidatesItemView.render().el
-
-#          @$el.find("tr")
-#          .last()
-#          .append addCandidatesItemView.render().el
-
-#        @collection.each (module) =>
-#          modulePermissionButtonView = new ModulePermissionButtonView
-#            model: module
-#            user_id: enrolled_user.id
-#            user_enrolled: @check_permission(module.id,enrolled_user.id)
-#
-#          @$el.find("tr")
-#          .last()
-#          .append modulePermissionButtonView.render().el
-
+      while i < myarray.length
+        email_array.push myarray[i]  if (i % 2)!=0
+        i++
+      json = JSON.stringify(email_array)
+      console.log(json)
+      alert json
+      @collection.fetch
+        email: json
+        type: "POST"
+#      this.$el.parent().find('.btn-primary').removeClass('ui-state-hover')
+      super
 
 

@@ -341,7 +341,8 @@ class AccountsController < ApplicationController
             :enable_scheduler,
             :show_scheduler,
             :global_includes,
-            :gmail_domain
+            :gmail_domain,
+            :register_fields_includes
           ].each do |key|
             params[:account][:settings].try(:delete, key)
           end

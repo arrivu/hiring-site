@@ -28,7 +28,7 @@
 %>
 
 <% else %>
-<% js_bundle :quizzes_index_legacy ,:candidate_invitation %>
+<% js_bundle :quizzes_index_legacy  %>
 
 <% content_for :right_side do %>
   <% if can_do(@context.quizzes.new, @current_user, :create) %>

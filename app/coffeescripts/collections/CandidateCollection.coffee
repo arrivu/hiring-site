@@ -1,7 +1,10 @@
 define [
-  'Backbone'
-  'underscore'
+  'compiled/collections/PaginatedCollection'
   'compiled/models/Candidate'
-], (Backbone, _, Candidate) ->
-  class CandidateCollection extends Backbone.Collection
+], (PaginatedCollection, Candidate) ->
+
+  class CandidateCollection extends PaginatedCollection
     model: Candidate
+    url: 'invitations'
+
+

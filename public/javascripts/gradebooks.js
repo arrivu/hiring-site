@@ -529,7 +529,7 @@ define([
 
           if(object_data.submissions) {
             if(!readOnlyGradebook) {
-              addOption('mail-closed', I18n.t('message_students_who', 'Message Students Who...'), function() {
+              addOption('mail-closed', I18n.t('message_students_who', 'Message Candidates Who...'), function() {
                 var data = objectData($td),
                     title = data.title,
                     $submissions = $("#datagrid_data .assignment_" + data.id);

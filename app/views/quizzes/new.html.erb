@@ -222,6 +222,40 @@
                   </label>
                 </div>
 
+                <div class="option-group">
+                  <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
+                    <input type="checkbox"   name="time_limit" id="time_limit_option"/>
+                    <%= t('label.registration_fields', "Registration fields") %>
+                  </label>
+                  <div class="options" id="registrations_details">
+                    <div>
+                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
+                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
+                        <%= t('label.name', "Name") %>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
+                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
+                        <%= t('label.email', "Email") %>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
+                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
+                        <%= t('label.dob', "Date Of Birth") %>
+                      </label>
+                    </div>
+                    <div>
+                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
+                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
+                        <%= t('label.gender', "Gender") %>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+
                 <div class="quiz_survey_setting" style="<%= hidden unless @quiz.survey? %>">
                   <label class="checkbox" for="quiz_anonymous_submissions">
                     <%= check_box :quiz, :anonymous_submissions %>
