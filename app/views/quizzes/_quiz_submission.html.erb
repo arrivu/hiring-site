@@ -52,7 +52,7 @@
 <% if @submission.pending_review? %>
   <% if editable %>
     <% if @quiz.changed_significantly_since?(@submission.quiz_version) %>
-      <%= image_tag "pending_review.png" %> <%= t(:quiz_submission_needs_review, "The quiz has changed significantly since this submission was made. This submission may need re-grading.") %><br/>
+      <%= image_tag "pending_review.png" %> <%= t(:quiz_submission_needs_review, "The assessment has changed significantly since this submission was made. This submission may need re-grading.") %><br/>
     <% end %>
     <% questions_needing_review = submission_data.find_all do |answer|
          answer[:correct] == "undefined" && submission_questions_hash[answer[:question_id]]
@@ -241,9 +241,9 @@ $(document).ready(function() {
         <% end %>
       <% else %>
         <% if @submission.fudge_points > 0 %>
-          <%= t(:quiz_fudged_positive, "This quiz score has been manually adjusted by +%{fudge} points.", :fudge => @submission.fudge_points) %>
+          <%= t(:quiz_fudged_positive, "This assessment score has been manually adjusted by +%{fudge} points.", :fudge => @submission.fudge_points) %>
         <% else %>
-          <%= t(:quiz_fudged_negative, "This quiz score has been manually adjusted by %{fudge} points.", :fudge => @submission.fudge_points) %>
+          <%= t(:quiz_fudged_negative, "This assessment score has been manually adjusted by %{fudge} points.", :fudge => @submission.fudge_points) %>
         <% end %>
       <% end %>
     </small></div>

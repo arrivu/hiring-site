@@ -198,7 +198,7 @@ class Notification < ActiveRecord::Base
       FREQ_IMMEDIATELY
     when 'Appointment Cancelations'
       FREQ_IMMEDIATELY
-    when 'Course Content'
+    when 'Project Content'
       FREQ_NEVER
     when 'Files'
       FREQ_NEVER
@@ -327,7 +327,7 @@ class Notification < ActiveRecord::Base
     t 'categories.appointment_availability', 'Appointment Availability'
     t 'categories.appointment_signups', 'Appointment Signups'
     t 'categories.appointment_cancelations', 'Appointment Cancelations'
-    t 'categories.course_content', 'Course Content'
+    t 'categories.course_content', 'Project Content'
     t 'categories.discussion', 'Discussion'
     t 'categories.discussion_entry', 'DiscussionEntry'
     t 'categories.due_date', 'Due Date'
@@ -351,8 +351,8 @@ class Notification < ActiveRecord::Base
     case category
       when 'Announcement'
         t(:announcement_display, 'Announcement')
-      when 'Course Content'
-        t(:course_content_display, 'Course Content')
+      when 'Project Content'
+        t(:course_content_display, 'Project Content')
       when 'Files'
         t(:files_display, 'Files')
       when 'Discussion'
@@ -402,7 +402,7 @@ class Notification < ActiveRecord::Base
     case category
     when 'Announcement'
       t(:announcement_description, 'New announcement in your course')
-    when 'Course Content'
+    when 'Project Content'
         mt(:course_content_description, <<-EOS)
 Change to course content:
 

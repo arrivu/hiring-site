@@ -19,7 +19,7 @@
 <div id="course_details_tabs" style="display:none;" class="ui-tabs-minimal">
   <ul>
     <li id="course_details_tab"><a href="#tab-details"><%= t('tabs.details', %{Project Details}) %></a></li>
-    <li id="sections_tab"><a href="#tab-sections"><%= t('tabs.sections', %{Sections}) %></a></li>
+    <li id="sections_tab"><a href="#tab-sections"><%= t('tabs.sections', %{Batches}) %></a></li>
     <% if can_do @context, @current_user, :update %>
       <!--<li id="navigation_tab"><a href="#tab-navigation"><%#= t('tabs.navigation', %{Navigation}) %></a></li>-->
     <% end %>
@@ -323,7 +323,7 @@
     
   </div>
   <div id="tab-sections">
-    <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Sections}) %></h2>
+    <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
     <ul id="sections">
       <% @context.course_sections.active.each do |section| %>
         <li class="section">
@@ -369,9 +369,9 @@
       <% if can_do(@context.course_sections.new, @current_user, :create) %>
         <li>
           <%= form_for :course_section, :url => context_url(@context, :context_sections_url), :html => {:id => "add_section_form", :class => "form-inline", :style => "margin-top: 20px;"} do |f| %>
-            <h3><%= f.blabel :name, :course_section_name, :en => "Add a New Section" %></h3>
+            <h3><%= f.blabel :name, :course_section_name, :en => "Add a New Batch" %></h3>
             <%= f.text_field :name %>
-            <button class="btn btn-primary" type="submit"><i class="icon-add"></i> <%= t('buttons.add_section', %{Add Section}) %></button>
+            <button class="btn btn-primary" type="submit"><i class="icon-add"></i> <%= t('buttons.add_section', %{Add Batch}) %></button>
           <% end %>
         </li>
       <% end %>

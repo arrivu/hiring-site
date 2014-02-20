@@ -11,7 +11,7 @@
         <option value="assignment"><%= t :assignment_item, "Assignment" %></option>
         <% end %>
         <% if !only || only.include?(:quizzes) %>
-        <option value="quiz"><%= t :quiz_item, "Quiz" %></option>
+        <option value="quiz"><%= t :quiz_item, "Assessment" %></option>
         <% end %>
         <% if !only || only.include?(:attachments) %>
         <option value="attachment"><%= t :file_item, "File" %></option>
@@ -19,9 +19,9 @@
         <% if !only || only.include?(:wiki_pages) %>
         <option value="wiki_page"><%= t :content_page_item, "Content Page" %></option>
         <% end %>
-        <% if !only || only.include?(:discussion_topics) %>
-        <option value="discussion_topic"><%= t :discussion_item, "Discussion" %></option>
-        <% end %>
+        <%# if !only || only.include?(:discussion_topics) %>
+        <!--<option value="discussion_topic"><%#= t :discussion_item, "Discussion" %></option>-->
+        <%# end %>
         <% if !only || only.include?(:sub_headers) %>
         <option value="context_module_sub_header" class="context_module_content"><%= t :text_header_item, "Text Header" %></option>
         <% end %>
@@ -183,7 +183,7 @@
       <div id="quizs_select" class="module_item_option" style="margin: 5px 20px;">
         <div style="font-size: 0.8em;">
           <i class="icon-quiz"></i>
-          <%= t :quiz_notice, 'Select the quiz you want to associate with this *module*, or add a new one by selecting "New Quiz".', :wrapper => '<span class="holder_type">\1</span>' %>
+          <%= t :quiz_notice, 'Select the assessment you want to associate with this *module*, or add a new one by selecting "New Assessment".', :wrapper => '<span class="holder_type">\1</span>' %>
         </div>
         <div style="margin-top: 5px;">
         <select class="module_item_select" multiple>

@@ -13,7 +13,7 @@ define [
       # gets the I18n version of the group name. The display text used for the items gets set through the
       # ProfileController#communication. The values are defined in Notification#category_display_name.
       @groups =
-        Course: ['Due Date', 'Grading Policies', 'Course Content', 'Files', 'Announcement', 'Grading', 'Invitation',
+        Course: ['Due Date', 'Grading Policies', 'Course Content', 'Files', 'Announcements', 'Grading', 'Invitation',
                  'All Submissions', 'Late Grading', 'Submission Comment']
         Discussions: ['Discussion', 'DiscussionEntry']
         Communication: ['Added To Conversation', 'Conversation Message']
@@ -27,8 +27,8 @@ define [
     getGroupDisplayName: (groupName) =>
       switch groupName
         when 'Course' then I18n.t('groups.course', 'Project Activities')
-        when 'Discussions' then I18n.t('groups.discussions', 'Discussions')
-        when 'Communication' then I18n.t('groups.communication', 'Conversations')
+#        when 'Discussions' then I18n.t('groups.discussions', 'Discussions')
+#        when 'Communication' then I18n.t('groups.communication', 'Conversations')
         when 'Scheduling' then I18n.t('groups.scheduling', 'Scheduling')
         when 'Parent' then I18n.t('groups.parent', 'Parent Emails')
         when 'Groups' then I18n.t('groups.groups', 'Groups')

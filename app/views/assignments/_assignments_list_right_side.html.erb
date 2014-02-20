@@ -4,7 +4,7 @@
     <a href="#" class="show_groups_link btn button-sidebar-wide"><%= t 'links.group_assignments_by_type', "Group Assignments by Type" %></a>
     <a href="#" class="hide_groups_link btn button-sidebar-wide" style="display: none;"><%= t 'links.just_show_assignment_list', "Just Show the Assignment List" %></a>
     <% if @courses.length == 1 && can_do(@courses.first, @current_user, :participate_as_student) %>
-      <a href="<%= context_url(@context, :context_grades_url) %>" class="btn button-sidebar-wide"><%= image_tag "grading_icon.png" %> <%= t 'links.see_current_grades', "See my grades so far" %></a>
+      <a href="<%= context_url(@context, :context_grades_url) %>" class="btn button-sidebar-wide"><%= image_tag "grading_icon.png" %> <%= t 'links.see_current_grades', "See my results so far" %></a>
     <% end %>
   </div>
   <% end %>
