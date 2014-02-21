@@ -15,6 +15,7 @@ environment_configuration(defined?(config) && config) do |config|
   else
     config.consider_all_requests_local = true
   end
+  config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
   config.action_view.cache_template_loading = false
 
