@@ -1,13 +1,16 @@
 class Invitation < ActiveRecord::Base
-  include Workflow
   belongs_to :pseudonym
   belongs_to :quiz
 
-  attr_accessible :access_code
+  attr_accessible :access_code,:workflow_status
 
   # default key length: 10 characters
   mattr_accessor :unique_key_length
   self.unique_key_length = 10
+
+  CHARSETS = {
+      :alphanum => ('a'..'z').to_a + (0..9).to_a,
+      :alphanumcase => ('a'..'z').to_a + ('A'..'Z').to_a + (0..9).to_a }
 
   # character set to chose from:
   #  :alphanum     - a-z0-9     -  has about 60 million possible combos

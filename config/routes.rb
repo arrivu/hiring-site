@@ -708,6 +708,8 @@ routes.draw do
   match 'dashboard-sidebar' => 'users#dashboard_sidebar', :as => :dashboard_sidebar, :via => :get
   match 'toggle_dashboard' => 'users#toggle_dashboard', :as => :toggle_dashboard, :via => :post
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
+  match 'accept' => 'invitations#accept_code', :as => :accept, :via => :get
+  match 'new_register' => 'invitations#optional_register', :as => :new_register, :via => :get
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url
@@ -824,7 +826,10 @@ routes.draw do
   # resources :collections, :only => [:show, :index] do
   #   resources :collection_items, :only => [:show, :index]
   # end
-
+  #resources :invitations do
+  #  match 'accept' => 'invitations#accept_code', :as => :accept
+  #  match 'register' => 'invitations#optional_register', :as => :register
+  #end
   ### API routes ###
 
   # TODO: api routes can't yet take advantage of concerns for DRYness, because of

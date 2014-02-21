@@ -28,50 +28,7 @@
   end
 
 -%>
-<style>
-    #breadcrumbs {
-        width: 100%;
-        position: absolute;
-    }
-    #content{width: 97%;
-        top: 25px; position: absolute;}
-    #breadcrumbs ul .home a i {
-        margin-right: -5px;
-        vertical-align: text-bottom;
-        margin-top: 7px;
-    }
-    .table-condensed th, .table-condensed td {
-        padding: 4px 5px;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .table th {
-        font-weight: bold;
-    }
-    .table-striped {
-        border: 1px solid #dddddd;
-    }
-    .prev, .next {
-        width: 50px;
-        text-align: center;
-        margin-right: 10px;
-        user-select: none;
-        -o-user-select:none;
-        -moz-user-select: none;
-        -khtml-user-select: none;
-        -webkit-user-select: none;
-    }
 
-    .prev, .next {
-        border: 1px solid green;
-        cursor: pointer;
-    }
-
-    .prev.disabled, .next.disabled {
-        border: 1px solid red;
-        cursor: default;
-    }
-</style>
 <% content_for :head do %>
   <%= include_common_stylesheets %>
   <% if @eportfolio_view === true %>
@@ -80,13 +37,14 @@
 <% end %>
 <%= render :partial => "layouts/head" %>
 <%= render :partial => 'shared/flash_notices' %>
-<%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js" %>
+
+
 
 <div id="header" class="no-print <%= 'no-user' unless @current_user %>">
   <div id="header-inner">
     <a href="#content" id="skip_navigation_link"><%= t 'links.skip_to_content', "Skip To Content" %></a>
    <%if @show_left_side == true %>
-    <a id='hideshow' value='hide/show' style="cursor: pointer;"><%= image_tag "menu.png", :style=> "width: 25px;height: 20px;margin: -17px 10px;" %> </a>
+    <!--<a id='hideshow' value='hide/show' style="cursor: pointer;"><%#= image_tag "menu.png", :style=> "width: 25px;height: 20px;margin: -17px 10px;" %> </a>-->
         <%end%>
 
     <a id="header-logo" href="<%= root_url %>" style="left: 45px;"><%= t 'links.dashboard', "My Dashboard" %></a>
@@ -237,7 +195,7 @@
     </div>
         </div>
     <% end %>
-<div id="main" style="min-height:2250px;">
+<div id="main" >
       <div id="right-side-wrapper">
         <aside id="right-side" role="complementary">
           <%= right_side %>

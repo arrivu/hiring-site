@@ -35,6 +35,7 @@
     <% if can_do @context, @current_user, :manage_feature_flags %>
       <!--<li id="feature_flags_tab"><a href="#tab-features" id="tab-features-link"><%#= t('tabs.feature_options', %{Feature options}) %></a></li>-->
     <% end %>
+        <li id="candidate_details_tab"><a href="#tab-canditate" id="tab-canditate-link">Candidate Details</a></li>
   </ul>
   <div id="tab-details">
     <h2><%= t('headings.details', %{Project Details}) %></h2>
@@ -108,23 +109,24 @@
             <% end %>
           </span>
         </td>
-      </tr><tr>
-        <td class="form-label"><%= f.blabel :enrollment_term_id, :en => "Term" %></td>
-        <td>
-          <span class="course_form">
-            <% if can_do(@context.root_account, @current_user, :manage_courses) %>
-              <select name="course[enrollment_term_id]" id="course_enrollment_term_id">
-                <% @context.root_account.enrollment_terms.active.sort_by{|t| t.start_at || SortFirst}.each do |term| %>
-                  <option value="<%= term.id %>" <%= 'selected' if term.id == @context.enrollment_term_id %>><%= term.name %></option>
-                <% end %>
-              </select>
-            <% else %>
-              <%= @context.enrollment_term.name %>
-            <% end %>
-          </span>
-          <span class="course_info term_name"><%= @context.enrollment_term.name %></span>
-        </td>
-      </tr><tr>
+      </tr><!--<tr>-->
+        <!--<td class="form-label"><%#= f.blabel :enrollment_term_id, :en => "Term" %></td>-->
+        <!--<td>-->
+          <!--<span class="course_form">-->
+            <!--<%# if can_do(@context.root_account, @current_user, :manage_courses) %>-->
+              <!--<select name="course[enrollment_term_id]" id="course_enrollment_term_id">-->
+                <!--<%# @context.root_account.enrollment_terms.active.sort_by{|t| t.start_at || SortFirst}.each do |term| %>-->
+                  <!--<option value="<%#= term.id %>" <%#= 'selected' if term.id == @context.enrollment_term_id %>><%#= term.name %></option>-->
+                <!--<%# end %>-->
+              <!--</select>-->
+            <!--<%# else %>-->
+              <!--<%#= @context.enrollment_term.name %>-->
+            <!--<%# end %>-->
+          <!--</span>-->
+          <!--<span class="course_info term_name"><%#= @context.enrollment_term.name %></span>-->
+        <!--</td>-->
+      <!--</tr>   -->
+      <tr>
         <td class="form-label"><%= f.blabel :start_at, :en => "Starts" %></td>
         <td class="nobr">
           <span class="course_form"><%= f.text_field :start_at, :class => "date_entry", :value => datetime_string(@context.start_at, :verbose, nil, true) %></span>
@@ -185,7 +187,7 @@
       </tr>
       <tr>
         <td class="form-label">
-          <label><%= before_label('grading_scheme', %{Hiring Scheme}) %></label>
+          <label><%= before_label('grading_scheme', %{Grading Scheme}) %></label>
         </td>
         <td>
           <span class="course_info grading_scheme_set">
@@ -193,26 +195,26 @@
           </span>
           <div class="course_form">
             <%= f.check_box :grading_standard_enabled, :class => "grading_standard_checkbox" %>
-            <%= f.label :grading_standard_enabled, :en => "Enable project hiring scheme" %>
+            <%= f.label :grading_standard_enabled, :en => "Enable project grading scheme" %>
             <div class="grading_standard_link" style="margin-left: 20px;">
               <a href="#" class="edit_letter_grades_link"><%= @context.grading_standard_enabled? ? t('view_grading_scheme', "view grading scheme") : t('set_grading_scheme', "set grading scheme") %></a>
             </div>
           </div>
         </td>
       </tr>
-      <tr>
-        <td class="form-label"><%= f.blabel :license, :en => "License" %></td>
-        <td colspan="3">
-          <span class="course_form">
-          <% if @domain_root_account.settings[:private_license_enable] %>
-          <%= f.select :license, (Course.licenses).map { |id, attrs| [attrs[:readable_license], id] }  %>
-          <% else %>
-          <%= f.select :license, Course.public_licenses.map { |id, attrs| [attrs[:readable_license], id] }  %>
-          <% end %>
-         <%= license_help_link %>
-          </span>
-          <span class="course_info readable_license"><%= @context.readable_license %></span>
-        </td>
+      <!--<tr>-->
+        <!--<td class="form-label"><%#= f.blabel :license, :en => "License" %></td>-->
+        <!--<td colspan="3">-->
+          <!--<span class="course_form">-->
+          <!--<%# if @domain_root_account.settings[:private_license_enable] %>-->
+          <!--<%#= f.select :license, (Course.licenses).map { |id, attrs| [attrs[:readable_license], id] }  %>-->
+          <!--<%# else %>-->
+          <!--<%#= f.select :license, Course.public_licenses.map { |id, attrs| [attrs[:readable_license], id] }  %>-->
+          <!--<%# end %>-->
+         <!--<%#= license_help_link %>-->
+          <!--</span>-->
+          <!--<span class="course_info readable_license"><%#= @context.readable_license %></span>-->
+        <!--</td>-->
       <!--</tr><tr>-->
         <!--<td class="form-label"><label><%#= before_label('course_visibility', %{Visibility}) %></label></td>-->
         <!--<td colspan="3">-->
@@ -492,6 +494,8 @@
     <% end %>
   </div>
 <% end %>
+<div id="tab-canditate">
+</div>
 <script>
   var sisPublishEnabled = <%= publishing_enabled %>;
 </script>
