@@ -5755,6 +5755,7 @@ en-GB:
     sort_rows_by: "Sort rows by..."
     speed_grader: SpeedGrader
     student: Student
+    candidate: Candidate
     student_mute_notification: "Instructor is working on grades"
     student_name: "Student name"
     students_who: 

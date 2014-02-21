@@ -34,12 +34,12 @@ To start organizing your project into modules, click the "%{button}" button to t
 TEXT
 %>
   <% else %>
-    <p><%= t('help.no_modules', %{No modules have been defined for this course.}) %></p>
+    <p><%= t('help.no_modules', %{No modules have been defined for this project.}) %></p>
   <% end %>
 </div>
 <div class="hidden-readable" tabindex="0" aria-label="keyboard instructions">
   <%= t('modules_keyboard_hint',
-        'To change the order of the course modules and module items,
+        'To change the order of the project modules and module items,
         first turn the cursor off on your screen reader. Insert-z in JAWS.
         Press tab to select the first module.
         Press up and down to choose a module or module item.
@@ -54,7 +54,7 @@ TEXT
    {:key => t('keycodes.toggle_module_dragging', 'Space'), :description => t('keycode_descriptions.toggle_module_dragging', 'Select item to begin dragging, or drop previously selected item')}
 ]) %>
 <div id="context_modules_sortable_container">
-  <div id="context_modules" tabindex="0" aria-label="<%= t('headings.course_modules', %{Course Modules}) %>" class="<%= 'editable' if can_do(@context, @current_user, :manage_content) %>">
+  <div id="context_modules" tabindex="0" aria-label="<%= t('headings.course_modules', %{Project Modules}) %>" class="<%= 'editable' if can_do(@context, @current_user, :manage_content) %>">
     <% editable = can_do(@context, @current_user, :manage_grades) || can_do(@context, @current_user, :manage_content) %>
     <% cache([@context.cache_key, editable, 'all_context_modules', collection_cache_key(@modules)].join('/')) do %>
       <% ContextModule.send(:preload_associations, @modules, :content_tags => :content) %>
@@ -89,7 +89,7 @@ TEXT
       </tr><tr>
         <td colspan="2">
         <div class="prerequisites_entry">
-          <b><%= before_label('modules.before_students_view', %{Before students can view this module}) %></b>
+          <b><%= before_label('modules.before_students_view', %{Before candidates can view this module}) %></b>
           <div class="prerequisites_list">
             <div class="no_prerequisites_message"><%= t('no_preprequisites', %{No prerequisites defined}) %></div>
             <div class="criteria_list" style="display: none;">
@@ -135,7 +135,7 @@ TEXT
     <tr>
         <td colspan="2">
           <%= f.check_box :require_sequential_progress, :id => "require_sequential_progress" %>
-          <%= f.label :require_sequential_progress, :en => "students must move through requirements in this module in sequential order", :for => "require_sequential_progress" %>
+          <%= f.label :require_sequential_progress, :en => "candidates must move through requirements in this module in sequential order", :for => "require_sequential_progress" %>
         </td>
     </tr><tr>
       <td colspan="2">
@@ -219,8 +219,8 @@ TEXT
       </div>
     </p>
   </div>
-  <div id="student_progression_dialog" style="display: none;" title="<%= t 'titles.student_progression', 'Module Progression by Student' %>">
-    <h2 style="margin-top: 0;"><%= t('headings.student_progress', %{Module Progress by Student}) %></h2>
+  <div id="student_progression_dialog" style="display: none;" title="<%= t 'titles.student_progression', 'Module Progression by Candidate' %>">
+    <h2 style="margin-top: 0;"><%= t('headings.student_progress', %{Module Progress by Candidate}) %></h2>
     <table class="side_tabs_table" style="width: 100%;">
       <tr>
         <td class="left">
@@ -242,7 +242,7 @@ TEXT
         <td class="right">
           <div class="side_tabs_content">
             <div style="text-align: right; padding-right: 5px;">
-              <a href="#" class="refresh refresh_progressions_link"><%= t('links.reload_student', %{Reload Student's Progress}) %></a>
+              <a href="#" class="refresh refresh_progressions_link"><%= t('links.reload_student', %{Reload Candidates's Progress}) %></a>
             </div>
             <table class="module_progressions" style="width: 100%;">
               <thead>

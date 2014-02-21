@@ -693,7 +693,7 @@ define [
 
     initHeader: =>
       if @sections_enabled
-        allSectionsText = I18n.t('all_sections', 'All Sections')
+        allSectionsText = I18n.t('all_sections', 'All Batches')
         sections = [{ name: allSectionsText, checked: !@sectionToShow}]
         for id, s of @sections
           sections.push

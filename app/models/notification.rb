@@ -283,7 +283,7 @@ class Notification < ActiveRecord::Base
     t 'names.new_announcement', 'New Announcement'
     t 'names.new_context_group_membership', 'New Context Group Membership'
     t 'names.new_context_group_membership_invitation', 'New Context Group Membership Invitation'
-    t 'names.new_course', 'New Course'
+    t 'names.new_course', 'New Project'
     t 'names.new_discussion_entry', 'New Discussion Entry'
     t 'names.new_discussion_topic', 'New Discussion Topic'
     t 'names.new_event_created', 'New Event Created'
@@ -352,7 +352,7 @@ class Notification < ActiveRecord::Base
       when 'Announcement'
         t(:announcement_display, 'Announcement')
       when 'Course Content'
-        t(:course_content_display, 'Project Content')
+        t(:course_content_display, 'Course Content')
       when 'Files'
         t(:files_display, 'Files')
       when 'Discussion'
@@ -452,7 +452,7 @@ Assignment submission comment
 Check 'Mark new submission comments as read' if you don't want them to show up as 'new' in your Canvas Inbox
 EOS
     when 'Grading Policies'
-      t(:grading_policies_description, 'Course grading policy change')
+      t(:grading_policies_description, 'Project grading policy change')
     when 'Invitation'
       mt(:invitation_description, <<-EOS)
 Invitation for:
@@ -460,20 +460,20 @@ Invitation for:
 * Web conference
 * Group
 * Collaboration
-* Course
+* Project
 * Peer Review & reminder
 EOS
     when 'Other'
       mt(:other_description, <<-EOS)
 *Instructor and Admin only:*
 
-* Course enrollment
+* Project enrollment
 * Report generated
 * Content export
 * Migration report
 * New account user
-* New teacher registration
-* New student group
+* New hiring manager registration
+* New candidate group
 EOS
     when 'Calendar'
       t(:calendar_description, 'New and changed items on your course calendar')

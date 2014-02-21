@@ -1,10 +1,10 @@
 <%
-  content_for :page_title, "Evaluations - #{@context.name}"
+  content_for :page_title, "Grades - #{@context.name}"
   @body_classes << "gradebook2 full-width"
   @show_left_side = false
   @show_embedded_chat = false
   if @context.old_gradebook_visible?
-    add_crumb t(:go_back_to_the_old_gradebook, "Go back to the old evaluation", :version => 1), context_url(@context, :change_gradebook_version_context_gradebook_url, :reset => true), :id => 'change_gradebook_version_link_holder'
+    add_crumb t(:go_back_to_the_old_gradebook, "Go back to the old grade", :version => 1), context_url(@context, :change_gradebook_version_context_gradebook_url, :reset => true), :id => 'change_gradebook_version_link_holder'
   end
   jammit_css :slickgrid, :gradebook2
   js_bundle :gradebook2
@@ -14,7 +14,7 @@
   <div id="gradebook-toolbar" class="toolbar">
     <button style="display:none;" id="section_to_show">
       <%= t :showing_sections, 'Showing: *%{section_being_shown}*',
-            :section_being_shown => t(:all_sections, "All Sections"),
+            :section_being_shown => t(:all_sections, "All Batches"),
             :wrapper => '<span id="section_being_shown">\1</span>' %>
     </button>
     <button id="gradebook_settings"><i class="icon-settings"></i></button>

@@ -86,10 +86,10 @@ define([
         return;
       }
       if (GradePublishing.status == 'published') {
-        if (!confirm(I18n.t('confirm.re_publish_grades', "Are you sure you want to republish these grades to the student information system?")))
+        if (!confirm(I18n.t('confirm.re_publish_grades', "Are you sure you want to republish these grades to the candidate information system?")))
           return;
       } else {
-        if (!confirm(I18n.t('confirm.publish_grades', "Are you sure you want to publish these grades to the student information system? You should only do this if all your grades have been finalized.")))
+        if (!confirm(I18n.t('confirm.publish_grades', "Are you sure you want to publish these grades to the candidate information system? You should only do this if all your grades have been finalized.")))
           return;
       }
       var $publish_to_sis_form = $("#publish_to_sis_form");
@@ -98,7 +98,7 @@ define([
       var successful_statuses = { "published": 1, "publishing": 1, "pending": 1 };
       var error = function(data, xhr, status, error) {
         GradePublishing.status = "unknown";
-        $.flashError(I18n.t('errors.publish_grades', "Something went wrong when trying to publish grades to the student information system. Please try again later."));
+        $.flashError(I18n.t('errors.publish_grades', "Something went wrong when trying to publish grades to the candidate information system. Please try again later."));
         GradePublishing.update({});
       };
       $.ajaxJSON($publish_to_sis_form.attr('action'), 'POST', $publish_to_sis_form.getFormData(), function(data) {
@@ -127,14 +127,14 @@ define([
     $add_section_form.formSubmit({
       required: ['course_section[name]'],
       beforeSubmit: function(data) {
-        $add_section_form.find("button").attr('disabled', true).text(I18n.t('buttons.adding_section', "Adding Section..."));
+        $add_section_form.find("button").attr('disabled', true).text(I18n.t('buttons.adding_section', "Adding Batch..."));
       },
       success: function(data) {
         var section = data.course_section,
             $section = $(".section_blank:first").clone(true).attr('class', 'section'),
             $option = $("<option/>");
 
-        $add_section_form.find("button").attr('disabled', false).text(I18n.t('buttons.add_section', "Add Section"));
+        $add_section_form.find("button").attr('disabled', false).text(I18n.t('buttons.add_section', "Add Batch"));
         $section.fillTemplateData({
           data: section,
           hrefValues: ['id']
@@ -148,7 +148,7 @@ define([
       error: function(data) {
         $add_section_form
           .formErrors(data)
-          .find("button").attr('disabled', false).text(I18n.t('errors.section', "Add Section Failed, Please Try Again"));
+          .find("button").attr('disabled', false).text(I18n.t('errors.section', "Add Batch Failed, Please Try Again"));
       }
     });
     $(".cant_delete_section_link").click(function(event) {
@@ -198,7 +198,7 @@ define([
     $(".delete_section_link").click(function() {
       $(this).parents(".section").confirmDelete({
         url: $(this).attr('href'),
-        message: I18n.t('confirm.delete_section', "Are you sure you want to delete this section?"),
+        message: I18n.t('confirm.delete_section', "Are you sure you want to delete this batch?"),
         success: function(data) {
           $(this).slideUp(function() {
             $(this).remove();
@@ -312,7 +312,7 @@ define([
         course.is_public = course.is_public ? I18n.t('public_course', 'Public') : I18n.t('private_course', 'Private');
         course.indexed = course.indexed ? I18n.t('indexed_course', "Included in public course index") : "";
         course.grading_scheme_set = course.grading_standard_title || (course.grading_standard_id ? I18n.t('grading_standard_set', "Currently Set") : I18n.t('grading_standard_unset', "Not Set"));
-        course.restrict_dates = course.restrict_enrollments_to_course_dates ? I18n.t('course_dates_enforced', "Users can only participate in the course between these dates") : I18n.t('course_dates_unenforced', "These dates will not affect course availability");
+        course.restrict_dates = course.restrict_enrollments_to_course_dates ? I18n.t('course_dates_enforced', "Users can only participate in the project between these dates") : I18n.t('course_dates_unenforced', "These dates will not affect project availability");
         course.locale = $("#course_locale option[value='" + (course.locale || '') + "']").text();
         if (course.locale != $course_form.find('.locale').text()) {
           location.reload();

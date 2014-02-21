@@ -67,7 +67,7 @@ define [
       ,
         silent: true
         success: (response) ->
-          $.flashMessage "Send Invitation Successfully!"
+          $.flashMessage "Invitations send Successfully!"
 
         error: (response) ->
           $.flashMessage "There is some error while saving reward! " + response
