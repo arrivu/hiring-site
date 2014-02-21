@@ -215,7 +215,7 @@ routes.draw do
     match 'limit_user_grading/:id' => 'courses#limit_user', :as => :limit_user_grading, :via => :post
     match 'conclude_user/:id' => 'courses#conclude_user', :as => :conclude_user_enrollment, :via => :delete
     match 'unconclude_user/:id' => 'courses#unconclude_user', :as => :unconclude_user_enrollment, :via => :post
-    resources :sections, :except => ["index", "edit", "new"] do
+    resources :sections,:path => :batches, :except => ["index", "edit", "new"] do
       match 'crosslist/confirm/:new_course_id' => 'sections#crosslist_check', :as => :confirm_crosslist
       match 'crosslist' => 'sections#crosslist', :as => :crosslist, :via => :post
       match 'crosslist' => 'sections#uncrosslist', :as => :uncrosslist, :via => :delete
@@ -230,7 +230,7 @@ routes.draw do
     match 'link_enrollment' => 'courses#link_enrollment', :as => :link_enrollment
     match 'update_nav' => 'courses#update_nav', :as => :update_nav
     match 'enroll_users.:format' => 'courses#enroll_users', :as => :formatted_enroll_users
-    resource :gradebook ,:path => :evaluation do
+    resource :gradebook ,:path => :evaluations do
       match 'submissions_upload/:assignment_id' => 'gradebooks#submissions_zip_upload', :as => :submissions_upload, :via => :post
       collection do
         get :change_gradebook_version
@@ -350,6 +350,8 @@ routes.draw do
       match 'moderate' => 'quizzes#moderate', :as => :moderate
       match 'lockdown_browser_required' => 'quizzes#lockdown_browser_required', :as => :lockdown_browser_required
       resources :invitations
+        match 'accept' => 'invitations#accept_code', :as => :accept
+        match 'register' => 'invitations#optional_register', :as => :register
     end
 
     #resources :collaborations
@@ -670,8 +672,8 @@ routes.draw do
     resources :user_notes
     match 'manageable_courses' => 'users#manageable_courses', :as => :manageable_courses
     match 'outcomes' => 'outcomes#user_outcome_results', :as => :outcomes
-    match 'teacher_activity/course/:course_id' => 'users#teacher_activity', :as => :course_teacher_activity
-    match 'teacher_activity/student/:student_id' => 'users#teacher_activity', :as => :student_teacher_activity
+    match 'hiring_manager_activity/project/:course_id' => 'users#teacher_activity', :as => :course_teacher_activity
+    match 'hiring_manager_activity/candidate/:student_id' => 'users#teacher_activity', :as => :student_teacher_activity
     match 'media_download' => 'users#media_download', :as => :media_download
     resources :messages, :only => [:index, :create] do
       match 'html_message' => 'messages#html_message', :as => :html_message, :via => :get

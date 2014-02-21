@@ -28,6 +28,22 @@
   end
 
 -%>
+<style>
+    /*#breadcrumbs {*/
+        /*width: 100%;*/
+        /*position: absolute;*/
+    /*}*/
+    /*#content{width: 97%;*/
+        /*top: 25px; position: absolute;}*/
+    /*#breadcrumbs ul .home a i {*/
+        /*margin-right: -5px;*/
+        /*vertical-align: text-bottom;*/
+        /*margin-top: 7px;*/
+    /*}*/
+    /*select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{*/
+        /*height: 31px !important;*/
+    /*}*/
+</style>
 <% content_for :head do %>
   <%= include_common_stylesheets %>
   <% if @eportfolio_view === true %>
@@ -40,20 +56,26 @@
 <div id="header" class="no-print <%= 'no-user' unless @current_user %>">
   <div id="header-inner">
     <a href="#content" id="skip_navigation_link"><%= t 'links.skip_to_content', "Skip To Content" %></a>
-    <a id="header-logo" href="<%= root_url %>"><%= t 'links.dashboard', "My Dashboard" %></a>
+   <%if @show_left_side == true %>
+    <!--<a id='hideshow' value='hide/show' style="cursor: pointer;"><%#= image_tag "menu.png", :style=> "width: 25px;height: 20px;margin: -17px 10px;" %> </a>-->
+        <%end%>
+
+    <a id="header-logo" href="<%= root_url %>" style="left: 45px;"><%= t 'links.dashboard', "My Dashboard" %></a>
     <b id="header-logo-secondary"></b>
-    <div id="topbar">
-      <% if (identity = yield :identity) %>
-        <%= identity %>
-      <% else %>
-        <%- cache_if(!@real_current_user, [@current_user || 'nobody', 'identity-15m'], :expires_in => 15.minutes) do -%>
-          <%= render(:partial => 'shared/identity') %>
-        <%- end -%>
-      <% end %>
-    </div>
+    <!--<div id="topbar">-->
+      <!--<%# if (identity = yield :identity) %>-->
+        <!--<%#= identity %>-->
+      <!--<%# else %>-->
+        <!--<%#- cache_if(!@real_current_user, [@current_user || 'nobody', 'identity-15m'], :expires_in => 15.minutes) do -%>-->
+          <!--<%#= render(:partial => 'shared/identity') %>-->
+        <!--<%#- end -%>-->
+      <!--<%# end %>-->
+    <!--</div>-->
     <%= render(:partial => "shared/keyboard_navigation_hint") if keyboard_navigation %>
+
     <% if @current_user %>
-    <ul role="navigation" id="menu" aria-label="<%= t('navigation.main', 'Main Navigation') %>">
+        <ul role="navigation" id="menu" aria-label="<%= t('navigation.main', 'Main Navigation') %>">
+
       <%- cache([@current_user, 'home-menu-15m'], :expires_in => 15.minutes) do -%>
       <li id="courses_menu_item" class="menu-item">
         <%- if show_home_menu? -%>
@@ -124,6 +146,28 @@
       <li id="calendar_menu_item" class="menu-item">
         <!--<a href="<%#= calendar_path %>" class="menu-item-no-drop"><%#= t('menu.calendar', 'Calendar') %></a>-->
       </li>
+          <li class="menu-item" style="float: right;margin-right:30px;">
+            <a href="#" class="menu-item-title">
+              <%= @current_user.name %>
+              <span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
+            <div class="menu-item-drop" style="width: 136px;">
+              <table cellspacing="0">
+                <tr>
+                  <td class="menu-item-drop-column" id="menu_enrollments">
+  <span class="menu-item-heading">
+
+  </span>
+
+                    <ul class="menu-item-drop-column-list">
+                      <li class="customListItem"><%= link_to t('links.settings', "Settings"), settings_profile_path %></li>
+                      <li class="logout customListItem"><%= link_to t('links.logout', "Logout"), logout_path, :method => :delete %></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+          </li>
     </ul>
     <% end %>
   </div>
@@ -139,6 +183,7 @@
   <div id="wrapper">
     <% if @show_left_side %>
       <%# @left_side_list_view is temporary until we redo eportfolios %>
+        <div id="menu1">
       <div id="left-side" class="<% if !@no_left_side_list_view %>list-view<% end %>">
       <% if left_side %>
         <%= left_side %>
@@ -151,7 +196,9 @@
             <% elsif @context && @context.respond_to?(:enrollment_term) && !@context.enrollment_term.default_term? %>
               <span id="section-tabs-header-subtitle" class="ellipsis"><%= @context.enrollment_term.name %></span>
             <% end %>
-          </div>
+
+                 </div>
+
         <% end %>
         <%= section_tabs %>
       <% end %>
@@ -159,8 +206,9 @@
         <%= left_side_custom %>
       <% end %>
     </div>
+        </div>
     <% end %>
-    <div id="main">
+<div id="main" style="min-height: 750px;">
       <div id="right-side-wrapper">
         <aside id="right-side" role="complementary">
           <%= right_side %>
@@ -168,10 +216,12 @@
       </div>
       <div id="not_right_side">
         <div id="content-wrapper">
-          <%= render_crumbs %>
+         <div id="margin">
+            <%= render_crumbs %>
           <div id="content" role="main" class="container-fluid">
             <%= yield %>
           </div>
+         </div>
         </div>
       </div>
     </div>
@@ -213,7 +263,7 @@
     <%= keyboard_navigation %>
     <div class='hidden-readable' tabindex='0'>
       <%= t('keyboard_navigation.close', 'Press comma to close this dialog') %>
-    </div>
+   </div>
   </div>
 <% end %>
   <div style="display:none;"><!-- Everything inside of this should always stay hidden -->

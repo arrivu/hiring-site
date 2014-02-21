@@ -47,6 +47,8 @@ require [
   'vendor/jquery.pageless'
   'vendor/jquery.scrollTo'
   'compiled/badge_counts'
+  'jquery'
+  'jquery.mmenu'
 ], (Backbone, courseList, helpDialog, tours) ->
   courseList.init()
   helpDialog.initTriggers()
@@ -71,4 +73,22 @@ require [
   $('body').on 'click', '[data-pushstate]', (event) ->
     event.preventDefault()
     Backbone.history.navigate $(this).attr('href'), yes
+
+#  $( document ).ready ->
+#    $('#left-side').mmenu()
+  jQuery(document).ready ->
+#    jQuery("#hideshow").live "click", (event) ->
+#      jQuery("#left-side").toggle "show"
+#      jQuery(".with-left-side #main").toggleClass("margin")
+      isOn = true
+      $ ->
+        $("#hideshow").click ->
+          console.log isOn
+          if isOn
+            isOn = false
+            $("#main").css "margin-left", "0"
+          else
+            isOn = true
+            $("#main").css "margin-left", "175"
+          false
 

@@ -14,8 +14,8 @@
     <% end %>
 
     <% unless @current_user.fake_student? %>
-      <!--<li class="first inbox"><a href="<%#= conversations_path %>"><span><%= t 'links.inbox', "Inbox" %></span>-->
-      <% #unread = @current_user.unread_conversations_count; if unread > 0 %>
+      <!--<li class="first inbox"><a href="<%#= conversations_path %>"><span><%#= t 'links.inbox', "Inbox" %></span>-->
+      <%#unread = @current_user.unread_conversations_count; if unread > 0 %>
         <!--<b class="unread-messages-count"><%#= unread %></b>-->
       <% #end %>
       <!--</a></li>-->
@@ -30,4 +30,8 @@
   <% if help_link %>
     <li id="identity-help-container"><%= help_link %></li>
   <% end %>
+
 </ul>
+
+
+

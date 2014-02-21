@@ -90,7 +90,7 @@ class QuizStatistics < ActiveRecord::Base
   def readable_type
     case report_type
     when 'item_analysis' then t('types.item_analysis', 'Item Analysis')
-    when 'student_analysis' then t('types.student_analysis', 'Student Analysis')
+    when 'student_analysis' then t('types.student_analysis', 'Candidate Analysis')
     end
   end
 

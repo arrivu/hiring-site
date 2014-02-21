@@ -47,4 +47,19 @@ class InvitationsController < ApplicationController
       end
     end
   end
+
+  def accept_code
+    @show_left_side = false
+    clear_crumbs
+    js_env(:COURSE_ID => @context.id)
+    js_env(:QUIZZ_ID => params[:quiz_id].to_i)
+  end
+
+  def optional_register
+    @show_left_side = false
+    clear_crumbs
+    js_env(:COURSE_ID => @context.id)
+    js_env(:QUIZZ_ID => params[:quiz_id].to_i)
+  end
+
 end

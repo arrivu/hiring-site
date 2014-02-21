@@ -2428,17 +2428,16 @@ class Course < ActiveRecord::Base
   def self.default_tabs
     [
         { :id => TAB_HOME, :label => t('#tabs.home', "Home"), :css_class => 'home', :href => :course_path },
-
         #{ :id => TAB_ANNOUNCEMENTS, :label => t('#tabs.announcements', "Announcements"), :css_class => 'announcements', :href => :course_announcements_path },
         { :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_assignments_path },
         #{ :id => TAB_DISCUSSIONS, :label => t('#tabs.discussions', "Discussions"), :css_class => 'discussions', :href => :course_discussion_topics_path },
-        { :id => TAB_GRADES, :label => t('#tabs.grades', "Hiring Outcomes"), :css_class => 'grades', :href => :course_grades_path },
+        { :id => TAB_GRADES, :label => t('#tabs.grades', "Grades"), :css_class => 'grades', :href => :course_grades_path },
         { :id => TAB_PEOPLE, :label => t('#tabs.people', "People"), :css_class => 'people', :href => :course_users_path },
         { :id => TAB_CHAT, :label => t('#tabs.chat', "Chat"), :css_class => 'chat', :href => :course_chat_path },
         #{ :id => TAB_PAGES, :label => t('#tabs.pages', "Pages"), :css_class => 'pages', :href => :course_wiki_pages_path },
         { :id => TAB_FILES, :label => t('#tabs.files', "Files"), :css_class => 'files', :href => :course_files_path },
         #{ :id => TAB_SYLLABUS, :label => t('#tabs.syllabus', "Syllabus"), :css_class => 'syllabus', :href => :syllabus_course_assignments_path },
-        #{ :id => TAB_OUTCOMES, :label => t('#tabs.outcomes', "Outcomes"), :css_class => 'outcomes', :href => :course_outcomes_path },
+        { :id => TAB_OUTCOMES, :label => t('#tabs.outcomes', "Outcomes"), :css_class => 'outcomes', :href => :course_outcomes_path },
         { :id => TAB_QUIZZES, :label => t('#tabs.quizzes', "Assessments"), :css_class => 'quizzes', :href => :course_quizzes_path },
         { :id => TAB_MODULES, :label => t('#tabs.modules', "Modules"), :css_class => 'modules', :href => :course_context_modules_path },
         { :id => TAB_CONFERENCES, :label => t('#tabs.conferences', "Conferences"), :css_class => 'conferences', :href => :course_conferences_path },
@@ -2514,7 +2513,7 @@ class Course < ActiveRecord::Base
         tab[:hidden_unused] = true if tab[:id] == TAB_MODULES && !active_record_types[:modules]
         tab[:hidden_unused] = true if tab[:id] == TAB_FILES && !active_record_types[:files]
         tab[:hidden_unused] = true if tab[:id] == TAB_QUIZZES && !active_record_types[:quizzes]
-        #tab[:hidden_unused] = true if tab[:id] == TAB_ASSIGNMENTS && !active_record_types[:assignments]
+        tab[:hidden_unused] = true if tab[:id] == TAB_ASSIGNMENTS && !active_record_types[:assignments]
         tab[:hidden_unused] = true if tab[:id] == TAB_PAGES && !active_record_types[:pages] && !allow_student_wiki_edits
         tab[:hidden_unused] = true if tab[:id] == TAB_CONFERENCES && !active_record_types[:conferences] && !self.grants_right?(user, nil, :create_conferences)
         tab[:hidden_unused] = true if tab[:id] == TAB_ANNOUNCEMENTS && !active_record_types[:announcements]
@@ -2544,7 +2543,7 @@ class Course < ActiveRecord::Base
         end
         tabs.delete_if{ |t| t[:visibility] == 'admins' } unless self.grants_right?(user, opts[:session], :manage_content)
         if self.grants_rights?(user, opts[:session], :manage_content, :manage_assignments).values.any?
-          #tabs.detect { |t| t[:id] == TAB_ASSIGNMENTS }[:manageable] = true
+          tabs.detect { |t| t[:id] == TAB_ASSIGNMENTS }[:manageable] = true
           #tabs.detect { |t| t[:id] == TAB_SYLLABUS }[:manageable] = true
           tabs.detect { |t| t[:id] == TAB_QUIZZES }[:manageable] = true
         end
@@ -2773,14 +2772,14 @@ class Course < ActiveRecord::Base
     if self.student_view_students.active.count == 0
       fake_student = nil
       User.skip_updating_account_associations do
-        fake_student = User.new(:name => t('student_view_student_name', "Test Student"))
+        fake_student = User.new(:name => t('student_view_student_name', "Test Candidate"))
         fake_student.preferences[:fake_student] = true
         fake_student.workflow_state = 'registered'
         fake_student.save
         # hash the unique_id so that it's hard to accidently enroll the user in
         # a course by entering something in a user list. :(
         fake_student.pseudonyms.create!(:account => self.root_account,
-                                        :unique_id => Canvas::Security.hmac_sha1("Test Student_#{fake_student.id}"))
+                                        :unique_id => Canvas::Security.hmac_sha1("Test Candidate_#{fake_student.id}"))
       end
       fake_student
     else

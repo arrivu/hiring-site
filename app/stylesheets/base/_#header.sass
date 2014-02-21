@@ -18,10 +18,11 @@
 // the #header.no-user #header-logo part here is so that it overrides the byuh logo
 #header-logo, #header.no-user #header-logo
   background: url("/images/arrivu_logo.png") no-repeat
-  background-size: 100% 50px
-  width: 160px
-  height: 40px
+  background-size: 92% 37px
+  width: 85px
+  height: 37pX
   left: 16px
+  top: 5pX
   bottom: 5px
   position: absolute
   text-indent: -9999px
@@ -52,15 +53,17 @@
 #header
   border-bottom: 2px solid #0088cc
   position: relative
-  z-index: 11 /* IE7 needs this o so the menu-item-drops get stuck above #main */
-  background-color: #393939
-  background-image: -moz-linear-gradient(top,#484848,#222222)
-  background-image: -webkit-gradient(linear,0 0,0 100%,from(#484848),to(#222222))
-  background-image: -webkit-linear-gradient(top,#484848,#222222)
-  background-image: -o-linear-gradient(top,#484848,#222222)
-  background-image: linear-gradient(to bottom,#484848,#222222)
-  background-repeat: repeat-x
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00484848', endColorstr='#00212121', GradientType=0)
+  z-index: 11
+  background: #f1f1f1
+  //background-color: #393939
+  //background-image: -moz-linear-gradient(top, #484848, #222222)
+  //background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#484848), to(#222222))
+  //background-image: -webkit-linear-gradient(top, #484848, #222222)
+  //background-image: -o-linear-gradient(top, #484848, #222222)
+  //background-image: linear-gradient(to bottom, #484848, #222222)
+  //background-repeat: repeat-x
+  //filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00484848', endColorstr='#00212121', GradientType=0)
+  height: 37px
   &.no-user
     min-height: 65px
     #header-logo
@@ -78,16 +81,19 @@
 
 #identity
   +reset-list
+  margin: 0
+  padding: 0
+  list-style: none
   float: right
   font-size: 12px
-  margin-right: $right_side_margin
-  margin-bottom: 4px /*make room for the drop shadow*/
-  padding: 0 11px
-  background: #ebebeb
-  box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 1px
-  border-bottom-left-radius: 6px
-  border-bottom-right-radius: 5px
-  border: 1px solid rgba(0,0,0, 0.3)
+  margin-right: 13px
+  margin-bottom: 4px
+  padding: 8px 11px
+  background: transparent
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 0px
+  border-bottom-left-radius: 0px
+  border-bottom-right-radius: 0px
+  border: 0px solid rgba(0, 0, 0, 0.3)
   border-top: 0
 
 
@@ -103,6 +109,7 @@
     margin-right: 15px
     a
       text-decoration: none !important
+      color: #fff
 
   .emphasize-name
     color: $masquerade-link-color
@@ -121,15 +128,16 @@
 #menu
   +pie-clearfix
   +reset-list
-  padding-top: 3px
+  padding-top: 0px
+  margin-top: -25px
   margin-left: $left_side_width
 .menu-item
   display: block
   float: left
   position: relative
   .menu-item-title, .menu-item-no-drop
-    text-shadow: 0px 0px 1px #000 /*this gives it the effect of looking thinner*/
-    color: #fff
+    text-shadow: 0px 0px 0px #000 /*this gives it the effect of looking thinner*/
+    color: #000
     font-size: 16px
     border: 1px solid transparent
     border-bottom: 0 none

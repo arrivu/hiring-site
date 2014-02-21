@@ -187,61 +187,61 @@ class Notification < ActiveRecord::Base
     when 'All Submissions'
       FREQ_NEVER
     when 'Announcement'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Calendar'
       FREQ_NEVER
     when 'Student Appointment Signups'
       FREQ_NEVER
     when 'Appointment Availability'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Appointment Signups'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Appointment Cancelations'
-      FREQ_IMMEDIATELY
-    when 'Project Content'
+      FREQ_NEVER
+    when 'Course Content'
       FREQ_NEVER
     when 'Files'
       FREQ_NEVER
     when 'Discussion'
       FREQ_NEVER
     when 'DiscussionEntry'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Due Date'
-      FREQ_WEEKLY
+      FREQ_NEVER
     when 'Grading'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Grading Policies'
-      FREQ_WEEKLY
+      FREQ_NEVER
     when 'Invitation'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Late Grading'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Membership Update'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Other'
       FREQ_DAILY
     when 'Registration'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Migration'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Submission Comment'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'Reminder'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'TestImmediately'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'TestDaily'
-      FREQ_DAILY
+      FREQ_NEVER
     when 'TestWeekly'
-      FREQ_WEEKLY
+      FREQ_NEVER
     when 'TestNever'
       FREQ_NEVER
     when 'Conversation Message'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     when 'Added To Conversation'
-      FREQ_IMMEDIATELY
+      FREQ_NEVER
     else
-      FREQ_DAILY
+      FREQ_NEVER
     end
   end
   
@@ -283,7 +283,7 @@ class Notification < ActiveRecord::Base
     t 'names.new_announcement', 'New Announcement'
     t 'names.new_context_group_membership', 'New Context Group Membership'
     t 'names.new_context_group_membership_invitation', 'New Context Group Membership Invitation'
-    t 'names.new_course', 'New Course'
+    t 'names.new_course', 'New Project'
     t 'names.new_discussion_entry', 'New Discussion Entry'
     t 'names.new_discussion_topic', 'New Discussion Topic'
     t 'names.new_event_created', 'New Event Created'
@@ -327,7 +327,7 @@ class Notification < ActiveRecord::Base
     t 'categories.appointment_availability', 'Appointment Availability'
     t 'categories.appointment_signups', 'Appointment Signups'
     t 'categories.appointment_cancelations', 'Appointment Cancelations'
-    t 'categories.course_content', 'Project Content'
+    t 'categories.course_content', 'Course Content'
     t 'categories.discussion', 'Discussion'
     t 'categories.discussion_entry', 'DiscussionEntry'
     t 'categories.due_date', 'Due Date'
@@ -351,8 +351,8 @@ class Notification < ActiveRecord::Base
     case category
       when 'Announcement'
         t(:announcement_display, 'Announcement')
-      when 'Project Content'
-        t(:course_content_display, 'Project Content')
+      when 'Course Content'
+        t(:course_content_display, 'Course Content')
       when 'Files'
         t(:files_display, 'Files')
       when 'Discussion'
@@ -402,7 +402,7 @@ class Notification < ActiveRecord::Base
     case category
     when 'Announcement'
       t(:announcement_description, 'New announcement in your course')
-    when 'Project Content'
+    when 'Course Content'
         mt(:course_content_description, <<-EOS)
 Change to course content:
 
@@ -452,7 +452,7 @@ Assignment submission comment
 Check 'Mark new submission comments as read' if you don't want them to show up as 'new' in your Canvas Inbox
 EOS
     when 'Grading Policies'
-      t(:grading_policies_description, 'Course grading policy change')
+      t(:grading_policies_description, 'Project grading policy change')
     when 'Invitation'
       mt(:invitation_description, <<-EOS)
 Invitation for:
@@ -460,20 +460,20 @@ Invitation for:
 * Web conference
 * Group
 * Collaboration
-* Course
+* Project
 * Peer Review & reminder
 EOS
     when 'Other'
       mt(:other_description, <<-EOS)
 *Instructor and Admin only:*
 
-* Course enrollment
+* Project enrollment
 * Report generated
 * Content export
 * Migration report
 * New account user
-* New teacher registration
-* New student group
+* New hiring manager registration
+* New candidate group
 EOS
     when 'Calendar'
       t(:calendar_description, 'New and changed items on your course calendar')
