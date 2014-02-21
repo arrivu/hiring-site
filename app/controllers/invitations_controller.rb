@@ -42,7 +42,11 @@ class InvitationsController < ApplicationController
       @quiz = Quiz.find(params[:quiz_id])
       params[:login_ids].each do |login_id|
         candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
-        @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
+        @invitation = Invitation.find_by_quiz_id_and_pseudonym_id_and_workflow_status(@quiz.id,candidate_pseudonym.id,'active')
+        unless @invitation
+          @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
+          send_invitation_email(@invitation,candidate_pseudonym,candidate_pseudonym.user,@quiz)
+        end
       end
       respond_to do |format|
         format.json  { render :json => @invitation }
@@ -58,6 +62,18 @@ class InvitationsController < ApplicationController
   def optional_register
     @show_left_side = false
     clear_crumbs
+  end
+
+  def send_invitation_email(invitation,pseudonym,user,quiz)
+    domains = HostUrl.context_hosts(@domain_root_account)
+    @domain_url =  "#{HostUrl.protocol}://#{domains.first}/accept/"
+      m = Message.new
+      m.to = pseudonym.unique_id
+      m.subject = "Assessment Invitation"
+      m.html_body = "You have been invited by #{@current_user.name} to take the assessment #{quiz.title}"
+      m.body = @domain_url+"#{invitation.access_code}"
+      Mailer.send_later(:deliver_invitation_email,m,user)
+
   end
 
 end

@@ -1,7 +1,7 @@
 class Invitation < ActiveRecord::Base
   belongs_to :pseudonym
   belongs_to :quiz
-
+  has_many :messages
   attr_accessible :access_code,:workflow_status
 
   # default key length: 10 characters

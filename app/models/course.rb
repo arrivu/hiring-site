@@ -16,7 +16,9 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-class Course < ActiveRecord::Base
+class
+
+Course < ActiveRecord::Base
 
   include Context
   include Workflow
