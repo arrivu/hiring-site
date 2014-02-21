@@ -132,7 +132,6 @@ class Account < ActiveRecord::Base
   # these settings either are or could be easily added to
   # the account settings page
   add_setting :global_includes, :root_only => true, :boolean => true, :default => false
-  add_setting :quiz_includes, :root_only => true, :boolean =>true, :default => false
   add_setting :global_javascript, :condition => :allow_global_includes
   add_setting :global_stylesheet, :condition => :allow_global_includes
   add_setting :sub_account_includes, :condition => :allow_global_includes, :boolean => true, :default => false
@@ -207,10 +206,6 @@ class Account < ActiveRecord::Base
 
   def allow_global_includes?
     self.global_includes? || self.parent_account.try(:sub_account_includes?)
-  end
-
-  def allow_quiz_includes?
-    self.quiz_includes?
   end
 
   def quiz_includes_hash

@@ -494,7 +494,11 @@
     <% end %>
   </div>
 <% end %>
-<div id="tab-canditate">
+<div id="tab-canditate" style="padding:20px;">
+  <label for="" class="checkbox">
+    <input type="checkbox" id="" class="checked" onchange="valueChanged()" name="checked" value="0"/>
+    Enable Candidate Details Collection
+  </label>
 </div>
 <script>
   var sisPublishEnabled = <%= publishing_enabled %>;
