@@ -2,7 +2,16 @@ class Invitation < ActiveRecord::Base
   belongs_to :pseudonym
   belongs_to :quiz
   has_many :messages
-  attr_accessible :access_code,:workflow_status
+  attr_accessible :access_code,:workflow_status,
+                  :full_name,
+                  :middle_name,
+                  :last_name,
+                  :dob,
+                  :contact_number,
+                  :address,
+                  :current_compensation,
+                  :expected_compensation
+
 
   # default key length: 10 characters
   mattr_accessor :unique_key_length
