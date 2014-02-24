@@ -6,6 +6,7 @@ define [
   'jst/CandidateInvitations/IndexView'
   'compiled/views/ValidatedMixin'
   'compiled/jquery.rails_flash_notifications'
+  'jquery.disableWhileLoading'
 ], (I18n,Backbone, $, htmlEscape, template, ValidatedMixin) ->
 
   class IndexView extends Backbone.View
@@ -47,6 +48,7 @@ define [
         $(event.currentTarget).attr "checked", "checked"
 
     sendInvitations: ->
+      $('.paginatedLoadingIndicator').show()
       values = new Array()
       $.each $("input[name='chkbox[]']:checked").closest("td").siblings("td"), ->
         values.push $(this).text()
@@ -67,9 +69,11 @@ define [
       ,
         silent: true
         success: (response) ->
+          $('.paginatedLoadingIndicator').hide()
           $.flashMessage "Invitations send Successfully!"
 
         error: (response) ->
+          $('.paginatedLoadingIndicator').hide()
           $.flashMessage "There is some error while saving reward! " + response
       return false
 
