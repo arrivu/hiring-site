@@ -24,18 +24,18 @@
     </div>
   </div>
 
-  <div class="control-group">
-    <%= f.label :license,
+  <!--<div class="control-group">-->
+    <%#= f.label :license,
                 :en => "Content License",
                 :class => "control-label" %>
-    <div class="controls">
-      <% if @domain_root_account.settings[:private_license_enable] %>
-      <%= f.select :license, (Course.private_licenses.merge(Course.licenses)).map { |id, attrs| [attrs[:readable_license], id] } , {}, :class => 'input-xlarge' %>
-      <% else %>
-      <%= f.select :license, Course.public_licenses.map { |id, attrs| [attrs[:readable_license], id] } , {}, :class => 'input-xlarge' %>
-      <% end %>
-    </div>
-  </div>
+    <!--<div class="controls">-->
+      <%# if @domain_root_account.settings[:private_license_enable] %>
+      <%#= f.select :license, (Course.private_licenses.merge(Course.licenses)).map { |id, attrs| [attrs[:readable_license], id] } , {}, :class => 'input-xlarge' %>
+      <%# else %>
+      <%#= f.select :license, Course.public_licenses.map { |id, attrs| [attrs[:readable_license], id] } , {}, :class => 'input-xlarge' %>
+      <%# end %>
+    <!--</div>-->
+  <!--</div>-->
 
   <div class="control-group">
     <div class="controls">
