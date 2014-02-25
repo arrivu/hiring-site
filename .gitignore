@@ -51,3 +51,4 @@ tags
 /.idea/*.*
 .idea/
 /spec/plugins/
+/.rvmrc
