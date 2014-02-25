@@ -56,11 +56,13 @@ class InvitationsController < ApplicationController
 
   def accept_code
     @show_left_side = false
+    @headers == false
     clear_crumbs
   end
 
   def optional_register
     @show_left_side = false
+    @headers == false
     clear_crumbs
   end
 
