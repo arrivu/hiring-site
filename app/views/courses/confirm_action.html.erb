@@ -20,7 +20,7 @@
   <% else %>
     <h2><%= t('headings.confirm_conclude', %{Confirm Conclude Project}) %></h2>
     <p><%= t 'details.confirm_conclude', %{Warning: Concluding the project will prevent you from modifying grades and accessing project content.} %></p>
-    <p><%= t 'details.conclude_alt_text', %{If you would like to retain the ability to change results while limiting student access to the project, please utilize the project dates settings. You can learn about project date settings in our guides *here*}, :wrapper => link_to('\1', "http://guides.arrivuapps.com/m/4152/l/57088-how-do-i-change-the-start-and-end-dates-for-my-course") %></p>
+    <p><%= t 'details.conclude_alt_text', %{If you would like to retain the ability to change results while limiting candidate access to the project, please utilize the project dates settings. You can learn about project date settings in our guides *here*}, :wrapper => link_to('\1', "http://guides.arrivuapps.com/m/4152/l/57088-how-do-i-change-the-start-and-end-dates-for-my-course") %></p>
 
     <%= form_tag context_url(@context, :context_url), {:method => :delete} do %>
       <input type="hidden" name="event" value="conclude"/>

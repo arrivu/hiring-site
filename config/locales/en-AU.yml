@@ -3721,8 +3721,8 @@ en-AU:
       re_publish_grades: "Are you sure you want to republish these grades to the student information system?"
     course_dates_enforced: "Users can only participate in the course between these dates"
     course_dates_unenforced: "These dates will not affect course availability"
-    edit_sections_placeholder: "Enter a section name"
-    edit_sections_title: "Section name"
+    edit_sections_placeholder: "Enter a batch name"
+    edit_sections_title: "Batch name"
     errors: 
       invalid_sis_status: "Invalid SIS publish status"
       invitation: "Invitation Failed.  Please try again."
@@ -4137,7 +4137,7 @@ en-AU:
         grading_scheme: "Grading Scheme"
         grading_standard_enabled: "Enable course grading scheme"
         hide_distribution_graphs: "Hide grade distribution graphs from students"
-        hide_final_grades: "Hide totals in student grades summary"
+        hide_final_grades: "Hide totals in candidate grades summary"
         indexed: "Include this course in the public course index"
         is_public: "Make this course publicly visible"
         language: Language
@@ -6890,7 +6890,7 @@ en-AU:
       send_message: "Send Message"
       send_message_failed: "Sending Message Failed, please try again"
       sending_message: "Sending Message..."
-    message_student: "Message Students for %{course_name}"
+    message_student: "Message Candidates for %{course_name}"
     send_message: "Send Message"
   message_students_dialog: 
     recipients: "Recipients:"
@@ -11358,7 +11358,7 @@ en-AU:
         cancel: Cancel
         crosslist_section: "Cross-List this Section"
         crosslist_this_section: "Cross-List This Section"
-        decrosslit_section: "De-Cross-List This Section"
+        decrosslit_section: "De-Cross-List This Batch"
         edit_section: "Edit Section"
         recrosslist_section: "Re-Cross-List this Section"
         uncrosslist_section: "De-Cross-List this Section"
@@ -11381,7 +11381,7 @@ en-AU:
         sis_id: "SIS ID"
         sis_source_id: "SIS ID"
         start_at: Starts
-      override_settings: "This will override any term or course date settings."
+      override_settings: "This will override on any hiring period or project date settings."
       pending_enrollment: 
         one: "1 Pending Enrollment"
         other: "%{count} Pending Enrollments"

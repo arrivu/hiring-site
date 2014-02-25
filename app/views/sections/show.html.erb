@@ -108,7 +108,7 @@ h3 .tally {
 <%= form_for @section, :url => context_url(@context, :context_section_url, @section), :html => {:id => "edit_section_form", :style => "display: none;"} do |f| %>
 <table class="formtable">
   <tr>
-    <td><%= f.blabel :name, :en => "Section Name" %></td>
+    <td><%= f.blabel :name, :en => "Batch Name" %></td>
     <td><%= f.text_field :name %></td>
   </tr>
   <% if @section.sis_source_id && can_do(@context.root_account, @current_user, :read_sis) || can_do(@context.root_account, @current_user, :manage_sis) %>
@@ -138,7 +138,7 @@ h3 .tally {
       <%= f.check_box :restrict_enrollments_to_section_dates %>
       <%= f.label :restrict_enrollments_to_section_dates, t('access_limit', "Users can only participate in the project between these dates") %>
       <div style="font-size: 0.8em; padding-left: 25px;">
-        <%= t('override_settings', 'This will override any term or project date settings.') %>
+        <%= t('override_settings', 'This will override on any hiring period or project date settings.') %>
       </div>
     </td>
   </tr>
