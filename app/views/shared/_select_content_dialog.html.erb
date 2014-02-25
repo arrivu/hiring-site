@@ -7,30 +7,30 @@
       <!--<a href="<%#= context_url(@context, :context_external_tool_resource_selection_url, "{{ id }}") %>" id="select_content_resource_selection_url" style="display: none;">&nbsp;</a>-->
       <% ot :add_to_module, "Add %{item} to *module*", :item => capture { %>
       <select id="add_module_item_select">
-        <% if !only || only.include?(:assignments) %>
-        <option value="assignment"><%= t :assignment_item, "Assignment" %></option>
-        <% end %>
+        <%# if !only || only.include?(:assignments) %>
+        <!--<option value="assignment"><%#= t :assignment_item, "Assignment" %></option>-->
+        <%# end %>
         <% if !only || only.include?(:quizzes) %>
         <option value="quiz"><%= t :quiz_item, "Assessment" %></option>
         <% end %>
-        <% if !only || only.include?(:attachments) %>
-        <option value="attachment"><%= t :file_item, "File" %></option>
-        <% end %>
-        <% if !only || only.include?(:wiki_pages) %>
-        <option value="wiki_page"><%= t :content_page_item, "Content Page" %></option>
-        <% end %>
+        <%# if !only || only.include?(:attachments) %>
+        <!--<option value="attachment"><%#= t :file_item, "File" %></option>-->
+        <%# end %>
+        <%# if !only || only.include?(:wiki_pages) %>
+        <!--<option value="wiki_page"><%#= t :content_page_item, "Content Page" %></option>-->
+        <%# end %>
         <%# if !only || only.include?(:discussion_topics) %>
         <!--<option value="discussion_topic"><%#= t :discussion_item, "Discussion" %></option>-->
         <%# end %>
-        <% if !only || only.include?(:sub_headers) %>
-        <option value="context_module_sub_header" class="context_module_content"><%= t :text_header_item, "Text Header" %></option>
-        <% end %>
-        <% if !only || only.include?(:external_urls) %>
-        <option value="external_url" class="context_module_content"><%= t :external_url_item, "External URL" %></option>
-        <% end %>
-        <% if !only || only.include?(:external_tools) %>
-        <option value="context_external_tool" class="context_module_content"><%= t :external_tool_item, "External Tool" %></option>
-        <% end %>
+        <%# if !only || only.include?(:sub_headers) %>
+        <!--<option value="context_module_sub_header" class="context_module_content"><%#= t :text_header_item, "Text Header" %></option>-->
+        <%# end %>
+        <%# if !only || only.include?(:external_urls) %>
+        <!--<option value="external_url" class="context_module_content"><%#= t :external_url_item, "External URL" %></option>-->
+        <%# end %>
+        <%# if !only || only.include?(:external_tools) %>
+        <!--<option value="context_external_tool" class="context_module_content"><%#= t :external_tool_item, "External Tool" %></option>-->
+        <%# end %>
       </select>
       <% }, :wrapper => '<span class="holder_name">\1</span>' %>
     </div>
@@ -190,14 +190,14 @@
           <% @context.quizzes.active.limit(400).each do |quiz| %>
             <option value="<%= quiz.id %>"><%= quiz.title %></option>
           <% end %>
-          <option value="new"><%= t :new_quiz_option, "[ New Quiz ]" %></option>
+          <option value="new"><%= t :new_quiz_option, "[ New Assessment ]" %></option>
         </select>
         </div>
         <div class="new" style="margin-top: 5px;">
           <input type="hidden" name="quiz[quiz_type]" value="assignment" />
           <table>
             <tr>
-              <td><%= before_label :quiz_name, "Quiz Name" %></td>
+              <td><%= before_label :quiz_name, "Assessment Name" %></td>
               <td><input type="text" name="quiz[title]" class="item_title"/></td>
             </tr><tr>
               <td><%= before_label :quiz_group, "Group" %></td>

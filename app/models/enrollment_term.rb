@@ -17,7 +17,7 @@
 #
 
 class EnrollmentTerm < ActiveRecord::Base
-  DEFAULT_TERM_NAME = "Default Term"
+  DEFAULT_TERM_NAME = "Default"
   
   include Workflow
 
@@ -54,7 +54,7 @@ class EnrollmentTerm < ActiveRecord::Base
   end
 
   def self.i18n_default_term_name
-    t '#account.default_term_name', "Default Term"
+    t '#account.default_term_name', "Default"
   end
   
   def default_term?

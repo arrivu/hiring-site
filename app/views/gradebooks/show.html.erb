@@ -1,8 +1,9 @@
-<% content_for :page_title do %><%= join_title t(:page_title, "Hiring outcomes"), @context.name %><% end %>
+<% content_for :page_title do %><%= join_title t(:page_title, "Grading"), @context.name %><% end %>
 <% @body_classes << 'full-width' %>
 
 <h1 class='screenreader-only'>
-  <%= join_title t(:page_title, "Hiring outcomes"), @context.name %>
+  <%= join_title t(:page_title, "Grading"), @context.name %>
+
 </h1>
 
 <%= render :partial => "gradebook" %>
