@@ -179,15 +179,15 @@
             </div>
 
             <div class="control-group">
-              <!--<label class="control-label" for="quiz_assignment_group_id"><%#= t(:group, "Assignment Group") %></label>-->
+              <label class="control-label" for="quiz_assignment_group_id"><%= t(:group, "Assignment Group") %></label>
               <div class="controls">
-                <!--<select name="quiz[assignment_group_id]" id="quiz_assignment_group_id">-->
-                  <%# current_group_id = @quiz.assignment && @quiz.assignment.assignment_group_id || @quiz.assignment_group_id
+                <select name="quiz[assignment_group_id]" id="quiz_assignment_group_id">
+                  <% current_group_id = @quiz.assignment && @quiz.assignment.assignment_group_id || @quiz.assignment_group_id
                      @context.assert_assignment_group %>
-                  <!--<%# @context.assignment_groups.active.each do |g| %>-->
-                    <!--<option value="<%#= g.id %>" <%#= 'selected' if g.id == current_group_id%>><%#= g.name %></option>-->
-                  <!--<%# end %>-->
-                <!--</select>-->
+                  <% @context.assignment_groups.active.each do |g| %>
+                    <option value="<%= g.id %>" <%= 'selected' if g.id == current_group_id%>><%= g.name %></option>
+                  <% end %>
+                </select>
               </div>
             </div>
 
@@ -220,39 +220,6 @@
                     <%= text_field :quiz, :time_limit, :style => "width: 30px;", :"aria-label" => t(:time_limit, "How many minutes?") %>
                     <%= t(:minutes, "Minutes") %>
                   </label>
-                </div>
-
-                <div class="option-group">
-                  <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
-                    <input type="checkbox"   name="time_limit" id="time_limit_option"/>
-                    <%= t('label.registration_fields', "Registration fields") %>
-                  </label>
-                  <div class="options" id="registrations_details">
-                    <div>
-                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
-                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
-                        <%= t('label.name', "Name") %>
-                      </label>
-                    </div>
-                    <div>
-                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
-                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
-                        <%= t('label.email', "Email") %>
-                      </label>
-                    </div>
-                    <div>
-                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
-                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
-                        <%= t('label.dob', "Date Of Birth") %>
-                      </label>
-                    </div>
-                    <div>
-                      <label class="checkbox inline nowrap" for="time_limit_option" style="margin-top:-3px;">
-                        <input type="checkbox"   name="time_limit" id="time_limit_option"/>
-                        <%= t('label.gender', "Gender") %>
-                      </label>
-                    </div>
-                  </div>
                 </div>
 
 

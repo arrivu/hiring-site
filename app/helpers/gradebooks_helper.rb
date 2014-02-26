@@ -36,7 +36,7 @@ module GradebooksHelper
 
   def get_gradebook_version(user, context)
     if !context.old_gradebook_visible? || user.nil? || user.prefers_gradebook2?
-      'gradebook2'
+      'gradebook'
     else
       'gradebook'
     end
