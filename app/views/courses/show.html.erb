@@ -270,7 +270,7 @@ $(document).ready(function() {
       <select name="course[default_view]" id="edit_course_home_content_select">
         <option value="feed" <%= 'selected' if @context.default_view == 'feed' %>><%= t('options.recent_activity_dashboard', %{the Recent Activity Dashboard}) %></option>
         <option value="wiki" <%= 'selected' if @context.default_view == 'wiki' %>><%= t('options.custom_page', %{a Page I'll Design Myself}) %></option>
-        <option value="modules" <%= 'selected' if @context.default_view == 'modules' %>><%= t('options.modules', %{the Project Modules/Sections}) %></option>
+        <option value="modules" <%= 'selected' if @context.default_view == 'modules' %>><%= t('options.modules', %{the Project Modules/Batches}) %></option>
         <!--<option value="assignments" <%#= 'selected' if @context.default_view == 'assignments' %>><%#= t('options.assignments', %{the Assignment List}) %></option>-->
         <!--<option value="syllabus" <%#= 'selected' if @context.default_view == 'syllabus' %>><%#= t('options.syllabus', %{the Assignments with Syllabus}) %></option>-->
       </select>
@@ -283,9 +283,9 @@ $(document).ready(function() {
           <%= mt 'details.custom_page', "You can **design your own project home page** and include whatever links, images or rich media you like." %>
         </div>
         <div class="modules_details options_details">
-          <%= mt 'details.modules', "You can organize your project into **modules or sections**, where each section contains a related set of files, assignments, pages, etc.  If you want, you can also sequence modules by defining criteria and prerequisites that need to be completed before each module is unlocked.
+          <%= mt 'details.modules', "You can organize your project into **modules or batches**, where each batch contains a related set of files, assignments, pages, etc.  If you want, you can also sequence modules by defining criteria and prerequisites that need to be completed before each module is unlocked.
 
--This layout is probably best for project that aren't based on a specific schedule like a term or semester." %>
+-This layout is probably best for project that aren't based on a specific scheduled hiring period." %>
 </p>
       </div>
       <div class="assignments_details options_details">

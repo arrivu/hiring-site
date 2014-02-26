@@ -716,7 +716,7 @@ class RoleOverride < ActiveRecord::Base
         :available_to => %w(AccountAdmin AccountMembership TeacherEnrollment TaEnrollment DesignerEnrollment),
       },
       :manage_sections => {
-        :label => lambda { t('permissions.manage_sections', "Manage (create / edit / delete) project sections") },
+        :label => lambda { t('permissions.manage_sections', "Manage (create / edit / delete) project batches") },
         :true_for => %w(AccountAdmin TeacherEnrollment DesignerEnrollment),
         :available_to => %w(AccountAdmin AccountMembership TeacherEnrollment TaEnrollment DesignerEnrollment),
       },

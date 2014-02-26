@@ -46,8 +46,15 @@ tags
 /public/javascripts/plugins/
 /public/plugins/
 /spec/coffeescripts/plugins/
+<<<<<<< .merge_file_u9pYiJ
 /vendor/plugins/lms_customization
 /vendor/plugins/canvas-mt
 /.idea/*.*
 .idea/
+=======
+/.idea/*
+/vendor/plugins/lms_customization
+/vendor/plugins/canvas-mt
+>>>>>>> .merge_file_No4xLF
 /spec/plugins/
+
