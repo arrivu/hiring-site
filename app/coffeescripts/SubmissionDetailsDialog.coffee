@@ -16,7 +16,7 @@ define [
   class SubmissionDetailsDialog
     constructor: (@assignment, @student, @options) ->
       speedGraderUrl = if @options.speed_grader_enabled
-        "#{@options.context_url}/gradebook/speed_grader?assignment_id=#{@assignment.id}#%7B%22student_id%22%3A#{@student.id}%7D"
+        "#{@options.context_url}/gradebook/speed_grader?assignment_id=#{@assignment.id}#%7B%22candidate_id%22%3A#{@student.id}%7D"
       else
         null
 

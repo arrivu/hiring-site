@@ -41,7 +41,7 @@
         <td>
           <%= mt :term_runs_from, "**Term Runs** from" %>&nbsp;
         </td>
-        <%= render :partial => 'timespan', :locals => { :object => term, :key => '', :start_tooltip => t('titles.term_starts', "Term starts"), :end_tooltip => t('titles.term_ends', "Term ends") } %>
+        <%= render :partial => 'timespan', :locals => { :object => term, :key => '', :start_tooltip => t('titles.term_starts', "Hiring period starts"), :end_tooltip => t('titles.term_ends', "Term ends") } %>
       </tr>
     <% types.each do |type| %>
       <% override = term.enrollment_dates_overrides.find_by_context_type_and_context_id_and_enrollment_type(@context.class.to_s, @context.id, type.to_s) if term %>

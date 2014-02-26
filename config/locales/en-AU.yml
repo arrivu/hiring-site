@@ -28,7 +28,7 @@ en-AU:
     ask_canvas_network: "Ask the Canvas Network Community"
     default_account_name: "Default Account"
     default_site_administrator_account_name: "Site Admin"
-    default_term_name: "Default Term"
+    default_term_name: "Default hiring period"
     errors: 
       invalid_discovery_url: "The discovery URL is not valid"
     feedback_coach: "Ask the Community"
@@ -291,7 +291,7 @@ en-AU:
       labels: 
         account_id: Department
         course_code: "Reference Code"
-        enrollment_term_id: "Enrollment Term"
+        enrollment_term_id: "Hiring Period"
         full_name: "Full Name"
         name: "Course Name"
         path: Email
@@ -12363,7 +12363,7 @@ en-AU:
       prompts: 
         delete: "Are you sure you want to delete this term?"
       titles: 
-        enrollment_terms: "Enrollment Terms"
+        enrollment_terms: "Hiring Periods"
         term_details: "Term Details"
     term: 
       buttons: 
@@ -12375,24 +12375,24 @@ en-AU:
       labels: 
         designers_can_access_from: "**Designers** can access from"
         sis_id: "SIS ID"
-        students_can_access_from: "**Students** can access from"
+        students_can_access_from: "**Candidates** can access from"
         tas_can_access_from: "**TAs** can access from"
         teachers_can_access_from: "**Teachers** can access from"
-      name: "Term Name:"
+      name: "Hiring period Name:"
       sis_source_id: "SIS ID:"
-      term_runs_from: "**Term Runs** from"
+      term_runs_from: "**Hiring period Runs** from"
       titles: 
-        term_ends: "Term ends"
-        term_starts: "Term starts"
+        term_ends: "Hiring period ends"
+        term_starts: "Hiring period starts"
       tooltips: 
-        term_ends_designers: "For designers the term ends"
-        term_ends_students: "For students the term ends"
-        term_ends_tas: "For TAs the term ends"
-        term_ends_teachers: "For teachers the term ends"
-        term_starts_designers: "For designers the term starts"
-        term_starts_students: "For students the term starts"
-        term_starts_tas: "For TAs the term starts"
-        term_starts_teachers: "For teachers the term starts"
+        term_ends_designers: "For designers the Hiring period ends"
+        term_ends_students: "For students the Hiring period ends"
+        term_ends_tas: "For TAs the Hiring period ends"
+        term_ends_teachers: "For teachers the Hiring period ends"
+        term_starts_designers: "For designers the Hiring period starts"
+        term_starts_students: "For students the Hiring period starts"
+        term_starts_tas: "For TAs the Hiring period starts"
+        term_starts_teachers: "For teachers the Hiring period starts"
       user_count: 
         one: "1 User"
         other: "%{count} Users"
