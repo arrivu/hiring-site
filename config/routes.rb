@@ -305,7 +305,7 @@ routes.draw do
     #  end
     #end
 
-    #resources :submissions
+    resources :submissions
     #resources :calendar_events
 
     concerns :files, :file_images, :relative_files, :folders

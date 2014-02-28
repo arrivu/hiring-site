@@ -266,7 +266,7 @@ class Attachment < ActiveRecord::Base
     if data[:locked_folders]
       data[:locked_folders].each do |path|
         # TODO i18n
-        if f = migration.context.active_folders.find_by_full_name("course files/#{path}")
+        if f = migration.context.active_folders.find_by_full_name("project files/#{path}")
           f.locked = true
           f.save
         end
@@ -275,7 +275,7 @@ class Attachment < ActiveRecord::Base
     if data[:hidden_folders]
       data[:hidden_folders].each do |path|
         # TODO i18n
-        if f = migration.context.active_folders.find_by_full_name("course files/#{path}")
+        if f = migration.context.active_folders.find_by_full_name("project files/#{path}")
           f.workflow_state = 'hidden'
           f.save
         end

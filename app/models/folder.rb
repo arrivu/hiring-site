@@ -26,7 +26,7 @@ class Folder < ActiveRecord::Base
   include Workflow
   attr_accessible :name, :full_name, :parent_folder, :workflow_state, :lock_at, :unlock_at, :locked, :hidden, :context, :position
 
-  ROOT_FOLDER_NAME = "course files"
+  ROOT_FOLDER_NAME = "project files"
   PROFILE_PICS_FOLDER_NAME = "profile pictures"
   MY_FILES_FOLDER_NAME = "my files"
   CONVERSATION_ATTACHMENTS_FOLDER_NAME = "conversation attachments"

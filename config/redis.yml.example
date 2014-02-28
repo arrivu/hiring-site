@@ -8,13 +8,13 @@
 # production:
 #   servers:
 #   # list of redis servers to use in the ring
-#   - redis://redis01
+    - redis://localhost
 #   - redis://redis02
 
 # test:
 #   # only tests that are exercising the integration with redis require redis to run.
 #   servers:
-#   - redis://localhost
+#   - redis://localhost                    s
 #   # warning: the redis database will get cleared before each test, so if you
 #   # use this server for anything else, make sure to set aside a database id for
 #   # these tests to use.

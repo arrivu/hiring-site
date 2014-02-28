@@ -59,10 +59,8 @@
       <!--<%# end %>-->
     <!--</div>-->
     <%= render(:partial => "shared/keyboard_navigation_hint") if keyboard_navigation %>
-
     <% if @current_user %>
         <ul role="navigation" id="menu" aria-label="<%= t('navigation.main', 'Main Navigation') %>">
-
       <%- cache([@current_user, 'home-menu-15m'], :expires_in => 15.minutes) do -%>
       <li id="courses_menu_item" class="menu-item">
         <%- if show_home_menu? -%>
@@ -74,11 +72,7 @@
       <%- end -%>
       <% if @current_user.initial_enrollment_type != "student" %>
       <li id="courses_menu_item" class="menu-item">
-        <%- if show_home_menu? -%>
-            <%= render(:partial => 'shared/home_menu1') %>
-        <%- else  -%>
-            <a href="<%= dashboard_path %>" class="menu-item-no-drop"><%= t 'links.home', 'Home' %></a>
-        <%- end -%>
+                  <%= render(:partial => 'shared/home_menu1') %>
       </li>
       <% end %>
       <li id="assignments_menu_item" class="menu-item">
