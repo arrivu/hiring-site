@@ -122,7 +122,7 @@ Canvas::Plugin.register 'canvas_cartridge_importer', :export_system, {
   :author_website => 'http://www.instructure.com',
   :description => lambda{ I18n.t :canvas_cartridge_description, 'This enables converting a canvas export to the intermediary json format to be imported' },
   :version => '1.0.0',
-  :select_text => lambda{ I18n.t :canvas_cartridge_file_description, "Canvas Course Export Package" },
+  :select_text => lambda{ I18n.t :canvas_cartridge_file_description, "Sublime Hiring Project Export Package" },
   :sort_order => 1,
   :settings => {
     :worker => 'CCWorker',
@@ -133,13 +133,13 @@ Canvas::Plugin.register 'canvas_cartridge_importer', :export_system, {
 }
 require_dependency 'canvas/migration/worker/course_copy_worker'
 Canvas::Plugin.register 'course_copy_importer', :export_system, {
-        :name => lambda { I18n.t :course_copy_name, 'Copy Canvas Course' },
-        :display_name => lambda { I18n.t :course_copy_display, 'Course Copy' },
+        :name => lambda { I18n.t :course_copy_name, 'Copy Sublime Hiring Project' },
+        :display_name => lambda { I18n.t :course_copy_display, 'Project Copy' },
         :author => 'Instructure',
         :author_website => 'http://www.instructure.com',
         :description => lambda { I18n.t :course_copy_description, 'Migration plugin for copying canvas courses' },
         :version => '1.0.0',
-        :select_text => lambda { I18n.t :course_copy_file_description, "Copy a Canvas Course" },
+        :select_text => lambda { I18n.t :course_copy_file_description, "Copy a Sublime Hiring Project" },
         :sort_order => 0,
         :settings => {
                 :worker => 'CourseCopyWorker',

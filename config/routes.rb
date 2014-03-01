@@ -14,7 +14,7 @@ else
 end
 
 routes.draw do
-  #resources :submission_comments, :only => :destroy
+  resources :submission_comments, :only => :destroy
   #
   #match 'inbox' => 'context#mark_inbox_as_read', :as => :mark_inbox_as_read, :via => :delete
   #match 'inbox' => 'context#inbox', :as => :inbox
@@ -305,7 +305,7 @@ routes.draw do
     #  end
     #end
 
-    #resources :submissions
+    resources :submissions
     #resources :calendar_events
 
     concerns :files, :file_images, :relative_files, :folders
@@ -327,7 +327,7 @@ routes.draw do
         get :fabulous_quizzes
       end
 
-      resources :quiz_submissions, :path => :submissions do
+      resources :quiz_submissions do
         collection do
           put :backup
         end
@@ -801,7 +801,7 @@ routes.draw do
   # assignments at the top level (without a context) -- we have some specs that
   # assert these routes exist, but just 404. I'm not sure we ever actually want
   # top-level assignments available, maybe we should change the specs instead.
-  #resources :assignments, :only => ["index", "show"]
+  resources :assignments, :only => ["index", "show"]
 
   resources :files do
     match 'download' => 'files#show', :as => :download, :download => '1'
@@ -944,8 +944,8 @@ routes.draw do
       submissions_api("section", "course_section")
     end
 
-    post '/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files',
-         :action => :create_file, :controller => :submission_comments_api
+    post '/projects/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files',
+      :action => :create_file, :controller => :submission_comments_api
 
     scope(:controller => :gradebook_history_api) do
       get "courses/:course_id/gradebook_history/days", :action => :days, :path_name => 'gradebook_history'
