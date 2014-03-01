@@ -104,8 +104,8 @@
           <div id="submission_files_list">
             <div id="submission_file_hidden"  class="submission-file" style='display:none;'>
               <span class="turnitin_score_container"></span>
-              <!--<a class="submission-file-download" title="<%#= t('titles.download_file', "Download this file") %>" href="<%#= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}") %>"><%#= t('links.download_file', "Download File") %></a>-->
-              <!--<a class="display_name no-hover" href="<%#= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}", :inline => 1) %>" title="<%#= t('titles.preview_file', "Preview this File") %>">???</a>-->
+            <a class="submission-file-download" title="<%= t('titles.download_file', "Download this file") %>" href="<%= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}") %>"><%= t('links.download_file', "Download File") %></a>
+             <a class="display_name no-hover" href="<%= context_url(@context, :context_assignment_submission_url, @assignment.id, "{{submissionId}}", :download => "{{attachmentId}}", :inline => 1) %>" title="<%= t('titles.preview_file', "Preview this File") %>">???</a>
             </div>
           </div>
           <div class="turnitin_info_container"></div>

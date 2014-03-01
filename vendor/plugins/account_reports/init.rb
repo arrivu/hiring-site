@@ -28,7 +28,7 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term to get grades from'
+          :description => 'The sublime hiring id of the term to get grades from'
         },
         :include_deleted => {
           :required => false,
@@ -43,11 +43,11 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term to get grades from'
+          :description => 'The sublime hiring id of the term to get grades from'
         },
         :course_id => {
           :required => false,
-          :description => 'The course to report on'
+          :description => 'The project to report on'
         }
       }
     },
@@ -58,11 +58,11 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term of courses to report on'
+          :description => 'The sublime hiring id of the hiring period of projects to report on'
         },
         :order => {
           :required => false,
-          :description => "The sort order for the csv, Options: 'users', 'courses', 'outcomes'",
+          :description => "The sort order for the csv, Options: 'users', 'projects', 'outcomes'",
         },
         :include_deleted => {
           :required => false,
@@ -77,7 +77,7 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term of courses to report on'
+          :description => 'The sublime hiring id of the term of projects to report on'
         },
         :users => {
           :description => 'Get the Provisioning file for users'
@@ -89,7 +89,7 @@ Rails.configuration.to_prepare do
           :description => 'Get the Provisioning file for terms'
         },
         :courses => {
-          :description => 'Get the Provisioning file for courses'
+          :description => 'Get the Provisioning file for projects'
         },
         :sections => {
           :description => 'Get the Provisioning file for sections'
@@ -104,7 +104,7 @@ Rails.configuration.to_prepare do
           :description => 'Get the Provisioning file for group_membership'
         },
         :xlist => {
-          :description => 'Get the Provisioning file for cross listed courses'
+          :description => 'Get the Provisioning file for cross listed projects'
         },
         :include_deleted => {
           :description => 'Include deleted objects'
@@ -118,7 +118,7 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term to get grades from'
+          :description => 'The sublime hiring id of the term to get grades from'
         }
       }
     },
@@ -129,7 +129,7 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term of courses to report on'
+          :description => 'The sublime hiring id of the term of projects to report on'
         },
         :users => {
           :description => 'Get the SIS file for users'
@@ -141,7 +141,7 @@ Rails.configuration.to_prepare do
           :description => 'Get the SIS file for terms'
         },
         :courses => {
-          :description => 'Get the SIS file for courses'
+          :description => 'Get the SIS file for projects'
         },
         :sections => {
           :description => 'Get the SIS file for sections'
@@ -156,7 +156,7 @@ Rails.configuration.to_prepare do
           :description => 'Get the SIS file for group_membership'
         },
         :xlist => {
-          :description => 'Get the SIS file for cross listed courses'
+          :description => 'Get the SIS file for cross listed projects'
         },
         :include_deleted => {
           :description => 'Include deleted objects'
@@ -170,7 +170,7 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term of courses to report on'
+          :description => 'The sublime hiring id of the term of projects to report on'
         },
         :include_deleted => {
           :required => false,
@@ -189,7 +189,7 @@ Rails.configuration.to_prepare do
         },
         :course_id => {
           :required => false,
-          :description => 'The course to report on'
+          :description => 'The project to report on'
         },
         :start_at => {
           :required => true,
@@ -208,7 +208,7 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term to get grades from'
+          :description => 'The sublime hiring id of the term to get grades from'
         }
       }
     },
@@ -219,7 +219,7 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term to get courses from'
+          :description => 'The sublime hiring id of the term to get projects from'
         }
       }
     },
@@ -230,11 +230,11 @@ Rails.configuration.to_prepare do
       :parameters => {
         :enrollment_term_id => {
           :required => false,
-          :description => 'The canvas id of the term to get grades from'
+          :description => 'The sublime hiring id of the term to get grades from'
         },
         :course_id => {
           :required => false,
-          :description => 'The course to report on'
+          :description => 'The project to report on'
         }
       }
     }

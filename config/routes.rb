@@ -230,7 +230,7 @@ routes.draw do
     match 'link_enrollment' => 'courses#link_enrollment', :as => :link_enrollment
     match 'update_nav' => 'courses#update_nav', :as => :update_nav
     match 'enroll_users.:format' => 'courses#enroll_users', :as => :formatted_enroll_users
-    resource :gradebook ,:path => :evaluations do
+    resource :gradebook do
       match 'submissions_upload/:assignment_id' => 'gradebooks#submissions_zip_upload', :as => :submissions_upload, :via => :post
       collection do
         get :change_gradebook_version
@@ -305,7 +305,7 @@ routes.draw do
     #  end
     #end
 
-    resources :submissions
+    #resources :submissions
     #resources :calendar_events
 
     concerns :files, :file_images, :relative_files, :folders
@@ -414,7 +414,7 @@ routes.draw do
     match 'student_view' => 'courses#student_view', :as => :student_view, :via => :post
     match 'student_view' => 'courses#leave_student_view', :as => :student_view, :via => :delete
     match 'test_student' => 'courses#reset_test_student', :as => :test_student, :via => :delete
-    #match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
+    match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
   end
 
   match 'quiz_statistics/:quiz_statistics_id/files/:file_id/download' => 'files#show', :as => :quiz_statistics_download, :download => '1'
@@ -826,10 +826,7 @@ routes.draw do
   # resources :collections, :only => [:show, :index] do
   #   resources :collection_items, :only => [:show, :index]
   # end
-  #resources :invitations do
-  #  match 'accept' => 'invitations#accept_code', :as => :accept
-  #  match 'register' => 'invitations#optional_register', :as => :register
-  #end
+
   ### API routes ###
 
   # TODO: api routes can't yet take advantage of concerns for DRYness, because of

@@ -39,7 +39,7 @@
     <table>
       <tr class="general_dates">
         <td>
-          <%= mt :term_runs_from, "**Term Runs** from" %>&nbsp;
+          <%= mt :term_runs_from, "**Hiring period Runs** from" %>&nbsp;
         </td>
         <%= render :partial => 'timespan', :locals => { :object => term, :key => '', :start_tooltip => t('titles.term_starts', "Hiring period starts"), :end_tooltip => t('titles.term_ends', "Term ends") } %>
       </tr>
@@ -51,20 +51,20 @@
         <td>
           <% case type_string
               when 'student_enrollment'
-                start_tooltip = t 'tooltips.term_starts_students', "For candidates the term starts"
-                end_tooltip = t 'tooltips.term_ends_students', "For candidates the term ends"
+                start_tooltip = t 'tooltips.term_starts_students', "For candidates the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_students', "For candidates the hiring period ends"
                 access_label = mt 'labels.students_can_access_from', "**Candidates** can access from"
               when 'teacher_enrollment'
-                start_tooltip = t 'tooltips.term_starts_teachers', "For hiring manager the term starts"
-                end_tooltip = t 'tooltips.term_ends_teachers', "For hiring manager the term ends"
+                start_tooltip = t 'tooltips.term_starts_teachers', "For hiring manager the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_teachers', "For hiring manager the hiring period ends"
                 access_label = mt 'labels.teachers_can_access_from', "**Hiring Manager** can access from"
               when 'ta_enrollment'
-                start_tooltip = t 'tooltips.term_starts_tas', "For interviewers the term starts"
-                end_tooltip = t 'tooltips.term_ends_tas', "For interviewers the term ends"
+                start_tooltip = t 'tooltips.term_starts_tas', "For interviewers the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_tas', "For interviewers the hiring period ends"
                 access_label = mt 'labels.tas_can_access_from', "**Interviewers** can access from"
               when 'designer_enrollment'
-                start_tooltip = t 'tooltips.term_starts_designers', "For designers the term starts"
-                end_tooltip = t 'tooltips.term_ends_designers', "For designers the term ends"
+                start_tooltip = t 'tooltips.term_starts_designers', "For designers the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_designers', "For designers the hiring period ends"
                 access_label = mt 'labels.designers_can_access_from', "**Designers** can access from"
               end
           %>
