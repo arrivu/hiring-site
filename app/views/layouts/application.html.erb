@@ -70,11 +70,6 @@
         <%- end -%>
       </li>
       <%- end -%>
-      <% if @current_user.initial_enrollment_type != "student" %>
-      <li id="courses_menu_item" class="menu-item">
-                  <%= render(:partial => 'shared/home_menu1') %>
-      </li>
-      <% end %>
       <li id="assignments_menu_item" class="menu-item">
       <%
       # this will cache the assignments menu for 3 minutes.  the way it is right now it does 3 really expensive queries every page load.

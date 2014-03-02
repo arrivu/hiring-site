@@ -6136,7 +6136,7 @@ en-AU:
       page_title: "%{assignment_name}, SpeedGrader, %{course_name}"
       sort_by: 
         status: "by submission status (needs grading, not submitted, etc)"
-        student_name: "by student name (alphabetically)"
+        student_name: "by candidate name (alphabetically)"
         submitted_at: "the date they submitted the assignment"
       submitted_files: "Submitted Files: (click to load)"
       titles: 
@@ -12223,7 +12223,7 @@ en-AU:
     links: 
       click_to_view: "click here to view"
     loading_comments: "Loading comments..."
-    more_details_in_the_speedgrader: "More details in the SpeedGrader"
+    more_details_in_the_speedgrader: "More details in the QuickGrader"
     post_comment: "Post Comment"
     submitted: "Submitted:"
     this_was_submitted_multiple_times_choose_a_submission_to_view: "Submitted multiple times, choose which to view:"

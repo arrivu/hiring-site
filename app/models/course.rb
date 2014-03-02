@@ -949,7 +949,7 @@ Course < ActiveRecord::Base
       entry.updated   = self.updated_at
       entry.published = self.created_at
       entry.links    << Atom::Link.new(:rel => 'alternate',
-                                       :href => "/#{context_url_prefix}/courses/#{self.id}")
+                                       :href => "/#{context_url_prefix}/projects/#{self.id}")
     end
   end
 
