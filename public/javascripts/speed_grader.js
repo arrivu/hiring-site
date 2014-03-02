@@ -128,7 +128,7 @@ define([
       snapshotCache = {},
       sectionToShow,
       header,
-      studentLabel = I18n.t("candidate", "Candidate"),
+      studentLabel = I18n.t("student", "Candidate"),
       groupLabel = I18n.t("group", "Group"),
       gradeeLabel = studentLabel,
       utils;
