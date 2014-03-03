@@ -6,7 +6,11 @@ set :user,    "sysadmin"
 set :passenger_user,"canvasuser"
 
 set :stages, ["testing","staging", "production"]
-set :default_stage, "testing"
+
+set :default_stage, "production"
+
+set :repository,    "https://github.com/m-narayan/sublime-hiring.git"
+
 
 set :scm,     :git
 set :deploy_via,  :remote_cache
