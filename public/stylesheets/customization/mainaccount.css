@@ -1,4 +1,7 @@
 #header{background:#345E6A;}
+#header.no-user {
+    min-height: 75px;
+}
 
 #header-logo,#header.no-user #header-logo{background: url("images/pro.png?v1") no-repeat scroll 0 0 transparent;
 bottom: 5px;
