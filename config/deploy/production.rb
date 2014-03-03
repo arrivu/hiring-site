@@ -1,4 +1,4 @@
-server "arrivuapps.com", :app, :web, :db, :primary => true
+server "192.241.156.215", :app, :web, :db, :primary => true
 set :deploy_to, "/var/capistrano/deploy/lms"
 set :branch,    "deploy"
 #set :scm_passphrase, "deployadmin123$"
