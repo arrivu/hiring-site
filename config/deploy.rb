@@ -123,12 +123,12 @@ namespace :canvas do
 
   desc "Clone canvas-mt"
   task :clone_canvas_mt do
-    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} git@github.com:m-narayan/canvas-mt.git canvas_mt"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/canvas-mt.git canvas_mt"
   end
 
   desc "Clone lms_customization"
   task :clone_lms_customization do
-    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} git@github.com:m-narayan/lms_customization.git lms_customization"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/lms_customization.git lms_customization"
   end
 
   desc "Compile static assets"
