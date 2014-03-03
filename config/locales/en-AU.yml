@@ -5585,7 +5585,7 @@ en-AU:
       find_outcome: "Find Outcome"
       find_outcome_criterion: "Find Outcome Criterion"
   folder: 
-    course_content_folder_name: "course content"
+    course_content_folder_name: "project content"
     default_folder_name: folder
     errors: 
       invalid_recursion: "A folder cannot be the parent of itself"
@@ -8849,7 +8849,7 @@ en-AU:
       appointment_cancelations: "Appointment Cancelations"
       appointment_signups: "Appointment Signups"
       calendar: Calendar
-      course_content: "Course Content"
+      course_content: "Project Content"
       discussion: Discussion
       discussion_entry: DiscussionEntry
       due_date: "Due Date"
@@ -8874,7 +8874,7 @@ en-AU:
         * WikiPage
         * Quiz content
         * Assignment content
-    course_content_display: "Course Content"
+    course_content_display: "Projects Content"
     discussion_description: "New discussion topic in your course"
     discussion_display: Discussion
     discussion_post_description: "New discussion post in a topic you're subscribed to"
