@@ -219,7 +219,11 @@ class ActiveRecord::Base
   end
 
   def context_url_prefix
-    "#{self.context_type.downcase.pluralize}/#{self.context_id}"
+    if context_type == "Course"
+      "projects/#{self.context_id}"
+    else
+      "#{self.context_type.downcase.pluralize}/#{self.context_id}"
+    end
   end
 
   # Example:

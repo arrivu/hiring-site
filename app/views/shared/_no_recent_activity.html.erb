@@ -1,4 +1,4 @@
-<% if !show_welcome_message? %>
+<% if show_welcome_message? %>
 <div class="no-recent-messages global-message image-block">
   <div class="image-block-image">
     <i class="information-icon"></i>
@@ -14,8 +14,7 @@
       <p><%= t 'empty_stream_message', <<-BODY
       You don't have any messages to show in your stream yet.  Once you
       begin participating in your projects you'll see this stream fill up
-      with messages from result updates, private messages between
-      you and other users, etc.
+      with messages from result updates.
       BODY
       %></p>
     </div>

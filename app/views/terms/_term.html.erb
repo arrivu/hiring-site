@@ -15,7 +15,7 @@
     </div>
     <%= form_for (term || EnrollmentTerm.new), :url => (term ? context_url(@context, :context_term_url, term.id) : context_url(@context, :context_terms_url)), :html => {:class => "enrollment_term_form", :method => (term ? :put : :post)} do |f| %>
         <div class="control-group edit_term">
-          <label class="control-label" for="enrollment_term_name"><%= t :name, 'Term Name:' %></label>
+          <label class="control-label" for="enrollment_term_name"><%= t :name, 'Hiring Period Name:' %></label>
           <div class="controls">
             <%= f.text_field :name, :class => "input-xlarge" %>
           </div>
@@ -30,7 +30,7 @@
       <% end %>
       <div class="edit_term edit_term_buttons">
         <button class="btn button-secondary cancel_button" type="button"><%= t '#buttons.cancel', "Cancel" %></button>
-        <button class="btn btn-primary submit_button" type="submit"><%= term ? t('buttons.update', "Update Term") : t('buttons.add', "Add Term") %></button>
+        <button class="btn btn-primary submit_button" type="submit"><%= term ? t('buttons.update', "Update Hiring period") : t('buttons.add', "Add Hiring Period") %></button>
       </div>
     <% end %>
   </td>
@@ -41,7 +41,7 @@
         <td>
           <%= mt :term_runs_from, "**Hiring period Runs** from" %>&nbsp;
         </td>
-        <%= render :partial => 'timespan', :locals => { :object => term, :key => '', :start_tooltip => t('titles.term_starts', "Hiring period starts"), :end_tooltip => t('titles.term_ends', "Term ends") } %>
+        <%= render :partial => 'timespan', :locals => { :object => term, :key => '', :start_tooltip => t('titles.term_starts', "Hiring period starts"), :end_tooltip => t('titles.term_ends', "Hiring period ends") } %>
       </tr>
     <% types.each do |type| %>
       <% override = term.enrollment_dates_overrides.find_by_context_type_and_context_id_and_enrollment_type(@context.class.to_s, @context.id, type.to_s) if term %>

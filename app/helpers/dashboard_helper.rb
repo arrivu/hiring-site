@@ -48,14 +48,13 @@ module DashboardHelper
       t('#users.welcome.unpublished_courses_message', <<-BODY)
         You've enrolled in one or more projects that have not started yet. Once
         those projects are available, you will see information about them here
-        and in the top navigation. In the meantime, feel free to sign up for
+        and in the top navigation. In the meantime, feel free to create
         more projects or set up your profile.
       BODY
     else
       t('#users.welcome.no_courses_message', <<-BODY)
         You don't have any projects, so this page won't be very exciting for now.
-        Once you've created or signed up for projects, you'll start to see
-        conversations from all of your classes.
+        Once you've created or signed up for projects.
       BODY
     end
   end

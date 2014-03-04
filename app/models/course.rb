@@ -16,9 +16,7 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-class
-
-Course < ActiveRecord::Base
+class Course < ActiveRecord::Base
 
   include Context
   include Workflow
@@ -949,7 +947,7 @@ Course < ActiveRecord::Base
       entry.updated   = self.updated_at
       entry.published = self.created_at
       entry.links    << Atom::Link.new(:rel => 'alternate',
-                                       :href => "/#{context_url_prefix}/courses/#{self.id}")
+                                       :href => "/#{context_url_prefix}/projects/#{self.id}")
     end
   end
 
@@ -2431,7 +2429,7 @@ Course < ActiveRecord::Base
     [
         { :id => TAB_HOME, :label => t('#tabs.home', "Home"), :css_class => 'home', :href => :course_path },
         #{ :id => TAB_ANNOUNCEMENTS, :label => t('#tabs.announcements', "Announcements"), :css_class => 'announcements', :href => :course_announcements_path },
-        { :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_assignments_path },
+        #{ :id => TAB_ASSIGNMENTS, :label => t('#tabs.assignments', "Assignments"), :css_class => 'assignments', :href => :course_assignments_path },
         #{ :id => TAB_DISCUSSIONS, :label => t('#tabs.discussions', "Discussions"), :css_class => 'discussions', :href => :course_discussion_topics_path },
         { :id => TAB_GRADES, :label => t('#tabs.grades', "Grades"), :css_class => 'grades', :href => :course_grades_path },
         { :id => TAB_PEOPLE, :label => t('#tabs.people', "People"), :css_class => 'people', :href => :course_users_path },
@@ -2520,7 +2518,6 @@ Course < ActiveRecord::Base
         tab[:hidden_unused] = true if tab[:id] == TAB_CONFERENCES && !active_record_types[:conferences] && !self.grants_right?(user, nil, :create_conferences)
         tab[:hidden_unused] = true if tab[:id] == TAB_ANNOUNCEMENTS && !active_record_types[:announcements]
         tab[:hidden_unused] = true if tab[:id] == TAB_OUTCOMES && !active_record_types[:outcomes]
-        tab[:hidden_unused] = true if tab[:id] == TAB_GRADES && !active_record_types[:grades]
       end
 
       # remove tabs that the user doesn't have access to

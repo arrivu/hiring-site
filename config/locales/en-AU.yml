@@ -56,7 +56,7 @@ en-AU:
     tab_sis_import: "SIS Import"
     tab_statistics: Statistics
     tab_sub_accounts: Sub-Accounts
-    tab_terms: Terms
+    tab_terms: Hiring Period
     tab_users: Users
     turnitin_pledge: "This assignment submission is my own, original work"
   account_authorization_config: 
@@ -240,7 +240,7 @@ en-AU:
     permission_denied_notice: "You cannot create announcements for that account"
   account_reports: 
     default: 
-      all_terms: "All Terms"
+      all_terms: "All Horong Periods"
       message: "%{type} report successfully generated with the following settings. Account: %{account}; %{options}"
     grades: 
       deleted: "Include Deleted Objects: true;"
@@ -434,7 +434,7 @@ en-AU:
       account_reports: 
         auburn: 
           course_status: 
-            text: "This report shows the status of all the courses for a given term. The resulting csv file will have one row per course section and will show the course, course status, term, effective start and end dates, and a teacher of record in the section."
+            text: "This report shows the status of all the courses for a given hiring period. The resulting csv file will have one row per course section and will show the course, course status, hiring period, effective start and end dates, and a teacher of record in the section."
           description: 
             header: Example
     course_type: course
@@ -445,9 +445,9 @@ en-AU:
       search_results_crumb: "Search results for \"%{query}\""
       title: "Course Search Results for \"%{query}\""
     courses_right_side: 
-      all_terms: "All Terms"
+      all_terms: "All hiring period"
       course_filtering: "Course Filtering"
-      enrollment_term_label: "Show courses from the term"
+      enrollment_term_label: "Show courses from the hiring period"
       filter_label: "Find a Course"
       go_button: Go
       hide_enrollmentless_courses: "Hide enrollmentless courses"
@@ -5585,7 +5585,7 @@ en-AU:
       find_outcome: "Find Outcome"
       find_outcome_criterion: "Find Outcome Criterion"
   folder: 
-    course_content_folder_name: "course content"
+    course_content_folder_name: "project content"
     default_folder_name: folder
     errors: 
       invalid_recursion: "A folder cannot be the parent of itself"
@@ -6136,7 +6136,7 @@ en-AU:
       page_title: "%{assignment_name}, SpeedGrader, %{course_name}"
       sort_by: 
         status: "by submission status (needs grading, not submitted, etc)"
-        student_name: "by student name (alphabetically)"
+        student_name: "by candidate name (alphabetically)"
         submitted_at: "the date they submitted the assignment"
       submitted_files: "Submitted Files: (click to load)"
       titles: 
@@ -8849,7 +8849,7 @@ en-AU:
       appointment_cancelations: "Appointment Cancelations"
       appointment_signups: "Appointment Signups"
       calendar: Calendar
-      course_content: "Course Content"
+      course_content: "Project Content"
       discussion: Discussion
       discussion_entry: DiscussionEntry
       due_date: "Due Date"
@@ -8874,7 +8874,7 @@ en-AU:
         * WikiPage
         * Quiz content
         * Assignment content
-    course_content_display: "Course Content"
+    course_content_display: "Projects Content"
     discussion_description: "New discussion topic in your course"
     discussion_display: Discussion
     discussion_post_description: "New discussion post in a topic you're subscribed to"
@@ -9409,7 +9409,7 @@ en-AU:
         section_end_days_adjustment: "Section end days adjustment"
         section_name_selection: "Section name selection"
         section_start_days_adjustment: "Section start days adjustment"
-        term_end_days_adjustment: "Term end days adjustment"
+        term_end_days_adjustment: "Hiring Period end days adjustment"
         term_start_days_adjustment: "Hiring period start days adjustment"
     index: 
       author: Author
@@ -12116,8 +12116,8 @@ en-AU:
       enrollments: "Enrollments: %{enrollment_count}"
       group_enrollments: "Group Enrollments: %{group_enrollments_count}"
       groups: "Groups: %{group_count}"
-      sections: "Sections: %{section_count}"
-      terms: "Terms: %{term_count}"
+      sections: "Batches: %{section_count}"
+      terms: "hiring Periods: %{term_count}"
       users: "Users: %{user_count}"
     messages: 
       import_complete_success: "The import is complete and all records were successfully imported."
@@ -12223,7 +12223,7 @@ en-AU:
     links: 
       click_to_view: "click here to view"
     loading_comments: "Loading comments..."
-    more_details_in_the_speedgrader: "More details in the SpeedGrader"
+    more_details_in_the_speedgrader: "More details in the QuickGrader"
     post_comment: "Post Comment"
     submitted: "Submitted:"
     this_was_submitted_multiple_times_choose_a_submission_to_view: "Submitted multiple times, choose which to view:"

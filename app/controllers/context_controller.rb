@@ -322,7 +322,7 @@ class ContextController < ApplicationController
         :USER_LISTS_URL => polymorphic_path([@context, :user_lists], :format => :json),
         :ENROLL_USERS_URL => course_enroll_users_url(@context),
         #:SEARCH_URL => search_recipients_url,
-        :COURSE_ROOT_URL => "/courses/#{ @context.id }",
+        :COURSE_ROOT_URL => "/projects/#{ @context.id }",
         :CONTEXTS => @contexts,
         :resend_invitations_url => course_re_send_invitations_url(@context),
         :permissions => {

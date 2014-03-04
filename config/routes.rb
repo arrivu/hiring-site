@@ -327,7 +327,7 @@ routes.draw do
         get :fabulous_quizzes
       end
 
-      resources :quiz_submissions do
+      resources :quiz_submissions, :path => :submissions do
         collection do
           put :backup
         end
@@ -944,7 +944,7 @@ routes.draw do
       submissions_api("section", "course_section")
     end
 
-    post '/projects/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files',
+    post '/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files',
       :action => :create_file, :controller => :submission_comments_api
 
     scope(:controller => :gradebook_history_api) do

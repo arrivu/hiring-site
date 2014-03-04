@@ -18,6 +18,7 @@ environment_configuration(defined?(config) && config) do |config|
   config.action_view.debug_rjs             = true
   config.action_controller.perform_caching = false
   config.action_view.cache_template_loading = false
+  config.action_mailer.delivery_method = :smtp
 
   # run rake js:build to build the optimized JS if set to true
   # ENV['USE_OPTIMIZED_JS']                            = 'true'

@@ -47,7 +47,7 @@
     <!--<a id='hideshow' value='hide/show' style="cursor: pointer;"><%#= image_tag "menu.png", :style=> "width: 25px;height: 20px;margin: -17px 10px;" %> </a>-->
         <%end%>
 
-    <a id="header-logo" href="<%= root_url %>" style="left: 45px;"><%= t 'links.dashboard', "My Dashboard" %></a>
+    <a id="header-logo" href="<%= root_url %>" ><%= t 'links.dashboard', "My Dashboard" %></a>
     <b id="header-logo-secondary"></b>
     <!--<div id="topbar">-->
       <!--<%# if (identity = yield :identity) %>-->
@@ -70,11 +70,6 @@
         <%- end -%>
       </li>
       <%- end -%>
-      <% if @current_user.initial_enrollment_type != "student" %>
-      <li id="courses_menu_item" class="menu-item">
-                  <%= render(:partial => 'shared/home_menu1') %>
-      </li>
-      <% end %>
       <li id="assignments_menu_item" class="menu-item">
       <%
       # this will cache the assignments menu for 3 minutes.  the way it is right now it does 3 really expensive queries every page load.
@@ -93,7 +88,7 @@
         total_shown = 0
         if assignment_sets.any?{ |k, v| @current_user.send(k).length > 0 }
       -%>
-        <a href="/assignments" class="menu-item-title"><%= t('menu.assignments', 'Assignments') %><span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
+        <a href="/assignments" class="menu-item-title"><%= t('menu.assignments', 'Assessments') %><span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
         <div class="menu-item-drop">
           <table cellspacing="0">
             <tr>
