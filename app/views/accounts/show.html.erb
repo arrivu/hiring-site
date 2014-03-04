@@ -11,12 +11,12 @@
 <h2><%= t(:title, "Project In This Account") %></h2>
 <% if @associated_courses_count > 0 %>
   <% if @term %>
-    <h3 style="margin-bottom: 1em;"><%= mt(:subtitle_term, "For the term **%{term}**", :term => @term.name) %></h3>
+    <h3 style="margin-bottom: 1em;"><%= mt(:subtitle_term, "For the hiring period **%{term}**", :term => @term.name) %></h3>
   <% end %>
   <% if @associated_courses_count > @maximum_courses_im_gonna_show %>
     <p class='ui-state-highlight' style='padding:0.7em;'>
-      <%= t(:too_many_courses_message, "There are too many courses to show (%{count}). " +
-      "Please use the finder on the right to find a specific course.", :count => @associated_courses_count) %>
+      <%= t(:too_many_courses_message, "There are too many projects to show (%{count}). " +
+      "Please use the finder on the right to find a specific project.", :count => @associated_courses_count) %>
     </p>
   <% end %>
 
@@ -28,8 +28,8 @@
 </div>
 <% else %>
   <h3><%= @root_account.enrollment_terms.active.count > 1 ?
-          t(:no_courses_term_message, "There are no courses in this term") :
-          t(:no_courses_account_message, "There are no courses in this account") %></h3>
+          t(:no_courses_term_message, "There are no projects in this hiring Period") :
+          t(:no_courses_account_message, "There are no projects in this account") %></h3>
   <ul class='courses' style="list-style-type: none;">
     <%= render :partial => "course" %>
   </ul>
