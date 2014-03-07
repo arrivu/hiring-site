@@ -53,7 +53,13 @@ class InvitationsController < ApplicationController
       end
     end
   end
+  def new
+    @show_left_side = false
+    @headers == false
+    clear_crumbs
+    @registerform = Candidate.new
 
+  end
   def accept_code
     @show_left_side = false
     @headers == false
@@ -64,6 +70,14 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers == false
     clear_crumbs
+    @registerform = Candidate.new(params[:certified_program_user])
+
+
+    if @registerform.save
+      flash[:success] = "Application Submitted Succesfully"
+    else
+      flash[:error] = "Mandatory Fields should not be empty"
+    end
   end
 
   def send_invitation_email(invitation,pseudonym,user,quiz)
