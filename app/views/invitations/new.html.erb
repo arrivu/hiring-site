@@ -1,0 +1,48 @@
+<% @body_classes << "gradebook2 full-width" %>
+<div style="padding:10px; margin:0px auto;">
+  <% form_for :candidate_detail, :url => {:action => "optional_register"} do |f| %>
+      <table class="table">
+        <tr><td><%= f.label :first_name, "First Name*"%></td><td><%= f.text_field :first_name%></td><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td></tr>
+        <tr><td><%= f.label :dob, "Date Of Birth* (DD-MM-YYYY)"%></td><td><%= f.text_field :dob%></td><td><%= f.label :contact_number, "Contact number"%></td><td><%= f.text_field :contact_number%></td><td></td><td></td></tr>
+        <tr><td><%= f.label :email_id, "E-mail Id*" %></td>
+          <td><%= f.text_field :email_id%></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td><%= f.label :address, "Address" %></td>
+          <td><%= f.text_field :address%></td><td></td><td></td><td></td><td></td>
+      </table>
+      <table class="table"><h4>Academic Qualifications*</h4>
+        <tr><th>  Qualification</th><th>Degree</th><th>Discipline#</th><th>School/ College</th><th>Board/ University</th><th>Year of Completion</th><th>%/ CGPA</th></tr>
+        <tr><td>Post-Graduation(If any)</td><td><%= f.text_field :pg_degree, :style=>"width:120px;"%></td><td><%= f.text_field :pg_discipline, :style=>"width:120px;"%></td><td><%= f.text_field :pg_college, :style=>"width:120px;"%></td><td><%= f.text_field :pg_university, :style=>"width:120px;"%></td><td><%= f.text_field :pg_year, :style=>"width:120px;"%></td><td><%= f.text_field :pg_cpga, :style=>"width:120px;"%></td></tr>
+        <tr><td>Graduation*</td><td><%= f.text_field :gr_degree, :style=>"width:120px;"%></td><td><%= f.text_field :gr_discipline, :style=>"width:120px;"%></td><td><%= f.text_field :gr_college, :style=>"width:120px;"%></td><td><%= f.text_field :gr_university, :style=>"width:120px;"%></td><td><%= f.text_field :gr_year, :style=>"width:120px;"%></td><td><%= f.text_field :gr_cpga, :style=>"width:120px;"%></td></tr>
+        <tr><td>Higher Secondary (XII)*</td><td><%= f.text_field :hsc_degree, :style=>"width:120px;"%></td><td><%= f.text_field :hsc_discipline, :style=>"width:120px;"%></td><td><%= f.text_field :hsc_college, :style=>"width:120px;"%></td><td><%= f.text_field :hsc_university, :style=>"width:120px;"%></td><td><%= f.text_field :hsc_year, :style=>"width:120px;"%></td><td><%= f.text_field :hsc_cpga, :style=>"width:120px;"%></td></tr>
+        <tr><td>Secondary (X)*</td><td><%= f.text_field :sc_degree, :style=>"width:120px;"%></td><td><%= f.text_field :sc_discipline, :style=>"width:120px;"%></td><td><%= f.text_field :sc_college, :style=>"width:120px;"%></td><td><%= f.text_field :sc_university, :style=>"width:120px;"%></td><td><%= f.text_field :sc_year, :style=>"width:120px;"%></td><td><%= f.text_field :sc_cpga, :style=>"width:120px;"%></td></tr>
+        <tr><td colspan="3"># Branch of Engineering/ Science/ Arts/ Commerce/ Other</td></tr>
+
+      </table>
+      <table>
+        </tr>
+      </table>
+      <table class="table"><h4>Employment (Please mention in chronological order)</h4>
+        <tr><td>Organization</td><td>From(MM/YYYY)</td><td>To(MM/YYYY)</td><td>Designation</td><td>Permanent/ contract</td><td>Reason for leaving</td></tr>
+        <tr><td><%= f.text_field :organization_a, :style=>"width:150px;"%></td>
+          <td><%= f.text_field :from_a , :style=>"width:100px;"%></td>
+          <td><%= f.text_field :to_a , :style=>"width:100px;"%></td>
+          <td><%= f.text_field :designation_a, :style=>"width:150px;"%></td>
+          <td><%= f.text_field :permanent_a, :style=>"width:150px;"%></td>
+          <td><%= f.text_field :reason_a, :style=>"width:150px;"%></td>
+        </tr>
+        <tr><td><%= f.text_field :organization_b, :style=>"width:150px;"%></td>
+          <td><%= f.text_field :from_b , :style=>"width:100px;"%></td>
+          <td><%= f.text_field :to_b , :style=>"width:100px;"%></td>
+          <td><%= f.text_field :designation_b, :style=>"width:150px;"%></td>
+          <td><%= f.text_field :permanent_b, :style=>"width:150px;"%></td>
+          <td><%= f.text_field :reason_b, :style=>"width:150px;"%></td>
+        </tr>
+      </table>
+
+      <table>
+        </tr>
+        <tr><td></td><td><%= f.submit "submit", class: "btn btn-large btn-primary" %>
+        </td></tr>
+      </table>
+  <% end %>
+</div>
