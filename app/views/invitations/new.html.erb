@@ -2,7 +2,7 @@
 <div style="padding:10px; margin:0px auto;">
   <% form_for :candidate_detail, :url => {:action => "optional_register"} do |f| %>
       <table class="table">
-        <tr><td><%= f.label :first_name, "First Name*"%></td><td><%= f.text_field :first_name%></td><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td></tr>
+        <tr><% if (@check_enable.first_name) == "true" %><td><%= f.label :first_name, "First Name*"%></td><% end %><td><%= f.text_field :first_name%></td><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td></tr>
         <tr><td><%= f.label :dob, "Date Of Birth* (DD-MM-YYYY)"%></td><td><%= f.text_field :dob%></td><td><%= f.label :contact_number, "Contact number"%></td><td><%= f.text_field :contact_number%></td><td></td><td></td></tr>
         <tr><td><%= f.label :email_id, "E-mail Id*" %></td>
           <td><%= f.text_field :email_id%></td><td></td><td></td><td></td><td></td></tr>

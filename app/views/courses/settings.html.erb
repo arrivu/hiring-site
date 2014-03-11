@@ -40,11 +40,11 @@
   <style>
       /*#block{display:none;background:#f1f1f1;;padding:10px;text-align:left;width:50%;}*/
   </style>
-   <div id="tab-canditate" style="padding:20px;">
-
-    <input type="checkbox" id="cbxShowHide"/><label for="cbxShowHide">Enable Candidate Details Collection</label>
-    <div id="block" style="display:none;">
+   <div id="tab-canditate" style="padding:20px;">Select Candidate Details Collection
+    <!--<input type="checkbox" id="cbxShowHide"/><label for="cbxShowHide">Enable Candidate Details Collection</label>-->
+    <div id="block">
       <% form_for :candidate_detail, :url => { :controller => "candidate_details", :action => "enable_candidate" } do |f| %>
+
        <table cellpadding="10"><tr><td style="vertical-align: top;">
 
              <%= f.check_box :first_name %>
@@ -65,13 +65,13 @@
              <%= f.label :academics, :en => "Academics" %> <br><br>
              <%= f.check_box :employment %>
              <%= f.label :employment, :en => "Employment" %> <br><br>
-             <%= f.text_field :project_id, :value => @context.id %>
+             <%#= f.text_field :project_id, :value => @context.id %>
 
 
       <!--<input type="checkbox" /><label >Current compensation</label><br><br>-->
       <!--<input type="checkbox" /><label >Expected compensation</label>-->
        </td></tr>
-         <tr><td><%= f.submit "submit", class: "btn btn-success" %></td></tr>
+         <tr><td><%= f.submit "submit", class: "btn btn-primary" %></td></tr>
        </table>
          <% end %>
     </div>

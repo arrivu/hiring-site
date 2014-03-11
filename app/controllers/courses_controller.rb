@@ -739,6 +739,8 @@ class CoursesController < ApplicationController
 
       @invited_count = @context.invited_count_visible_to(@current_user)
 
+      @candidate_detail = @context.candidate_detail
+
       js_env(:COURSE_ID => @context.id,
              :USERS_URL => "/api/v1/courses/#{ @context.id }/users",
              :ALL_ROLES => @all_roles,
@@ -1726,4 +1728,6 @@ class CoursesController < ApplicationController
     end
 
   end
+
+
 end

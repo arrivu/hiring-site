@@ -2,8 +2,8 @@ class InvitationsController < ApplicationController
 
   before_filter :require_user
   before_filter :require_context
-  skip_before_filter :require_context, :only => [:accept_code, :optional_register, :new]
-  skip_before_filter :require_user, :only => [:accept_code, :optional_register, :new]
+  skip_before_filter :require_context, :only => [:accept_code]
+  skip_before_filter :require_user, :only => [:accept_code]
 
   def index
     return unless authorized_action(@domain_root_account, @current_user, [:create_courses, :manage_courses])
@@ -53,13 +53,15 @@ class InvitationsController < ApplicationController
       end
     end
   end
+
   def new
     @show_left_side = false
     @headers == false
     clear_crumbs
-    @registerform = Candidate.new
-
+    #@registerform = Candidate.new
+    @check_enable = CandidateDetail.find_by_course_id(@context.id)
   end
+
   def accept_code
     @show_left_side = false
     @headers == false

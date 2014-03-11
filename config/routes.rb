@@ -227,6 +227,8 @@ routes.draw do
     match 'details' => 'courses#settings', :as => :details
     match 're_send_invitations' => 'courses#re_send_invitations', :as => :re_send_invitations, :via => :post
     match 'enter_details' => 'candidate_details#enable_candidate', :as => :enter_details, :via => :post
+    match 'new_register' => 'invitations#new', :as => :enter_details, :via => :get
+    match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
     match 'enroll_users' => 'courses#enroll_users', :as => :enroll_users
     match 'link_enrollment' => 'courses#link_enrollment', :as => :link_enrollment
     match 'update_nav' => 'courses#update_nav', :as => :update_nav
@@ -710,8 +712,8 @@ routes.draw do
   match 'toggle_dashboard' => 'users#toggle_dashboard', :as => :toggle_dashboard, :via => :post
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
   match 'accept' => 'invitations#accept_code', :as => :take_quiz, :via => :get
-  match 'new_register' => 'invitations#new', :as => :enter_details, :via => :get
-  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  #match 'new_register' => 'invitations#new', :as => :enter_details, :via => :get
+  #match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url
