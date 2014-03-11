@@ -35,33 +35,33 @@
     <% if can_do @context, @current_user, :manage_feature_flags %>
       <!--<li id="feature_flags_tab"><a href="#tab-features" id="tab-features-link"><%#= t('tabs.feature_options', %{Feature options}) %></a></li>-->
     <% end %>
-        <!--<li id="candidate_details_tab"><a href="#tab-canditate" id="tab-canditate-link">Candidate Details</a></li>-->
+        <li id="candidate_details_tab"><a href="#tab-canditate" id="tab-canditate-link">Candidate Details</a></li>
   </ul>
   <style>
       /*#block{display:none;background:#f1f1f1;;padding:10px;text-align:left;width:50%;}*/
   </style>
-   <!--<div id="tab-canditate" style="padding:20px;">-->
+   <div id="tab-canditate" style="padding:20px;">
 
-    <!--<input type="checkbox" id="cbxShowHide"/><label for="cbxShowHide">Enable Candidate Details Collection</label>-->
-    <!--<div id="block">-->
-       <!--<table cellpadding="10"><tr><td style="vertical-align: top;">-->
-      <!--<input type="checkbox" /><label >First Name</label>  <br><br>-->
-      <!--<input type="checkbox" /><label >Middle Name</label><br><br>-->
-      <!--<input type="checkbox" /><label >Last name</label><br><br>-->
-      <!--<input type="checkbox" /><label >DOB (DD-MM-YY)</label><br><br>-->
-      <!--<input type="checkbox" /><label >Contact number</label></td><td>-->
-      <!--<input type="checkbox" /><label >Personal email ID</label><br><br>-->
-      <!--<input type="checkbox" /><label >Address</label><br><br>-->
-      <!--<input type="checkbox" /><label >Academics</label><br><br>-->
-      <!--<input type="checkbox" /><label >Employment</label><br><br>-->
-      <!--<input type="checkbox" /><label >Current compensation</label><br><br>-->
-      <!--<input type="checkbox" /><label >Expected compensation</label>-->
-       <!--</td></tr>-->
-         <!--<tr><td><button type="submit" class="btn btn-success">Submit</button> </td></tr>-->
-       <!--</table>-->
-    <!--</div>-->
+    <input type="checkbox" id="cbxShowHide"/><label for="cbxShowHide">Enable Candidate Details Collection</label>
+    <div id="block">
+       <table cellpadding="10"><tr><td style="vertical-align: top;">
+      <input type="checkbox" /><label >First Name</label>  <br><br>
+      <input type="checkbox" /><label >Middle Name</label><br><br>
+      <input type="checkbox" /><label >Last name</label><br><br>
+      <input type="checkbox" /><label >DOB (DD-MM-YY)</label><br><br>
+      <input type="checkbox" /><label >Contact number</label></td><td>
+      <input type="checkbox" /><label >Personal email ID</label><br><br>
+      <input type="checkbox" /><label >Address</label><br><br>
+      <input type="checkbox" /><label >Academics</label><br><br>
+      <input type="checkbox" /><label >Employment</label><br><br>
+      <input type="checkbox" /><label >Current compensation</label><br><br>
+      <input type="checkbox" /><label >Expected compensation</label>
+       </td></tr>
+         <tr><td><button type="submit" class="btn btn-success">Submit</button> </td></tr>
+       </table>
+    </div>
 
-  <!--</div>-->
+  </div>
   <div id="tab-details">
     <h2><%= t('headings.details', %{Project Details}) %></h2>
     <%= form_for @context, :html => {:id => "course_form"} do |f| %>
@@ -241,32 +241,33 @@
           <!--</span>-->
           <!--<span class="course_info readable_license"><%#= @context.readable_license %></span>-->
         <!--</td>-->
-      <!--</tr><tr>-->
-        <!--<td class="form-label"><label><%#= before_label('course_visibility', %{Visibility}) %></label></td>-->
-        <!--<td colspan="3">-->
-          <!--<span class="course_form">-->
-            <!--<%#= f.check_box :public_syllabus %>-->
-            <!--<%#= f.label :public_syllabus, :en => "Make the syllabus for this project publicly visible" %>-->
-          <!--</span>-->
-          <!--<div>-->
-            <!--<span class="course_form">-->
-              <!--<%#= f.check_box :is_public, :class => "is_public_checkbox" %>-->
-              <!--<%#= f.label :is_public, :en => "Make this project publicly visible" %>-->
-              <!--<span class="aside checklabelfix"><%#= t('help.public_course', %{(candidate data will remain private)}) %></span>-->
-            <!--</span>-->
-          <!--</div>-->
-          <!--<span class="course_info is_public"><%#= @context.is_public ? t('public_course', 'Public') : t('private_course', 'Private') %></span>-->
-          <!--<div class="public_options">-->
-            <!--<span class="course_form">-->
-              <!--<%#= f.check_box :indexed %>-->
-              <!--<%#= f.label :indexed, :en => "Include this project in the public project index" %>-->
-            <!--</span>-->
-            <!--<span class="course_info indexed">-->
-              <!--<%#= @context.indexed ? t('indexed_course', "Included in public project index") : "" %>-->
-            <!--</span>-->
-          <!--</div>-->
-        <!--</td>-->
-      <!--</tr><tr>-->
+      <!--</tr>-->
+        <tr>
+        <td class="form-label"><label><%= before_label('course_visibility', %{Visibility}) %></label></td>
+        <td colspan="3">
+          <span class="course_form">
+            <%= f.check_box :public_syllabus %>
+            <%= f.label :public_syllabus, :en => "Make the syllabus for this project publicly visible" %>
+          </span>
+          <div>
+            <span class="course_form">
+              <%= f.check_box :is_public, :class => "is_public_checkbox" %>
+              <%= f.label :is_public, :en => "Make this project publicly visible" %>
+              <span class="aside checklabelfix"><%= t('help.public_course', %{(candidate data will remain private)}) %></span>
+            </span>
+          </div>
+          <span class="course_info is_public"><%= @context.is_public ? t('public_course', 'Public') : t('private_course', 'Private') %></span>
+          <div class="public_options">
+            <span class="course_form">
+              <%= f.check_box :indexed %>
+              <%= f.label :indexed, :en => "Include this project in the public project index" %>
+            </span>
+            <span class="course_info indexed">
+              <%= @context.indexed ? t('indexed_course', "Included in public project index") : "" %>
+            </span>
+          </div>
+        </td>
+      </tr><tr>
         <td></td>
         <td colspan="3">
           <span class="self_enrollment_message" style="<%= hidden unless @context.self_enrollment %>">

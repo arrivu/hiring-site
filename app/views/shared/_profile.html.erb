@@ -36,9 +36,9 @@
           <div class="row-fluid">
             <div class="span6">
               <ul class="social-links">
-                <li>
-                  <label for="social_message" class="social message" title="<%= t :message_title, 'Message' %>" data-tooltip><%= t :message_me, 'message me in Sublime' %></label>
-                </li>
+                <!--<li>-->
+                  <!--<label for="social_message" class="social message" title="<%#= t :message_title, 'Message' %>" data-tooltip><%#= t :message_me, 'message me in Sublime' %></label>-->
+                <!--</li>-->
                 <% @user_data[:user_services].each do |s| %>
                   <li>
                     <% service_name = s[:service_name] || s[:service].to_s.titleize %>
@@ -133,6 +133,37 @@
           </table>
           <button data-event="addLinkField" class="btn btn-small"><%= t :add_link_field, "Add another link" %></button>
         </div>
+      <% end %>
+    </div>
+
+    <div class="profile_links span6">
+      <h2 class="h1 border border-b">Educational Details</h2>
+      <div class="hide-if-editing">
+        <% if @user_data[:links].length > 0 %>
+            <ul>
+              <% @user_data[:links].each do |link| %>
+                  <li><a href="<%= add_uri_scheme_name(link[:url]) %>"><%= link[:title] %></a></li>
+              <% end %>
+            </ul>
+        <% else %>
+            <p><%= t  :no_links, "%{name} hasn't added any links", :name => @user_data[:short_name] %></p>
+        <% end %>
+      </div>
+
+      <% if @user_data[:can_edit] %>
+          <div class="show-if-editing">
+            <table id="edit_links_table">
+              <thead>
+              <th>Degree</th>
+              <th>Discipline</th>
+              <th>School/College</th>
+              <th>Year of completion</th>
+              <th>%/cpga</th>
+              </thead>
+              <tbody id="qual_fields"></tbody>
+            </table>
+            <button data-event="addLinkField" class="btn btn-small"><%= t :add_link_field, "Add another link" %></button>
+          </div>
       <% end %>
     </div>
 

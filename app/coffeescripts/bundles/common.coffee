@@ -74,6 +74,9 @@ require [
     event.preventDefault()
     Backbone.history.navigate $(this).attr('href'), yes
 
+  $("#cbxShowHide").click ->
+    $("#block").toggle @checked
+
 #  $( document ).ready ->
 #    $('#left-side').mmenu()
   jQuery(document).ready ->
