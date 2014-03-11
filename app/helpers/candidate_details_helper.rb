@@ -1,0 +1,2 @@
+module CandidateDetailsHelper
+end

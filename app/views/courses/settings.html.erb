@@ -44,21 +44,36 @@
 
     <input type="checkbox" id="cbxShowHide"/><label for="cbxShowHide">Enable Candidate Details Collection</label>
     <div id="block" style="display:none;">
+      <% form_for :candidate_detail, :url => { :controller => "candidate_details", :action => "enable_candidate" } do |f| %>
        <table cellpadding="10"><tr><td style="vertical-align: top;">
-      <input type="checkbox" /><label >First Name</label>  <br><br>
-      <input type="checkbox" /><label >Middle Name</label><br><br>
-      <input type="checkbox" /><label >Last name</label><br><br>
-      <input type="checkbox" /><label >DOB (DD-MM-YY)</label><br><br>
-      <input type="checkbox" /><label >Contact number</label></td><td>
-      <input type="checkbox" /><label >Personal email ID</label><br><br>
-      <input type="checkbox" /><label >Address</label><br><br>
-      <input type="checkbox" /><label >Academics</label><br><br>
-      <input type="checkbox" /><label >Employment</label><br><br>
-      <input type="checkbox" /><label >Current compensation</label><br><br>
-      <input type="checkbox" /><label >Expected compensation</label>
+
+             <%= f.check_box :first_name %>
+             <%= f.label :first_name, :en => "First Name" %> <br><br>
+             <%= f.check_box :middle_name %>
+             <%= f.label :middle_name, :en => "Middle Name" %> <br><br>
+             <%= f.check_box :last_name %>
+             <%= f.label :last_name, :en => "Last Name" %> <br><br>
+             <%= f.check_box :dob %>
+             <%= f.label :dob, :en => "DOB (DD-MM-YY)" %> <br><br>
+             <%= f.check_box :contact_number %>
+             <%= f.label :contact_number, :en => "Contact number" %> <br><br>
+             <%= f.check_box :email_id %>
+             <%= f.label :email_id, :en => "Email ID" %> <br><br>
+             <%= f.check_box :address %>
+             <%= f.label :address, :en => "Address" %> <br><br>
+             <%= f.check_box :academics %>
+             <%= f.label :academics, :en => "Academics" %> <br><br>
+             <%= f.check_box :employment %>
+             <%= f.label :employment, :en => "Employment" %> <br><br>
+             <%= f.text_field :project_id, :value => @context.id %>
+
+
+      <!--<input type="checkbox" /><label >Current compensation</label><br><br>-->
+      <!--<input type="checkbox" /><label >Expected compensation</label>-->
        </td></tr>
-         <tr><td><button type="submit" class="btn btn-success">Submit</button> </td></tr>
+         <tr><td><%= f.submit "submit", class: "btn btn-success" %></td></tr>
        </table>
+         <% end %>
     </div>
 
   </div>
