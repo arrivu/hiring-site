@@ -133,7 +133,7 @@ class CoursesController < ApplicationController
   include SearchHelper
 
   before_filter :require_user, :only => [:index]
-  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file,:enable_candidate]
+  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file]
 
   include Api::V1::Course
   include Api::V1::Progress
@@ -738,6 +738,8 @@ class CoursesController < ApplicationController
       @all_roles = Role.custom_roles_and_counts_for_course(@context, @current_user, true)
 
       @invited_count = @context.invited_count_visible_to(@current_user)
+
+      @candidate_detail = @context.candidate_detail
 
       js_env(:COURSE_ID => @context.id,
              :USERS_URL => "/api/v1/courses/#{ @context.id }/users",
@@ -1711,19 +1713,4 @@ class CoursesController < ApplicationController
     end
   end
 
-  def enable_candidate
-    @candidate_detail = @context.candidate_detail
-    if @candidate_detail
-      @candidate_detail = @context.update_attributes(params[:candidate_detail])
-    else
-     @candidate_detail = @context.candidate_detail.build(params[:candidate_detail])
-    end
-    if @candidate_detail.save!
-        flash[:success] = "Application Submitted Succesfully"
-        redirect_to course_settings_url
-      else
-        flash[:error] = "Mandatory Fields should not be empty"
-    end
-
-  end
 end

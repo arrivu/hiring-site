@@ -4,7 +4,8 @@ class CandidateDetailsController < ApplicationController
   def enable_candidate
     @candidate_detail = @context.candidate_detail
     if @candidate_detail
-      #@candidate_detail = @context.update_attributes(params[:candidate_detail])
+      @candidate_detail= CandidateDetail.find_by_course_id(params[:course_id])
+      update
     else
       @candidate_detail = @context.create_candidate_detail(params[:candidate_detail])
     end
@@ -13,6 +14,13 @@ class CandidateDetailsController < ApplicationController
       redirect_to course_settings_url(@context)
     else
       flash[:error] = "Mandatory Fields should not be empty"
+    end
+  end
+
+  def update
+    @candidate_detail = CandidateDetail.find_by_course_id(params[:course_id])
+    if @candidate_detail.update_attributes(params[:candidate_detail])
+      flash[:success] ="Successfully Updated Settings."
     end
 
   end

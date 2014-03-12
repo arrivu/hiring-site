@@ -53,13 +53,19 @@ class InvitationsController < ApplicationController
       end
     end
   end
+
   def new
     @show_left_side = false
     @headers == false
     clear_crumbs
-    @registerform = Candidate.new
-
+    @registerform = Candidate.new(params[:candidate_detail])
+    #unless @check_enable = CandidateDetail.find_by_course_id(@context.id)
+    #  @check_enable = CandidateDetail.new
+    #else
+    #  @check_enable = CandidateDetail.find_by_course_id(@context.id)
+    #end
   end
+
   def accept_code
     @show_left_side = false
     @headers == false
@@ -70,6 +76,7 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers == false
     clear_crumbs
+
     @registerform = Candidate.new(params[:candidate_detail])
 
     if @registerform.save
