@@ -40,6 +40,8 @@ require [
     initialize: ->
       super
       new AvatarWidget('.profile-link')
+      @addQualField()
+      @addWorkField()
 
     handleDeclarativeClick: (event) ->
       event.preventDefault()
@@ -88,10 +90,47 @@ require [
       """
       @$linkFields.append $row
 
-      # focus if called from the "add row" button
       if event?
         event.preventDefault()
         $row.find('input:first').focus()
+
+    addQualField: (event, $el, title = '', url = '') ->
+      @$linkFields1 ?= @$ '#qual_fields'
+      $row = $ """
+         <tr>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+         </tr>
+         """
+      @$linkFields1.append $row
+
+      if event?
+        event.preventDefault()
+        $row.find('input:first').focus()
+
+    addWorkField: (event, $el, title = '', url = '') ->
+      @$linkFields2 ?= @$ '#work_fields'
+      $row = $ """
+         <tr>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+         </tr>
+         """
+      @$linkFields2.append $row
+
+      if event?
+        event.preventDefault()
+        $row.find('input:first').focus()
+
 
     removeLinkRow: (event, $el) ->
       $el.parents('tr').remove()

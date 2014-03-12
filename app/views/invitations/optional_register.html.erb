@@ -1,6 +1,9 @@
-<% @body_classes << "gradebook2 full-width" %>
+<%
+   jammit_css :profile_show, :tinymce
+   js_bundle :profile_show
+   @body_classes << "gradebook2 full-width" %>
 <div style="padding:10px; margin:0px auto;">
-<% form_for :candidate_detail, :html => {:method => :post} do |f| %>
+<% form_for :candidate_detail do |f| %>
 <table class="table">
 <tr><td><%= f.label :first_name, "First Name*"%></td><td><%= f.text_field :first_name%></td><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td></tr>
 <tr><td><%= f.label :dob, "Date Of Birth* (DD-MM-YYYY)"%></td><td><%= f.text_field :dob%></td><td><%= f.label :contact_number, "Contact number"%></td><td><%= f.text_field :contact_number%></td><td></td><td></td></tr>
@@ -20,7 +23,31 @@
 <table>
 </tr>
 </table>
-<table class="table"><h4>Employment (Please mention in chronological order)</h4>
+      <div class="profile_links span6">
+        <h2 class="h1 border border-b"><%= t :links, "Links" %></h2>
+        <div class="hide-if-editing">
+                      <ul>
+                    <li><a href=""></a></li>
+              </ul>
+
+        </div>
+
+
+            <div class="show-if-editing">
+              <table id="edit_links_table">
+                <thead>
+                <th></th>
+                <th></th>
+                <th></th>
+                </thead>
+                <tbody id="profile_link_fields"></tbody>
+              </table>
+              <button data-event="addLinkField" class="btn btn-small"><%= t :add_link_field, "Add another link" %></button>
+            </div>
+
+      </div>
+
+      <table class="table"><h4>Employment (Please mention in chronological order)</h4>
     <tr><td>Organization</td><td>From(MM/YYYY)</td><td>To(MM/YYYY)</td><td>Designation</td><td>Permanent/ contract</td><td>Reason for leaving</td></tr>
     <tr><td><%= f.text_field :organization_a, :style=>"width:150px;"%></td>
     <td><%= f.text_field :from_a , :style=>"width:100px;"%></td>
