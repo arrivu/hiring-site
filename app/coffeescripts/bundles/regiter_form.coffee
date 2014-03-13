@@ -17,15 +17,17 @@
 #
 
 require [
+  'i18n!user_profile',
   'Backbone'
   'jquery'
   'str/htmlEscape'
+  'compiled/util/AvatarWidget'
   'compiled/tinymce'
   'jquery.instructure_forms'
   'tinymce.editor_box'
-], (I18n, {View}, $, htmlEscape) ->
+], (I18n, {View}, $, htmlEscape, AvatarWidget) ->
 
-  class RegiterForm extends View
+  class ProfileShow extends View
 
     el: document.body
 
@@ -37,7 +39,7 @@ require [
 
     initialize: ->
       super
-
+      new AvatarWidget('.profile-link')
       @addQualField()
       @addWorkField()
 
@@ -50,7 +52,47 @@ require [
     ##
     # first run initializes some stuff, then is reassigned
     # to a showEditForm
+    editProfile: ->
+      @initEdit()
+      @editProfile = @showEditForm
 
+    showEditForm: ->
+      @$el.addClass('editing').removeClass('not-editing')
+      @$('.profile_links').removeClass('span6')
+
+    initEdit: ->
+      if @options.links?.length
+        @addLinkField(null, null, title, url) for {title, url} in @options.links
+      else
+        @addLinkField()
+        @addLinkField()
+
+      # setTimeout so tiny has some width to read
+      #setTimeout -> @$('#profile_bio').editorBox()
+      @showEditForm()
+
+    cancelEditProfile: ->
+      @$el.addClass('not-editing').removeClass('editing')
+      @$('.profile_links').addClass('span6')
+
+    ##
+    # Event handler that can also be called manually.
+    # When called manually, it will focus the first input in the new row
+    addLinkField: (event, $el, title = '', url = '') ->
+      @$linkFields ?= @$ '#profile_link_fields'
+      $row = $ """
+               <tr>
+               <td><input type="text" maxlength="255" name="link_titles[]" value="#{htmlEscape title}"></td>
+               <td>→</td>
+               <td><input type="text" name="link_urls[]" value="#{htmlEscape url}"></td>
+               <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+               </tr>
+               """
+      @$linkFields.append $row
+
+      if event?
+        event.preventDefault()
+        $row.find('input:first').focus()
 
     addQualField: (event, $el, title = '', url = '') ->
       @$linkFields1 ?= @$ '#qual_fields'
@@ -93,7 +135,15 @@ require [
     removeLinkRow: (event, $el) ->
       $el.parents('tr').remove()
 
+    validateForm: (event) ->
+      validations =
+        required: ['user[short_name]']
+        property_validations:
+          'user_profile[title]': (value) ->
+            if value && value.length > 255
+              return I18n.t("profile_title_too_long", "Title is too long")
+      if !$(event.target).validateForm(validations)
+        event.preventDefault()
 
-
-
+  new ProfileShow ENV.PROFILE
 
