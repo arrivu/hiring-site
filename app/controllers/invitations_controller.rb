@@ -81,7 +81,7 @@ class InvitationsController < ApplicationController
 
     if @registerform.save
       flash[:success] = "Application Submitted Succesfully"
-      redirect_to root_url
+      redirect_to courses_path
     else
       flash[:error] = "Mandatory Fields should not be empty"
     end

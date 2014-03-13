@@ -1,0 +1,8 @@
+<% js_bundle :quiz_show %>
+<% jammit_css :quizzes, :learning_outcomes
+   @show_left_side = false
+   @headers == false
+   @body_classes << "gradebook2 full-width" %>
+<div id="quiz_show">
+  <iframe src="/projects/<%= @context.id %>/wiki/front-page/" style="width:100%;height: 500px;"></iframe>
+</div>

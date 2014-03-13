@@ -1,7 +1,7 @@
 define [
   'jquery'
   'str/htmlEscape'
-  'jst/rewards/PersonelCollectionView'
+  'jst/invitations/PersonelCollectionView'
   'compiled/views/Invitations/PersonelListView'
   'compiled/views/PaginatedCollectionView'
 ], ($, htmlEscape, template, PersonelListView, PaginatedCollectionView) ->

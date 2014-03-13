@@ -321,10 +321,12 @@ routes.draw do
     match 'quizzes/unpublish' => 'quizzes#unpublish', :as => :quizzes_unpublish
     resources :quizzes, :path => :assesments do
       match 'managed_quiz_data' => 'quizzes#managed_quiz_data', :as => :managed_quiz_data
+      match 'instructions' => 'quizzes#quiz_instructions'
       match 'submission_versions' => 'quizzes#submission_versions', :as => :submission_versions
       match 'history' => 'quizzes#history', :as => :history
       match 'statistics' => 'quizzes#statistics', :as => :statistics
       match 'read_only' => 'quizzes#read_only', :as => :read_only
+
 
       collection do
         get :fabulous_quizzes
