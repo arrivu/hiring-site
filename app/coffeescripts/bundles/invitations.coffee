@@ -24,7 +24,7 @@ require [
   @app = new IndexView
     el: '#new_form'
     personelCollectionView: personelCollection
-#    academicsCollectionView: academicsCollectionView
+    academicsCollection: academicsCollection
 #    experienceCollectionView: experienceCollectionView
 
   @app.render()

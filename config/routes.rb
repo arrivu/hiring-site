@@ -713,7 +713,7 @@ routes.draw do
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
   match 'accept' => 'invitations#accept_code', :as => :take_quiz, :via => :get
   match 'new_register' => 'invitations#new', :as => :enter_details, :via => :get
-  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  match 'optional_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url

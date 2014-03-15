@@ -1,6 +1,7 @@
 class Invitation < ActiveRecord::Base
   belongs_to :pseudonym
   belongs_to :course
+  has_many :user_academics
   has_many :quizzes
   #attr_accessible :access_code,:workflow_status,
   #                :full_name,
