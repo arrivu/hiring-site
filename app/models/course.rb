@@ -196,6 +196,23 @@ class Course < ActiveRecord::Base
 
   has_a_broadcast_policy
 
+
+    #count = 0
+    #begin
+    #  Invitation.access_code = generate_unique_key
+    #  super
+    #    #ActiveRecord::RecordNotUnique
+    #rescue ActiveRecord::ActiveRecordError, ActiveRecord::StatementInvalid => err
+    #  if (count +=1) < 5
+    #    logger.info("retrying with different unique key")
+    #    retry
+    #  else
+    #    logger.info("too many retries to get an unique code for the Reference, giving up")
+    #    raise
+    #  end
+    #end
+
+
   def events_for(user)
     if user
       CalendarEvent.

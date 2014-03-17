@@ -35,10 +35,11 @@ class Invitation < ActiveRecord::Base
 
   # we'll rely on the DB to make sure the unique key is really unique.
   # if it isn't unique, the unique index will catch this and raise an error
-  def create
+  def generate_unique_access_code
     count = 0
     begin
-      self.access_code = generate_unique_key
+      #self.access_code = generate_unique_key
+      generate_unique_key
       super
         #ActiveRecord::RecordNotUnique
     rescue ActiveRecord::ActiveRecordError, ActiveRecord::StatementInvalid => err

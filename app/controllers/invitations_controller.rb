@@ -39,6 +39,7 @@ class InvitationsController < ApplicationController
 
   def create
     if authorized_action(@context, @current_user, :read_roster)
+
       @quiz = Quiz.find(params[:quiz_id])
       params[:login_ids].each do |login_id|
         candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
@@ -93,10 +94,8 @@ class InvitationsController < ApplicationController
       m = Message.new
       m.to = pseudonym.unique_id
       m.subject = "Assessment Invitation"
-      m.html_body = "You have been invited by #{@current_user.name} to take the assessment #{quiz.title}"
+      m.html_body = "You have been invited by #{@current_user.name} to take the assessment #{quiz.title} #{invitation.access_code}"
       m.body = @domain_url+"#{invitation.access_code}"
       Mailer.send_later(:deliver_invitation_email,m,user)
-
   end
-
 end

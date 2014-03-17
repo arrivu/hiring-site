@@ -201,6 +201,7 @@ routes.draw do
     match 'self_enrollment/:self_enrollment' => 'courses#self_enrollment', :as => :self_enrollment, :via => :get
     match 'self_unenrollment/:self_unenrollment' => 'courses#self_unenrollment', :as => :self_unenrollment, :via => :post
     match 'restore' => 'courses#restore', :as => :restore
+    match 'quiz_list' => 'courses#quiz_list', :as =>  :quiz_list, :via => :get
     match 'backup' => 'courses#backup', :as => :backup
     match 'unconclude' => 'courses#unconclude', :as => :unconclude
     match 'students' => 'courses#students', :as => :students
@@ -321,12 +322,10 @@ routes.draw do
     match 'quizzes/unpublish' => 'quizzes#unpublish', :as => :quizzes_unpublish
     resources :quizzes, :path => :assesments do
       match 'managed_quiz_data' => 'quizzes#managed_quiz_data', :as => :managed_quiz_data
-      match 'instructions' => 'quizzes#quiz_instructions'
       match 'submission_versions' => 'quizzes#submission_versions', :as => :submission_versions
       match 'history' => 'quizzes#history', :as => :history
       match 'statistics' => 'quizzes#statistics', :as => :statistics
       match 'read_only' => 'quizzes#read_only', :as => :read_only
-
 
       collection do
         get :fabulous_quizzes

@@ -133,7 +133,7 @@ class CoursesController < ApplicationController
   include SearchHelper
 
   before_filter :require_user, :only => [:index]
-  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file]
+  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file, :quiz_list]
 
   include Api::V1::Course
   include Api::V1::Progress
@@ -227,6 +227,10 @@ class CoursesController < ApplicationController
     end
   end
 
+  def quiz_list
+     @quizes = @context.active_quizzes.all
+  end
+
   # @API Create a new course
   # Create a new course
   #
@@ -305,6 +309,7 @@ class CoursesController < ApplicationController
   #
   # @returns Course
   def create
+    #@access_code = Invitation.access_code
     @account = params[:account_id] ? Account.find(params[:account_id]) : @domain_root_account.manually_created_courses_account
     if authorized_action(@account, @current_user, [:manage_courses, :create_courses])
       params[:course] ||= {}
