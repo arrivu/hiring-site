@@ -64,6 +64,7 @@ class Course < ActiveRecord::Base
 
   serialize :tab_configuration
   serialize :settings, Hash
+  has_one :course_unique_code_association
   has_one :candidate_detail
   belongs_to :root_account, :class_name => 'Account'
   belongs_to :abstract_course

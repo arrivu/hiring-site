@@ -712,8 +712,8 @@ routes.draw do
   match 'dashboard-sidebar' => 'users#dashboard_sidebar', :as => :dashboard_sidebar, :via => :get
   match 'toggle_dashboard' => 'users#toggle_dashboard', :as => :toggle_dashboard, :via => :post
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
-  match 'accept' => 'invitations#accept_code', :as => :take_quiz, :via => :get
-  match 'new_register' => 'invitations#new', :as => :enter_details, :via => :get
+  match 'accept' => 'invitations#accept_code', :as => :take_quiz
+  match 'registration_form' => 'invitations#fill_registration_form', :as => :registration_form
   match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get

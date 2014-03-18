@@ -309,7 +309,6 @@ class CoursesController < ApplicationController
   #
   # @returns Course
   def create
-    #@access_code = Invitation.access_code
     @account = params[:account_id] ? Account.find(params[:account_id]) : @domain_root_account.manually_created_courses_account
     if authorized_action(@account, @current_user, [:manage_courses, :create_courses])
       params[:course] ||= {}

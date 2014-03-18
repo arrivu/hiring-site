@@ -1,5 +1,20 @@
+<%
+
+%>
+<style>
+  #main{margin-left: 9%;margin-top:5%;border-top:1px solid #b6babf;}
+  #header{display: none;}
+  .table th, .table td{border:none;   }
+
+</style>
 <%= image_tag "arrivu_logo.png" %><br><br><br>
-<div style="width: 50%;margin: 0px auto;">
-<label>Enter Code:</label><input type="text"> <br><br>
-<button type="submit" class="btn btn-success">Proceed</button>
+<div style="width: 35%;margin: 0px auto;">
+  <% form_for :invitation, :url => { :controller => "invitations", :action => "fill_registration_form" } do |f| %>
+      <table class="table">
+        <tr><td>
+            <tr><td>  <%= f.label :email, "Enter Email"%></td><td> <input id="unique_id" name="invitation[unique_id]" type="email" required="true" /></td></tr>
+        <tr><td> <%= f.label :access_code, "Enter Access Code"%></td><td><%= f.text_field :access_code, :required => true %> </td></tr>
+        <tr><td>  <%= f.submit "Proceed", class: "btn btn-success" %></td></tr>
+  </table>
+<% end %>
 </div>

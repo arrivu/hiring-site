@@ -857,7 +857,7 @@ class UsersController < ApplicationController
   # @argument communication_channel[address] [Optional, String]
   #   The communication channel address, e.g. the user's email address.
   #
-  # @returns User
+  # @returns User                  ``
   def create
     # Look for an incomplete registration with this pseudonym
     @pseudonym = @context.pseudonyms.active.custom_find_by_unique_id(params[:pseudonym][:unique_id])

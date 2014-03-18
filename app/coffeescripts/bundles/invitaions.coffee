@@ -4,9 +4,7 @@ require [
   'compiled/collections/ExperienceCollection',
   'compiled/views/Invitations/IndexView'
   'compiled/views/Invitations/PersonelCollectionView'
-  'compiled/views/Invitations/AcademicsCollectionView'
-  'compiled/views/Invitations/ExperienceCollectionView'
-], (PersonelCollection, AcademicsCollection,ExperienceCollection, IndexView, PersonelCollectionView, AcademicsCollectionView, ExperienceCollectionView) ->
+], (PersonelCollection, AcademicsCollection,ExperienceCollection, IndexView, PersonelCollectionView) ->
 
   # Collections
 
