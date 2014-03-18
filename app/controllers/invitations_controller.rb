@@ -59,6 +59,9 @@ class InvitationsController < ApplicationController
     @headers == false
     clear_crumbs
     @registerform = Candidate.new(params[:candidate_detail])
+    params[:id] = 3
+    @user = User.find(params[:id])
+    #@check_enable = User.find_by_id("1")
     #unless @check_enable = CandidateDetail.find_by_course_id(@context.id)
     #  @check_enable = CandidateDetail.new
     #else
@@ -83,6 +86,16 @@ class InvitationsController < ApplicationController
           map { |degrees, disciplines, colleges, year_of_completions, percentages|
         @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages)
         @user_academic.save
+      }
+
+    end
+
+    if params[:link_organizations] && params[:link_from_dates] && params[:link_end_dates] && params[:link_designations] && params[:link_permanents] && params[:link_reason_for_leaving]
+      links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving]).
+          reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank?}.
+          map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving|
+        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving)
+        @user_work_experience.save
       }
 
     end

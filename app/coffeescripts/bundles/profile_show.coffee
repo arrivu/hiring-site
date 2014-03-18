@@ -119,8 +119,8 @@ require [
          <td><input type="text" name="link_organizations[]" value="#{htmlEscape organization}"></td>
          <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}"></td>
          <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}"></td>
-         <td><input type="text" name="link_designation[]" value="#{htmlEscape designation}"></td>
-         <td><input type="text" name="link_permanent[]" value="#{htmlEscape permanent}"></td>
+         <td><input type="text" name="link_designations[]" value="#{htmlEscape designation}"></td>
+         <td><input type="text" name="link_permanents[]" value="#{htmlEscape permanent}"></td>
          <td><input type="text" name="link_reason_for_leaving[]" value="#{htmlEscape reason_for_leaving}"></td>
          <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
          </tr>
