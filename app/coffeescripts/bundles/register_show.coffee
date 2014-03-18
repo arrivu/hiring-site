@@ -21,13 +21,12 @@ require [
   'Backbone'
   'jquery'
   'str/htmlEscape'
-  'compiled/util/AvatarWidget'
   'compiled/tinymce'
   'jquery.instructure_forms'
   'tinymce.editor_box'
-], (I18n, {View}, $, htmlEscape, AvatarWidget) ->
+], (I18n, {View}, $, htmlEscape) ->
 
-  class ProfileShow extends View
+  class RegisterShow extends View
 
     el: document.body
 
@@ -39,7 +38,6 @@ require [
 
     initialize: ->
       super
-      new AvatarWidget('.profile-link')
       @addQualField()
       @addWorkField()
 
@@ -81,28 +79,27 @@ require [
     addLinkField: (event, $el, title = '', url = '') ->
       @$linkFields ?= @$ '#profile_link_fields'
       $row = $ """
-               <tr>
-               <td><input type="text" maxlength="255" name="link_titles[]" value="#{htmlEscape title}"></td>
-               <td>→</td>
-               <td><input type="text" name="link_urls[]" value="#{htmlEscape url}"></td>
-               <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
-               </tr>
-               """
+        <tr>
+          <td><input type="text" maxlength="255" name="link_titles[]" value="#{htmlEscape title}"></td>
+          <td>→</td>
+          <td><input type="text" name="link_urls[]" value="#{htmlEscape url}"></td>
+          <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+        </tr>
+      """
       @$linkFields.append $row
 
       if event?
         event.preventDefault()
         $row.find('input:first').focus()
 
-    addQualField: (event, $el, degree = '', discipline = '', college = '', year_of_completion = '', percentage = '') ->
+    addQualField: (event, $el, title = '', url = '') ->
       @$linkFields1 ?= @$ '#qual_fields'
       $row = $ """
-
-        <tr>
+         <tr>
          <td><input type="text" name="link_degrees[]" value="#{htmlEscape degree}"></td>
          <td><input type="text" name="link_disciplines[]" value="#{htmlEscape discipline}"></td>
          <td><input type="text" name="link_colleges[]" value="#{htmlEscape college}"></td>
-         <td><input type="text" name="link_year_of_completions[]" value="#{htmlEscape year_of_completion}"></td>
+         <td><input type="text" name="link_years[]" value="#{htmlEscape year}"></td>
          <td><input type="text" name="link_percentages[]" value="#{htmlEscape percentage}"></td>
          <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
          </tr>
@@ -113,17 +110,16 @@ require [
         event.preventDefault()
         $row.find('input:first').focus()
 
-    addWorkField: (event, $el, organization = '', from_date = '', end_date = '', designation = '', permanent = '', reason_for_leaving = '') ->
+    addWorkField: (event, $el, title = '', url = '') ->
       @$linkFields2 ?= @$ '#work_fields'
       $row = $ """
-
          <tr>
-         <td><input type="text" name="link_organizations[]" value="#{htmlEscape organization}"></td>
-         <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}"></td>
-         <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}"></td>
-         <td><input type="text" name="link_designation[]" value="#{htmlEscape designation}"></td>
-         <td><input type="text" name="link_permanent[]" value="#{htmlEscape permanent}"></td>
-         <td><input type="text" name="link_reason_for_leaving[]" value="#{htmlEscape reason_for_leaving}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
+         <td><input type="text" name="link_titles[]" value="#{htmlEscape title}"></td>
          <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
          </tr>
          """
@@ -147,4 +143,5 @@ require [
       if !$(event.target).validateForm(validations)
         event.preventDefault()
 
-  new ProfileShow ENV.PROFILE
+#  new ProfileShow ENV.PROFILE
+

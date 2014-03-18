@@ -6,6 +6,5 @@ define [
 ], ($, htmlEscape, template, PaginatedCollectionView) ->
 
   class PersonelCollectionView extends PaginatedCollectionView
-
     template: template
-    itemView: PersonelListView
+

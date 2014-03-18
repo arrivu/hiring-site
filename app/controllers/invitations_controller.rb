@@ -122,6 +122,16 @@ class InvitationsController < ApplicationController
 
     end
 
+    if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages]
+      links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages]).
+          reject { |degrees, disciplines, colleges, year_of_completions, percentages| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank?}.
+          map { |degrees, disciplines, colleges, year_of_completions, percentages|
+        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages)
+        @user_academic.save
+      }
+
+    end
+
     @registerform = Candidate.new(params[:candidate_detail])
 
     if @registerform.save

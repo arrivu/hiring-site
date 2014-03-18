@@ -3,5 +3,5 @@ define [
   'compiled/models/Academics'
 ], (PaginatedCollection, Academics) ->
 
-  class ExperienceCollection extends PaginatedCollection
+  class AcademicsCollection extends PaginatedCollection
     model: Academics

@@ -3,5 +3,5 @@ define [
   'compiled/models/Personel'
 ], (PaginatedCollection, Personel) ->
 
-  class ExperienceCollection extends PaginatedCollection
+  class PersonelCollection extends PaginatedCollection
     model: Personel
