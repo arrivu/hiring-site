@@ -9,13 +9,14 @@
     .table th, .table td{border:none;padding:3px;}
 
 </style>
-<div style="width: 86%;margin: 0px auto;">
+<div style="width: 80%;margin: 0px auto;">
 
 <% form_for :user, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
       <div style="width: 100%;background-color: #1994D1;color:white;text-align: center;padding: 10px 0px;font-size: 22px;">Basic Informations</div>
     <table class="table" style="border: 1px solid #1994D1;">
-      <tr><td><%= f.label :name, "First Name"%></td><td><%= f.text_field :name%></td>
-        <td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td>
+
+      <tr><%= @candidate_detail.first_name %><% if @candidate_detail.first_name == 'true' %><td><%= f.label :name, "First Name"%></td><td><%= f.text_field :name%></td><% end %>
+        <%= @candidate_detail.middle_name %> <% if @candidate_detail.middle_name == 'true' %><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><% end %>
         <td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td>
       </tr>
       <tr><td><%= f.label :gender, "Gender"%></td>

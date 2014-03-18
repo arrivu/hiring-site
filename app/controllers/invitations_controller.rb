@@ -61,6 +61,7 @@ class InvitationsController < ApplicationController
     @registerform = Candidate.new(params[:candidate_detail])
     params[:id] = 3
     @user = User.find(params[:id])
+    @candidate_detail = CandidateDetail.find_by_course_id("1")
     #@check_enable = User.find_by_id("1")
     #unless @check_enable = CandidateDetail.find_by_course_id(@context.id)
     #  @check_enable = CandidateDetail.new
