@@ -1,9 +1,10 @@
 define [
   'jquery'
-  'underscore'
-  'Backbone'
+  'str/htmlEscape'
   'jst/invitations/PersonelCollectionView'
-], ($, _, Backbone, template) ->
-  class PersonelCollectionView extends Backbone.View
+  'compiled/views/PaginatedCollectionView'
+], ($, htmlEscape, template, PaginatedCollectionView) ->
+
+  class PersonelCollectionView extends PaginatedCollectionView
     template: template
 

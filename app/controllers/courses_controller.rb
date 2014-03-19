@@ -133,7 +133,7 @@ class CoursesController < ApplicationController
   include SearchHelper
 
   before_filter :require_user, :only => [:index]
-  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file]
+  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file, :quiz_list]
 
   include Api::V1::Course
   include Api::V1::Progress
@@ -225,6 +225,10 @@ class CoursesController < ApplicationController
         render :json => hash
       }
     end
+  end
+
+  def quiz_list
+     @quizes = @context.active_quizzes.all
   end
 
   # @API Create a new course

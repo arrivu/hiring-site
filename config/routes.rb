@@ -201,6 +201,7 @@ routes.draw do
     match 'self_enrollment/:self_enrollment' => 'courses#self_enrollment', :as => :self_enrollment, :via => :get
     match 'self_unenrollment/:self_unenrollment' => 'courses#self_unenrollment', :as => :self_unenrollment, :via => :post
     match 'restore' => 'courses#restore', :as => :restore
+    match 'quiz_list' => 'courses#quiz_list', :as =>  :quiz_list, :via => :get
     match 'backup' => 'courses#backup', :as => :backup
     match 'unconclude' => 'courses#unconclude', :as => :unconclude
     match 'students' => 'courses#students', :as => :students
@@ -711,9 +712,9 @@ routes.draw do
   match 'dashboard-sidebar' => 'users#dashboard_sidebar', :as => :dashboard_sidebar, :via => :get
   match 'toggle_dashboard' => 'users#toggle_dashboard', :as => :toggle_dashboard, :via => :post
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
-  match 'accept' => 'invitations#accept_code', :as => :take_quiz, :via => :get
-  match 'new_register' => 'invitations#new', :as => :enter_details, :via => :get
-  match 'optional_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  match 'accept' => 'invitations#accept_code', :as => :take_quiz
+  match 'registration_form' => 'invitations#fill_registration_form', :as => :registration_form
+  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url

@@ -64,6 +64,7 @@ class Course < ActiveRecord::Base
 
   serialize :tab_configuration
   serialize :settings, Hash
+  has_one :course_unique_code_association
   has_one :candidate_detail
   belongs_to :root_account, :class_name => 'Account'
   belongs_to :abstract_course
@@ -195,6 +196,23 @@ class Course < ActiveRecord::Base
   include FeatureFlags
 
   has_a_broadcast_policy
+
+
+    #count = 0
+    #begin
+    #  Invitation.access_code = generate_unique_key
+    #  super
+    #    #ActiveRecord::RecordNotUnique
+    #rescue ActiveRecord::ActiveRecordError, ActiveRecord::StatementInvalid => err
+    #  if (count +=1) < 5
+    #    logger.info("retrying with different unique key")
+    #    retry
+    #  else
+    #    logger.info("too many retries to get an unique code for the Reference, giving up")
+    #    raise
+    #  end
+    #end
+
 
   def events_for(user)
     if user
@@ -2435,7 +2453,7 @@ class Course < ActiveRecord::Base
         { :id => TAB_GRADES, :label => t('#tabs.grades', "Grades"), :css_class => 'grades', :href => :course_grades_path },
         { :id => TAB_PEOPLE, :label => t('#tabs.people', "People"), :css_class => 'people', :href => :course_users_path },
         { :id => TAB_CHAT, :label => t('#tabs.chat', "Chat"), :css_class => 'chat', :href => :course_chat_path },
-        #{ :id => TAB_PAGES, :label => t('#tabs.pages', "Pages"), :css_class => 'pages', :href => :course_wiki_pages_path },
+        { :id => TAB_PAGES, :label => t('#tabs.pages', "Pages"), :css_class => 'pages', :href => :course_wiki_pages_path },
         { :id => TAB_FILES, :label => t('#tabs.files', "Files"), :css_class => 'files', :href => :course_files_path },
         #{ :id => TAB_SYLLABUS, :label => t('#tabs.syllabus', "Syllabus"), :css_class => 'syllabus', :href => :syllabus_course_assignments_path },
         { :id => TAB_OUTCOMES, :label => t('#tabs.outcomes', "Outcomes"), :css_class => 'outcomes', :href => :course_outcomes_path },
