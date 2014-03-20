@@ -25,8 +25,8 @@
           <% if @candidate_filter.contact_number == TRUE %><td><%= f.label :phone, "Contact number"%></td><td><%= f.text_field :phone%></td><% end %>
 
         </tr>
-        <tr><td><%= f.label :unique_id, "E-mail Id*" %></td>
-        <td><%= f.text_field :unique_id %></td><td></td><td></td><td></td><td></td></tr>
+        <!--<tr><td><%#= f.label :unique_id, "E-mail Id*" %></td>-->
+        <!--<td><%#= f.text_field :unique_id %></td><td></td><td></td><td></td><td></td></tr>-->
         <% if @candidate_filter.address == TRUE %>
         <tr><td><%= f.label :address, "Address" %></td>
           <td colspan="5"><%= f.text_area :address, size: "24x2" %></td></tr>

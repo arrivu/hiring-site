@@ -81,6 +81,9 @@ class InvitationsController < ApplicationController
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       @context = unique_code_association.course
       @pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
+      @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
+      @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
+      @current_pseudonym = @pseudonym
       unless @pseudonym
         password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
         @user = User.create!(:name => params[:invitation][:unique_id])
@@ -90,7 +93,7 @@ class InvitationsController < ApplicationController
         @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
         @user.save!
         @user_pseudonym.save!
-        #params[:candidate_detail][:unique_id] = params[:invitation][:unique_id]
+
       end
       @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
       @candidate_detail= @get_pseudonym.user
@@ -99,7 +102,7 @@ class InvitationsController < ApplicationController
       #@candidate_email = {:unique_id => params[:invitation][:unique_id]}
       @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
       @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
-      params[:unique_id] = params[:invitation][:unique_id]
+      #params[:unique_id] = params[:invitation][:unique_id]
 
     end
 
