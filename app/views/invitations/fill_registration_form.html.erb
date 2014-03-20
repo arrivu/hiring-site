@@ -8,12 +8,14 @@
     .table th, .table td{padding:3px;}
 
 </style>
-<div style="width: 80%;margin: 0px auto;">
+
+<div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
+
   <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
 
       <div style="width: 100%;background-color: #1994D1;color:white;text-align: center;padding: 10px 0px;font-size: 22px;">Basic Informations</div>
       <table class="table" style="border: 1px solid #1994D1;">
-
+        <%= f.text_field :id%>
         <tr><td><%= f.label :name, "First Name"%></td><td><%= f.text_field :name%></td>
          <td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td>
           <td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td>

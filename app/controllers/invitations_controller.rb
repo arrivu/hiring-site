@@ -84,21 +84,24 @@ class InvitationsController < ApplicationController
       unless @pseudonym
         password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
         @user = User.create!(:name => params[:invitation][:unique_id])
-        @user.workflow_state = 'inactive'
+        @user.workflow_state = 'registered'
         @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
                                               :account => @domain_root_account)
         @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
         @user.save!
         @user_pseudonym.save!
-
+        @enrollment = @context.enroll_student(@user, :self_enrolled => true)
+        @enrollment.workflow_state = 'active'
+        @enrollment.save!
       end
-      @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
-      @candidate_detail= @get_pseudonym.user
-      @user ||= @current_user
-      #@user_data = UserAcademic.find_by_user_id(@candidate_detail.id)
-      @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
-    end
+        @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
+        @candidate_detail= @get_pseudonym.user
+        @user ||= @current_user
+        #@user_data = UserAcademic.find_by_user_id(@candidate_detail.id)
+        @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
 
+
+   end
   end
 
   def optional_register
@@ -110,7 +113,7 @@ class InvitationsController < ApplicationController
       links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages]).
           reject { |degrees, disciplines, colleges, year_of_completions, percentages| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank?}.
           map { |degrees, disciplines, colleges, year_of_completions, percentages|
-        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => params[:candidate_detail][:id])
         @user_academic.save
       }
 
@@ -120,15 +123,15 @@ class InvitationsController < ApplicationController
       links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving]).
           reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank?}.
           map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving|
-        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
+        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => params[:candidate_detail][:id])
         @user_work_experience.save
       }
 
     end
-    @candidate_detail = User.find_by_id(@current_pseudonym[:user_id])
+    @candidate_detail = User.find_by_id(params[:candidate_detail][:id])
     if @candidate_detail.update_attributes(params[:candidate_detail])
       flash[:success] ="Successfully Updated Settings."
-      redirect_to user_profile_url
+      redirect_to course_path
     end
 
   end
