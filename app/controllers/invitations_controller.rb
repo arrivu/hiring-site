@@ -81,7 +81,11 @@ class InvitationsController < ApplicationController
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       @context = unique_code_association.course
       @pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
-      unless @pseudonym
+      if @pseudonym
+        @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
+        @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
+        @current_pseudonym = @pseudonym
+      else
         password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
         @user = User.create!(:name => params[:invitation][:unique_id])
         @user.workflow_state = 'registered'
@@ -94,15 +98,19 @@ class InvitationsController < ApplicationController
         @enrollment.workflow_state = 'active'
         @enrollment.save!
       end
-        @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
-        @candidate_detail= @get_pseudonym.user
-        @user ||= @current_user
-        #@user_data = UserAcademic.find_by_user_id(@candidate_detail.id)
-        @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
 
+      @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
+      @candidate_detail= @get_pseudonym.user
+      @user ||= @current_user
+      #@user_data = UserAcademic.find_by_user_id(@candidate_detail.id)
+      #@candidate_email = {:unique_id => params[:invitation][:unique_id]}
+      @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
+      @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+      #params[:unique_id] = params[:invitation][:unique_id]
+
+    end
 
    end
-  end
 
   def optional_register
     @show_left_side = false
@@ -113,7 +121,7 @@ class InvitationsController < ApplicationController
       links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages]).
           reject { |degrees, disciplines, colleges, year_of_completions, percentages| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank?}.
           map { |degrees, disciplines, colleges, year_of_completions, percentages|
-        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => params[:candidate_detail][:id])
+        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
         @user_academic.save
       }
 
@@ -123,15 +131,15 @@ class InvitationsController < ApplicationController
       links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving]).
           reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank?}.
           map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving|
-        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => params[:candidate_detail][:id])
+        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
         @user_work_experience.save
       }
 
     end
-    @candidate_detail = User.find_by_id(params[:candidate_detail][:id])
+    @candidate_detail = User.find_by_id(@current_pseudonym[:user_id])
     if @candidate_detail.update_attributes(params[:candidate_detail])
       flash[:success] ="Successfully Updated Settings."
-      redirect_to course_path
+      redirect_to courses_path
     end
 
   end
