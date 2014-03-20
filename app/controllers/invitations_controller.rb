@@ -88,13 +88,16 @@ class InvitationsController < ApplicationController
       unless @pseudonym
         password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
         @user = User.create!(:name => params[:invitation][:unique_id])
-        @user.workflow_state = 'inactive'
+        @user.workflow_state = 'registered'
         @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
                                               :account => @domain_root_account)
         @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
         @user.save!
         @user_pseudonym.save!
-      end
+        @enrollment = @context.enroll_student(@user, :self_enrolled => true)
+        @enrollment.workflow_state = 'active'
+        @enrollment.save!
+        end
    end
   end
 
@@ -136,7 +139,7 @@ class InvitationsController < ApplicationController
 
     if @registerform.save
       flash[:success] = "Application Submitted Succesfully"
-      redirect_to user_profile_url
+      redirect_to courses_path
     else
       flash[:error] = "Mandatory Fields should not be empty"
     end
