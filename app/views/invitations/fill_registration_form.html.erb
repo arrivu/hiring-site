@@ -5,27 +5,29 @@
 <style>
     select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
     label{margin-top:15px;}
-    .table th, .table td{padding:3px;}
-
+    .table th, .table td{border:none;   }
 </style>
-<div style="width: 80%;margin: 0px auto;">
+<div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
   <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
 
-      <div style="width: 100%;background-color: #1994D1;color:white;text-align: center;padding: 10px 0px;font-size: 22px;">Basic Informations</div>
-      <table class="table" style="border: 1px solid #1994D1;">
+      <div class="profile_links">
+        <h2 class="h1 border border-b">Personal Information</h2>
+        <div class="show-if-editing">
+          <table class="table">
 
-        <tr><td><%= f.label :name, "First Name"%></td><td><%= f.text_field :name%></td>
-         <td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td>
-          <td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td>
+        <tr><% if @candidate_filter.first_name == TRUE %><td><%= f.label :name, "First Name"%></td><td><%= f.text_field :name%></td><% end %>
+          <% if @candidate_filter.middle_name == TRUE %><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><% end %>
+          <% if @candidate_filter.last_name == TRUE %><td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td><% end %>
         </tr>
         <tr><td><%= f.label :gender, "Gender"%></td>
           <td style="padding-top: 17px;"><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</td>
-          <td><%= f.label :birthdate, "Date Of Birth (DD-MM-YYYY)"%></td><td><%= f.text_field :birthdate%></td>
-          <td><%= f.label :phone, "Contact number"%></td><td><%= f.text_field :phone%></td>
+          <% if @candidate_filter.dob == TRUE %><td><%= f.label :birthdate, "Date Of Birth (DD-MM-YYYY)"%></td><td><%= f.text_field :birthdate%></td><% end %>
+          <% if @candidate_filter.contact_number == TRUE %><td><%= f.label :phone, "Contact number"%></td><td><%= f.text_field :phone%></td><% end %>
 
         </tr>
-        <!--<tr><td><%#= f.label :email_id, "E-mail Id*" %></td>-->
-        <!--<td><%#= f.text_field :@pseudonym.unique_id %></td><td></td><td></td><td></td><td></td></tr>-->
+        <tr><td><%= f.label :unique_id, "E-mail Id*" %></td>
+        <td><%= f.text_field :unique_id %></td><td></td><td></td><td></td><td></td></tr>
+        <% if @candidate_filter.address == TRUE %>
         <tr><td><%= f.label :address, "Address" %></td>
           <td colspan="5"><%= f.text_area :address, size: "24x2" %></td></tr>
         <tr>
@@ -33,12 +35,16 @@
           <td><%= f.label :state, "State" %></td><td><%= f.text_field :state%></td>
           <td><%= f.label :zip_code, "Zip code" %></td><td><%= f.text_field :zip_code%></td>
         </tr>
-      </table>
-      <div style="width: 100%;background-color: #1994D1;color:white;text-align: center;padding: 10px 0px;font-size: 22px;">Academic Qualifications</div>
+        <% end %>
+          </table>
+        </div>
+      </div>
+      <% if @candidate_filter.academics == TRUE %>
       <div class="profile_links">
+        <h2 class="h1 border border-b">Academic Qualifications</h2>
+        <div class="show-if-editing">
+          <table id="edit_links_table" cellpadding="10" >
 
-        <div class="show-if-editing" style="border: 1px solid #1994D1;">
-          <table id="edit_links_table" cellpadding="10">
             <thead>
             <th>Degree</th>
             <th>Discipline</th>
@@ -66,12 +72,11 @@
         </div>
         <br/>
       </div>
-
-      <div style="width: 100%;background-color: #1994D1;color:white;text-align: center;padding: 10px 0px;font-size: 22px;">Work Experience</div>
-
+      <% end %>
+      <% if @candidate_filter.employment == TRUE %>
       <div class="profile_links">
-
-        <div class="show-if-editing" style="border: 1px solid #1994D1;">
+        <h2 class="h1 border border-b">Employment (Please mention in chronological order)</h2>
+        <div class="show-if-editing">
           <table id="edit_links_table" cellpadding="10">
             <thead>
             <th>Organization</th>
@@ -90,6 +95,7 @@
         </div>
 
       </div>
+      <% end %>
       <br/>
       <br/>
       <div style="text-align: center;"><%= f.submit "SUBMIT", class: "btn btn-small btn-primary" %>

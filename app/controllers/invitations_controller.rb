@@ -90,13 +90,17 @@ class InvitationsController < ApplicationController
         @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
         @user.save!
         @user_pseudonym.save!
-
+        #params[:candidate_detail][:unique_id] = params[:invitation][:unique_id]
       end
       @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
       @candidate_detail= @get_pseudonym.user
       @user ||= @current_user
       #@user_data = UserAcademic.find_by_user_id(@candidate_detail.id)
+      #@candidate_email = {:unique_id => params[:invitation][:unique_id]}
       @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
+      @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+      params[:unique_id] = params[:invitation][:unique_id]
+
     end
 
   end
