@@ -129,7 +129,8 @@ class User < ActiveRecord::Base
         enrollment_conditions(:invited, strict_course_state, course_workflow_state)
     end
   end
-
+  has_many :user_academics
+  has_many :user_work_experiences
   has_many :communication_channels, :order => 'communication_channels.position ASC', :dependent => :destroy
   has_one :communication_channel, :order => 'position'
   has_many :enrollments, :dependent => :destroy

@@ -72,11 +72,13 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers == false
     clear_crumbs
+
   end
 
   def fill_registration_form
     @show_left_side = false
     @headers == false
+
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       @context = unique_code_association.course
@@ -102,11 +104,9 @@ class InvitationsController < ApplicationController
       @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
       @candidate_detail= @get_pseudonym.user
       @user ||= @current_user
-      #@user_data = UserAcademic.find_by_user_id(@candidate_detail.id)
-      #@candidate_email = {:unique_id => params[:invitation][:unique_id]}
       @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
+      @user_experience = UserWorkExperience.find_all_by_user_id(@candidate_detail.id)
       @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
-      #params[:unique_id] = params[:invitation][:unique_id]
 
     end
 
@@ -116,18 +116,61 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers == false
     clear_crumbs
+    @user = @current_user.id
 
-    if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages]
+    if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages] && params[:link_ids]
+      user_academic_ids = @current_user.user_academic_ids
+      if user_academic_ids
+        link_ids = []
+        params[:link_ids].map do |link_id|
+          link_ids << link_id.to_i
+        end
+        comapre_and_delete(user_academic_ids,link_ids,UserAcademic)
+      end
+      links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages],params[:link_ids]).
+          reject { |degrees, disciplines, colleges, year_of_completions, percentages,ids| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank? && ids.blank?}.
+          map { |degrees, disciplines, colleges, year_of_completions, percentages, id|
+            if id
+              @user_academic = UserAcademic.find(id)
+              @user_academic.update_attributes(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+            else
+              @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+              @user_academic.save!
+            end
+
+      }
+    elsif params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages]
       links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages]).
-          reject { |degrees, disciplines, colleges, year_of_completions, percentages| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank?}.
+          reject { |degrees, disciplines, colleges, year_of_completions, percentages,ids| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank? }.
           map { |degrees, disciplines, colleges, year_of_completions, percentages|
-        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
-        @user_academic.save
+            @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+            @user_academic.save!
       }
 
     end
 
-    if params[:link_organizations] && params[:link_from_dates] && params[:link_end_dates] && params[:link_designations] && params[:link_permanents] && params[:link_reason_for_leaving]
+    if params[:link_organizations] && params[:link_from_dates] && params[:link_end_dates] && params[:link_designations] && params[:link_permanents] && params[:link_reason_for_leaving] && params[:link_experience_ids]
+      user_experience_ids = @current_user.user_work_experience_ids
+      if user_experience_ids
+        link_experience_ids = []
+        params[:link_experience_ids].map do |link_experience_id|
+          link_experience_ids << link_experience_id.to_i
+        end
+        comapre_and_delete(user_experience_ids,link_experience_ids,UserWorkExperience)
+      end
+      links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving],params[:link_experience_ids]).
+          reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving,experience_ids| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank? && experience_ids.blank?}.
+          map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving, experience_ids|
+        if experience_ids
+          @user_work_experience = UserWorkExperience.find(experience_ids)
+          @user_work_experience.update_attributes(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
+        else
+          @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
+          @user_work_experience.save
+        end
+
+      }
+    elsif params[:link_organizations] && params[:link_from_dates] && params[:link_end_dates] && params[:link_designations] && params[:link_permanents] && params[:link_reason_for_leaving]
       links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving]).
           reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank?}.
           map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving|
@@ -136,12 +179,21 @@ class InvitationsController < ApplicationController
       }
 
     end
+
     @candidate_detail = User.find_by_id(@current_pseudonym[:user_id])
     if @candidate_detail.update_attributes(params[:candidate_detail])
       flash[:success] ="Successfully Updated Settings."
       redirect_to courses_path
     end
 
+  end
+
+  def comapre_and_delete(comparable1,comparable2,context_name)
+    deleted_ids = comparable1 - comparable2
+    deleted_ids.each do |deleted_id|
+      context_name = context_name.find(deleted_id)
+      context_name.destroy
+    end
   end
 
   def send_invitation_email(context,pseudonym,user,quiz)
