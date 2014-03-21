@@ -1,6 +1,22 @@
 <% content_for :page_title do %><%= join_title(@quiz.quiz_title || @quiz.readable_type, @context.name) %><% end %>
+<% if @context_enrollment.type == "StudentEnrollment" %>
+    <% @headers = false
 
+       @show_left_side = false %>
+<% end %>
+<% js_block do %>
+    <script>
+    var message="Right Click Disabled!";
+    function clickIE4(){ if (event.button==2){ alert(message); return false; } }
+    function clickNS4(e){ if (document.layers||document.getElementById&&!document.all)
+    { if (e.which==2||e.which==3){ alert(message); return false; } } }
+    if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; }
+    else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; }
+    document.oncontextmenu=new Function("alert(message);return false")
+    </script>
+<% end %>
 <%
+   @body_classes << "gradebook2 full-width"
   # These titles are used in different elements/scopes below
   #
   # Quiz or Survey title
@@ -91,7 +107,7 @@
 <% js_bundle :quiz_show %>
 <% jammit_css :quizzes, :learning_outcomes %>
 
-<div id="quiz_show">
+<div id="quiz_show" ondragstart="return false" onselectstart="return false">
 <% if @context.feature_enabled?(:draft_state) %>
   <% if can_do(@quiz, @current_user, :update) || can_do(@quiz, @current_user, :manage) %>
   <div class="header-bar">

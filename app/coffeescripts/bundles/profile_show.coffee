@@ -42,6 +42,7 @@ require [
       new AvatarWidget('.profile-link')
       @addQualField()
       @addWorkField()
+#      @initEditUser()
 
     handleDeclarativeClick: (event) ->
       event.preventDefault()
@@ -59,6 +60,12 @@ require [
     showEditForm: ->
       @$el.addClass('editing').removeClass('not-editing')
       @$('.profile_links').removeClass('span6')
+
+    initEditUser: ->
+      if @options.links?.length
+        @addQualField(null, null, degree, discipline, college, year_of_completion, percentage) for {degree, discipline, college, year_of_completion, percentage} in @options.links
+      else
+        @addQualField()
 
     initEdit: ->
       if @options.links?.length
@@ -121,8 +128,8 @@ require [
          <td><input type="text" name="link_organizations[]" value="#{htmlEscape organization}"></td>
          <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}"></td>
          <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}"></td>
-         <td><input type="text" name="link_designation[]" value="#{htmlEscape designation}"></td>
-         <td><input type="text" name="link_permanent[]" value="#{htmlEscape permanent}"></td>
+         <td><input type="text" name="link_designations[]" value="#{htmlEscape designation}"></td>
+         <td><input type="text" name="link_permanents[]" value="#{htmlEscape permanent}"></td>
          <td><input type="text" name="link_reason_for_leaving[]" value="#{htmlEscape reason_for_leaving}"></td>
          <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
          </tr>

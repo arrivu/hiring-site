@@ -2,7 +2,7 @@ class InvitationsController < ApplicationController
 
   before_filter :require_user ,:except => [:accept_code, :optional_register, :new, :fill_registration_form]
   before_filter :require_context,:except => [:accept_code, :optional_register, :new, :fill_registration_form]
-
+  before_filter :get_context
   def index
     return unless authorized_action(@domain_root_account, @current_user, [:create_courses, :manage_courses])
     js_env(:COURSE_ID => @context.id)
@@ -65,11 +65,7 @@ class InvitationsController < ApplicationController
     @headers == false
     clear_crumbs
     @registerform = Candidate.new(params[:candidate_detail])
-    #unless @check_enable = CandidateDetail.find_by_course_id(@context.id)
-    #  @check_enable = CandidateDetail.new
-    #else
-    #  @check_enable = CandidateDetail.find_by_course_id(@context.id)
-    #end
+
   end
 
   def accept_code
@@ -85,10 +81,11 @@ class InvitationsController < ApplicationController
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       @context = unique_code_association.course
       @pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
-      @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
-      @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
-      @current_pseudonym = @pseudonym
-      unless @pseudonym
+      if @pseudonym
+        @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
+        @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
+        @current_pseudonym = @pseudonym
+      else
         password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
         @user = User.create!(:name => params[:invitation][:unique_id])
         @user.workflow_state = 'registered'
@@ -100,19 +97,30 @@ class InvitationsController < ApplicationController
         @enrollment = @context.enroll_student(@user, :self_enrolled => true)
         @enrollment.workflow_state = 'active'
         @enrollment.save!
-        end
+      end
+
+      @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
+      @candidate_detail= @get_pseudonym.user
+      @user ||= @current_user
+      #@user_data = UserAcademic.find_by_user_id(@candidate_detail.id)
+      #@candidate_email = {:unique_id => params[:invitation][:unique_id]}
+      @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
+      @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+
+    end
+
    end
-  end
 
   def optional_register
+    get_context
     @show_left_side = false
-    @headers == false
+    @headers = false
     clear_crumbs
     if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages]
       links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages]).
           reject { |degrees, disciplines, colleges, year_of_completions, percentages| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank?}.
           map { |degrees, disciplines, colleges, year_of_completions, percentages|
-        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages)
+        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
         @user_academic.save
       }
 
@@ -122,20 +130,17 @@ class InvitationsController < ApplicationController
       links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving]).
           reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank?}.
           map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving|
-        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving)
+        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
         @user_work_experience.save
       }
     end
 
-
-    @registerform = Candidate.new(params[:candidate_detail])
-
-    if @registerform.save
-      flash[:success] = "Application Submitted Succesfully"
+    @candidate_detail = User.find_by_id(@current_pseudonym[:user_id])
+    if @candidate_detail.update_attributes(params[:candidate_detail])
+      flash[:success] ="Successfully Updated Settings."
       redirect_to courses_path
-    else
-      flash[:error] = "Mandatory Fields should not be empty"
     end
+
   end
 
   def send_invitation_email(context,pseudonym,user,quiz)
