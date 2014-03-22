@@ -78,7 +78,6 @@ class InvitationsController < ApplicationController
   def fill_registration_form
     @show_left_side = false
     @headers == false
-
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       @context = unique_code_association.course
@@ -107,6 +106,10 @@ class InvitationsController < ApplicationController
       @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
       @user_experience = UserWorkExperience.find_all_by_user_id(@candidate_detail.id)
       @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+      @candidate_email = params[:invitation][:unique_id]
+      if @candidate_filter == nil
+        redirect_to courses_path
+      end
 
     end
 
