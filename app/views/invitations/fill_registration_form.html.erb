@@ -28,7 +28,7 @@
         </tr>
         <% if @candidate_filter.email_id == TRUE %>
         <tr><td><%= f.label :unique_id, "E-mail Id*" %></td>
-        <td><input type="text" name="email" value=<%= @pseudonym[:unique_id] %>  /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></td><td></td><td></td><td></td><td></td></tr>
+        <td><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></td><td></td><td></td><td></td><td></td></tr>
         <% end %>
         <% if @candidate_filter.address == TRUE %>
         <tr><td><%= f.label :address, "Address*" %></td>

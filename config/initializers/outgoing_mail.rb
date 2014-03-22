@@ -1,4 +1,4 @@
-# Initialize outgoing email configuration. See config/outgoing_mail.yml.
+# Initialize outgoing email configuration. See config/outgoing_mail.yml.example.
 
 # This doesn't get required if we're not using smtp, and there's some
 # references to SMTP exception classes in the code.

@@ -4,7 +4,8 @@
      join_title(t(:page_title_survey, "%{user}'s Survey History", :user => user_name), @quiz.quiz_title || t(:default_survey_name, "Survey %{course_name}", :course_name => @context.name)) :
      join_title(t(:page_title_quiz, "%{user}'s Assessment History", :user => user_name), @quiz.quiz_title || t(:default_quiz_name, "Assessment %{course_name}", :course_name => @context.name)))
 %>
-<% if can_do(@current_user, :update) %>    <% @headers = false
+<% if @context_enrollment.type == "StudentEnrollment" %>
+    <% @headers = false
 
        @show_left_side = false %>
  <% end %>
