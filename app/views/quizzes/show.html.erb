@@ -1,6 +1,5 @@
 <% content_for :page_title do %><%= join_title(@quiz.quiz_title || @quiz.readable_type, @context.name) %><% end %>
-<% if @context_enrollment.type == "StudentEnrollment" %>
-    <% @headers = false
+<% if can_do(@current_user, :update) %>     <% @headers = false
 
        @show_left_side = false %>
 <% end %>

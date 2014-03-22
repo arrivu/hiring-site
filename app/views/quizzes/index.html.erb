@@ -1,5 +1,5 @@
 <% content_for :page_title, t(:page_titles, "Assessments")%>
-<% if @context_enrollment.type == "StudentEnrollment" %>
+<% if can_do(@current_user, :update) %>
     <% @headers = false
 
     @show_left_side = false %>

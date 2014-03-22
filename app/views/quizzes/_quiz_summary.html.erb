@@ -15,8 +15,7 @@
   </div>
 
   <% if q.available? %>
-    <% if !@context_enrollment.type == "StudentEnrollment" %>
-  <div style="border-bottom: 1px solid #ccc;float: right;">
+      <% if can_do(q, @current_user, :update) %>  <div style="border-bottom: 1px solid #ccc;float: right;">
     <a href="<%= course_quiz_invitations_path(@context,q) %>" class="send_invitation" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
       <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
     </a>
@@ -36,7 +35,7 @@
           <% else %>
             <%= before_label(:quiz_details, "Assesments Details") %>
           <% end %>
-        </div>
+           </div>
 
         <% if submission && submission.completed? %>
           <%= datetime_string(submission.finished_at) %><br/>
