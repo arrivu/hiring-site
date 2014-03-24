@@ -64,6 +64,7 @@ define [
         i++
       login_id = email_array
       @collection.create
+        course_section_id: $("#course_section_id").val()
         login_ids: login_id
         type: "POST"
       ,
