@@ -161,7 +161,7 @@ class SectionsController < ApplicationController
       end
     end
   end
-  
+
   # @API De-cross-list a Section
   # Undo cross-listing of a Section, returning it to its original course.
   #
@@ -220,6 +220,7 @@ class SectionsController < ApplicationController
       respond_to do |format|
         format.html do
           add_crumb(@section.name, named_context_url(@context, :context_section_url, @section))
+          get_unique_access_code
           @enrollments_count = @section.enrollments.not_fake.where(:workflow_state => 'active').count
           @completed_enrollments_count = @section.enrollments.not_fake.where(:workflow_state => 'completed').count
           @pending_enrollments_count = @section.enrollments.not_fake.where(:workflow_state => %w{invited pending}).count

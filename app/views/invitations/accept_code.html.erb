@@ -12,7 +12,7 @@
       <table class="table">
         <tr><td>
             <tr><td>  <%= f.label :email, "Enter Email"%></td><td> <input id="unique_id" name="invitation[unique_id]" type="email" required="true" /></td></tr>
-        <tr><td> <%= f.label :access_code, "Enter Access Code"%></td><td><%= f.text_field :access_code, :required => true %> </td></tr>
+        <tr><td> <%= f.label :access_code, "Enter Access Code"%></td><td><%= f.text_field :access_code, :value => params[:access_code], :required => true %> </td></tr>
         <tr><td>  <%= f.submit "Proceed", class: "btn btn-success" %></td></tr>
   </table>
 <% end %>

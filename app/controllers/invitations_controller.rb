@@ -39,7 +39,8 @@ class InvitationsController < ApplicationController
       @quiz = Quiz.find(params[:quiz_id])
       params[:login_ids].each do |login_id|
         candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
-        create_access_code
+        @section = @context.course_sections.find(params[:course_section_id])
+        get_unique_access_code(@quiz.id)
         @invitation = Invitation.find_by_quiz_id_and_pseudonym_id_and_workflow_status(@quiz.id,candidate_pseudonym.id,'active')
         unless @invitation
           @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
@@ -49,13 +50,6 @@ class InvitationsController < ApplicationController
       respond_to do |format|
         format.json  { render :json => @invitation }
       end
-    end
-  end
-
-  def create_access_code
-    unique_code = @context.course_unique_code_association
-    unless unique_code
-      course_unique_code_association = @context.create_course_unique_code_association
     end
   end
 
@@ -205,7 +199,7 @@ class InvitationsController < ApplicationController
     m.to = pseudonym.unique_id
     m.subject = "Assessment Invitation"
     m.html_body = "You have been invited by #{@current_user.name} to take the assessment #{quiz.title}"
-    m.body = @domain_url+"#{context.course_unique_code_association.unique_access_code}"
+    m.body = @domain_url+"#{@access_code.unique_access_code}"
     Mailer.send_later(:deliver_invitation_email,m,user)
 
     end
