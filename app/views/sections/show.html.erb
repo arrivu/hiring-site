@@ -2,10 +2,7 @@
 
 <% content_for :right_side do %>
   <div class="rs-margin-all">
-    <%= link_to "generate ", :controller => "invitations", :action => "create_access_code" %>
-    <a href="<%=  %>" class="send_invitation btn button-sidebar-wide" data-course-id="<%= @context.id %>">
-      <i class="icon-flag"></i><span><%= "Generate Access Code" %></span>
-    </a>
+
     <% if can_do(@section, @current_user, :update) %>
       <a href="#" class="btn button-sidebar-wide edit_section_link"><i class="icon-edit"></i> <%= t('buttons.edit_section', 'Edit Batch') %></a>
       <% if @section.nonxlist_course_id %>
