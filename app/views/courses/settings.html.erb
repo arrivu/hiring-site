@@ -389,6 +389,11 @@
               <% end %>
             )
           </span>
+            <span class="users_count">
+            (
+              <%= CourseUniqueCodeAssociation.unique_access_code(section.id) %>
+              )
+          </span>
           <span class="section_links">
             <% if can_do(section, @current_user, :update) && !section.defined_by_sis? %>
               <a class="no-hover edit_section_link" title="<%= t('links.title.edit_section', %{Edit Batch}) %>" href="<%= context_url(@context, :context_section_url, section) %>"><i class="icon-edit standalone-icon"></i><span class="screen-reader-text"><%= t('images.alt.edit', %{Edit}) %></span></a>

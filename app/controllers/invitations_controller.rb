@@ -40,6 +40,7 @@ class InvitationsController < ApplicationController
       params[:login_ids].each do |login_id|
         candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
         @section = @context.course_sections.find(params[:course_section_id])
+        if @context.course_sy
         get_unique_access_code(@quiz.id)
         @invitation = Invitation.find_by_quiz_id_and_pseudonym_id_and_workflow_status(@quiz.id,candidate_pseudonym.id,'active')
         unless @invitation
