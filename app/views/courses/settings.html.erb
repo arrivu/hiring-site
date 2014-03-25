@@ -45,28 +45,38 @@
     <div id="block">
       <% form_for :candidate_detail, :url => { :controller => "candidate_details", :action => "enable_candidate" } do |f| %>
 
-       <table cellpadding="10"><tr><td style="vertical-align: top;">
-
+       <table cellpadding="10"><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :first_name %>
-             <%= f.label :first_name, :en => "First Name" %> <br><br>
+             <%= f.label :first_name, :en => "First Name" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :middle_name %>
-             <%= f.label :middle_name, :en => "Middle Name" %> <br><br>
+             <%= f.label :middle_name, :en => "Middle Name" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :last_name %>
-             <%= f.label :last_name, :en => "Last Name" %> <br><br>
+             <%= f.label :last_name, :en => "Last Name" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :dob %>
-             <%= f.label :dob, :en => "DOB (DD-MM-YY)" %> <br><br>
+             <%= f.label :dob, :en => "Date Of Birth (DD-MM-YYYY)" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :contact_number %>
-             <%= f.label :contact_number, :en => "Contact Number" %> <br><br>
+             <%= f.label :contact_number, :en => "Contact Number" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :email_id %>
-             <%= f.label :email_id, :en => "Email ID" %> <br><br>
+             <%= f.label :email_id, :en => "Email ID" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :address %>
-             <%= f.label :address, :en => "Address" %> <br><br>
+             <%= f.label :address, :en => "Address" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :academics %>
-             <%= f.label :academics, :en => "Academics" %> <br><br>
+             <%= f.label :academics, :en => "Academics" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :employment %>
-             <%= f.label :employment, :en => "Employment" %> <br><br>
-             <%#= f.text_field :project_id, :value => @context.id %>
-
+             <%= f.label :employment, :en => "Employment" %>
 
       <!--<input type="checkbox" /><label >Current compensation</label><br><br>-->
       <!--<input type="checkbox" /><label >Expected compensation</label>-->
