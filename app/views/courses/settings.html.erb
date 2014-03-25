@@ -403,7 +403,7 @@
             (
             <% if can_do(section, @current_user, :update) %>
                    <% get_unique_access_code(@context,section)%>
-                   Access Code:<span style="font-size:16px;"><%=@access_code.unique_access_code unless @access_code.nil? %></span>
+                   Access Code: <span style="font-size:14px;padding:0px 5px;"><%=@access_code.unique_access_code unless @access_code.nil? %></span>
             <% end  %>
               )
 
