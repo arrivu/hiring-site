@@ -6,7 +6,7 @@
     {{/t}}<br>
   </p>
   <div class="row-fluid content-box">
-    <textarea id="user_list_textarea" name="user_list" class="span12" rows=7 placeholder='"Example Student" &lt;student@example.com&gt;, "Lastname, Firstname" &lt;firstlast@example.com&gt;, justAnEmailAddress@example.com'>{{user_list}}</textarea>
+    <textarea id="user_list_textarea" name="user_list" class="span12" rows=7 placeholder='"Example Candidate" &lt;candidate@example.com&gt;, "Lastname, Firstname" &lt;firstlast@example.com&gt;, justAnEmailAddress@example.com'>{{user_list}}</textarea>
   </div>
   <div class="form-horizontal">
     <div class="control-group">
@@ -35,7 +35,7 @@
       <div class="controls">
         <label class="checkbox">
           {{checkbox "limit_privileges_to_course_section"}}
-          {{#t "can_only_grade_students_in_section"}}Can grade students in their section only{{/t}}
+          {{#t "can_only_grade_students_in_section"}}Can grade candidates in their batch only{{/t}}
         </label>
       </div>
     </div>
@@ -116,7 +116,7 @@
       <tr>
         <th>{{#t "name"}}Name{{/t}}</th>
         <th>{{#t "email"}}Email{{/t}}</th>
-        <th>{{#t "section"}}Section{{/t}}</th>
+        <th>Batch</th>
       </tr>
     </thead>
     <tbody>
