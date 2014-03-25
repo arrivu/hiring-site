@@ -64,13 +64,13 @@ class Course < ActiveRecord::Base
 
   serialize :tab_configuration
   serialize :settings, Hash
-  has_one :course_unique_code_association
   has_one :candidate_detail
   belongs_to :root_account, :class_name => 'Account'
   belongs_to :abstract_course
   belongs_to :enrollment_term
   belongs_to :grading_standard
   belongs_to :template_course, :class_name => 'Course'
+  has_many :course_unique_code_associations
   has_many :templated_courses, :class_name => 'Course', :foreign_key => 'template_course_id'
   has_many :invitations
   has_many :course_sections

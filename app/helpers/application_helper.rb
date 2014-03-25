@@ -987,20 +987,19 @@ module ApplicationHelper
     )
 
   end
-  def get_unique_access_code(quiz_id=nil)
+  def get_unique_access_code(context, section, quiz_id=nil)
     if quiz_id
-      @access_code = CourseUniqueCodeAssociation.find_by_course_id_and_course_section_id_and_quiz_id(@context,@section,quiz_id)
+      @access_code = CourseUniqueCodeAssociation.find_by_course_id_and_course_section_id_and_quiz_id(context,section,quiz_id)
       else
-      @access_code = CourseUniqueCodeAssociation.find_by_course_id_and_course_section_id(@context,@section)
+      @access_code = CourseUniqueCodeAssociation.find_by_course_id_and_course_section_id(context,section)
      end
     unless @access_code
-      @access_code = @context.build_course_unique_code_association
-      @access_code.course_section_id = @section.id
+      @access_code = context.course_unique_code_associations.build(:course_section_id => section.id)
       if quiz_id
         @access_code.quiz_id = quiz_id
       end
-      @access_code.save
     end
+    @access_code.save
   end
 
 end

@@ -40,8 +40,7 @@ class InvitationsController < ApplicationController
       params[:login_ids].each do |login_id|
         candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
         @section = @context.course_sections.find(params[:course_section_id])
-        if @context.course_sy
-        get_unique_access_code(@quiz.id)
+        get_unique_access_code(@context,@section,@quiz.id)
         @invitation = Invitation.find_by_quiz_id_and_pseudonym_id_and_workflow_status(@quiz.id,candidate_pseudonym.id,'active')
         unless @invitation
           @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
@@ -85,11 +84,11 @@ class InvitationsController < ApplicationController
         @user = User.create!(:name => params[:invitation][:unique_id])
         @user.workflow_state = 'registered'
         @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
-                                              :account => @domain_root_account)
+                                                   :account => @domain_root_account)
         @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
         @user.save!
         @user_pseudonym.save!
-        @enrollment = @context.enroll_student(@user, :self_enrolled => true)
+        @enrollment = @context.enroll_student(@user, :self_enrolled => true, :section => @section)
         @enrollment.workflow_state = 'active'
         @enrollment.save!
       end
@@ -107,7 +106,7 @@ class InvitationsController < ApplicationController
 
     end
 
-   end
+  end
 
   def optional_register
     get_context
@@ -128,21 +127,21 @@ class InvitationsController < ApplicationController
       links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages],params[:link_ids]).
           reject { |degrees, disciplines, colleges, year_of_completions, percentages,ids| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank? && ids.blank?}.
           map { |degrees, disciplines, colleges, year_of_completions, percentages, id|
-            if id
-              @user_academic = UserAcademic.find(id)
-              @user_academic.update_attributes(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
-            else
-              @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
-              @user_academic.save!
-            end
+        if id
+          @user_academic = UserAcademic.find(id)
+          @user_academic.update_attributes(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+        else
+          @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+          @user_academic.save!
+        end
 
       }
     elsif params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages]
       links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages]).
           reject { |degrees, disciplines, colleges, year_of_completions, percentages,ids| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank? }.
           map { |degrees, disciplines, colleges, year_of_completions, percentages|
-            @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
-            @user_academic.save!
+        @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+        @user_academic.save!
       }
 
     end
@@ -203,5 +202,5 @@ class InvitationsController < ApplicationController
     m.body = @domain_url+"#{@access_code.unique_access_code}"
     Mailer.send_later(:deliver_invitation_email,m,user)
 
-    end
+  end
 end

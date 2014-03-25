@@ -7,6 +7,7 @@ class AddPersonalDetailsToUser < ActiveRecord::Migration
     add_column :users, :city, :text
     add_column :users, :zip_code, :text
 
+
   end
 
   def self.down
@@ -15,6 +16,7 @@ class AddPersonalDetailsToUser < ActiveRecord::Migration
     remove_column :users, :state
     remove_column :users, :city
     remove_column :users, :zip_code
+
 
   end
 end

@@ -105,6 +105,7 @@ class SectionsController < ApplicationController
           format.json { render :json => @section.errors, :status => :bad_request }
         end
       end
+      get_unique_access_code(@context,@section)
     end
   end
 
@@ -220,7 +221,6 @@ class SectionsController < ApplicationController
       respond_to do |format|
         format.html do
           add_crumb(@section.name, named_context_url(@context, :context_section_url, @section))
-          get_unique_access_code
           @enrollments_count = @section.enrollments.not_fake.where(:workflow_state => 'active').count
           @completed_enrollments_count = @section.enrollments.not_fake.where(:workflow_state => 'completed').count
           @pending_enrollments_count = @section.enrollments.not_fake.where(:workflow_state => %w{invited pending}).count

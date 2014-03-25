@@ -370,7 +370,7 @@
   </div>
   <div id="tab-sections">
     <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
-    <ul id="sections">
+    <ul id="sections" style="max-width:100%;">
       <% @context.course_sections.active.each do |section| %>
         <li class="section">
           <% if can_do section, @current_user, :read %>
@@ -389,10 +389,32 @@
               <% end %>
             )
           </span>
-            <span class="users_count">
+          <span class="users_count">
             (
-              <%= CourseUniqueCodeAssociation.unique_access_code(section.id) %>
+            <% if can_do(section, @current_user, :update) %>
+                   <% get_unique_access_code(@context,section)%>
+                   Access Code:<span style="font-size:16px;"><%=@access_code.unique_access_code unless @access_code.nil? %></span>
+            <% end  %>
               )
+
+          </span>
+           <span class="users_count">
+            (
+             <% if can_do(section, @current_user, :update) %>
+
+              Start Date: <%= datetime_string(section.start_at, :verbose, nil, true)%>
+            <% end  %>
+             )
+
+          </span>
+          <span class="users_count">
+            (
+            <% if can_do(section, @current_user, :update) %>
+
+              End Date: <%= datetime_string(section.end_at, :verbose, nil, true) %>
+            <% end  %>
+            )
+
           </span>
           <span class="section_links">
             <% if can_do(section, @current_user, :update) && !section.defined_by_sis? %>

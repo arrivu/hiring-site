@@ -16,102 +16,102 @@
         <div class="show-if-editing">
           <table class="table">
 
-        <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td><%= f.label :name, "First Name*"%></td><td><%= f.text_field :name, :required => true%></td><% end %>
-          <% if @candidate_filter.middle_name %><td><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true%></td><% end %>
-          <% if @candidate_filter.last_name == TRUE %><td><%= f.label :last_name, "Last Name*"%></td><td><%= f.text_field :last_name, :required => true%></td><% end %>
-        </tr>
-        <tr><td><%= f.label :gender, "Gender"%></td>
-          <td style="padding-top: 17px;"><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</td>
-          <% if @candidate_filter.dob == TRUE %><td><%= f.label :birthdate, "Date Of Birth* (DD-MM-YYYY)"%></td><td><%= f.text_field :birthdate, :required => true%></td><% end %>
-          <% if @candidate_filter.contact_number == TRUE %><td><%= f.label :phone, "Contact number*"%></td><td><%= f.text_field :phone, :required => true%></td><% end %>
+            <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td><%= f.label :name, "First Name*"%></td><td><%= f.text_field :name, :required => true%></td><% end %>
+              <% if @candidate_filter.middle_name %><td><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true%></td><% end %>
+              <% if @candidate_filter.last_name == TRUE %><td><%= f.label :last_name, "Last Name*"%></td><td><%= f.text_field :last_name, :required => true%></td><% end %>
+            </tr>
+            <tr><td><%= f.label :gender, "Gender"%></td>
+              <td style="padding-top: 17px;"><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</td>
+              <% if @candidate_filter.dob == TRUE %><td><%= f.label :birthdate, "Date Of Birth* (DD-MM-YYYY)"%></td><td><%= f.text_field :birthdate, :required => true%></td><% end %>
+              <% if @candidate_filter.contact_number == TRUE %><td><%= f.label :phone, "Contact number*"%></td><td><%= f.text_field :phone, :required => true%></td><% end %>
 
-        </tr>
-        <% if @candidate_filter.email_id == TRUE %>
-        <tr><td><%= f.label :unique_id, "E-mail Id*" %></td>
-        <td><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></td><td></td><td></td><td></td><td></td></tr>
-        <% end %>
-        <% if @candidate_filter.address == TRUE %>
-        <tr><td><%= f.label :address, "Address*" %></td>
-          <td colspan="5"><%= f.text_area :address, :required => true, size: "24x2" %></td></tr>
-        <tr>
-          <td><%= f.label :city, "City" %></td><td><%= f.text_field :city%></td>
-          <td><%= f.label :state, "State" %></td><td><%= f.text_field :state%></td>
-          <td><%= f.label :zip_code, "Zip code" %></td><td><%= f.text_field :zip_code%></td>
-        </tr>
-        <% end %>
+            </tr>
+            <% if @candidate_filter.email_id == TRUE %>
+                <tr><td><%= f.label :unique_id, "E-mail Id*" %></td>
+                  <td><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></td><td></td><td></td><td></td><td></td></tr>
+            <% end %>
+            <% if @candidate_filter.address == TRUE %>
+                <tr><td><%= f.label :address, "Address*" %></td>
+                  <td colspan="5"><%= f.text_area :address, :required => true, size: "24x2" %></td></tr>
+                <tr>
+                  <td><%= f.label :city, "City" %></td><td><%= f.text_field :city%></td>
+                  <td><%= f.label :state, "State" %></td><td><%= f.text_field :state%></td>
+                  <td><%= f.label :zip_code, "Zip code" %></td><td><%= f.text_field :zip_code%></td>
+                </tr>
+            <% end %>
           </table>
         </div>
       </div>
       <% if @candidate_filter.academics == TRUE %>
-      <div class="profile_links">
-        <h2 class="h1 border border-b">Academic Qualifications</h2>
-        <div class="show-if-editing">
-          <table id="edit_links_table" cellpadding="10" >
+          <div class="profile_links">
+            <h2 class="h1 border border-b">Academic Qualifications</h2>
+            <div class="show-if-editing">
+              <table id="edit_links_table" cellpadding="10" >
 
-            <thead>
-            <th>Degree</th>
-            <th>Discipline</th>
-            <th>School/ College</th>
-            <th>Year of Completion</th>
-            <th>%/ CGPA</th>
-            <th></th>
-            </thead>
-            <tbody id="qual_fields">
-            <% @user_data.each do |link| %>
-                <tr>
-                  <input type="hidden" name="link_ids[]" value=<%= link.id.to_i %>>
-                  <td><input type="text" name="link_degrees[]" value="<%= link.degree %>"></td>
-                  <td><input type="text" name="link_disciplines[]" value="<%= link.discipline %>"></td>
-                  <td><input type="text" name="link_colleges[]" value="<%= link.college %>"></td>
-                  <td><input type="text" name="link_year_of_completions[]" value="<%= link.year_of_completion %>"></td>
-                  <td><input type="text" name="link_percentages[]" value="<%= link.percentage %>"></td>
-                  <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
-                </tr>
-            <% end %>
-            </tbody>
-          </table>
-          <button data-event="addQualField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Qualification</button>
-          <br/>
-        </div>
-        <br/>
-      </div>
+                <thead>
+                <th>Degree</th>
+                <th>Discipline</th>
+                <th>School/ College</th>
+                <th>Year of Completion</th>
+                <th>%/ CGPA</th>
+                <th></th>
+                </thead>
+                <tbody id="qual_fields">
+                <% @user_data.each do |link| %>
+                    <tr>
+                      <input type="hidden" name="link_ids[]" value=<%= link.id.to_i %>>
+                      <td><input type="text" name="link_degrees[]" value="<%= link.degree %>"></td>
+                      <td><input type="text" name="link_disciplines[]" value="<%= link.discipline %>"></td>
+                      <td><input type="text" name="link_colleges[]" value="<%= link.college %>"></td>
+                      <td><input type="text" name="link_year_of_completions[]" value="<%= link.year_of_completion %>"></td>
+                      <td><input type="text" name="link_percentages[]" value="<%= link.percentage %>"></td>
+                      <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              <button data-event="addQualField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Qualification</button>
+              <br/>
+            </div>
+            <br/>
+          </div>
       <% end %>
       <% if @candidate_filter.employment == TRUE %>
-      <div class="profile_links">
-        <h2 class="h1 border border-b">Employment (Please mention in chronological order)</h2>
-        <div class="show-if-editing">
-          <table id="edit_links_table" cellpadding="10">
-            <thead>
-            <th>Organization</th>
-            <th>From(MM/YYYY)</th>
-            <th>To(MM/YYYY)</th>
-            <th>Designation</th>
-            <th>Permanent/ contract</th>
-            <th>Reason for leaving</th>
-            <th></th>
-            </thead>
-            <tbody id="work_fields">
-            <% @user_experience.each do |link| %>
-                <tr>
-                  <input type="hidden" name="link_experience_ids[]" value="<%= link.id %>">
-                  <td><input type="text" name="link_organizations[]" value="<%= link.organization %>"></td>
-                  <td><input type="text" name="link_from_dates[]" value="<%= link.from_date %>"></td>
-                  <td><input type="text" name="link_end_dates[]" value="<%= link.end_date %>"></td>
-                  <td><input type="text" name="link_designations[]" value="<%= link.designation %>"></td>
-                  <td><input type="text" name="link_permanents[]" value="<%= link.permanent %>"></td>
-                  <td><input type="text" name="link_reason_for_leaving[]" value="<%= link.reason_for_leaving %>"></td>
-                  <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
-                </tr>
+          <div class="profile_links">
+            <h2 class="h1 border border-b">Employment (Please mention in chronological order)</h2>
+            <div class="show-if-editing">
+              <table id="edit_links_table" cellpadding="10">
+                <thead>
+                <th>Organization</th>
+                <th>From(MM/YYYY)</th>
+                <th>To(MM/YYYY)</th>
+                <th>Designation</th>
+                <th>Permanent/ contract</th>
+                <th>Reason for leaving</th>
+                <th></th>
+                </thead>
+                <tbody id="work_fields">
+                <% @user_experience.each do |link| %>
+                    <tr>
+                      <input type="hidden" name="link_experience_ids[]" value="<%= link.id %>">
+                      <td><input type="text" name="link_organizations[]" value="<%= link.organization %>"></td>
+                      <td><input type="text" name="link_from_dates[]" value="<%= link.from_date %>"></td>
+                      <td><input type="text" name="link_end_dates[]" value="<%= link.end_date %>"></td>
+                      <td><input type="text" name="link_designations[]" value="<%= link.designation %>"></td>
+                      <td><input type="text" name="link_permanents[]" value="<%= link.permanent %>"></td>
+                      <td><input type="text" name="link_reason_for_leaving[]" value="<%= link.reason_for_leaving %>"></td>
+                      <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+                    </tr>
 
-            <% end %>
-            </tbody>
-          </table>
+                <% end %>
+                </tbody>
+              </table>
 
-          <button data-event="addWorkField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Experience</button>
+              <button data-event="addWorkField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Experience</button>
 
-        </div>
+            </div>
 
-      </div>
+          </div>
       <% end %>
       <br/>
       <br/>
