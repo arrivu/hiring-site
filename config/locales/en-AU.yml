@@ -4022,7 +4022,7 @@ en-AU:
         add_these_users: "Add Users"
         adding: Adding...
         adding_n_users: "Validated and ready to add %{users.length} users:"
-        can_only_grade_students_in_section: "Can grade students in their section only"
+        can_only_grade_students_in_section: "Can grade candidates in their batch only"
         close: Done
         duplicates_removed: "Some duplicates were removed."
         email: Email
