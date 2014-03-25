@@ -73,35 +73,40 @@ class InvitationsController < ApplicationController
     @headers = false
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
-      @context = unique_code_association.course
-      @pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
-      if @pseudonym
-        @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
-        @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
-        @current_pseudonym = @pseudonym
-      else
-        password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
-        @user = User.create!(:name => params[:invitation][:unique_id])
-        @user.workflow_state = 'registered'
-        @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
-                                                   :account => @domain_root_account)
-        @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
-        @user.save!
-        @user_pseudonym.save!
-        @enrollment = @context.enroll_student(@user, :self_enrolled => true, :section => @section)
-        @enrollment.workflow_state = 'active'
-        @enrollment.save!
-      end
+      unless unique_code_association.nil?
+        @course_section = unique_code_association.course_section
+        @context = unique_code_association.course(@course_section)
+        @pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
+        if @pseudonym
+          @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
+          @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
+          @current_pseudonym = @pseudonym
+        else
+          password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
+          @user = User.create!(:name => params[:invitation][:unique_id])
+          @user.workflow_state = 'registered'
+          @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
+                                                     :account => @domain_root_account)
+          @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
+          @user.save!
+          @user_pseudonym.save!
+          @enrollment = @context.enroll_user(@user, type='StudentEnrollment',:enrollment_state => 'active',:section => @course_section)
+          @enrollment.save!
+        end
 
-      @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
-      @candidate_detail= @get_pseudonym.user
-      @user ||= @current_user
-      @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
-      @user_experience = UserWorkExperience.find_all_by_user_id(@candidate_detail.id)
-      @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
-      @candidate_email = params[:invitation][:unique_id]
-      if @candidate_filter == nil
-        redirect_to courses_path
+        @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
+        @candidate_detail= @get_pseudonym.user
+        @user ||= @current_user
+        @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
+        @user_experience = UserWorkExperience.find_all_by_user_id(@candidate_detail.id)
+        @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+        @candidate_email = params[:invitation][:unique_id]
+        if @candidate_filter == nil
+          redirect_to courses_path
+        end
+      else
+        flash[:error] = "Invalid Access Code "
+        redirect_to :back
       end
 
     end
@@ -194,7 +199,7 @@ class InvitationsController < ApplicationController
 
   def send_invitation_email(context,pseudonym,user,quiz)
     domains = HostUrl.context_hosts(@domain_root_account)
-    @domain_url =  "#{HostUrl.protocol}://#{domains.first}/accept/"
+    @domain_url =  "#{HostUrl.protocol}://#{domains.first}/authenticateKey/"
     m = Message.new
     m.to = pseudonym.unique_id
     m.subject = "Assessment Invitation"
