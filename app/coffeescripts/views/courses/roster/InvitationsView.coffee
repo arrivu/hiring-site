@@ -47,7 +47,7 @@ define [
     resend: (e) =>
       e.preventDefault()
       @close()
-      for e in @msend_all_invitationsodel.get('enrollments')
+      for e in @model.get('enrollments')
         url = "/confirmations/#{ @model.get('id') }/re_send?enrollment_id=#{ e.id }"
         $.ajaxJSON url
       $.flashMessage I18n.t('flash.invitation', 'Invitation sent.')

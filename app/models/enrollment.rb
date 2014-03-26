@@ -123,14 +123,14 @@ class Enrollment < ActiveRecord::Base
       ((record.just_created && record.invited?) || record.changed_state(:invited) || @re_send_confirmation)
     }
 
-    p.dispatch :enrollment_notification
-    p.to { self.user }
-    p.whenever { |record|
-      !record.self_enrolled and
-      record.course &&
-      !record.course.created? &&
-      record.just_created && record.active?
-    }
+    #p.dispatch :enrollment_notification
+    #p.to { self.user }
+    #p.whenever { |record|
+    #  !record.self_enrolled and
+    #  record.course &&
+    #  !record.course.created? &&
+    #  record.just_created && record.active?
+    #}
 
     p.dispatch :enrollment_accepted
     p.to {self.course.admins - [self.user] }
