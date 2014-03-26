@@ -1,11 +1,11 @@
 development:
   address: "smtp.example.com"
   port: "25"
-  user_name: "user"
-  password: "password"
+  user_name: "sublimehiring@gmail.com"
+  password: "sysadmin123$"
   authentication: "plain" # plain, login, or cram_md5
   domain: "example.com"
-  outgoing_address: "canvas@example.com"
+  outgoing_address: "sublimehiring@gmail.com"
   default_name: "Sublime Hiring"
 
 # or to use sendmail --
