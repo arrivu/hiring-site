@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
   before_filter :require_user ,:except => [:accept_code, :optional_register, :new, :fill_registration_form]
   before_filter :require_context,:except => [:accept_code, :optional_register, :new, :fill_registration_form]
   def index
-    return unless authorized_action(@domain_root_account, @current_user, [:create_courses, :manage_courses])
+    return unless authorized_action(@context, @current_user, [:create_courses, :manage_courses, :read])
     js_env(:COURSE_ID => @context.id)
     js_env(:QUIZZ_ID => params[:quiz_id].to_i)
     sections = @context.course_sections.active.select([:id, :name])
@@ -12,7 +12,7 @@ class InvitationsController < ApplicationController
 
   def get_candidates
     get_context
-    if authorized_action(@context, @current_user, :read_roster)
+    if authorized_action(@context, @current_user, :read)
       #backcompat limit param
       params[:per_page] ||= params.delete(:limit)
 
@@ -57,7 +57,7 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers == false
     clear_crumbs
-    @registerform = Candidate.new(params[:candidate_detail])
+    @registerform = User.new(params[:candidate_detail])
 
   end
 
@@ -206,6 +206,6 @@ class InvitationsController < ApplicationController
     m.html_body = "You have been invited by #{@current_user.name} to take the assessment #{quiz.title}"
     m.body = @domain_url+"#{@access_code.unique_access_code}"
     Mailer.send_later(:deliver_invitation_email,m,user)
-
   end
+
 end
