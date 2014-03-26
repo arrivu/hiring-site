@@ -1541,6 +1541,9 @@ class Course < ActiveRecord::Base
     enrollment_state ||= self.available? ? "invited" : "creation_pending"
     if type == 'TeacherEnrollment' || type == 'TaEnrollment' || type == 'DesignerEnrollment'
       enrollment_state = 'invited' if enrollment_state == 'creation_pending'
+
+    elsif type == 'StudentEnrollment' || type == 'StudentViewEnrollment'
+      enrollment_state = 'active'
     else
       enrollment_state = 'creation_pending' if enrollment_state == 'invited' && !self.available?
     end
