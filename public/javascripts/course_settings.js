@@ -130,6 +130,7 @@ define([
         $add_section_form.find("button").attr('disabled', true).text(I18n.t('buttons.adding_section', "Adding Batch..."));
       },
       success: function(data) {
+
         var section = data.course_section,
             $section = $(".section_blank:first").clone(true).attr('class', 'section'),
             $option = $("<option/>");
@@ -144,6 +145,7 @@ define([
         $("#sections .section_blank").before($section);
         $section.slideDown();
         $("#course_section_name").val();
+        location.reload(true);
       },
       error: function(data) {
         $add_section_form
@@ -156,10 +158,13 @@ define([
       return false;
     });
     $edit_section_form.formSubmit({
+        //alert("okkk");
       beforeSubmit: function(data) {
         $edit_section_form.hide();
         var $section = $edit_section_form.parents(".section");
         $section.find(".name").text(data['course_section[name]']).show();
+        //alert(JSON.stringify(data));
+        $section.find(".start_date").text(data['course_section[start_at]']).show();
         $section.loadingImage({image_size: "small"});
         return $section;
       },
@@ -186,13 +191,17 @@ define([
         }
       });
     $(".edit_section_link").click(function() {
-      var $this = $(this),
-          $section = $this.parents(".section"),
-          data = $section.getTemplateData({textValues: ['name']});
-      $edit_section_form.fillFormData(data, {object_name: "course_section"});
-      $section.find(".name").hide().after($edit_section_form.show());
-      $edit_section_form.attr('action', $this.attr('href'));
-      $edit_section_form.find(":text:first").focus().select();
+     var $this = $(this),
+     $section = $this.parents(".section"),
+     data = $section.getTemplateData({textValues: ['name','start_date']});
+     $edit_section_form.fillFormData(data, {object_name: "course_section"});
+     $section.find(".name").hide().after($edit_section_form.show());
+     $section.find(".start_date").hide().after($edit_section_form.show());
+     $edit_section_form.attr('action', $this.attr('href'));
+     $edit_section_form.find(":text:first").focus().select();
+     alert(JSON.stringify(data));
+     //$edit_section_form.("input[type=text]").focus().select();
+      //alert("ok");
       return false;
     });
     $(".delete_section_link").click(function() {

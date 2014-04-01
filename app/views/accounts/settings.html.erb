@@ -37,12 +37,12 @@
   <% if can_do(@context, @current_user, :manage_account_settings) %>
       <li><a href="#tab-settings" id="tab-settings-link"><%= t(:tab_settings, "Settings") %></a></li>
   <% end %>
-  <% if can_do(@context, @current_user, :manage_storage_quotas) %>
-      <li><a href="#tab-quotas" id="tab-quotas-link"><%= t(:tab_quotas, "Quotas") %></a></li>
-  <% end %>
-  <% if can_do(@context, @current_user, :manage_account_settings) %>
-      <li><a href="#tab-notifications" id="tab-notifications-link"><%= t(:tab_notifications, "Notifications") %></a></li>
-  <% end %>
+  <%# if can_do(@context, @current_user, :manage_storage_quotas) %>
+      <!--<li><a href="#tab-quotas" id="tab-quotas-link"><%#= t(:tab_quotas, "Quotas") %></a></li>-->
+  <%# end %>
+  <%# if can_do(@context, @current_user, :manage_account_settings) %>
+      <!--<li><a href="#tab-notifications" id="tab-notifications-link"><%#= t(:tab_notifications, "Notifications") %></a></li>-->
+  <%# end %>
   <li><a href="#tab-users" id="tab-users-link"><%= t(:tab_admins, "Admins") %></a></li>
   <%# if @account.root_account? %>
       <!--<li><a href="#tab-announcements" id="tab-announcements-link"><%#= t(:tab_announcements, "Announcements") %></a></li>-->
@@ -60,7 +60,7 @@
       <!--<li><a href="#tab-features" id="tab-features-link"><%#= t(:feature_options, "Feature options") %></a></li>-->
   <% end %>
   <% if can_do(@context, @current_user, :manage_account_settings) %>
-      <li><a href="#tab-sms" id="tab-sms-settings-link">SMS Settings</a></li>
+      <!--<li><a href="#tab-sms" id="tab-sms-settings-link">SMS Settings</a></li>-->
   <% end %>
   <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
       <% if can_do(@context, @current_user, :manage_account_settings) %>
@@ -509,9 +509,9 @@
     </div>
 <% end %>
 
-<% if can_do(@context, @current_user, :manage_storage_quotas) %>
-    <div id="tab-quotas"></div>
-<% end %>
+<%# if can_do(@context, @current_user, :manage_storage_quotas) %>
+    <!--<div id="tab-quotas"></div>-->
+<%# end %>
 
 <% if can_do(@context, @current_user, :manage_account_settings) %>
     <div id="tab-notifications">
@@ -618,9 +618,9 @@
               <% end %>
           <% end %>
 
-          <div class="button-container">
-            <button type="submit" class="btn btn-primary"><%= t(:update_settings_button, "Update Settings") %></button>
-          </div>
+          <!--<div class="button-container">-->
+            <!--<button type="submit" class="btn btn-primary"><%#= t(:update_settings_button, "Update Settings") %></button>-->
+          <!--</div>-->
       <% end %>
     </div>
 <% end %>
@@ -844,6 +844,6 @@
 <%# if can_do(@context, @current_user, :manage_feature_flags) %>
     <!--<div id="tab-features"></div>-->
 <%# end %>
-<%= render :partial => 'accounts/sms_settings' %>
+<%#= render :partial => 'accounts/sms_settings' %>
 <%= render :partial => 'accounts/plugin_settings' %>
 </div>

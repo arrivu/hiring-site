@@ -77,7 +77,10 @@
          <td style="vertical-align: top;">
              <%= f.check_box :employment %>
              <%= f.label :employment, :en => "Employment" %>
-
+         </td>
+         <td style="vertical-align: top;">
+           <%= f.check_box :profile_picture %>
+           <%= f.label :profile_picture, :en => "Profile Picture" %>
       <!--<input type="checkbox" /><label >Current compensation</label><br><br>-->
       <!--<input type="checkbox" /><label >Expected compensation</label>-->
        </td></tr>
@@ -381,6 +384,7 @@
   <div id="tab-sections">
     <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
     <ul id="sections" style="max-width:100%;">
+
       <% @context.course_sections.active.each do |section| %>
         <li class="section">
           <% if can_do section, @current_user, :read %>
@@ -408,9 +412,9 @@
               )
 
           </span>
-           <span class="users_count">
+           <span class="start_date">
             (
-             <% if can_do(section, @current_user, :update) %>
+            <% if can_do(section, @current_user, :update) %>
 
               Start Date: <%= datetime_string(section.start_at, :verbose, nil, true)%>
             <% end  %>
@@ -461,6 +465,7 @@
     </ul>
     <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :method => :put, :style => "display: none;"} do |f| %>
       <%= f.text_field :name %>
+      <%= f.text_field :start_at %>
     <% end %>
   </div>
   <% if can_do @context, @current_user, :update %>
