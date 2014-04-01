@@ -41,7 +41,7 @@
     <% elsif @context %>
       <p>
         <% if @context.try_rescue(:is_public) %>
-          <%= mt 'public_course', 'This page is part of the content for the course, **%{course}**.', :course => @context.name %>
+          <%= mt 'public_course', 'This page is part of the content for the project, **%{course}**.', :course => @context.name %>
         <% end %>
       <%= t('unauthorized_1', %{It appears that you don't have permission to access this page.  Please make sure you're authorized to view this content.}) %>
       <% if Setting.get("show_feedback_link", "false") == "true" %>

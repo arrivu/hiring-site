@@ -111,6 +111,7 @@ h3 .tally {
     <td><%= f.blabel :name, :en => "Batch Name" %></td>
     <td><%= f.text_field :name %></td>
   </tr>
+
   <% if @section.sis_source_id && can_do(@context.root_account, @current_user, :read_sis) || can_do(@context.root_account, @current_user, :manage_sis) %>
     <tr>
       <td><%= f.blabel :sis_source_id, :en => "SIS ID" %></td>
@@ -125,6 +126,7 @@ h3 .tally {
       </td>
     </tr>
   <% end %>
+
   <tr>
     <td><%= f.blabel :start_at, :en => "Starts" %></td>
     <td><%= f.text_field :start_at, :class => "datetime_field", :value => datetime_string(@section.start_at), :style => 'width: 120px;' %></td>
@@ -153,6 +155,8 @@ h3 .tally {
 </table>
 <% end %>
 <h2 id="section_name"><%= @section.name %></h2>
+<!--<h2 id="section_name">Access Code:<%#= @access_code.unique_access_code%></h2>-->
+
 <div style="margin-bottom: 20px;">
   <div id="enrollments_div">
     <table id="enrollment_table">
@@ -209,7 +213,7 @@ h3 .tally {
   <%= form_tag context_url(@context, :context_section_crosslist_url, @section.id), :id => "crosslist_course_form", :class => "no-margin-bottom", :title => t('titles.crosslist_this_section', 'Cross-List this Batch'), :method => :post do %>
     <h2><%= t('titles.cross_listed_sections', 'Cross-List Batch') %></h2>
     <p>
-      <%= t('crosslist_description', %{
+      <%= t('crosslist_description', %{dr
       Cross-listing allows you to create a batch in one account and
       then move it to a project on a different account.
       To cross-list this project, you'll need to find the project you
@@ -272,3 +276,5 @@ h3 .tally {
     </div>
   <% end %>
 </div>
+
+

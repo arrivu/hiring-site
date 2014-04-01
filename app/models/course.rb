@@ -64,13 +64,13 @@ class Course < ActiveRecord::Base
 
   serialize :tab_configuration
   serialize :settings, Hash
-  has_one :course_unique_code_association
   has_one :candidate_detail
   belongs_to :root_account, :class_name => 'Account'
   belongs_to :abstract_course
   belongs_to :enrollment_term
   belongs_to :grading_standard
   belongs_to :template_course, :class_name => 'Course'
+  has_many :course_unique_code_associations
   has_many :templated_courses, :class_name => 'Course', :foreign_key => 'template_course_id'
   has_many :invitations
   has_many :course_sections
@@ -1541,6 +1541,9 @@ class Course < ActiveRecord::Base
     enrollment_state ||= self.available? ? "invited" : "creation_pending"
     if type == 'TeacherEnrollment' || type == 'TaEnrollment' || type == 'DesignerEnrollment'
       enrollment_state = 'invited' if enrollment_state == 'creation_pending'
+
+    elsif type == 'StudentEnrollment' || type == 'StudentViewEnrollment'
+      enrollment_state = 'active'
     else
       enrollment_state = 'creation_pending' if enrollment_state == 'invited' && !self.available?
     end

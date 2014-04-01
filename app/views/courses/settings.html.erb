@@ -45,28 +45,38 @@
     <div id="block">
       <% form_for :candidate_detail, :url => { :controller => "candidate_details", :action => "enable_candidate" } do |f| %>
 
-       <table cellpadding="10"><tr><td style="vertical-align: top;">
-
+       <table cellpadding="10"><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :first_name %>
-             <%= f.label :first_name, :en => "First Name" %> <br><br>
+             <%= f.label :first_name, :en => "First Name" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :middle_name %>
-             <%= f.label :middle_name, :en => "Middle Name" %> <br><br>
+             <%= f.label :middle_name, :en => "Middle Name" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :last_name %>
-             <%= f.label :last_name, :en => "Last Name" %> <br><br>
+             <%= f.label :last_name, :en => "Last Name" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :dob %>
-             <%= f.label :dob, :en => "DOB (DD-MM-YY)" %> <br><br>
+             <%= f.label :dob, :en => "Date Of Birth (DD-MM-YYYY)" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :contact_number %>
-             <%= f.label :contact_number, :en => "Contact Number" %> <br><br>
+             <%= f.label :contact_number, :en => "Contact Number" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :email_id %>
-             <%= f.label :email_id, :en => "Email ID" %> <br><br>
+             <%= f.label :email_id, :en => "Email ID" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :address %>
-             <%= f.label :address, :en => "Address" %> <br><br>
+             <%= f.label :address, :en => "Address" %>
+         </td><td style="vertical-align: top;">
              <%= f.check_box :academics %>
-             <%= f.label :academics, :en => "Academics" %> <br><br>
+             <%= f.label :academics, :en => "Academics" %>
+       </td></tr><tr>
+         <td style="vertical-align: top;">
              <%= f.check_box :employment %>
-             <%= f.label :employment, :en => "Employment" %> <br><br>
-             <%#= f.text_field :project_id, :value => @context.id %>
-
+             <%= f.label :employment, :en => "Employment" %>
 
       <!--<input type="checkbox" /><label >Current compensation</label><br><br>-->
       <!--<input type="checkbox" /><label >Expected compensation</label>-->
@@ -370,7 +380,7 @@
   </div>
   <div id="tab-sections">
     <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
-    <ul id="sections">
+    <ul id="sections" style="max-width:100%;">
       <% @context.course_sections.active.each do |section| %>
         <li class="section">
           <% if can_do section, @current_user, :read %>
@@ -388,6 +398,35 @@
                 <%= t 'section_sis_id', 'SIS ID: %{section_sis}', :section_sis => section.sis_source_id %>
               <% end %>
             )
+          </span>
+          <span class="users_count">
+            (
+            <% if can_do(section, @current_user, :update) %>
+                   <% get_unique_access_code(@context,section)%>
+
+                   Access Code: <span style="font-size:14px;padding:0px 5px;"><%=@access_code.unique_access_code unless @access_code.nil? %></span>
+
+            <% end  %>
+              )
+
+          </span>
+           <span class="users_count">
+            (
+             <% if can_do(section, @current_user, :update) %>
+
+              Start Date: <%= datetime_string(section.start_at, :verbose, nil, true)%>
+            <% end  %>
+             )
+
+          </span>
+          <span class="users_count">
+            (
+            <% if can_do(section, @current_user, :update) %>
+
+              End Date: <%= datetime_string(section.end_at, :verbose, nil, true) %>
+            <% end  %>
+            )
+
           </span>
           <span class="section_links">
             <% if can_do(section, @current_user, :update) && !section.defined_by_sis? %>

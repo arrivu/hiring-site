@@ -21,7 +21,7 @@ define [
 
     dialogOptions:
       id: 'edit_sections'
-      title: I18n.t 'titles.section_enrollments', 'Section Enrollments'
+      title: 'Batch Enrollments'
 
     render: ->
       @$el.html editSectionsViewTemplate

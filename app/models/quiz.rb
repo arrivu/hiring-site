@@ -40,6 +40,7 @@ class Quiz < ActiveRecord::Base
 
   attr_readonly :context_id, :context_type
   attr_accessor :notify_of_update
+  has_one :course_unique_code_association
   has_many :quiz_questions, :dependent => :destroy, :order => 'position'
   has_many :quiz_submissions, :dependent => :destroy
   has_many :quiz_groups, :dependent => :destroy, :order => 'position'

@@ -6,75 +6,125 @@
     select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
     label{margin-top:15px;}
     .table th, .table td{border:none;   }
+    .alnright { text-align: right !important; }
 </style>
-<div style="width: 95%;margin: 0px auto;border: 1px solid #efefef;padding: 10px;border-radius: 10px;box-shadow: 3px 0px 0px 2px #D1D0D0;">
+
+<div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
   <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
+
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div class="show-if-editing">
           <table class="table">
-            <tr><td><%= f.label :first_name, "First Name*"%></td><td><%= f.text_field :first_name%></td><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td></tr>
-            <tr><td><%= f.label :dob, "Date Of Birth* (DD-MM-YYYY)"%></td><td><%= f.text_field :dob%></td><td><%= f.label :contact_number, "Contact number"%></td><td><%= f.text_field :contact_number%></td><td></td><td></td></tr>
-            <tr><td><%= f.label :email_id, "E-mail Id*" %></td>
-              <td><%= f.text_field :email_id%></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td><%= f.label :address, "Address" %></td>
-              <td ><%= f.text_field :address%></td>
-              <td><%= f.label :address, "City" %></td><td><%= f.text_field :address%></td><td><%= f.label :address, "State" %></td>
-              <td colspan="5"><%= f.text_field :address%></td>
+
+            <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
+              <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
+              <% if @candidate_filter.last_name == TRUE %><td class='alnright'><%= f.label :last_name, "Last Name*"%></td><td><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></td><% end %>
             </tr>
-          </table>
-        </div>
-      </div>
-      <div class="profile_links">
-        <h2 class="h1 border border-b">Academic Qualifications</h2>
-        <div class="show-if-editing">
-          <table id="edit_links_table" cellpadding="10" >
-            <thead>
-            <th>Degree</th>
-            <th>Discipline</th>
-            <th>School/ College</th>
-            <th>Year of Completion</th>
-            <th>%/ CGPA</th>
-            <th></th>
-            </thead>
-            <tbody id="qual_fields"></tbody>
-          </table>
-          <button data-event="addQualField" class="btn btn-small">Add another Qualification</button>
-        </div>
-
-      </div>
-
-      <table>
-        </tr>
-      </table>
-      <div class="profile_links">
-        <h2 class="h1 border border-b">Employment (Please mention in chronological order)</h2>
-        <div class="show-if-editing">
-          <table id="edit_links_table" cellpadding="10">
-            <thead>
-            <th>Organization</th>
-            <th>From(MM/YYYY)</th>
-            <th>To(MM/YYYY)</th>
-            <th>Designation</th>
-            <th>Permanent/ contract</th>
-            <th>Reason for leaving</th>
-            <th></th>
-            </thead>
-            <tbody id="work_fields"></tbody>
-          </table>
-          <button data-event="addWorkField" class="btn btn-small">Add another Experience</button>
-        </div>
-
-      </div>
-      <div class="profile_links" style="margin-top:10px;">
-        <div class="show-if-editing">
-
-          <table>
+            <tr>
+              <td class='alnright'><%= f.label :gender, "Gender"%></td>
+              <td style="padding-top: 17px;"><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</td>
+              <% if @candidate_filter.dob == TRUE %>
+                <td class='alnright'><%= f.label :birthdate, "Date Of Birth*"%></td><td><%= f.text_field :birthdate, :required => true, :placeholder => "DD-MM-YYYY"%></td>
+              <% end %>
             </tr>
-            <tr><td></td><td><%= f.submit "submit", class: "btn btn-primary" %>
-            </td></tr>
+            <tr>
+                <% if @candidate_filter.email_id == TRUE %>
+                  <td class='alnright'><%= f.label :unique_id, "E-mail Id*" %></td>
+                  <td><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></td>
+                <% end %>
+                <% if @candidate_filter.contact_number == TRUE %>
+                  <td class='alnright'><%= f.label :phone, "Contact number*"%></td><td><%= f.text_field :phone, :required => true%></td>
+                <% end %>
+            </tr>
+
+            <% if @candidate_filter.address == TRUE %>
+                <tr><td  class='alnright'><%= f.label :address, "Address*" %></td>
+                  <td><%= f.text_field :address, :required => true %></td>
+                  <td  class='alnright'><%= f.label :city, "City" %></td><td><%= f.text_field :city%></td>
+                </tr>
+                <tr>
+                  <td  class='alnright'><%= f.label :state, "State" %></td><td><%= f.text_field :state%></td>
+                  <td  class='alnright'><%= f.label :zip_code, "Zip code" %></td><td><%= f.text_field :zip_code%></td>
+                </tr>
+            <% end %>
           </table>
         </div>
+      </div>
+      <% if @candidate_filter.academics == TRUE %>
+          <div class="profile_links">
+            <h2 class="h1 border border-b">Academic Qualifications</h2>
+            <div class="show-if-editing">
+              <table id="edit_links_table" cellpadding="10" >
+
+                <thead>
+                <th>Degree</th>
+                <th>Discipline</th>
+                <th>School/ College</th>
+                <th>Year of Completion</th>
+                <th>%/ CGPA</th>
+                <th></th>
+                </thead>
+                <tbody id="qual_fields">
+                <% @user_data.each do |link| %>
+                    <tr>
+                      <input type="hidden" name="link_ids[]" value=<%= link.id.to_i %>>
+                      <td><input type="text" name="link_degrees[]" value="<%= link.degree %>"></td>
+                      <td><input type="text" name="link_disciplines[]" value="<%= link.discipline %>"></td>
+                      <td><input type="text" name="link_colleges[]" value="<%= link.college %>"></td>
+                      <td><input type="text" name="link_year_of_completions[]" value="<%= link.year_of_completion %>"></td>
+                      <td><input type="text" name="link_percentages[]" value="<%= link.percentage %>"></td>
+                      <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+              <button data-event="addQualField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Qualification</button>
+              <br/>
+            </div>
+            <br/>
+          </div>
+      <% end %>
+      <% if @candidate_filter.employment == TRUE %>
+          <div class="profile_links">
+            <h2 class="h1 border border-b">Employment (Please mention in chronological order)</h2>
+            <div class="show-if-editing">
+              <table id="edit_links_table" cellpadding="10">
+                <thead>
+                <th>Organization</th>
+                <th>From(MM/YYYY)</th>
+                <th>To(MM/YYYY)</th>
+                <th>Designation</th>
+                <th>Permanent/ contract</th>
+                <th>Reason for leaving</th>
+                <th></th>
+                </thead>
+                <tbody id="work_fields">
+                <% @user_experience.each do |link| %>
+                    <tr>
+                      <input type="hidden" name="link_experience_ids[]" value="<%= link.id %>">
+                      <td><input type="text" name="link_organizations[]" value="<%= link.organization %>"></td>
+                      <td><input type="text" name="link_from_dates[]" value="<%= link.from_date %>"></td>
+                      <td><input type="text" name="link_end_dates[]" value="<%= link.end_date %>"></td>
+                      <td><input type="text" name="link_designations[]" value="<%= link.designation %>"></td>
+                      <td><input type="text" name="link_permanents[]" value="<%= link.permanent %>"></td>
+                      <td><input type="text" name="link_reason_for_leaving[]" value="<%= link.reason_for_leaving %>"></td>
+                      <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
+                    </tr>
+
+                <% end %>
+                </tbody>
+              </table>
+
+              <button data-event="addWorkField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Experience</button>
+
+            </div>
+
+          </div>
+      <% end %>
+      <br/>
+      <br/>
+      <div style="text-align: center;"><%= f.submit "SUBMIT", class: "btn btn-small btn-primary" %>
       </div>
   <% end %>
 </div>

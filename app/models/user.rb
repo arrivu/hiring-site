@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   include Context
   include UserFollow::FollowedItem
 
-  attr_accessible :name, :short_name, :sortable_name, :time_zone, :show_user_services, :gender, :visible_inbox_types, :avatar_image, :subscribe_to_emails, :locale, :bio, :birthdate, :terms_of_use, :self_enrollment_code, :initial_enrollment_type
+  attr_accessible :name, :short_name, :sortable_name, :time_zone, :show_user_services, :gender, :visible_inbox_types, :avatar_image, :subscribe_to_emails, :locale, :bio, :birthdate, :terms_of_use, :self_enrollment_code, :initial_enrollment_type, :middle_name, :last_name, :address, :city, :state, :zip_code, :phone, :email
   attr_accessor :original_id, :menu_data
 
   before_save :infer_defaults
@@ -129,7 +129,8 @@ class User < ActiveRecord::Base
         enrollment_conditions(:invited, strict_course_state, course_workflow_state)
     end
   end
-
+  has_many :user_academics
+  has_many :user_work_experiences
   has_many :communication_channels, :order => 'communication_channels.position ASC', :dependent => :destroy
   has_one :communication_channel, :order => 'position'
   has_many :enrollments, :dependent => :destroy

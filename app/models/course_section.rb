@@ -21,6 +21,7 @@ class CourseSection < ActiveRecord::Base
 
   attr_protected :sis_source_id, :sis_batch_id, :course_id,
       :root_account_id, :enrollment_term_id
+  has_one :course_unique_code_association
   belongs_to :course
   belongs_to :nonxlist_course, :class_name => 'Course'
   belongs_to :root_account, :class_name => 'Account'

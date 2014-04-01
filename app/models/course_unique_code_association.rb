@@ -1,7 +1,9 @@
 class CourseUniqueCodeAssociation < ActiveRecord::Base
   belongs_to :course
+  belongs_to :course_section
+  belongs_to :quiz
 
-  attr_accessible :course_id,:unique_access_code
+  attr_accessible :course_id,:unique_access_code, :course_section_id
 
   # default key length: 10 characters
   mattr_accessor :unique_key_length

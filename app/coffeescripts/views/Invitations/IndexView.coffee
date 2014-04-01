@@ -1,6 +1,5 @@
 define [
   'jquery'
-  'i18n!rewards'
   'str/htmlEscape'
   'jst/invitations/IndexView'
   'compiled/views/Invitations/PersonelCollectionView'
@@ -10,7 +9,7 @@ define [
   'compiled/models/Academics'
   'compiled/views/Invitations/AcademicsView'
 #  'compiled/models/Experience'
-], ($, I18n, htmlEscape, template, PersonelCollectionView, Personel, AcademicsCollectionView, Academics, AcademicsView) ->
+], ($, htmlEscape, template, PersonelCollectionView, Personel, AcademicsCollectionView, Academics, AcademicsView) ->
 
   class IndexView extends Backbone.View
 

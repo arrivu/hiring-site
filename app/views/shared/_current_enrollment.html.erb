@@ -11,7 +11,13 @@
   </div>
 <% else %>
   <% show_link = current_enrollment.course.grants_right?(@current_user, session, :read) %>
-  <% if show_link %><a href="<%= course_path(current_enrollment.course_id) %>"><% end %>
+  <% if show_link %>
+        <% if current_enrollment.type == "StudentEnrollment" %>
+        <a href="<%= course_quizzes_path(current_enrollment.course_id) %>">
+        <%else %>
+            <a href="<%= course_path(current_enrollment.course_id) %>">
+        <% end %>
+        <% end %>
     <span class="name ellipsis" title="<%= current_enrollment.long_name %>">
       <%= current_enrollment.long_name %>
       <% if current_enrollment.admin? && (current_enrollment.course.created? || current_enrollment.course.claimed?) %>

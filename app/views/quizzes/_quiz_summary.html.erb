@@ -7,7 +7,12 @@
 %>
 <li class="quiz clearfix <%= 'unpublished' if unpublished %>" id="summary_quiz_<%= q ? q.id : "blank" %>" style="position: relative">
   <div class="title">
-    <a href="<%= context_url(@context, :context_quiz_url, q) %>" class="quiz_title"><%= q.quiz_title || q.readable_type %></a>
+    <% if can_do(q, @current_user, :update)%>
+    <a href="<%= context_url(@context, :context_quiz_url, q) %>" class="quiz_title">
+   <% else %>
+        <a href="<%= context_url(@context, :context_quiz_url, q) %>?force_user=1&persist_headless=1" class="quiz_title">
+   <% end %>
+      <%= q.quiz_title || q.readable_type %></a>
     <span class="quiz_id" style="display: none;"><%= (q && q.id) || nbsp %></span>
     <% if q && q.assignment_id && q.assignment.try(:points_possible) %>
       <span style="font-size: 0.8em; font-weight: normal;">(<%= t(:assignment_points_possible, "pt", :count => q.assignment.points_possible) %>)</span>
@@ -15,11 +20,12 @@
   </div>
 
   <% if q.available? %>
-  <div style="border-bottom: 1px solid #ccc;float: right;">
+      <% if can_do(q, @current_user, :update) %>  <div style="border-bottom: 1px solid #ccc;float: right;">
     <a href="<%= course_quiz_invitations_path(@context,q) %>" class="send_invitation" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
       <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
     </a>
   </div>
+    <% end %>
       <br/>
   <% end %>
   <div class="description user_content">
@@ -34,7 +40,7 @@
           <% else %>
             <%= before_label(:quiz_details, "Assesments Details") %>
           <% end %>
-        </div>
+           </div>
 
         <% if submission && submission.completed? %>
           <%= datetime_string(submission.finished_at) %><br/>

@@ -1,4 +1,9 @@
-<% content_for :page_title, t(:page_titles, "Assessments") %>
+<% content_for :page_title, t(:page_titles, "Assessments")%>
+<% if @context_enrollment.type == "StudentEnrollment" %>
+    <% @headers = false
+
+    @show_left_side = false %>
+<% end %>
 
 <% if @context.feature_enabled?(:draft_state) %>
 
