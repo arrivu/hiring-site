@@ -382,11 +382,13 @@
     
   </div>
   <div id="tab-sections">
-    <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
-    <ul id="sections" style="max-width:100%;">
 
+    <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
+    <table cellspacing="10" class="table" id="sections" style="max-width:100%;">
+      <tr><th>Batch Name</th><th>Enrolled Users</th><th>Access Code</th><th>Start Date</th><th>End Date</th></tr>
       <% @context.course_sections.active.each do |section| %>
-        <li class="section">
+        <tr class="section">
+          <td>
           <% if can_do section, @current_user, :read %>
             <a href="<%= context_url(@context, :context_section_url, section) %>" class="name">
               <%= section.display_name %>
@@ -396,6 +398,8 @@
               <%= section.display_name %>
             </span>
           <% end %>
+          </td>
+          <td>
           <span class="users_count">
             (
               <%= t 'enrollment_count', 'User', :count => section.enrollments.not_fake.count %><% if section && section.sis_source_id %>,
@@ -403,33 +407,39 @@
               <% end %>
             )
           </span>
+          </td>
+          <td>
           <span class="users_count">
-            (
+
             <% if can_do(section, @current_user, :update) %>
                    <% get_unique_access_code(@context,section)%>
-                   Access Code:<span style="font-size:16px;"><%=@access_code.unique_access_code unless @access_code.nil? %></span>
+                   <span style="font-size:16px;"><%=@access_code.unique_access_code unless @access_code.nil? %></span>
             <% end  %>
-              )
+
 
           </span>
+          </td>
+          <td>
+
            <span class="start_date">
-            (
             <% if can_do(section, @current_user, :update) %>
 
-              Start Date: <%= datetime_string(section.start_at, :verbose, nil, true)%>
+              <%= datetime_string(section.start_at, :verbose, nil, true)%>
             <% end  %>
-             )
+           </span>
 
-          </span>
-          <span class="users_count">
-            (
+          </td>
+          <td>
+          <span class="end_date">
+
             <% if can_do(section, @current_user, :update) %>
 
-              End Date: <%= datetime_string(section.end_at, :verbose, nil, true) %>
+              <%= datetime_string(section.end_at, :verbose, nil, true) %>
             <% end  %>
-            )
 
           </span>
+            </td>
+          <td>
           <span class="section_links">
             <% if can_do(section, @current_user, :update) && !section.defined_by_sis? %>
               <a class="no-hover edit_section_link" title="<%= t('links.title.edit_section', %{Edit Batch}) %>" href="<%= context_url(@context, :context_section_url, section) %>"><i class="icon-edit standalone-icon"></i><span class="screen-reader-text"><%= t('images.alt.edit', %{Edit}) %></span></a>
@@ -443,8 +453,10 @@
             <% end %>
           </span>
           <div class="clear"></div>
-        </li>
+          </td>
+        </tr>
       <% end %>
+      </table>
       <li class="section_blank" style="display: none;">
         <a href="<%= context_url(@context, :context_section_url, "{{ id }}") %>" class="name"></a>
         <span class="section_links">
@@ -465,7 +477,9 @@
     </ul>
     <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :method => :put, :style => "display: none;"} do |f| %>
       <%= f.text_field :name %>
-      <%= f.text_field :start_at %>
+      <%= f.text_field :start_at, :class => "datetime_field", :id => "batch_start_date" %>
+      <%= f.text_field :end_at, :class => "datetime_field", :id => "batch_end_date" %>
+      <button name="update" class="btn btn-primary submit_update_button"><%= t('buttons.update_section', 'Update Batch') %></button>
     <% end %>
   </div>
   <% if can_do @context, @current_user, :update %>

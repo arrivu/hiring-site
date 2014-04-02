@@ -164,7 +164,11 @@ define([
         var $section = $edit_section_form.parents(".section");
         $section.find(".name").text(data['course_section[name]']).show();
         //alert(JSON.stringify(data));
+        //alert(data['course_section[start_at]']);
+        $('#batch_start_date').val(data['course_section[start_at]']);
+        $('#batch_end_date').val(data['course_section[end_at]']);
         $section.find(".start_date").text(data['course_section[start_at]']).show();
+        $section.find(".end_date").text(data['course_section[end_at]']).show();
         $section.loadingImage({image_size: "small"});
         return $section;
       },
@@ -180,29 +184,33 @@ define([
     })
     .find(":text")
       .bind('blur', function() {
-        $edit_section_form.submit();
+        //$edit_section_form.submit();
       })
       .keycodes('return esc', function(event) {
         if(event.keyString == 'return') {
-          $edit_section_form.submit();
+          //$edit_section_form.submit();
         } else {
           $(this).parents(".section").find(".name").show();
           $("body").append($edit_section_form.hide());
         }
       });
+      $(".submit_update_button").click(function() {
+          $edit_section_form.submit();
+      });
     $(".edit_section_link").click(function() {
      var $this = $(this),
      $section = $this.parents(".section"),
-     data = $section.getTemplateData({textValues: ['name','start_date']});
+     data = $section.getTemplateData({textValues: ['name','start_date','end_date']});
      $edit_section_form.fillFormData(data, {object_name: "course_section"});
      $section.find(".name").hide().after($edit_section_form.show());
      $section.find(".start_date").hide().after($edit_section_form.show());
+     $section.find(".end_date").hide().after($edit_section_form.show());
      $edit_section_form.attr('action', $this.attr('href'));
      $edit_section_form.find(":text:first").focus().select();
-     alert(JSON.stringify(data));
-     //$edit_section_form.("input[type=text]").focus().select();
-      //alert("ok");
-      return false;
+     $('#batch_start_date').val(data['start_date']);
+     $('#batch_end_date').val(data['end_date']);
+     //alert("ok");
+     return false;
     });
     $(".delete_section_link").click(function() {
       $(this).parents(".section").confirmDelete({
