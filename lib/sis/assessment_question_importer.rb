@@ -41,12 +41,9 @@ module SIS
       return importer.success_count
     end
 
-
-
-
     private
     class Work
-      attr_accessor :success_count, :question, :bank, :assessment_question, :id, :count
+      attr_accessor :success_count, :question, :bank, :assessment_question, :id, :weight_count, :question_row
 
       def initialize(batch_id, root_account, logger)
         @batch_id = batch_id
@@ -55,7 +52,8 @@ module SIS
         @question = {}
         @bank = {}
         @success_count = 0
-        @count = 0
+        @weight_count = 0
+        @question_row = 0
       end
 
       def unique_local_id
@@ -87,11 +85,177 @@ module SIS
           if AssessmentQuestionBank.active.find_by_title(question_bank_title).present?
             question_bank_id = AssessmentQuestionBank.active.find_by_title(question_bank_title).id
             @bank = @root_account.assessment_question_banks.active.find(question_bank_id)
+                @question_row += 1
+                question = @bank.assessment_questions.new
+                @assessment_question ||= {}
+                if question_type == "true_false_question"
+                  if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
+                    question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
+                                              :correct_comments => correct_comments,
+                                              :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
+                                              :question_type => question_type,:name => name, :question_name => question_name,
+                                              :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
+                                              :text => ans1_text,:weight => ans1_weight.to_i},  {:id => ans2_id,:comments => ans2_comments,
+                                              :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
+                                              :assessment_question_id => assessment_question_id }
+                    if ans1_weight == "100" || ans1_weight == "0" and ans2_weight == "100" || ans2_weight == "0"
+                      if ans1_weight != ans2_weight
+                        if question.with_versioning(&:save)
+                          question.insert_at_bottom
+                        end
+                      else
+                        raise ImportError, "Improper weight for question #{question_row}"
+                      end
+                    else
+                      raise ImportError, "Improper weight for question #{question_row}"
+                    end
+                  else
+                    raise ImportError, "Improper answer for question #{question_row}"
+                  end
+                elsif question_type == "multiple_choice_question"
+                  if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
+                       question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
+                                                 :correct_comments => correct_comments,
+                                                 :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
+                                                 :question_type => question_type,:name => name, :question_name => question_name,
+                                                 :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
+                                                 :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
+                                                 :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
+                                                 :assessment_question_id => assessment_question_id }
 
+                       if ans3_text !=nil && ans3_weight !=nil
+                         question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
+                                                              :text => ans3_text,:weight => ans3_weight.to_i}
+                       end
+                       if ans4_text !=nil && ans4_weight !=nil
+                       question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
+                                                              :text => ans4_text,:weight => ans4_weight.to_i}
+                       end
 
+                       if ans5_text !=nil && ans5_weight != nil
+                         question.question_data[:answers] << {:id => ans5_id,:comments => ans5_comments,
+                                                              :text => ans5_text,:weight => ans5_weight.to_i}
+                       end
+                       @weight_count = 0
+                       if ans1_weight == "100" || ans1_weight == "0" || ans1_weight == nil and ans2_weight == "100" ||
+                          ans2_weight == "0" || ans2_weight == nil and ans3_weight == "100" || ans3_weight == "0" ||
+                          ans3_weight == nil and ans4_weight == "100" || ans4_weight == "0" || ans4_weight == nil and
+                          ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
+                         if ans1_weight == "100"
+                           @weight_count +=1
+                         end
+                         if ans2_weight == "100"
+                           @weight_count +=1
+                         end
+                         if ans3_weight == "100"
+                           @weight_count +=1
+                         end
+                         if ans4_weight == "100"
+                           @weight_count +=1
+                         end
+                         if ans5_weight == "100"
+                           @weight_count +=1
+                         end
+                         if @weight_count == 1
+                           if question.with_versioning(&:save)
+                             question.insert_at_bottom
+                           end
+                         else
+                           raise ImportError, "Improper weight for question #{question_row}"
+                         end
+                       else
+                         raise ImportError, "Improper weight for question #{question_row}"
+                       end
+                  else
+                    raise ImportError, "Improper answer for question #{question_row}"
+                  end
+                elsif question_type == "short_answer_question"
+                    if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
+                        question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
+                                                  :correct_comments => correct_comments,
+                                                  :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
+                                                  :question_type => question_type,:name => name, :question_name => question_name,
+                                                  :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
+                                                  :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
+                                                  :text => ans2_text,:weight => ans2_weight.to_i}],:text_after_answers => text_after_answers,
+                                                  :assessment_question_id => assessment_question_id }
+
+                        if ans3_text !=nil && ans3_weight !=nil
+                          question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
+                                                               :text => ans3_text,:weight => ans3_weight.to_i}
+                        end
+                        if ans4_text !=nil && ans4_weight !=nil
+                          question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
+                                                               :text => ans4_text,:weight => ans4_weight.to_i}
+                        end
+
+                        if ans5_text !=nil && ans5_weight != nil
+                          question.question_data[:answers] << {:id => ans5_id,:comments => ans5_comments,
+                                                               :text => ans5_text,:weight => ans5_weight.to_i}
+                        end
+                          if ans1_weight == "100" ||  ans1_weight == nil and ans2_weight == "100" ||
+                             ans2_weight == nil and ans3_weight == "100" || ans3_weight == nil and
+                             ans4_weight == "100" || ans4_weight == nil and ans5_weight == "100" || ans5_weight == nil
+                            if question.with_versioning(&:save)
+                              question.insert_at_bottom
+                            end
+                          else
+                            raise ImportError, "Improper weight for question #{question_row}"
+                          end
+                    else
+                      raise ImportError, "Improper answer for question #{question_row}"
+                    end
+                elsif question_type == "multiple_answers_question"
+                  if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
+                      question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
+                                                :correct_comments => correct_comments,
+                                                :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
+                                                :question_type => question_type,:name => name, :question_name => question_name,
+                                                :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
+                                                :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
+                                                :text => ans2_text,:weight => ans2_weight.to_i}],:text_after_answers => text_after_answers,
+                                                :assessment_question_id => assessment_question_id }
+                      if ans3_text !=nil && ans3_weight !=nil
+                        question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
+                                                             :text => ans3_text,:weight => ans3_weight.to_i}
+                      end
+                      if ans4_text !=nil && ans4_weight !=nil
+                        question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
+                                                             :text => ans4_text,:weight => ans4_weight.to_i}
+                      end
+                      if ans5_text !=nil && ans5_weight != nil
+                        question.question_data[:answers] << {:id => ans5_id,:comments => ans5_comments,
+                                                             :text => ans5_text,:weight => ans5_weight.to_i}
+                      end
+                      if ans1_weight == "100" || ans1_weight == "0" || ans1_weight == nil and ans2_weight == "100" ||
+                         ans2_weight == "0" || ans2_weight == nil and ans3_weight == "100" || ans3_weight == "0" ||
+                         ans3_weight == nil and ans4_weight == "100" || ans4_weight == "0" || ans4_weight == nil and
+                         ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
+                        if question.with_versioning(&:save)
+                          question.insert_at_bottom
+                        end
+                      else
+                        raise ImportError, "Improper weight for question #{question_row}"
+                      end
+                   else
+                    raise ImportError, "Improper answer for question #{question_row}"
+                  end
+                else
+                   raise ImportError, "Improper Question Type for question #{question_row}"
+                end
+             # end
+             #end
+          else
+              bank_new = @root_account.assessment_question_banks.new
+              bank_new.title = question_bank_title
+              bank_new.workflow_state = "active"
+              bank_new.save
+              @bank = @root_account.assessment_question_banks.active.find(bank_new.id)
+              @question_row += 1
               question = @bank.assessment_questions.new
               @assessment_question ||= {}
               if question_type == "true_false_question"
+                if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                   question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
                                             :correct_comments => correct_comments,
                                             :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
@@ -100,180 +264,152 @@ module SIS
                                             :text => ans1_text,:weight => ans1_weight.to_i},  {:id => ans2_id,:comments => ans2_comments,
                                             :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
                                             :assessment_question_id => assessment_question_id }
-                  if ans1_weight != ans2_weight
-                    if question.with_versioning(&:save)
-                      question.insert_at_bottom
+                  if ans1_weight == "100" || ans1_weight == "0" and ans2_weight == "100" || ans2_weight == "0"
+                    if ans1_weight != ans2_weight
+                      if question.with_versioning(&:save)
+                        question.insert_at_bottom
+                      end
+                    else
+                      raise ImportError, "Improper weight for question #{question_row}"
                     end
                   else
-                    raise ImportError, "Improper weight"
+                    raise ImportError, "Improper weight for question #{question_row}"
                   end
-                  elsif question_type == "multiple_choice_question" || question_type == "short_answer_question"
-                     question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                               :correct_comments => correct_comments,
-                                               :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
-                                               :question_type => question_type,:name => name, :question_name => question_name,
-                                               :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
-                                               :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
-                                               :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
-                                               :assessment_question_id => assessment_question_id }
-
-                     if ans3_text !=nil && ans3_weight !=nil
-                       question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
-                                                            :text => ans3_text,:weight => ans3_weight.to_i}
-                     end
-                     if ans4_text !=nil && ans4_weight !=nil
-                     question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
-                                                            :text => ans4_text,:weight => ans4_weight.to_i}
-                     end
-
-                     if ans5_text !=nil && ans5_weight != nil
-                       question.question_data [:answers] << {:id => ans5_id,:comments => ans5_comments,
-                                                              :text => ans5_text,:weight => ans5_weight.to_i}
-                     end
-
-                     if ans1_weight == "100"
-                       @count +=1
-                     end
-                     if ans2_weight == "100"
-                       @count +=1
-                     end
-                     if ans3_weight == "100"
-                       @count +=1
-                     end
-                     if ans4_weight == "100"
-                       @count +=1
-                     end
-                     if ans5_weight == "100"
-                       @count +=1
-                     end
-                       if @count == 1
-                       if question.with_versioning(&:save)
-                         question.insert_at_bottom
-                       end
-                     else
-                       raise ImportError, "Improper weight"
-                     end
-                  elsif question_type == "multiple_answers_question"
+                else
+                  raise ImportError, "Improper answer for question  #{question_row}"
+                end
+              elsif question_type == "multiple_choice_question"
+                if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                     question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
                                               :correct_comments => correct_comments,
                                               :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                               :question_type => question_type,:name => name, :question_name => question_name,
                                               :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
                                               :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
-                                              :text => ans2_text,:weight => ans2_weight.to_i}],:text_after_answers => text_after_answers,
+                                              :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
                                               :assessment_question_id => assessment_question_id }
                     if ans3_text !=nil && ans3_weight !=nil
                       question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
-                                                             :text => ans3_text,:weight => ans3_weight.to_i}                     end
+                                                           :text => ans3_text,:weight => ans3_weight.to_i}
+                    end
                     if ans4_text !=nil && ans4_weight !=nil
                       question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
-                                                            :text => ans4_text,:weight => ans4_weight.to_i}
+                                                           :text => ans4_text,:weight => ans4_weight.to_i}
                     end
+
                     if ans5_text !=nil && ans5_weight != nil
                       question.question_data[:answers] << {:id => ans5_id,:comments => ans5_comments,
-                                                             :text => ans5_text,:weight => ans5_weight.to_i}
+                                                            :text => ans5_text,:weight => ans5_weight.to_i}
                     end
+                    @weight_count = 0
+                    if ans1_weight == "100" || ans1_weight == "0" || ans1_weight == nil and ans2_weight == "100" ||
+                       ans2_weight == "0" || ans2_weight == nil and ans3_weight == "100" || ans3_weight == "0" ||
+                       ans3_weight == nil and ans4_weight == "100" || ans4_weight == "0" || ans4_weight == nil and
+                       ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
+                      if ans1_weight == "100"
+                        @weight_count +=1
+                      end
+                      if ans2_weight == "100"
+                        @weight_count +=1
+                      end
+                      if ans3_weight == "100"
+                        @weight_count +=1
+                      end
+                      if ans4_weight == "100"
+                        @weight_count +=1
+                      end
+                      if ans5_weight == "100"
+                        @weight_count +=1
+                      end
+                      if @weight_count == 1
+                        if question.with_versioning(&:save)
+                          question.insert_at_bottom
+                        end
+                      else
+                        raise ImportError, "Improper weight for question #{question_row}"
+                      end
+                    else
+                      raise ImportError, "Improper weight for question #{question_row}"
+                    end
+                else
+                  raise ImportError, "Improper answer for question #{question_row}"
+                end
+              elsif question_type == "short_answer_question"
+                if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
+                  question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
+                                            :correct_comments => correct_comments,
+                                            :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
+                                            :question_type => question_type,:name => name, :question_name => question_name,
+                                            :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
+                                                                                           :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
+                                                                                                                                             :text => ans2_text,:weight => ans2_weight.to_i}],:text_after_answers => text_after_answers,
+                                            :assessment_question_id => assessment_question_id }
+
+                  if ans3_text !=nil && ans3_weight !=nil
+                    question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
+                                                         :text => ans3_text,:weight => ans3_weight.to_i}
+                  end
+                  if ans4_text !=nil && ans4_weight !=nil
+                    question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
+                                                         :text => ans4_text,:weight => ans4_weight.to_i}
+                  end
+
+                  if ans5_text !=nil && ans5_weight != nil
+                    question.question_data[:answers] << {:id => ans5_id,:comments => ans5_comments,
+                                                         :text => ans5_text,:weight => ans5_weight.to_i}
+                  end
+                  if ans1_weight == "100" ||  ans1_weight == nil and ans2_weight == "100" ||
+                      ans2_weight == nil and ans3_weight == "100" || ans3_weight == nil and
+                      ans4_weight == "100" || ans4_weight == nil and ans5_weight == "100" || ans5_weight == nil
                     if question.with_versioning(&:save)
                       question.insert_at_bottom
                     end
                   else
-                    raise ImportError, "Improper Question Type"
-              end
-          else
-              bank_new = @root_account.assessment_question_banks.new
-              bank_new.title = question_bank_title
-              bank_new.workflow_state = "active"
-              bank_new.save
-              @bank = @root_account.assessment_question_banks.active.find(bank_new.id)
-              question = @bank.assessment_questions.new
-              @assessment_question ||= {}
-              if question_type == "true_false_question"
-
-                question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                          :correct_comments => correct_comments,
-                                          :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
-                                          :question_type => question_type,:name => name, :question_name => question_name,
-                                          :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
-                                          :text => ans1_text,:weight => ans1_weight.to_i},  {:id => ans2_id,:comments => ans2_comments,
-                                          :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
-                                          :assessment_question_id => assessment_question_id }
-                if ans1_weight != ans2_weight
-                  if question.with_versioning(&:save)
-                    question.insert_at_bottom
+                    raise ImportError, "Improper weight for question #{question_row}"
                   end
                 else
-                  raise ImportError, "Improper weight"
-                end
-              elsif question_type == "multiple_choice_question" || question_type == "short_answer_question"
-                question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                          :correct_comments => correct_comments,
-                                          :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
-                                          :question_type => question_type,:name => name, :question_name => question_name,
-                                          :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
-                                          :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
-                                          :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
-                                          :assessment_question_id => assessment_question_id }
-                if ans3_text !=nil && ans3_weight !=nil
-                  question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
-                                                       :text => ans3_text,:weight => ans3_weight.to_i}
-                end
-                if ans4_text !=nil && ans4_weight !=nil
-                  question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
-                                                       :text => ans4_text,:weight => ans4_weight.to_i}
-                end
-
-                if ans5_text !=nil && ans5_weight != nil
-                  question.question_data [:answers] << {:id => ans5_id,:comments => ans5_comments,
-                                                        :text => ans5_text,:weight => ans5_weight.to_i}
-                end
-                if ans1_weight == "100"
-                  @count +=1
-                end
-                if ans2_weight == "100"
-                  @count +=1
-                end
-                if ans3_weight == "100"
-                  @count +=1
-                end
-                if ans4_weight == "100"
-                  @count +=1
-                end
-                if ans5_weight == "100"
-                  @count +=1
-                end
-                if @count == 1
-                  if question.with_versioning(&:save)
-                    question.insert_at_bottom
-                  end
-                else
-                  raise ImportError, "Improper weight"
+                  raise ImportError, "Improper answer for question #{question_row}"
                 end
               elsif question_type == "multiple_answers_question"
-                question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                          :correct_comments => correct_comments,
-                                          :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
-                                          :question_type => question_type,:name => name, :question_name => question_name,
-                                          :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
-                                          :text => ans1_text,:weight => ans1_weight.to_i},  {:id => ans2_id,:comments => ans2_comments,
-                                          :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
-                                          :assessment_question_id => assessment_question_id }
-                if ans3_text !=nil && ans3_weight !=nil
-                  question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
-                                                       :text => ans3_text,:weight => ans3_weight.to_i}                     end
-                if ans4_text !=nil && ans4_weight !=nil
-                  question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
-                                                       :text => ans4_text,:weight => ans4_weight.to_i}
-                end
-                if ans5_text !=nil && ans5_weight != nil
-                  question.question_data[:answers] << {:id => ans5_id,:comments => ans5_comments,
-                                                       :text => ans5_text,:weight => ans5_weight.to_i}
-                end
-                if question.with_versioning(&:save)
-                  question.insert_at_bottom
+                if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
+                    question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
+                                              :correct_comments => correct_comments,
+                                              :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
+                                              :question_type => question_type,:name => name, :question_name => question_name,
+                                              :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
+                                              :text => ans1_text,:weight => ans1_weight.to_i},  {:id => ans2_id,:comments => ans2_comments,
+                                              :text => ans2_text,:weight => ans2_weight.to_i} ],:text_after_answers => text_after_answers,
+                                              :assessment_question_id => assessment_question_id }
+                    if ans3_text !=nil && ans3_weight !=nil
+                      question.question_data[:answers] << {:id => ans3_id,:comments => ans3_comments,
+                                                           :text => ans3_text,:weight => ans3_weight.to_i}
+                    end
+                    if ans4_text !=nil && ans4_weight !=nil
+                      question.question_data[:answers] << {:id => ans4_id,:comments => ans4_comments,
+                                                           :text => ans4_text,:weight => ans4_weight.to_i}
+                    end
+                    if ans5_text !=nil && ans5_weight != nil
+                      question.question_data[:answers] << {:id => ans5_id,:comments => ans5_comments,
+                                                           :text => ans5_text,:weight => ans5_weight.to_i}
+                    end
+                    if ans1_weight == "100" || ans1_weight == "0" || ans1_weight == nil and ans2_weight == "100" ||
+                       ans2_weight == "0" || ans2_weight == nil and ans3_weight == "100" || ans3_weight == "0" ||
+                       ans3_weight == nil and ans4_weight == "100" || ans4_weight == "0" || ans4_weight == nil and
+                       ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
+                      if question.with_versioning(&:save)
+                        question.insert_at_bottom
+                      end
+                    else
+                      raise ImportError, "Improper weight for question #{question_row}"
+                    end
+                else
+                  raise ImportError, "Improper answer for question #{question_row}"
                 end
               else
-                raise ImportError, "Improper Question Type"
-            end
+                raise ImportError, "Improper Question Type for question #{question_row}"
+              end
+             # end
+             #end
           end
         end
 
