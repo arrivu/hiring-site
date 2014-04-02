@@ -341,8 +341,8 @@ module SIS
                                             :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                             :question_type => question_type,:name => name, :question_name => question_name,
                                             :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
-                                                                                           :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
-                                                                                                                                             :text => ans2_text,:weight => ans2_weight.to_i}],:text_after_answers => text_after_answers,
+                                            :text => ans1_text,:weight => ans1_weight.to_i}, {:id => ans2_id,:comments => ans2_comments,
+                                            :text => ans2_text,:weight => ans2_weight.to_i}],:text_after_answers => text_after_answers,
                                             :assessment_question_id => assessment_question_id }
 
                   if ans3_text !=nil && ans3_weight !=nil
