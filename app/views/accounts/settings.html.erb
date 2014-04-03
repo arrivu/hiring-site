@@ -40,9 +40,9 @@
   <%# if can_do(@context, @current_user, :manage_storage_quotas) %>
       <!--<li><a href="#tab-quotas" id="tab-quotas-link"><%#= t(:tab_quotas, "Quotas") %></a></li>-->
   <%# end %>
-  <%# if can_do(@context, @current_user, :manage_account_settings) %>
-      <!--<li><a href="#tab-notifications" id="tab-notifications-link"><%#= t(:tab_notifications, "Notifications") %></a></li>-->
-  <%# end %>
+  <% if can_do(@context, @current_user, :manage_account_settings) %>
+      <li><a href="#tab-notifications" id="tab-notifications-link"><%= t(:tab_notifications, "Notifications") %></a></li>
+  <% end %>
   <li><a href="#tab-users" id="tab-users-link"><%= t(:tab_admins, "Admins") %></a></li>
   <%# if @account.root_account? %>
       <!--<li><a href="#tab-announcements" id="tab-announcements-link"><%#= t(:tab_announcements, "Announcements") %></a></li>-->

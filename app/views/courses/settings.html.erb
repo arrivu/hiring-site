@@ -385,7 +385,7 @@
 
     <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
     <table cellspacing="10" class="table" id="sections" style="max-width:100%;">
-      <tr><th>Batch Name</th><th>Enrolled Users</th><th>Access Code</th><th>Start Date</th><th>End Date</th></tr>
+      <tr><th>Batch Name</th><th>Enrolled Users</th><th>Access Code</th><th>Start Date</th><th>End Date</th><th></th></tr>
       <% @context.course_sections.active.each do |section| %>
         <tr class="section">
           <td>
@@ -442,7 +442,7 @@
           <td>
           <span class="section_links">
             <% if can_do(section, @current_user, :update) && !section.defined_by_sis? %>
-              <a class="no-hover edit_section_link" title="<%= t('links.title.edit_section', %{Edit Batch}) %>" href="<%= context_url(@context, :context_section_url, section) %>"><i class="icon-edit standalone-icon"></i><span class="screen-reader-text"><%= t('images.alt.edit', %{Edit}) %></span></a>
+              <a class=" no-hover edit_section_link" title="<%= t('links.title.edit_section', %{Edit Batch}) %>" href="<%= context_url(@context, :context_section_url, section) %>"><i class="icon-edit standalone-icon"></i><span class="screen-reader-text"><%= t('images.alt.edit', %{Edit}) %></span></a>
             <% end %>
             <% if can_do(section, @current_user, :delete) %>
               <% if section.deletable? %>
@@ -469,16 +469,21 @@
         <li>
           <%= form_for :course_section, :url => context_url(@context, :context_sections_url), :html => {:id => "add_section_form", :class => "form-inline", :style => "margin-top: 20px;"} do |f| %>
             <h3><%= f.blabel :name, :course_section_name, :en => "Add a New Batch" %></h3>
-            <%= f.text_field :name %>
+            <table cellspacing="20">
+            <tr><td>Batch Name</td><td><%= f.text_field :name %></td><td>Start Date</td><td><%= f.text_field :start_at, :class => "date_entry", :style => 'width: 120px;' %></td>
+              <td>End Date</td><td><%= f.text_field :end_at, :class => "date_entry", :style => 'width: 120px;' %></td>
+            </tr>
+
+            </table>
             <button class="btn btn-primary" type="submit"><i class="icon-add"></i> <%= t('buttons.add_section', %{Add Batch}) %></button>
           <% end %>
         </li>
       <% end %>
     </ul>
-    <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :method => :put, :style => "display: none;"} do |f| %>
-      <%= f.text_field :name %>
-      <%= f.text_field :start_at, :class => "datetime_field", :id => "batch_start_date" %>
-      <%= f.text_field :end_at, :class => "datetime_field", :id => "batch_end_date" %>
+    <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :title => "Edit Batch", :method => :put, :style => "display: none;"} do |f| %>
+      Batch Name<%= f.text_field :name %><br/>
+      Start Date<%= f.text_field :start_at, :class => "date_entry", :id => "batch_start_date", :style => 'width: 120px;' %><br/>
+      End Date<%= f.text_field :end_at, :class => "date_entry", :id => "batch_end_date", :style => 'width: 120px;' %>
       <button name="update" class="btn btn-primary submit_update_button"><%= t('buttons.update_section', 'Update Batch') %></button>
     <% end %>
   </div>
