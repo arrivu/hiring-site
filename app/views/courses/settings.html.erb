@@ -385,9 +385,9 @@
 
     <h2 style="margin-top: 10px;"><%= t('headings.sections', %{Project Batches}) %></h2>
     <table cellspacing="10" class="table" id="sections" style="max-width:100%;">
-      <tr><th>Batch Name</th><th>Enrolled Users</th><th>Access Code</th><th>Start Date</th><th>End Date</th><th></th></tr>
+      <tr><th>Batch Name</th><th>Enrolled Users</th><th>Access Code</th><th>Start Date</th><th>End Date</th><th></th><th></th></tr>
       <% @context.course_sections.active.each do |section| %>
-        <tr class="section">
+        <tr class="section" id="section_<%= section.id %>">
           <td>
           <% if can_do section, @current_user, :read %>
             <a href="<%= context_url(@context, :context_section_url, section) %>" class="name">
@@ -440,6 +440,11 @@
           </span>
             </td>
           <td>
+          <span class="sis_id" style="display:none;">
+           <%= section.sis_source_id %>
+          </span>
+          </td>
+          <td>
           <span class="section_links">
             <% if can_do(section, @current_user, :update) && !section.defined_by_sis? %>
               <a class=" no-hover edit_section_link" title="<%= t('links.title.edit_section', %{Edit Batch}) %>" href="<%= context_url(@context, :context_section_url, section) %>"><i class="icon-edit standalone-icon"></i><span class="screen-reader-text"><%= t('images.alt.edit', %{Edit}) %></span></a>
@@ -480,13 +485,15 @@
         </li>
       <% end %>
     </ul>
-    <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :title => "Edit Batch", :method => :put, :style => "display: none;"} do |f| %>
+    <div id="edit_batch_dialog" style="display: none;">
+    <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :title => "Edit Batch", :method => :put} do |f| %>
       Batch Name<%= f.text_field :name %><br/>
       Start Date<%= f.text_field :start_at, :class => "date_entry", :id => "batch_start_date", :style => 'width: 120px;' %><br/>
       End Date<%= f.text_field :end_at, :class => "date_entry", :id => "batch_end_date", :style => 'width: 120px;' %>
       <button name="update" class="btn btn-primary submit_update_button"><%= t('buttons.update_section', 'Update Batch') %></button>
     <% end %>
   </div>
+   </div>
   <% if can_do @context, @current_user, :update %>
 
     <div id="tab-navigation">

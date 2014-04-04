@@ -160,21 +160,26 @@ define([
     $edit_section_form.formSubmit({
 
       beforeSubmit: function(data) {
-        $edit_section_form.hide();
+        //$edit_section_form.hide();
+        $edit_section_form.find("button:last").attr('disabled', true).text("Updating Batch...");
         var $section = $edit_section_form.parents(".section");
-        $section.find(".name").text(data['course_section[name]']).show();
+        $section.find(".batch_name .name").text(data['course_section[name]']).show();
         $('#batch_start_date').val(data['course_section[start_at]']);
         $('#batch_end_date').val(data['course_section[end_at]']);
         $section.find(".start_date").text(data['course_section[start_at]']).show();
         $section.find(".end_date").text(data['course_section[end_at]']).show();
         $section.loadingImage({image_size: "small"});
-
         return $section;
       },
       success: function(data, $section) {
         var section = data.course_section;
         $section.loadingImage('remove');
         $(".option_for_section_" + section.id).text(section.name);
+        $("#section_" + section.id + " td .name").text(section.name);
+        $("#section_" + section.id + " td .start_date").text($.parseFromISO(section.start_at).datetime_formatted);
+        $("#section_" + section.id + " td  .end_date").text($.parseFromISO(section.end_at).datetime_formatted);
+        $("#edit_section_form").dialog('close');
+
       },
       error: function(data, $section) {
         $section.loadingImage('remove').find(".edit_section_link").click();
@@ -194,12 +199,12 @@ define([
         }
       });
 
-      $(".submit_update_button").click(function() {
-        $edit_section_form.submit();
-        $edit_section_form.dialog('close');
-        location.reload(true);
+      //$(".submit_update_button").click(function() {
+        //$edit_section_form.submit();
+        //$("#edit_section_form").dialog('close');
+        //location.reload(true);
 
-      });
+      //});
       /*
     $(".edit_section_link").click(function() {
      var $this = $(this),
@@ -216,9 +221,10 @@ define([
      return false;
     });
     */
-      $(".edit_section_link").live('click', function(event) {
+      $(".edit_section_link").click(function(event) {
 
           event.preventDefault();
+          $edit_section_form.find("button:last").attr('disabled', false).text("Update Batch");
           var $this = $(this),
           $section = $this.parents(".section"),
           data = $section.getTemplateData({textValues: ['name','start_date','end_date']});
@@ -226,6 +232,7 @@ define([
           $edit_section_form.attr('action', $this.attr('href'));
           $('#batch_start_date').val(data['start_date']);
           $('#batch_end_date').val(data['end_date']);
+
           $("#edit_section_form").dialog({
               modal: true,
               resizable: false,
