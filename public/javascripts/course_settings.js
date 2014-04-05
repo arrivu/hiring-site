@@ -166,6 +166,7 @@ define([
         $section.find(".batch_name .name").text(data['course_section[name]']).show();
         $('#batch_start_date').val(data['course_section[start_at]']);
         $('#batch_end_date').val(data['course_section[end_at]']);
+        $('#batch_sis_id').val(data['course_section[sis_source_id]']);
         $section.find(".start_date").text(data['course_section[start_at]']).show();
         $section.find(".end_date").text(data['course_section[end_at]']).show();
         $section.loadingImage({image_size: "small"});
@@ -178,6 +179,8 @@ define([
         $("#section_" + section.id + " td .name").text(section.name);
         $("#section_" + section.id + " td .start_date").text($.parseFromISO(section.start_at).datetime_formatted);
         $("#section_" + section.id + " td  .end_date").text($.parseFromISO(section.end_at).datetime_formatted);
+        $("#section_" + section.id + " td .sis_id").text(section.sis_source_id);
+        $("#section_" + section.id + " td .restrict_enrollments").text(section.restrict_enrollments_to_section_dates);
         $("#edit_section_form").dialog('close');
 
       },
@@ -199,12 +202,6 @@ define([
         }
       });
 
-      //$(".submit_update_button").click(function() {
-        //$edit_section_form.submit();
-        //$("#edit_section_form").dialog('close');
-        //location.reload(true);
-
-      //});
       /*
     $(".edit_section_link").click(function() {
      var $this = $(this),
@@ -227,30 +224,26 @@ define([
           $edit_section_form.find("button:last").attr('disabled', false).text("Update Batch");
           var $this = $(this),
           $section = $this.parents(".section"),
-          data = $section.getTemplateData({textValues: ['name','start_date','end_date']});
+          data = $section.getTemplateData({textValues: ['name','start_date','end_date','sis_id','restrict_enrollments']});
           $edit_section_form.fillFormData(data, {object_name: "course_section"});
           $edit_section_form.attr('action', $this.attr('href'));
           $('#batch_start_date').val(data['start_date']);
           $('#batch_end_date').val(data['end_date']);
-
+          $('#batch_sis_id').val(data['sis_id']);
+          if(data['restrict_enrollments'] == "true")
+          {
+              $('#batch_restrict').attr('checked', true);
+          }
+          else
+          {
+              $('#batch_restrict').attr('checked', false);
+          }
           $("#edit_section_form").dialog({
               modal: true,
               resizable: false,
-              width: 400
+              width: 600
           });
-          /*
-          var $form = $("#edit_section_form");
-          $form.dialog({
-              autoOpen: false,
-              modal: true,
-              width: 600,
-              close: function() {
 
-                  alert("Close");
-              }
-          }).fixDialogButtons().dialog('option', {title: 'Edit Batch', width: (isNew ? 'auto' : 600)}).dialog('open'); //show();
-          $form.find(":text:visible:first").focus().select();
-          */
       });
     $(".delete_section_link").click(function() {
       $(this).parents(".section").confirmDelete({

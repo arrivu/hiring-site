@@ -203,7 +203,7 @@
           </div>
         </td>
       <% if available_locales.size > 1 %>
-      </tr><tr>
+      </tr><tr style="display:none;">
         <td class="form-label"><%= f.blabel :locale, :language, :en => "Language" %></td>
         <td>
           <div class="course_form">
@@ -239,7 +239,7 @@
         </td>
       <% end %>
       </tr>
-      <tr>
+      <tr style="display:none;">
         <td class="form-label">
           <label><%= before_label('grading_scheme', %{Grading Scheme}) %></label>
         </td>
@@ -273,10 +273,10 @@
         <tr>
         <td class="form-label"><label><%= before_label('course_visibility', %{Visibility}) %></label></td>
         <td colspan="3">
-          <span class="course_form">
-            <%= f.check_box :public_syllabus %>
-            <%= f.label :public_syllabus, :en => "Make the syllabus for this project publicly visible" %>
-          </span>
+          <!--<span class="course_form">-->
+            <%#= f.check_box :public_syllabus %>
+            <%#= f.label :public_syllabus, :en => "Make the syllabus for this project publicly visible" %>
+          <!--</span>-->
           <div>
             <span class="course_form">
               <%= f.check_box :is_public, :class => "is_public_checkbox" %>
@@ -285,15 +285,15 @@
             </span>
           </div>
           <span class="course_info is_public"><%= @context.is_public ? t('public_course', 'Public') : t('private_course', 'Private') %></span>
-          <div class="public_options">
-            <span class="course_form">
-              <%= f.check_box :indexed %>
-              <%= f.label :indexed, :en => "Include this project in the public project index" %>
-            </span>
-            <span class="course_info indexed">
-              <%= @context.indexed ? t('indexed_course', "Included in public project index") : "" %>
-            </span>
-          </div>
+          <!--<div class="public_options">-->
+            <!--<span class="course_form">-->
+              <%#= f.check_box :indexed %>
+              <%#= f.label :indexed, :en => "Include this project in the public project index" %>
+            <!--</span>-->
+            <!--<span class="course_info indexed">-->
+              <%#= @context.indexed ? t('indexed_course', "Included in public project index") : "" %>
+            <!--</span>-->
+          <!--</div>-->
         </td>
       </tr><tr>
         <td></td>
@@ -316,7 +316,7 @@
               %>
             <% end %>
           </span>
-          <a href="#" class="course_form course_form_more_options_link" style="padding-left: 20px;"><%= t('links.more_options', %{more options}) %></a>
+          <!--<a href="#" class="course_form course_form_more_options_link" style="padding-left: 20px;"><%#= t('links.more_options', %{more options}) %></a>-->
           <div class="course_form_more_options" style="display: none; padding-left: 20px;">
             <% if @context.self_enrollment_allowed? %>
               <%= f.check_box :self_enrollment, :class => 'self_enrollment_checkbox' %>
@@ -402,18 +402,26 @@
           <td>
           <span class="users_count">
             (
-              <%= t 'enrollment_count', 'User', :count => section.enrollments.not_fake.count %><% if section && section.sis_source_id %>,
-                <%= t 'section_sis_id', 'SIS ID: %{section_sis}', :section_sis => section.sis_source_id %>
-              <% end %>
-            )
+              <%= t 'enrollment_count', 'User', :count => section.enrollments.not_fake.count %>
+            <%# if section && section.sis_source_id %>
+                <%#= t 'section_sis_id', 'SIS ID: %{section_sis}', :section_sis => section.sis_source_id %>
+              <%# end %>
+            </span>
+
+          <span class="sis_id"  style="display:none;">
+           <%= section.sis_source_id %>
           </span>
+          <span class="restrict_enrollments"  style="display:none;">
+           <%= section.restrict_enrollments_to_section_dates %>
+          </span>
+          )
           </td>
           <td>
           <span class="users_count">
 
             <% if can_do(section, @current_user, :update) %>
                    <% get_unique_access_code(@context,section)%>
-                   <span style="font-size:16px;"><%=@access_code.unique_access_code unless @access_code.nil? %></span>
+                <a href=""><span style="font-size:16px;"><%= @access_code.unique_access_code unless @access_code.nil? %></span></a>
             <% end  %>
 
 
@@ -439,14 +447,11 @@
 
           </span>
             </td>
-          <td>
-          <span class="sis_id" style="display:none;">
-           <%= section.sis_source_id %>
-          </span>
-          </td>
+
           <td>
           <span class="section_links">
-            <% if can_do(section, @current_user, :update) && !section.defined_by_sis? %>
+            <%# if can_do(section, @current_user, :update) && !section.defined_by_sis? %>
+            <% if can_do(section, @current_user, :update) %>
               <a class=" no-hover edit_section_link" title="<%= t('links.title.edit_section', %{Edit Batch}) %>" href="<%= context_url(@context, :context_section_url, section) %>"><i class="icon-edit standalone-icon"></i><span class="screen-reader-text"><%= t('images.alt.edit', %{Edit}) %></span></a>
             <% end %>
             <% if can_do(section, @current_user, :delete) %>
@@ -487,9 +492,21 @@
     </ul>
     <div id="edit_batch_dialog" style="display: none;">
     <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :title => "Edit Batch", :method => :put} do |f| %>
-      Batch Name<%= f.text_field :name %><br/>
-      Start Date<%= f.text_field :start_at, :class => "date_entry", :id => "batch_start_date", :style => 'width: 120px;' %><br/>
-      End Date<%= f.text_field :end_at, :class => "date_entry", :id => "batch_end_date", :style => 'width: 120px;' %>
+      <table>
+      <tr><td>Batch Name</td><td><%= f.text_field :name %></td></tr>
+      <tr><td>SIS Id</td><td><%= f.text_field :sis_source_id, :id => "batch_sis_id" %></td></tr>
+      <tr><td>Start Date</td><td><%= f.text_field :start_at, :class => "date_entry", :id => "batch_start_date" %></td></tr>
+      <tr><td>End Date</td><td><%= f.text_field :end_at, :class => "date_entry", :id => "batch_end_date" %></td></tr>
+        <tr>
+          <td colspan="2">
+            <%= f.check_box :restrict_enrollments_to_section_dates, :id => "batch_restrict" %>
+            <%= f.label :restrict_enrollments_to_section_dates, "Users can only participate in the project between these dates" %>
+            <div style="font-size: 0.8em; padding-left: 25px;">
+              This will override on any hiring period or project date settings.
+            </div>
+          </td>
+        </tr>
+      </table>
       <button name="update" class="btn btn-primary submit_update_button"><%= t('buttons.update_section', 'Update Batch') %></button>
     <% end %>
   </div>
