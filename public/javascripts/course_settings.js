@@ -229,7 +229,14 @@ define([
           $edit_section_form.attr('action', $this.attr('href'));
           $('#batch_start_date').val(data['start_date']);
           $('#batch_end_date').val(data['end_date']);
-          $('#batch_sis_id').val(data['sis_id']);
+          if(data['sis_id']=="null")
+          {
+              $('#batch_sis_id').val(" ");
+          }
+          else{
+              $('#batch_sis_id').val(data['sis_id']);
+          }
+
           if(data['restrict_enrollments'] == "true")
           {
               $('#batch_restrict').attr('checked', true);

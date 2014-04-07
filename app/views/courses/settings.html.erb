@@ -1,4 +1,4 @@
-<% 
+<%
   content_for :page_title, join_title(t(:page_title, "Project Details"), @context.name)
   jammit_css :course_settings
   js_bundle :course_settings
@@ -379,7 +379,7 @@
       </tr>
     </table>
     <% end %>
-    
+
   </div>
   <div id="tab-sections">
 
@@ -421,9 +421,8 @@
 
             <% if can_do(section, @current_user, :update) %>
                    <% get_unique_access_code(@context,section)%>
-                <a href=""><span style="font-size:16px;"><%= @access_code.unique_access_code unless @access_code.nil? %></span></a>
+                <a style="text-decoration:none;color:black;" title="<%= root_url %>/accept/<%= @access_code.unique_access_code unless @access_code.nil? %>"><span style="font-size:16px;"><%= @access_code.unique_access_code unless @access_code.nil? %></span></a>
             <% end  %>
-
 
           </span>
           </td>
