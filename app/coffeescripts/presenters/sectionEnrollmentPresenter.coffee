@@ -37,11 +37,11 @@ define [
       CourseDesignerEnrollment: I18n.t('enrolled_as_limited_designer', 'enrolled as a designer with section-only access')
       StudentEnrollment: I18n.t('enrolled_as_limited_student', 'enrolled as a student with section-only access')
     standard:
-      TeacherEnrollment: I18n.t('enrolled_as_teacher', 'enrolled as a teacher')
-      TaEnrollment: I18n.t('enrolled_as_ta', 'enrolled as a TA')
-      ObserverEnrollment: I18n.t('enrolled_as_observer', 'enrolled as a observer')
+      TeacherEnrollment: I18n.t('enrolled_as_teacher', 'enrolled as a Hiring Manager')
+      TaEnrollment: I18n.t('enrolled_as_ta', 'enrolled as a Interviewer')
+      ObserverEnrollment: I18n.t('enrolled_as_observer', 'enrolled as a HR')
       CourseDesignerEnrollment: I18n.t('enrolled_as_designer', 'enrolled as a designer')
-      StudentEnrollment: I18n.t('enrolled_as_student', 'enrolled as a student')
+      StudentEnrollment: I18n.t('enrolled_as_student', 'enrolled as a Candidate')
 
   ##
   # begin returned function here

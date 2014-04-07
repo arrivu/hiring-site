@@ -6,6 +6,6 @@ class CandidateDetail < ActiveRecord::Base
                   :contact_number,:email_id,
                   :address,:academics,
                   :employment,:current_compensation,
-                  :expected_compensation,
+                  :expected_compensation, :profile_picture,
                   :project_id
 end

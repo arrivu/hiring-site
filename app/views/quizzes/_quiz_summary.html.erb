@@ -38,7 +38,7 @@
           <% elsif q.survey? %>
             <%= before_label(:survey_details, "Survey Details") %>
           <% else %>
-            <%= before_label(:quiz_details, "Assesments Details") %>
+            <%#= before_label(:quiz_details, "Assesments Details") %>
           <% end %>
            </div>
 
@@ -62,9 +62,9 @@
           <% end %>
         <% else %>
           <% unless q.ungraded? %>
-            <%= q.points_possible ? t(:quiz_points_possible, "Point", :count => q.points_possible) : t(:quiz_no_points, "No Points") %><br/>
+            <%#= q.points_possible ? t(:quiz_points_possible, "Point", :count => q.points_possible) : t(:quiz_no_points, "No Points") %><br/>
           <% end %>
-          <%= t(:question_count, "Question", :count => q.question_count) %>
+          <%#= t(:question_count, "Question", :count => q.question_count) %>
         <% end %>
       </div>
       <% if q.multiple_due_dates_apply_to?(@current_user) %>
