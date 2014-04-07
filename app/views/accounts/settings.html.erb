@@ -469,17 +469,17 @@
             </fieldset>
         <% end %>
 
-        <% if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
-            <fieldset>
-              <legend>Project License</legend>
-              <% f.fields_for :settings do |settings| %>
-                  <div>
-                    <%= settings.check_box :private_license_enable, :checked => @account.settings[:private_license_enable] %>
-                    <%= settings.label :private_license_enable, :en => "Enable private license" %>
-                  </div>
-              <% end %>
-              <fieldset>
-        <% end %>
+        <%# if Account.site_admin.grants_right?(@current_user, :manage_site_settings) %>
+            <!--<fieldset>-->
+              <!--<legend>Project License</legend>-->
+              <!--<%# f.fields_for :settings do |settings| %>-->
+                  <!--<div>-->
+                    <!--<%#= settings.check_box :private_license_enable, :checked => @account.settings[:private_license_enable] %>-->
+                    <!--<%#= settings.label :private_license_enable, :en => "Enable private license" %>-->
+                  <!--</div>-->
+              <!--<%# end %>-->
+              <!--<fieldset>-->
+        <%# end %>
 
         <% if @account.root_account? && !@account.site_admin? %>
             <fieldset>

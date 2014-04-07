@@ -1,7 +1,9 @@
 <% content_for :page_title, t('titles.courses', 'Projects') %>
 
+<% if !can_do(@context, @current_user, :create)%>
     <% @headers = false
        @show_left_side = false %>
+<% end %>
 
 <% content_for :auto_discovery do %>
   <% if @current_user %>

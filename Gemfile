@@ -35,11 +35,11 @@ end
 
 gem "aws-sdk", '1.21.0'
 gem 'barby', '0.5.0'
-gem 'bcrypt-ruby', '3.0.1'
+gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'builder', '3.0.0'
 # enforce the version of bundler itself, to avoid any surprises
 
-gem 'bundler', '1.5.2'
+gem 'bundler', '1.6.1'
 gem 'canvas_connect', '0.3.2'
 gem 'canvas_webex', '0.7'
 gem 'daemons', '1.1.0'

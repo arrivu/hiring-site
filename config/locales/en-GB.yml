@@ -1219,7 +1219,7 @@ en-GB:
       please_log_in: "For security purposes, please enter your password to continue"
       titles: 
         suspended: "Institution suspended"
-      unsupported_browser: "Your browser does not meet the minimum requirements for Canvas. Please visit the *Canvas Guides* for a complete list of supported browsers."
+      unsupported_browser: "Your browser does not meet the minimum requirements for SublimeHiring. Please visit the *SublimeHiring Guides* for a complete list of supported browsers."
     wiki_front_page_default_content_course: "Welcome to your new course wiki!"
     wiki_front_page_default_content_group: "Welcome to your new group wiki!"
   appointment_group: 
