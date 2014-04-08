@@ -183,10 +183,6 @@ class CoursesController < ApplicationController
   #
   # @returns [Course]
   def index
-    unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
-    unless unique_code_association.nil?
-      @course_section = unique_code_association.course_section(course)
-    end
     respond_to do |format|
       format.html {
         @current_enrollments = @current_user.cached_current_enrollments(:include_enrollment_uuid => session[:enrollment_uuid]).sort_by{|e| [e.active? ? 1 : 0, Canvas::ICU.collation_key(e.long_name)] }

@@ -178,29 +178,29 @@ Rails.configuration.to_prepare do
         }
       }
     },
-    'students_with_no_submissions_csv'=> {
-      :title => 'Candidates with no submissions',
-      :description_partial => true,
-      :parameters_partial => 'term_and_date_pickers_parameters',
-      :parameters => {
-        :enrollment_term_id => {
-          :required => false,
-          :description => 'The term to report on'
-        },
-        :course_id => {
-          :required => false,
-          :description => 'The project to report on'
-        },
-        :start_at => {
-          :required => true,
-          :description => 'The beginning date for submissions. Max time range is 2 weeks.'
-        },
-        :end_at => {
-          :required => true,
-          :description => 'The end date for submissions. Max time range is 2 weeks.'
-        }
-      }
-    },
+    #'students_with_no_submissions_csv'=> {
+    #  :title => 'Candidates with no submissions',
+    #  :description_partial => true,
+    #  :parameters_partial => 'term_and_date_pickers_parameters',
+    #  :parameters => {
+    #    :enrollment_term_id => {
+    #      :required => false,
+    #      :description => 'The term to report on'
+    #    },
+    #    :course_id => {
+    #      :required => false,
+    #      :description => 'The project to report on'
+    #    },
+    #    :start_at => {
+    #      :required => true,
+    #      :description => 'The beginning date for submissions. Max time range is 2 weeks.'
+    #    },
+    #    :end_at => {
+    #      :required => true,
+    #      :description => 'The end date for submissions. Max time range is 2 weeks.'
+    #    }
+    #  }
+    #},
     'unpublished_courses_csv'=> {
       :title => 'Unpublished Projects',
       :description_partial => true,
@@ -223,20 +223,20 @@ Rails.configuration.to_prepare do
         }
       }
     },
-    'zero_activity_csv'=> {
-      :title => 'Zero Activity',
-      :description_partial => true,
-      :parameters_partial => 'term_and_date_picker_parameters',
-      :parameters => {
-        :enrollment_term_id => {
-          :required => false,
-          :description => 'The sublime hiring id of the term to get grades from'
-        },
-        :course_id => {
-          :required => false,
-          :description => 'The project to report on'
-        }
-      }
-    }
+    #'zero_activity_csv'=> {
+    #  :title => 'Zero Activity',
+    #  :description_partial => true,
+    #  :parameters_partial => 'term_and_date_picker_parameters',
+    #  :parameters => {
+    #    :enrollment_term_id => {
+    #      :required => false,
+    #      :description => 'The sublime hiring id of the term to get grades from'
+    #    },
+    #    :course_id => {
+    #      :required => false,
+    #      :description => 'The project to report on'
+    #    }
+    #  }
+    #}
   }
 end
