@@ -62,18 +62,18 @@ module SIS
 
       def add_assessment_question( question_bank_title,question_data,regrade_option,points_possible,
                                    correct_comments,incorrect_comments,neutral_comments,question_type,name,question_name,
-                                   question_text,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,ans2_id,ans2_comments,ans2_text,
+                                   question_text,status,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,ans2_id,ans2_comments,ans2_text,
                                    ans2_weight,ans3_id,ans3_comments,ans3_text,ans3_weight,ans4_id,ans4_comments,ans4_text,
                                    ans4_weight,ans5_id,ans5_comments,ans5_text,ans5_weight,text_after_answers,
-                                   assessment_question_id,status)
+                                   assessment_question_id)
         raise ImportError, "No question_bank_title given for a question_bank" unless question_bank_title.present?
 
         @logger.debug("Processing Group #{[question_bank_title,question_data,regrade_option,points_possible,
                                            correct_comments,incorrect_comments,neutral_comments,question_type,name,
-                                           question_name,question_text,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,
+                                           question_name,question_text,status,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,
                                            ans2_id,ans2_comments,ans2_text,ans2_weight,ans3_id,ans3_comments,ans3_text,ans3_weight,
                                            ans4_id,ans4_comments,ans4_text,ans4_weight,ans5_id,ans5_comments,ans5_text,ans5_weight,
-                                           text_after_answers,assessment_question_id,status].inspect}")
+                                           text_after_answers,assessment_question_id].inspect}")
 
         ans1_id = unique_local_id
         ans2_id = unique_local_id
@@ -101,6 +101,7 @@ module SIS
                     if ans1_weight == "100" || ans1_weight == "0" and ans2_weight == "100" || ans2_weight == "0"
                       if ans1_weight != ans2_weight
                         if question.with_versioning(&:save)
+                          question.workflow_state = status
                           question.insert_at_bottom
                         end
                       else
@@ -158,6 +159,7 @@ module SIS
                          end
                          if @weight_count == 1
                            if question.with_versioning(&:save)
+                             question.workflow_state = status
                              question.insert_at_bottom
                            end
                          else
@@ -197,6 +199,7 @@ module SIS
                              ans2_weight == nil and ans3_weight == "100" || ans3_weight == nil and
                              ans4_weight == "100" || ans4_weight == nil and ans5_weight == "100" || ans5_weight == nil
                             if question.with_versioning(&:save)
+                              question.workflow_state = status
                               question.insert_at_bottom
                             end
                           else
@@ -232,6 +235,7 @@ module SIS
                          ans3_weight == nil and ans4_weight == "100" || ans4_weight == "0" || ans4_weight == nil and
                          ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
                         if question.with_versioning(&:save)
+                          question.workflow_state = status
                           question.insert_at_bottom
                         end
                       else
@@ -267,6 +271,7 @@ module SIS
                   if ans1_weight == "100" || ans1_weight == "0" and ans2_weight == "100" || ans2_weight == "0"
                     if ans1_weight != ans2_weight
                       if question.with_versioning(&:save)
+                        question.workflow_state = status
                         question.insert_at_bottom
                       end
                     else
@@ -323,6 +328,7 @@ module SIS
                       end
                       if @weight_count == 1
                         if question.with_versioning(&:save)
+                          question.workflow_state = status
                           question.insert_at_bottom
                         end
                       else
@@ -362,6 +368,7 @@ module SIS
                       ans2_weight == nil and ans3_weight == "100" || ans3_weight == nil and
                       ans4_weight == "100" || ans4_weight == nil and ans5_weight == "100" || ans5_weight == nil
                     if question.with_versioning(&:save)
+                      question.workflow_state = status
                       question.insert_at_bottom
                     end
                   else
@@ -397,6 +404,7 @@ module SIS
                        ans3_weight == nil and ans4_weight == "100" || ans4_weight == "0" || ans4_weight == nil and
                        ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
                       if question.with_versioning(&:save)
+                        question.workflow_state = status
                         question.insert_at_bottom
                       end
                     else
