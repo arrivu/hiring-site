@@ -10,6 +10,12 @@ define [
     defaults:
       due_at_overridden: true
       due_at: null
+      show_correct_answers_at: null
+      show_correct_answers_at_overridden: true
+
+      hide_correct_answers_at: null
+      hide_correct_answers_at_overridden: true
+
       all_day: false
       all_day_date: null
 

@@ -169,6 +169,8 @@ class AssignmentOverride < ActiveRecord::Base
   override :due_at
   override :unlock_at
   override :lock_at
+  override :show_correct_answers_at
+  override :hide_correct_answers_at
 
   def due_at=(new_due_at)
     new_due_at = CanvasTime.fancy_midnight(new_due_at)
@@ -187,6 +189,15 @@ class AssignmentOverride < ActiveRecord::Base
     write_attribute(:lock_at, CanvasTime.fancy_midnight(new_lock_at))
   end
 
+  def show_correct_answers_at=(show_correct_answers_at)
+    write_attribute(:show_correct_answers_at, CanvasTime.fancy_midnight(show_correct_answers_at))
+  end
+
+  def hide_correct_answers_at=(hide_correct_answers_at)
+    write_attribute(:hide_correct_answers_at, CanvasTime.fancy_midnight(hide_correct_answers_at))
+  end
+
+
   def as_hash
     { :title => title,
       :due_at => due_at,
@@ -196,6 +207,8 @@ class AssignmentOverride < ActiveRecord::Base
       :all_day_date => all_day_date,
       :lock_at => lock_at,
       :unlock_at => unlock_at,
+      :show_correct_answers_at => show_correct_answers_at,
+      :hide_correct_answers_at => hide_correct_answers_at,
       :override => self }
   end
 

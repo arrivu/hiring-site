@@ -206,6 +206,8 @@ AssignmentGroupSelector, GroupCategorySelector, toggleAccessibly) ->
         data.lock_at = defaultDates?.get('lock_at') or null
         data.unlock_at = defaultDates?.get('unlock_at') or null
         data.due_at = defaultDates?.get('due_at') or null
+        data.show_correct_answers_at = defaultDates?.get('show_correct_answers_at') or null
+        data.hide_correct_answers_at = defaultDates?.get('hide_correct_answers_at') or null
         data.assignment_overrides = @dueDateOverrideView.getOverrides()
       else
         unfudged = $.unfudgeDateForProfileTimezone(data.due_at)

@@ -318,6 +318,9 @@ class QuizzesController < ApplicationController
 
           batch_update_assignment_overrides(@quiz,overrides) unless overrides.nil?
 
+
+
+
           # quiz.rb restricts all assignment broadcasts if notify_of_update is
           # false, so we do the same here
           if @quiz.assignment.present? && old_assignment && (notify_of_update || old_assignment.due_at != @quiz.assignment.due_at)
@@ -325,6 +328,8 @@ class QuizzesController < ApplicationController
           end
           @quiz.reload
           @quiz.update_quiz_submission_end_at_times if params[:quiz][:time_limit].present?
+
+        #AssignmentOverride.show_correct_answers_at = params[:show_correct_answers_at]
         end
         flash[:notice] = t('notices.quiz_updated', "Assessment successfully updated")
         format.html { redirect_to named_context_url(@context, :context_quiz_url, @quiz) }

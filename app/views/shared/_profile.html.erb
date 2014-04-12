@@ -19,7 +19,7 @@
     </div>
     <div class="image-block-content row-fluid">
       <h1 class="h1">
-        <span class="hide-if-editing"><%= @current_user.last_name %></span>
+        <span class="hide-if-editing"><%= @current_user[:last_name] %></span>
       </h1>
       <% if @user_data[:can_edit] %>
         <label class="show-if-editing"><%= t('name', 'Name') %>: <br><input type="text" name="user[short_name]" value="<%= @user_data[:short_name] %>" required></label>

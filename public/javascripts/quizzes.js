@@ -60,7 +60,7 @@ define([
     var idx = 0;
     var overridesLength = overrides.length;
     var _override = null;
-    var dates = [ 'due_at', 'lock_at', 'unlock_at' ];
+    var dates = [ 'due_at', 'lock_at', 'unlock_at', 'show_correct_answers_at' ];
     // make sure we don't send the literal string "null" to the server.
     for (idx;idx< overridesLength;idx++){
       _override = overrides[idx]
@@ -848,6 +848,7 @@ define([
       var that = correctAnswerVisibility;
       var $toggler = that.$toggler = $('#quiz_show_correct_answers');
       var $options = that.$options = $('#quiz_show_correct_answers_options');
+      //var $options = that.$options = $('#correct_answer_at');
       var $pickers = that.$pickers = $options.find('.date_field');
 
       $pickers.each(function() {
@@ -863,7 +864,7 @@ define([
         .on('serializing', that.serialize);
 
       $toggler.on('change', function() {
-        $options.toggle($toggler.is(':checked'));
+        // $options.toggle($toggler.is(':checked'));
       }).triggerHandler('change');
 
       that.installValidators();
@@ -1375,6 +1376,25 @@ define([
 
     $("#lockdown_browser_suboptions").showIf($("#quiz_require_lockdown_browser").attr('checked'));
 
+    $("#quiz_show_correct_answers").click(function() {
+      var x = $("#quiz_show_correct_answers").is(":checked");
+      if(x)
+      {
+          $(".correct_answer_at").show();
+          $("#overrides_show_correct_answer_at").show();
+          $("#overrides_hide_correct_answers_at").show();
+
+      }
+      else
+      {
+          $(".correct_answer_at").hide();
+          $("#overrides_show_correct_answer_at").hide();
+          $("#overrides_hide_correct_answers_at").hide();
+
+      }
+
+    });
+
     $("#ip_filters_dialog").delegate('.ip_filter', 'click', function(event) {
       event.preventDefault();
       var filter = $(this).getTemplateData({textValues: ['filter']}).filter;
@@ -1519,11 +1539,14 @@ define([
             data['quiz[due_at]'] = finalQuiz.due_at || ""
             data['quiz[unlock_at]'] = finalQuiz.unlock_at || "";
             data['quiz[lock_at]'] = finalQuiz.lock_at || "";
+            data['quiz[show_correct_answers_at]'] = finalQuiz.show_correct_answers_at || "";
+
           }
           else {
             data['quiz[due_at]'] = "";
             data['quiz[unlock_at]'] = "";
             data['quiz[lock_at]'] = "";
+            data['quiz[show_correct_answers_at]'] = "";
           }
           adjustOverridesForFormParams(overrides);
           if (overrides.length === 0) { overrides = false; }

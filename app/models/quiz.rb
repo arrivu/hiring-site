@@ -330,6 +330,8 @@ class Quiz < ActiveRecord::Base
         a.due_at = self.due_at
         a.lock_at = self.lock_at
         a.unlock_at = self.unlock_at
+        a.show_correct_answers_at = self.show_correct_answers_at
+        a.hide_correct_answers_at = self.hide_correct_answers_at
         a.submission_types = "online_quiz"
         a.assignment_group_id = self.assignment_group_id
         a.saved_by = :quiz
