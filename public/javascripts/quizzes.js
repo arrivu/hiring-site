@@ -1390,6 +1390,7 @@ define([
                 $(".correct_answer_at").hide();
                 $("#overrides_show_correct_answer_at").hide();
                 $("#overrides_hide_correct_answers_at").hide();
+                //document.getElementsByName("show_correct_answers_at").value = "";
 
             }
 
@@ -1514,6 +1515,7 @@ define([
                 if (_.keys(errs).length > 0) {
                     return false;
                 }
+                /*
                 else if (overrideView.containsSectionsWithoutOverrides() && !hasCheckedOverrides) {
                     sections = overrideView.sectionsWithoutOverrides();
                     var missingDateView = new MissingDateDialog({
@@ -1531,7 +1533,8 @@ define([
                     };
                     missingDateView.render();
                     return false;
-                } else {
+                } */
+                 else {
                     var finalQuiz = overrideView.getDefaultDueDate();
                     if (finalQuiz) {
                         finalQuiz = finalQuiz.toJSON().assignment_override;

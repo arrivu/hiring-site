@@ -124,7 +124,7 @@ module DatesOverridable
 
     all_dates.map do |dates|
       dates.keep_if do |k, v|
-        [:due_at, :unlock_at, :lock_at, :title, :base].include?(k)
+        [:due_at, :unlock_at, :lock_at, :title, :base, :show_correct_answers_at, :hide_correct_answers_at].include?(k)
       end
     end
 

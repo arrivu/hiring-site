@@ -19,6 +19,14 @@ class OverrideListPresenter
     formatted_date_string(:unlock_at, due_date)
   end
 
+  def show_correct_answers_at(due_date)
+    formatted_date_string(:show_correct_answers_at, due_date)
+  end
+
+  def hide_correct_answers_at(due_date)
+    formatted_date_string(:hide_correct_answers_at, due_date)
+  end
+
   def due_at(due_date)
     formatted_date_string(:due_at, due_date)
   end
@@ -57,6 +65,8 @@ class OverrideListPresenter
     assignment.dates_hash_visible_to(user).each do |due_date|
       due_date[:lock_at] = lock_at due_date
       due_date[:unlock_at] = unlock_at due_date
+      due_date[:show_correct_answers_at] = show_correct_answers_at due_date
+      due_date[:hide_correct_answers_at] = hide_correct_answers_at due_date
       due_date[:due_at] = due_at due_date
       due_date[:due_for] = due_for due_date
     end
