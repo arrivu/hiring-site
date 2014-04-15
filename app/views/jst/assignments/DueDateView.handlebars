@@ -2,12 +2,12 @@
   {{#with assignment_override}}
   <select class="section-list input-small" name="course_section_id" aria-labelledby="overrides_course_section">
   </select>
-
+<!--
   <div class="date_field_container">
-    <input value="{{datetimeFormatted due_at}}" name="due_at" type="text"
+    <input value="{{! datetimeFormatted due_at}}" name="due_at" type="text"
     class="input-small date_field" aria-labelledby="overrides_due_date">
   </div>
-
+-->
   <div class="date_field_container">
     <input name="unlock_at" value="{{datetimeFormatted unlock_at}}" type="text"
     class="date_field" aria-labelledby="overrides_unlock_at">
@@ -16,6 +16,16 @@
   <div class="date_field_container to">
     <input name="lock_at" value="{{datetimeFormatted lock_at}}" type="text"
     class="date_field" aria-labelledby="overrides_lock_at">
+  </div>
+
+  <div class="date_field_container correct_answer_at">
+      <input name="show_correct_answers_at" value="{{datetimeFormatted show_correct_answers_at}}" type="text"
+      class="date_field" aria-labelledby="overrides_show_correct_answer_at">
+  </div>
+
+  <div class="date_field_container correct_answer_at">
+        <input name="hide_correct_answers_at" value="{{datetimeFormatted hide_correct_answers_at}}" type="text"
+        class="date_field" aria-labelledby="overrides_hide_correct_answers_at">
   </div>
 
   <div>

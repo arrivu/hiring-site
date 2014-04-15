@@ -24,6 +24,8 @@ module Api::V1::AssignmentOverride
     fields.concat([:due_at, :all_day, :all_day_date]) if override.due_at_overridden
     fields << :unlock_at if override.unlock_at_overridden
     fields << :lock_at if override.lock_at_overridden
+    fields << :show_correct_answers_at if override.show_correct_answers_at_overridden
+    fields << :hide_correct_answers_at if override.hide_correct_answers_at_overridden
     api_json(override, @current_user, session, :only => fields).tap do |json|
       case override.set_type
       when 'ADHOC'
@@ -46,13 +48,15 @@ module Api::V1::AssignmentOverride
     scope
   end
 
-  def find_assignment_override(assignment, set_or_id)
+  def find_assignment_override(assignment, set_or_id, show_correct_answers_at, hide_correct_answers_at)
     scope = assignment_override_scope(assignment)
     case set_or_id
     when CourseSection, Group
       scope.where(
         :set_type => set_or_id.class.to_s,
-        :set_id => set_or_id
+        :set_id => set_or_id,
+        :show_correct_answers_at => show_correct_answers_at,
+        :hide_correct_answers_at => hide_correct_answers_at
       ).first
     when nil
       nil
@@ -158,7 +162,7 @@ module Api::V1::AssignmentOverride
     end
 
     # collect override values
-    [:due_at, :unlock_at, :lock_at].each do |field|
+    [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
       if data.has_key?(field)
         if data[field].blank?
           # override value of nil/'' is meaningful
@@ -223,7 +227,7 @@ module Api::V1::AssignmentOverride
       override.title = override_data[:title] || override.title
     end
 
-    [:due_at, :unlock_at, :lock_at].each do |field|
+    [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
       if override_data.has_key?(field)
         override.send("override_#{field}", override_data[field])
       else
@@ -248,7 +252,7 @@ module Api::V1::AssignmentOverride
     defunct_override_ids = assignment.assignment_overrides.map(&:id).to_set
     overrides = overrides.map do |override_params|
       # find/build override
-      override = find_assignment_override(assignment, override_params[:id])
+      override = find_assignment_override(assignment, override_params[:id], override_params[:show_correct_answers_at], override_params[:hide_correct_answers_at])
       if override
         defunct_override_ids.delete(override.id)
       else
