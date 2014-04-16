@@ -15,7 +15,7 @@ define [
 
     events:
       'click .remove-link' : 'removeDueDate'
-    
+
     # Method Summary
     #  Apply bindings and calendar js to each view
     afterRender: =>
@@ -48,6 +48,7 @@ define [
       json.course_section_id = parseInt(json.course_section_id, 10)
       errs = @validateBeforeSave json, {}
       @$el.hideErrors()
+
       for own el, msg of errs.assignmentOverrides
         @$("[name=#{el}]").errorBox msg
       json
@@ -72,3 +73,10 @@ define [
 
     updateOverride: =>
       @model.set @getFormValues()
+
+    toJSON: ->
+      json = super
+      json.status_check = "true"
+
+      json
+

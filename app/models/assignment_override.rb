@@ -190,26 +190,37 @@ class AssignmentOverride < ActiveRecord::Base
   end
 
   def show_correct_answers_at=(show_correct_answers_at)
-    write_attribute(:show_correct_answers_at, CanvasTime.fancy_midnight(show_correct_answers_at))
+    if(quiz.show_correct_answers)
+      write_attribute(:show_correct_answers_at, CanvasTime.fancy_midnight(show_correct_answers_at))
+    else
+      write_attribute(:show_correct_answers_at, ' ')
+    end
   end
 
   def hide_correct_answers_at=(hide_correct_answers_at)
-    write_attribute(:hide_correct_answers_at, CanvasTime.fancy_midnight(hide_correct_answers_at))
+    if(quiz.show_correct_answers)
+      write_attribute(:hide_correct_answers_at, CanvasTime.fancy_midnight(hide_correct_answers_at))
+    else
+      write_attribute(:hide_correct_answers_at, ' ')
+    end
   end
 
 
   def as_hash
-    { :title => title,
-      :due_at => due_at,
-      :all_day => all_day,
-      :set_type => set_type,
-      :set_id => set_id,
-      :all_day_date => all_day_date,
-      :lock_at => lock_at,
-      :unlock_at => unlock_at,
-      :show_correct_answers_at => show_correct_answers_at,
-      :hide_correct_answers_at => hide_correct_answers_at,
-      :override => self }
+
+      { :title => title,
+        :due_at => due_at,
+        :all_day => all_day,
+        :set_type => set_type,
+        :set_id => set_id,
+        :all_day_date => all_day_date,
+        :lock_at => lock_at,
+        :unlock_at => unlock_at,
+        :show_correct_answers_at => show_correct_answers_at,
+        :hide_correct_answers_at => hide_correct_answers_at,
+        :override => self }
+
+
   end
 
   def applies_to_students

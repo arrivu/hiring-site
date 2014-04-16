@@ -1376,6 +1376,26 @@ define([
 
         $("#lockdown_browser_suboptions").showIf($("#quiz_require_lockdown_browser").attr('checked'));
 
+        $("#never_hide_results").click(function() {
+            var x = $("#never_hide_results").is(":checked");
+            if(!x)
+            {
+                $(".correct_answer_at").hide();
+                $("#overrides_show_correct_answer_at").hide();
+                $("#overrides_hide_correct_answers_at").hide();
+                //$( "input[name*='correct_answers_at']" ).val(" ");
+                //$(".correct_answer_at .date_field").val("");
+                $(".correct_answer_at .datetime_suggest").html("");
+                var elements = [] ;
+                elements = document.getElementsByClassName("value_empty");
+
+                for(var i=0; i<elements.length ; i++){
+                    elements[i].value = "" ;
+                }
+
+            }
+
+        });
         $("#quiz_show_correct_answers").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
             if(x)
@@ -1390,8 +1410,15 @@ define([
                 $(".correct_answer_at").hide();
                 $("#overrides_show_correct_answer_at").hide();
                 $("#overrides_hide_correct_answers_at").hide();
-                //document.getElementsByName("show_correct_answers_at").value = "";
+                //$( "input[name*='correct_answers_at']" ).val(" ");
+                //$(".correct_answer_at .date_field").val("");
+                $(".correct_answer_at .datetime_suggest").html("");
+                var elements = [] ;
+                elements = document.getElementsByClassName("value_empty");
 
+                for(var i=0; i<elements.length ; i++){
+                    elements[i].value = "" ;
+                }
             }
 
         });

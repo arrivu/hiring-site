@@ -51,13 +51,20 @@ module Api::V1::AssignmentOverride
   def find_assignment_override(assignment, set_or_id, show_correct_answers_at, hide_correct_answers_at)
     scope = assignment_override_scope(assignment)
     case set_or_id
-    when CourseSection, Group
-      scope.where(
-        :set_type => set_or_id.class.to_s,
-        :set_id => set_or_id,
-        :show_correct_answers_at => show_correct_answers_at,
-        :hide_correct_answers_at => hide_correct_answers_at
-      ).first
+      when CourseSection, Group
+        if(@quiz.show_correct_answers)
+          scope.where(
+            :set_type => set_or_id.class.to_s,
+            :set_id => set_or_id,
+            :show_correct_answers_at => show_correct_answers_at,
+            :hide_correct_answers_at => hide_correct_answers_at
+          ).first
+        else
+          scope.where(
+              :set_type => set_or_id.class.to_s,
+              :set_id => set_or_id
+          ).first
+        end
     when nil
       nil
     else
@@ -162,15 +169,30 @@ module Api::V1::AssignmentOverride
     end
 
     # collect override values
-    [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
-      if data.has_key?(field)
-        if data[field].blank?
-          # override value of nil/'' is meaningful
-          override_data[field] = nil
-        elsif value = Time.zone.parse(data[field].to_s)
-          override_data[field] = value
-        else
-          errors << "invalid #{field} #{data[field].inspect}"
+    if(@quiz.show_correct_answers)
+      [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
+        if data.has_key?(field)
+          if data[field].blank?
+            # override value of nil/'' is meaningful
+            override_data[field] = nil
+          elsif value = Time.zone.parse(data[field].to_s)
+            override_data[field] = value
+          else
+            errors << "invalid #{field} #{data[field].inspect}"
+          end
+        end
+      end
+    else
+      [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
+        if data.has_key?(field)
+          if (data[field].blank? or  data[field] == "null")
+            # override value of nil/'' is meaningful
+            override_data[field] = nil
+          elsif value = Time.zone.parse(data[field].to_s)
+            override_data[field] = value
+          else
+            errors << "invalid #{field} #{data[field].inspect}"
+          end
         end
       end
     end
@@ -227,11 +249,21 @@ module Api::V1::AssignmentOverride
       override.title = override_data[:title] || override.title
     end
 
-    [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
-      if override_data.has_key?(field)
-        override.send("override_#{field}", override_data[field])
-      else
-        override.send("clear_#{field}_override")
+    if(@quiz.show_correct_answers)
+      [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
+        if override_data.has_key?(field)
+          override.send("override_#{field}", override_data[field])
+        else
+          override.send("clear_#{field}_override")
+        end
+      end
+    else
+      [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
+        if override_data.has_key?(field)
+          override.send("override_#{field}", override_data[field])
+        else
+          override.send("clear_#{field}_override")
+        end
       end
     end
   end
@@ -252,7 +284,12 @@ module Api::V1::AssignmentOverride
     defunct_override_ids = assignment.assignment_overrides.map(&:id).to_set
     overrides = overrides.map do |override_params|
       # find/build override
-      override = find_assignment_override(assignment, override_params[:id], override_params[:show_correct_answers_at], override_params[:hide_correct_answers_at])
+      if(override_params[:hide_correct_answers_at] == "null")
+        hide_correct_answers_at = ""
+      else
+        hide_correct_answers_at = override_params[:hide_correct_answers_at]
+      end
+      override = find_assignment_override(assignment, override_params[:id], override_params[:show_correct_answers_at], hide_correct_answers_at)
       if override
         defunct_override_ids.delete(override.id)
       else
