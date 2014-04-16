@@ -40,6 +40,7 @@ class ProfileController < ApplicationController
     end
 
     @user ||= @current_user
+    #@user_experience = UserWorkExperience.find_by_user_id(@user.id)
     @active_tab = "profile"
     @context = @user.profile if @user == @current_user
 
@@ -57,6 +58,7 @@ class ProfileController < ApplicationController
     else
       return render :action => :unauthorized
     end
+
   end
 
   # @API Get user profile
@@ -269,6 +271,70 @@ class ProfileController < ApplicationController
           UserProfileLink.new :url => url, :title => title
         }
       @profile.links = links
+    end
+
+
+    if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages] && params[:link_ids]
+      user_academic_ids = @current_user.user_academic_ids
+      if user_academic_ids
+        link_ids = []
+        params[:link_ids].map do |link_id|
+          link_ids << link_id.to_i
+        end
+        comapre_and_delete(user_academic_ids,link_ids,UserAcademic)
+      end
+      links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages],params[:link_ids]).
+          reject { |degrees, disciplines, colleges, year_of_completions, percentages,ids| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank? && ids.blank?}.
+          map { |degrees, disciplines, colleges, year_of_completions, percentages, id|
+        if id
+          @user_academic = UserAcademic.find(id)
+          @user_academic.update_attributes(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+        else
+          @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+          @user_academic.save!
+        end
+
+      }
+
+      elsif params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages]
+          links = params[:link_degrees].zip(params[:link_disciplines],params[:link_colleges],params[:link_year_of_completions],params[:link_percentages]).
+              reject { |degrees, disciplines, colleges, year_of_completions, percentages,ids| degrees.blank? && disciplines.blank? && colleges.blank? && year_of_completions.blank? && percentages.blank? }.
+              map { |degrees, disciplines, colleges, year_of_completions, percentages|
+            @user_academic = UserAcademic.new(:degree => degrees, :discipline => disciplines, :college => colleges, :year_of_completion => year_of_completions, :percentage => percentages, :user_id => @current_pseudonym[:user_id])
+            @user_academic.save!
+          }
+
+      end
+
+
+    if params[:link_organizations] && params[:link_from_dates] && params[:link_end_dates] && params[:link_designations] && params[:link_permanents] && params[:link_reason_for_leaving] && params[:link_experience_ids]
+      user_experience_ids = @current_user.user_work_experience_ids
+      if user_experience_ids
+        link_experience_ids = []
+        params[:link_experience_ids].map do |link_experience_id|
+          link_experience_ids << link_experience_id.to_i
+        end
+        comapre_and_delete(user_experience_ids,link_experience_ids,UserWorkExperience)
+      end
+      links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving],params[:link_experience_ids]).
+          reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving,experience_ids| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank? && experience_ids.blank?}.
+          map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving, experience_ids|
+        if experience_ids
+          @user_work_experience = UserWorkExperience.find(experience_ids)
+          @user_work_experience.update_attributes(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
+        else
+          @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
+          @user_work_experience.save
+        end
+
+      }
+    elsif params[:link_organizations] && params[:link_from_dates] && params[:link_end_dates] && params[:link_designations] && params[:link_permanents] && params[:link_reason_for_leaving]
+      links = params[:link_organizations].zip(params[:link_from_dates],params[:link_end_dates],params[:link_designations],params[:link_permanents],params[:link_reason_for_leaving]).
+          reject { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving| organizations.blank? && from_dates.blank? && end_dates.blank? && designations.blank? && end_dates.blank? && permanents.blank? && reason_for_leaving.blank?}.
+          map { |organizations, from_dates, end_dates, designations, permanents, reason_for_leaving|
+        @user_work_experience = UserWorkExperience.new(:organization => organizations, :from_date => from_dates, :end_date => end_dates, :designation => designations, :permanent => permanents, :reason_for_leaving => reason_for_leaving, :user_id => @current_pseudonym[:user_id])
+        @user_work_experience.save
+      }
     end
 
     if @user.valid? && @profile.valid?

@@ -80,7 +80,7 @@ require [
 
     cancelEditProfile: ->
       @$el.addClass('not-editing').removeClass('editing')
-      @$('.profile_links').addClass('span6')
+#      @$('.profile_links').addClass('span6')
 
     ##
     # Event handler that can also be called manually.

@@ -7,5 +7,5 @@ class CandidateDetail < ActiveRecord::Base
                   :address,:academics,
                   :employment,:current_compensation,
                   :expected_compensation, :profile_picture,
-                  :project_id
+                  :project_id,:bio
 end

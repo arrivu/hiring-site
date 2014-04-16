@@ -60,7 +60,7 @@ module SIS
           id = rand(10000)
       end
 
-      def add_assessment_question( question_bank_title,question_data,regrade_option,points_possible,
+      def add_assessment_question( question_bank_title,question_data,regrade_option,points_possible,tags,
                                    correct_comments,incorrect_comments,neutral_comments,question_type,name,question_name,
                                    question_text,status,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,ans2_id,ans2_comments,ans2_text,
                                    ans2_weight,ans3_id,ans3_comments,ans3_text,ans3_weight,ans4_id,ans4_comments,ans4_text,
@@ -68,7 +68,7 @@ module SIS
                                    assessment_question_id)
         raise ImportError, "No question_bank_title given for a question_bank" unless question_bank_title.present?
 
-        @logger.debug("Processing Group #{[question_bank_title,question_data,regrade_option,points_possible,
+        @logger.debug("Processing Group #{[question_bank_title,question_data,regrade_option,points_possible,tags,
                                            correct_comments,incorrect_comments,neutral_comments,question_type,name,
                                            question_name,question_text,status,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,
                                            ans2_id,ans2_comments,ans2_text,ans2_weight,ans3_id,ans3_comments,ans3_text,ans3_weight,
@@ -91,7 +91,7 @@ module SIS
                 if question_type == "true_false_question"
                   if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                     question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                              :correct_comments => correct_comments,
+                                              :tags => tags,:correct_comments => correct_comments,
                                               :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                               :question_type => question_type,:name => name, :question_name => question_name,
                                               :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
@@ -116,7 +116,7 @@ module SIS
                 elsif question_type == "multiple_choice_question"
                   if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                        question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                                 :correct_comments => correct_comments,
+                                                 :tags => tags,:correct_comments => correct_comments,
                                                  :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                                  :question_type => question_type,:name => name, :question_name => question_name,
                                                  :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
@@ -174,7 +174,7 @@ module SIS
                 elsif question_type == "short_answer_question"
                     if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                         question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                                  :correct_comments => correct_comments,
+                                                  :tags => tags,:correct_comments => correct_comments,
                                                   :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                                   :question_type => question_type,:name => name, :question_name => question_name,
                                                   :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
@@ -211,7 +211,7 @@ module SIS
                 elsif question_type == "multiple_answers_question"
                   if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                       question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                                :correct_comments => correct_comments,
+                                                :tags => tags,:correct_comments => correct_comments,
                                                 :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                                 :question_type => question_type,:name => name, :question_name => question_name,
                                                 :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
@@ -261,7 +261,7 @@ module SIS
               if question_type == "true_false_question"
                 if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                   question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                            :correct_comments => correct_comments,
+                                            :tags => tags,:correct_comments => correct_comments,
                                             :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                             :question_type => question_type,:name => name, :question_name => question_name,
                                             :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
@@ -286,7 +286,7 @@ module SIS
               elsif question_type == "multiple_choice_question"
                 if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                     question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                              :correct_comments => correct_comments,
+                                              :tags => tags,:correct_comments => correct_comments,
                                               :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                               :question_type => question_type,:name => name, :question_name => question_name,
                                               :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
@@ -343,7 +343,7 @@ module SIS
               elsif question_type == "short_answer_question"
                 if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                   question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                            :correct_comments => correct_comments,
+                                            :tags => tags,:correct_comments => correct_comments,
                                             :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                             :question_type => question_type,:name => name, :question_name => question_name,
                                             :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
@@ -380,7 +380,7 @@ module SIS
               elsif question_type == "multiple_answers_question"
                 if ans1_text !=nil && ans1_weight != nil and ans2_text !=nil && ans2_weight != nil
                     question.question_data = {:regrade_option => regrade_option,:points_possible => points_possible,
-                                              :correct_comments => correct_comments,
+                                              :tags => tags,:correct_comments => correct_comments,
                                               :incorrect_comments => incorrect_comments, :neutral_comments => neutral_comments,
                                               :question_type => question_type,:name => name, :question_name => question_name,
                                               :question_text => question_text,:answers => [ {:id => ans1_id,:comments => ans1_comments,
