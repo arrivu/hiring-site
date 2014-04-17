@@ -31,7 +31,7 @@ module SIS
 
             begin
               importer.add_assessment_question(row['question_bank_title'],
-                                               row['question_data'],row['regrade_option'],row['points_possible'],row['tags'],
+                                               row['question_data'],row['regrade_option'],row['points_possible'],
                                                row['correct_comments'],row['incorrect_comments'],row['neutral_comments'],
                                                row['question_type'],row['name'],row['question_name'],row['question_text'],row['status'],
                                                row['answers'],row['ans1_id'],row['ans1_comments'],row['ans1_text'],row['ans1_weight'],
