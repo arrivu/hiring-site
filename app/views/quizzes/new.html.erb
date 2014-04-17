@@ -322,16 +322,16 @@
                 <p class="option-caption"><strong><%= t('labels.restrict_quiz', "Assessment Restrictions") %></strong></p>
 
                 <!-- Quiz Restrictions -->
-                <div class="option-group">
-                  <label class="checkbox" for="enable_quiz_access_code">
-                    <input type="checkbox" <%= 'checked' if !@quiz.access_code.blank? %> id="enable_quiz_access_code">
-                    <%= t('labels.require_access_code', "Require an access code") %>
-                  </label>
+                <!--<div class="option-group">-->
+                  <!--<label class="checkbox" for="enable_quiz_access_code">-->
+                    <!--<input type="checkbox" <%#= 'checked' if !@quiz.access_code.blank? %> id="enable_quiz_access_code">-->
+                    <!--<%#= t('labels.require_access_code', "Require an access code") %>-->
+                  <!--</label>-->
 
-                  <div class="options control-group">
-                    <input type="text" name="quiz[access_code]" id="quiz_access_code" value="<%= @quiz.access_code %>" placeholder="ex: Password85" />
-                  </div>
-                </div>
+                  <!--<div class="options control-group">-->
+                    <!--<input type="text" name="quiz[access_code]" id="quiz_access_code" value="<%#= @quiz.access_code %>" placeholder="ex: Password85" />-->
+                  <!--</div>-->
+                <!--</div>-->
                 <div class="option-group">
                   <label class="checkbox" for="enable_quiz_ip_filter">
                     <input type="checkbox" <%= 'checked' if !@quiz.ip_filter.blank? %> id="enable_quiz_ip_filter">

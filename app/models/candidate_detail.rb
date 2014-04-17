@@ -8,4 +8,5 @@ class CandidateDetail < ActiveRecord::Base
                   :employment,:current_compensation,
                   :expected_compensation, :profile_picture,
                   :project_id
+
 end

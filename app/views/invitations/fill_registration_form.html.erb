@@ -10,13 +10,12 @@
 </style>
 
 <div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
-  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
+  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @context.id } do |f| %>
 
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div class="show-if-editing">
           <table class="table">
-
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
               <% if @candidate_filter.last_name == TRUE %><td class='alnright'><%= f.label :last_name, "Last Name*"%></td><td><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></td><% end %>

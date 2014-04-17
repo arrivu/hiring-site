@@ -347,7 +347,6 @@ routes.draw do
           post :reorder
         end
       end
-
       match 'take' => 'quizzes#show', :as => :take, :take => '1'
       match 'take/questions/:question_id' => 'quizzes#show', :as => :question, :take => '1'
       match 'moderate' => 'quizzes#moderate', :as => :moderate
@@ -711,7 +710,7 @@ routes.draw do
   match 'dashboard-sidebar' => 'users#dashboard_sidebar', :as => :dashboard_sidebar, :via => :get
   match 'toggle_dashboard' => 'users#toggle_dashboard', :as => :toggle_dashboard, :via => :post
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
-  match 'authenticateKey' => 'invitations#accept_code', :as => :authenticateKey, :via => :get
+  match 'authenticateKey' => 'invitations#accept_code', :as => :authenticateKey
   match 'authenticateKey/:access_code' => 'invitations#accept_code'
   match 'project' => 'courses#candidate' , :as => :project, :via => :get
   match 'registerCandidate' => 'invitations#fill_registration_form', :as => :registerCandidate
@@ -847,9 +846,6 @@ routes.draw do
         put "#{context}s/:#{context}_id/quizzes/:id/invitations/:invitation_id", :action => :update, :path_name => "#{context}_invitations_update"
         delete "#{context}s/:#{context}_id/quizzes/:id/invitations/:invitation_id", :action => :destroy, :path_name => "#{context}_invitations_delete"
       end
-      get 'authenticateKey', :action => :accept_code, :path_name => "authenticateKey"
-      get 'authenticateKey/:access_code', :action => :accept_code, :path_name => "authenticateKey"
-      get 'registerCandidate', :action => :fill_registration_form, :path_name => "registerCandidate"
       et_routes("course")
       et_routes("account")
     end
