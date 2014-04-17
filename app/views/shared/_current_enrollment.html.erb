@@ -1,7 +1,7 @@
 <% dashboard ||= false %>
-<% if Date.today.to_s < current_enrollment.course_section.start_at.to_s || Date.today.to_s > current_enrollment.course_section.end_at.to_s %>
+<% if Date.today.to_s.to_date < current_enrollment.course_section.start_at.to_s.to_date || Date.today.to_s.to_date > current_enrollment.course_section.end_at.to_s.to_date %>
     <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">
-      <h1>Assesments are unavaiable, please contact your administrator.</h1>
+      <h1>Assesments are unavailable, please contact your administrator.</h1>
     </div>
 <%else%>
     <% unless dashboard %>

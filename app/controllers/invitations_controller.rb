@@ -71,6 +71,7 @@ class InvitationsController < ApplicationController
   def fill_registration_form
     @show_left_side = false
     @headers = false
+
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -93,6 +94,7 @@ class InvitationsController < ApplicationController
           @enrollment = @context.enroll_user(@user, type='StudentEnrollment',:enrollment_state => 'active',:section => @course_section)
           @enrollment.save!
         end
+        api_json(unique_code_association, @user, session, :course => @course, :section => @course_section)
 
         @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
         @candidate_detail= @get_pseudonym.user
