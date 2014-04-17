@@ -17,18 +17,31 @@
     {{#t "until"}}Until{{/t}}
     </label>
   </div>
-  <div>
-    <label id="overrides_show_correct_answer_at">
-    Show Correct Answers at
-    </label>
-  </div>
-  <div>
-      <label id="overrides_hide_correct_answers_at">
-      Hide Correct Answers at
-      </label>
-  </div>
-</div>
-
+  {{#if ENV.SHOW_CORRECT_ANSWER}}
+      <div>
+        <label id="overrides_show_correct_answer_at">
+        Show Correct Answers at
+        </label>
+      </div>
+      <div>
+          <label id="overrides_hide_correct_answers_at">
+          Hide Correct Answers at
+          </label>
+      </div>
+    </div>
+{{else}}
+    <div class="correct_answer_at_css" style="display:none;>
+        <label id="overrides_show_correct_answer_at">
+        Show Correct Answers at
+        </label>
+      </div>
+      <div class="correct_answer_at_css" style="display:none;>
+          <label id="overrides_hide_correct_answers_at">
+          Hide Correct Answers at
+          </label>
+      </div>
+    </div>
+{{/if}}
 <ul class="due-date-overrides" style="min-width:1118px !important;"></ul>
 
 <div class="due-date-override-footer">

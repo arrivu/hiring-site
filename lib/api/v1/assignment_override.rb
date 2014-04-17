@@ -35,6 +35,7 @@ module Api::V1::AssignmentOverride
       when 'CourseSection'
         json[:course_section_id] = override.set_id
       end
+      json[:quiz_show_answers] = @quiz.show_correct_answers
     end
   end
 
@@ -169,20 +170,7 @@ module Api::V1::AssignmentOverride
     end
 
     # collect override values
-    if(@quiz.show_correct_answers)
-      [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
-        if data.has_key?(field)
-          if data[field].blank?
-            # override value of nil/'' is meaningful
-            override_data[field] = nil
-          elsif value = Time.zone.parse(data[field].to_s)
-            override_data[field] = value
-          else
-            errors << "invalid #{field} #{data[field].inspect}"
-          end
-        end
-      end
-    else
+
       [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
         if data.has_key?(field)
           if (data[field].blank? or  data[field] == "null")
@@ -195,7 +183,7 @@ module Api::V1::AssignmentOverride
           end
         end
       end
-    end
+
 
     errors = nil if errors.empty?
     return override_data, errors
@@ -249,7 +237,6 @@ module Api::V1::AssignmentOverride
       override.title = override_data[:title] || override.title
     end
 
-    if(@quiz.show_correct_answers)
       [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
         if override_data.has_key?(field)
           override.send("override_#{field}", override_data[field])
@@ -257,15 +244,7 @@ module Api::V1::AssignmentOverride
           override.send("clear_#{field}_override")
         end
       end
-    else
-      [:due_at, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
-        if override_data.has_key?(field)
-          override.send("override_#{field}", override_data[field])
-        else
-          override.send("clear_#{field}_override")
-        end
-      end
-    end
+
   end
 
   def update_assignment_override(override, override_data)

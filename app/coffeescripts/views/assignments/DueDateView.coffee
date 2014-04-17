@@ -15,6 +15,7 @@ define [
 
     events:
       'click .remove-link' : 'removeDueDate'
+      'click #quiz_show_correct_answers' : 'QuizShowCorrectOption'
 
     # Method Summary
     #  Apply bindings and calendar js to each view
@@ -29,6 +30,10 @@ define [
       event.preventDefault()
       @trigger 'remove', @model
       @remove()
+
+    QuizShowCorrectOption: (event) =>
+      event.preventDefault()
+      alert($(event.currentTarget).id("quiz_show_correct_answers"))
 
     hideRemoveButton: =>
       @$el.find('.remove-link').hide()
@@ -48,7 +53,11 @@ define [
       json.course_section_id = parseInt(json.course_section_id, 10)
       errs = @validateBeforeSave json, {}
       @$el.hideErrors()
-
+      x = $("#quiz_show_correct_answers").is(":checked")
+      if(x)
+        json.quiz_show_answers = x
+      else
+        json.quiz_show_answers = json.quiz_show_answers
       for own el, msg of errs.assignmentOverrides
         @$("[name=#{el}]").errorBox msg
       json
@@ -74,7 +83,7 @@ define [
     updateOverride: =>
       @model.set @getFormValues()
 
-    toJSON: ->
+    toJSON: =>
       json = super
       json.status_check = "true"
 

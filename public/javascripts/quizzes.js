@@ -60,7 +60,7 @@ define([
         var idx = 0;
         var overridesLength = overrides.length;
         var _override = null;
-        var dates = [ 'due_at', 'lock_at', 'unlock_at', 'show_correct_answers_at' ];
+        var dates = [ 'due_at', 'lock_at', 'unlock_at', 'show_correct_answers_at', 'hide_correct_answers_at' ];
         // make sure we don't send the literal string "null" to the server.
         for (idx;idx< overridesLength;idx++){
             _override = overrides[idx]
@@ -1403,6 +1403,7 @@ define([
                 $(".correct_answer_at").show();
                 $("#overrides_show_correct_answer_at").show();
                 $("#overrides_hide_correct_answers_at").show();
+                $('.correct_answer_at_css').css('display','block');
 
             }
             else
@@ -1410,6 +1411,7 @@ define([
                 $(".correct_answer_at").hide();
                 $("#overrides_show_correct_answer_at").hide();
                 $("#overrides_hide_correct_answers_at").hide();
+                $('.correct_answer_at_css').css('display','none');
                 //$( "input[name*='correct_answers_at']" ).val(" ");
                 //$(".correct_answer_at .date_field").val("");
                 $(".correct_answer_at .datetime_suggest").html("");

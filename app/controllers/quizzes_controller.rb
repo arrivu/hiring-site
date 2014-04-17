@@ -213,6 +213,7 @@ class QuizzesController < ApplicationController
       sections = @context.course_sections.active
       hash = { :ASSIGNMENT_ID => @assigment.present? ? @assignment.id : nil,
              :ASSIGNMENT_OVERRIDES => assignment_overrides_json(@quiz.overrides_visible_to(@current_user)),
+             :SHOW_CORRECT_ANSWER => @quiz.show_correct_answers,
              :QUIZ => quiz_json(@quiz, @context, @current_user, session),
              :SECTION_LIST => sections.map { |section| { :id => section.id, :name => section.name } },
              :QUIZZES_URL => polymorphic_url([@context, :quizzes]),
