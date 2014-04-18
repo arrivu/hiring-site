@@ -338,7 +338,7 @@
               <i class="icon-edit"><span class="screenreader-only"><%= admin_edit_title %></span></i> <%= admin_edit_title %>
             </a>
               <%else%>
-              <a href="<%= course_quizzes_path([@context, @quiz]) %>" class='btn edit_assignment_link quiz-edit-button'>
+              <a href="<%= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>
                 Back to assessments
               </a>
           <% end %>
