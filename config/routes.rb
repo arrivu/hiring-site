@@ -347,7 +347,6 @@ routes.draw do
           post :reorder
         end
       end
-
       match 'take' => 'quizzes#show', :as => :take, :take => '1'
       match 'take/questions/:question_id' => 'quizzes#show', :as => :question, :take => '1'
       match 'moderate' => 'quizzes#moderate', :as => :moderate

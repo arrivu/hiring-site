@@ -160,7 +160,7 @@
         <% if can_do(@quiz, @current_user, :update) %>
         <a href="<%= edit_polymorphic_path([@context, @quiz]) %>" class='btn edit_assignment_link quiz-edit-button'>
           <i class="icon-edit"><span class="screenreader-only"><%= admin_edit_title %></span></i> <%= admin_edit_title %>
-        </a>
+            </a>
         <% end %>
 
         <a class="al-trigger btn" role="button" aria-haspopup="true" aria-owns="toolbar-1" href="#">
@@ -337,6 +337,10 @@
             <a href="<%= edit_polymorphic_path([@context, @quiz]) %>" class='btn edit_assignment_link quiz-edit-button'>
               <i class="icon-edit"><span class="screenreader-only"><%= admin_edit_title %></span></i> <%= admin_edit_title %>
             </a>
+              <%else%>
+              <a href="<%= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>
+                Back to assessments
+              </a>
           <% end %>
 
           <% if can_do(@quiz, @current_user, :update) || can_do(@quiz, @current_user, :grade) || can_do(@quiz, @current_user, :review_grades) %>

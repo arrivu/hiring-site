@@ -1,7 +1,7 @@
 class InvitationsController < ApplicationController
 
-  before_filter :require_user ,:except => [:accept_code, :optional_register, :new, :fill_registration_form]
-  before_filter :require_context,:except => [:accept_code, :optional_register, :new, :fill_registration_form]
+  before_filter :require_user ,:except => [:accept_code, :new, :fill_registration_form]
+  before_filter :require_context ,:except => [:accept_code, :new, :optional_register, :fill_registration_form]
   def index
     return unless authorized_action(@context, @current_user, [:create_courses, :manage_courses, :read])
     js_env(:COURSE_ID => @context.id)
@@ -11,8 +11,7 @@ class InvitationsController < ApplicationController
   end
 
   def get_candidates
-    get_context
-    if authorized_action(@context, @current_user, :read)
+     if authorized_action(@context, @current_user, :read)
       #backcompat limit param
       params[:per_page] ||= params.delete(:limit)
 
@@ -71,6 +70,7 @@ class InvitationsController < ApplicationController
   def fill_registration_form
     @show_left_side = false
     @headers = false
+    reset_session
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -82,7 +82,7 @@ class InvitationsController < ApplicationController
           @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
           @current_pseudonym = @pseudonym
         else
-          password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
+          #password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
           @user = User.create!(:name => params[:invitation][:unique_id])
           @user.workflow_state = 'registered'
           @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
@@ -93,7 +93,6 @@ class InvitationsController < ApplicationController
           @enrollment = @context.enroll_user(@user, type='StudentEnrollment',:enrollment_state => 'active',:section => @course_section)
           @enrollment.save!
         end
-
         @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
         @candidate_detail= @get_pseudonym.user
         @user ||= @current_user
@@ -102,7 +101,7 @@ class InvitationsController < ApplicationController
         @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
         @candidate_email = params[:invitation][:unique_id]
         if @candidate_filter == nil
-          redirect_to courses_path
+          redirect_to course_quizzes_path(@context)
         end
       else
         flash[:error] = "Invalid Access Code "
@@ -114,7 +113,6 @@ class InvitationsController < ApplicationController
   end
 
   def optional_register
-    get_context
     @show_left_side = false
     @headers = false
     clear_crumbs
@@ -184,7 +182,8 @@ class InvitationsController < ApplicationController
     @candidate_detail = User.find_by_id(@current_pseudonym[:user_id])
     if @candidate_detail.update_attributes(params[:candidate_detail])
       flash[:success] ="Successfully Updated Settings."
-      redirect_to courses_path
+      @course = Course.find(params[:course_id])
+      redirect_to course_quizzes_path(@course)
     end
 
   end

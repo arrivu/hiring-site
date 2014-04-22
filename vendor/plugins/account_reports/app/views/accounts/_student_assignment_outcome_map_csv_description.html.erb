@@ -1,5 +1,5 @@
 <p><%= t('account_reports.student_assignment_map.description.text', %{This
-report shows the learning outcome results for all students. The
+report shows the learning outcome results for all candidates. The
 resulting csv file will have one row per user-outcome-result pair, and will
 show the details of the result including the associated assignment.
 This report only shows outcome results for assignments and does not include
@@ -11,9 +11,9 @@ outcomes tied to question banks.}) %></p>
 <table class="report_example">
   <thead>
   <tr>
-    <th>student name</th>
-    <th>student id</th>
-    <th>student sis id</th>
+    <th>candidate name</th>
+    <th>candidate id</th>
+    <th>candidate sis id</th>
     <th>assignment title</th>
     <th>assignment id</th>
     <th>submission date</th>
@@ -22,12 +22,12 @@ outcomes tied to question banks.}) %></p>
     <th>learning outcome id</th>
     <th>attempt</th>
     <th>outcome score</th>
-    <th>course name</th>
-    <th>course id</th>
-    <th>course sis id</th>
-    <th>section name</th>
-    <th>section id</th>
-    <th>section sis id</th>
+    <th>project name</th>
+    <th>project id</th>
+    <th>project sis id</th>
+    <th>batch name</th>
+    <th>batch id</th>
+    <th>batch sis id</th>
     <th>assignment url</th>
   </tr>
   </thead>
@@ -50,7 +50,7 @@ outcomes tied to question banks.}) %></p>
     <td>Section1</td>
     <td>678435</td>
     <td>s5001901</td>
-    <td>https://example.com/courses/46489/assignments/3217</td>
+    <td>https://example.com/projects/46489/assignments/3217</td>
   </tr>
   <tr>
     <td>smith, kacie</td>
@@ -70,7 +70,7 @@ outcomes tied to question banks.}) %></p>
     <td>Section1</td>
     <td>678435</td>
     <td>s5001901</td>
-    <td>https://example.com/courses/46489/assignments/3217</td>
+    <td>https://example.com/projects/46489/assignments/3217</td>
   </tr>
   </tbody>
 </table>  

@@ -183,7 +183,6 @@ class CoursesController < ApplicationController
   #
   # @returns [Course]
   def index
-    @headers == false
     respond_to do |format|
       format.html {
         @current_enrollments = @current_user.cached_current_enrollments(:include_enrollment_uuid => session[:enrollment_uuid]).sort_by{|e| [e.active? ? 1 : 0, Canvas::ICU.collation_key(e.long_name)] }
@@ -226,58 +225,6 @@ class CoursesController < ApplicationController
         render :json => hash
       }
     end
-  end
-
-  def candidate
-    @show_left_side = false
-    @headers == false
-    clear_crumbs
-    respond_to do |format|
-      format.html {
-        @current_enrollments = @current_user.cached_current_enrollments(:include_enrollment_uuid => session[:enrollment_uuid]).sort_by{|e| [e.active? ? 1 : 0, Canvas::ICU.collation_key(e.long_name)] }
-        @past_enrollments    = @current_user.enrollments.with_each_shard{|scope| scope.past }
-        @future_enrollments  = @current_user.enrollments.with_each_shard{|scope| scope.future.includes(:root_account)}.reject{|e| e.root_account.settings[:restrict_student_future_view]}
-
-        @past_enrollments.concat(@current_enrollments.select { |e| e.state_based_on_date == :completed })
-        @current_enrollments.reject! do |e|
-          [:inactive, :completed].include?(e.state_based_on_date) ||
-              @future_enrollments.include?(e)
-        end
-      }
-
-      format.json {
-        if params[:state]
-          params[:state] += %w(created claimed) if params[:state].include? 'unpublished'
-          enrollments = @current_user.enrollments
-          enrollments = enrollments.reject { |e| !params[:state].include?(e.course.workflow_state) || (%w(StudentEnrollment ObserverEnrollment).include?(e.type) && %w(created claimed).include?(e.course.workflow_state))}
-        else
-          enrollments = @current_user.cached_current_enrollments
-        end
-
-        if params[:enrollment_role]
-          enrollments = enrollments.reject { |e| (e.role_name || e.class.name) != params[:enrollment_role] }
-        elsif params[:enrollment_type]
-          e_type = "#{params[:enrollment_type].capitalize}Enrollment"
-          enrollments = enrollments.reject { |e| e.class.name != e_type }
-        end
-
-        includes = Set.new(Array(params[:include]))
-
-        # We only want to return the permissions for single courses and not lists of courses.
-        includes.delete 'permissions'
-
-        hash = []
-        enrollments.group_by(&:course_id).each do |course_id, course_enrollments|
-          course = course_enrollments.first.course
-          hash << course_json(course, @current_user, session, includes, course_enrollments)
-        end
-        render :json => hash
-      }
-    end
-  end
-
-  def quiz_list
-     @quizes = @context.active_quizzes.all
   end
 
   # @API Create a new course

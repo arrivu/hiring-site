@@ -56,7 +56,13 @@
   </tr>
   <tr>
     <td>
-      <%= t('account_reports.sis_default.parameters.note', %{*Term settings only impact Courses, Sections, Enrollments, and X list CSV files.}) %>
+      <%= check_box_tag "parameters[assessment_questions]"   %>
+      <%= label_tag(:assessment_questions, t('account_reports.default.assessment_questions.check_box','Assessment Questions CSV'), "for" => 'parameters_assessmnet_questions') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('account_reports.sis_default.parameters.note', %{*Hiring Period settings only impact Projects, Batches, Enrollments, and X list CSV files.}) %>
     </td>
   </tr>
   <%=  render :partial => 'include_deleted_parameter' %>

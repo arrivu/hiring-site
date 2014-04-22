@@ -86,6 +86,7 @@ $(document).ready(function(event) {
     output += "<li>" + I18n.t('import_counts.crosslists', "Crosslists: %{crosslist_count}", {crosslist_count: batch.data.counts.xlists}) + "</li>";
     output += "<li>" + I18n.t('import_counts.groups', "Groups: %{group_count}", {group_count: batch.data.counts.groups}) + "</li>";
     output += "<li>" + I18n.t('import_counts.group_enrollments', "Group Enrollments: %{group_enrollments_count}", {group_enrollments_count: batch.data.counts.group_memberships}) + "</li>";
+    output += "<li>" + I18n.t('import_counts.questions', "Assessment Questions: %{questions_count}", {questions_count: batch.data.counts.assessment_questions}) + "</li>";
     output += "</ul></li></ul>";
     
     return output
