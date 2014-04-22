@@ -68,6 +68,9 @@ define [
           lockAt = data.lock_at
           unlockAt = data.unlock_at
           dueAt = data.due_at
+          courseSectionId = data.course_section_id
+          if(courseSectionId==0)
+            errs.course_section_id = "Choose Batch"
           if lockAt && dueAt && lockAt < dueAt
             errs.lock_at = I18n.t('lock_date_before_due_date',
               'Lock date cannot be before due date')
@@ -82,10 +85,3 @@ define [
 
     updateOverride: =>
       @model.set @getFormValues()
-
-    toJSON: =>
-      json = super
-      json.status_check = "true"
-
-      json
-

@@ -33,9 +33,9 @@ class OverrideListPresenter
 
   def due_for(due_date)
     return due_date[:title] if due_date[:title]
-    multiple_due_dates? ? 
-      I18n.t('overrides.everyone_else','Everyone else') : 
-      I18n.t('overrides.everyone','Everyone')
+    #multiple_due_dates? ?
+    #  I18n.t('overrides.everyone_else','Everyone else') :
+    #  I18n.t('overrides.everyone','Everyone')
   end
 
   def formatted_date_string(date_field, date_hash = {})

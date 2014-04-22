@@ -284,7 +284,10 @@
                           <%= text_field :quiz, :show_correct_answers_at,
                             :class => "input-medium date_field",
                             :type => "text",
-                            :value => @quiz.show_correct_answers_at.as_json %>
+                            :value =>""
+                            #:value => @quiz.show_correct_answers_at.as_json
+
+                          %>
                         </div>
                       </div>
                       <div>
@@ -296,7 +299,9 @@
                           <%= text_field :quiz, :hide_correct_answers_at,
                             :class => "input-medium date_field",
                             :type => "text",
-                            :value => @quiz.hide_correct_answers_at.as_json %>
+                            :value =>""
+                            #:value => @quiz.hide_correct_answers_at.as_json
+                          %>
                         </div>
                       </div>
                     </div>

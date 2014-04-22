@@ -1375,7 +1375,29 @@ define([
         });
 
         $("#lockdown_browser_suboptions").showIf($("#quiz_require_lockdown_browser").attr('checked'));
+        $('select.section-list').change(function() {
+            $('.'+$(this).attr('class')).each(function(){
+                alert($(this).data('type'));
+            });
+        });
+        /*
+        var select = $('select.section-list');
+        select.change(function () {
 
+            alert(this.value);
+
+        });
+        */
+        /*
+        $(function () {
+            var select = $('select.section-list');
+            select.change(function () {
+
+                alert(this.value);
+
+            });
+        });
+        */
         $("#never_hide_results").click(function() {
             var x = $("#never_hide_results").is(":checked");
             if(!x)

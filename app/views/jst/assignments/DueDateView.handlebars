@@ -1,6 +1,6 @@
 <form>
   {{#with assignment_override}}
-  <select class="section-list input-small" name="course_section_id" aria-labelledby="overrides_course_section">
+  <select class="section-list input-small" name="course_section_id" id="course_batch_id" aria-labelledby="overrides_course_section" onchange="get_batch_id(this)">
   </select>
 <!--
   <div class="date_field_container">
