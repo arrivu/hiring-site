@@ -1,16 +1,17 @@
 class Invitation < ActiveRecord::Base
   belongs_to :pseudonym
-  belongs_to :quiz
-  has_many :messages
-  attr_accessible :access_code,:workflow_status,
-                  :full_name,
-                  :middle_name,
-                  :last_name,
-                  :dob,
-                  :contact_number,
-                  :address,
-                  :current_compensation,
-                  :expected_compensation
+  belongs_to :course
+  has_many :user_academics
+  has_many :quizzes
+  #attr_accessible :access_code,:workflow_status,
+  #                :full_name,
+  #                :middle_name,
+  #                :last_name,
+  #                :dob,
+  #                :contact_number,
+  #                :address,
+  #                :current_compensation,
+  #                :expected_compensation
 
 
   # default key length: 10 characters
@@ -35,10 +36,11 @@ class Invitation < ActiveRecord::Base
 
   # we'll rely on the DB to make sure the unique key is really unique.
   # if it isn't unique, the unique index will catch this and raise an error
-  def create
+  def generate_unique_access_code
     count = 0
     begin
-      self.access_code = generate_unique_key
+      #self.access_code = generate_unique_key
+      generate_unique_key
       super
         #ActiveRecord::RecordNotUnique
     rescue ActiveRecord::ActiveRecordError, ActiveRecord::StatementInvalid => err

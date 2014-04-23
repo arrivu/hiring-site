@@ -105,6 +105,7 @@ class SectionsController < ApplicationController
           format.json { render :json => @section.errors, :status => :bad_request }
         end
       end
+      get_unique_access_code(@context,@section)
     end
   end
 
@@ -161,7 +162,7 @@ class SectionsController < ApplicationController
       end
     end
   end
-  
+
   # @API De-cross-list a Section
   # Undo cross-listing of a Section, returning it to its original course.
   #

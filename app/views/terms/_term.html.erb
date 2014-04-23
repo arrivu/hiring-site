@@ -15,7 +15,7 @@
     </div>
     <%= form_for (term || EnrollmentTerm.new), :url => (term ? context_url(@context, :context_term_url, term.id) : context_url(@context, :context_terms_url)), :html => {:class => "enrollment_term_form", :method => (term ? :put : :post)} do |f| %>
         <div class="control-group edit_term">
-          <label class="control-label" for="enrollment_term_name"><%= t :name, 'Term Name:' %></label>
+          <label class="control-label" for="enrollment_term_name"><%= t :name, 'Hiring Period Name:' %></label>
           <div class="controls">
             <%= f.text_field :name, :class => "input-xlarge" %>
           </div>
@@ -30,7 +30,7 @@
       <% end %>
       <div class="edit_term edit_term_buttons">
         <button class="btn button-secondary cancel_button" type="button"><%= t '#buttons.cancel', "Cancel" %></button>
-        <button class="btn btn-primary submit_button" type="submit"><%= term ? t('buttons.update', "Update Term") : t('buttons.add', "Add Term") %></button>
+        <button class="btn btn-primary submit_button" type="submit"><%= term ? t('buttons.update', "Update Hiring period") : t('buttons.add', "Add Hiring Period") %></button>
       </div>
     <% end %>
   </td>
@@ -39,9 +39,9 @@
     <table>
       <tr class="general_dates">
         <td>
-          <%= mt :term_runs_from, "**Term Runs** from" %>&nbsp;
+          <%= mt :term_runs_from, "**Hiring period Runs** from" %>&nbsp;
         </td>
-        <%= render :partial => 'timespan', :locals => { :object => term, :key => '', :start_tooltip => t('titles.term_starts', "Term starts"), :end_tooltip => t('titles.term_ends', "Term ends") } %>
+        <%= render :partial => 'timespan', :locals => { :object => term, :key => '', :start_tooltip => t('titles.term_starts', "Hiring period starts"), :end_tooltip => t('titles.term_ends', "Hiring period ends") } %>
       </tr>
     <% types.each do |type| %>
       <% override = term.enrollment_dates_overrides.find_by_context_type_and_context_id_and_enrollment_type(@context.class.to_s, @context.id, type.to_s) if term %>
@@ -51,20 +51,20 @@
         <td>
           <% case type_string
               when 'student_enrollment'
-                start_tooltip = t 'tooltips.term_starts_students', "For candidates the term starts"
-                end_tooltip = t 'tooltips.term_ends_students', "For candidates the term ends"
+                start_tooltip = t 'tooltips.term_starts_students', "For candidates the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_students', "For candidates the hiring period ends"
                 access_label = mt 'labels.students_can_access_from', "**Candidates** can access from"
               when 'teacher_enrollment'
-                start_tooltip = t 'tooltips.term_starts_teachers', "For hiring manager the term starts"
-                end_tooltip = t 'tooltips.term_ends_teachers', "For hiring manager the term ends"
+                start_tooltip = t 'tooltips.term_starts_teachers', "For hiring manager the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_teachers', "For hiring manager the hiring period ends"
                 access_label = mt 'labels.teachers_can_access_from', "**Hiring Manager** can access from"
               when 'ta_enrollment'
-                start_tooltip = t 'tooltips.term_starts_tas', "For interviewers the term starts"
-                end_tooltip = t 'tooltips.term_ends_tas', "For interviewers the term ends"
+                start_tooltip = t 'tooltips.term_starts_tas', "For interviewers the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_tas', "For interviewers the hiring period ends"
                 access_label = mt 'labels.tas_can_access_from', "**Interviewers** can access from"
               when 'designer_enrollment'
-                start_tooltip = t 'tooltips.term_starts_designers', "For designers the term starts"
-                end_tooltip = t 'tooltips.term_ends_designers', "For designers the term ends"
+                start_tooltip = t 'tooltips.term_starts_designers', "For designers the hiring period starts"
+                end_tooltip = t 'tooltips.term_ends_designers', "For designers the hiring period ends"
                 access_label = mt 'labels.designers_can_access_from', "**Designers** can access from"
               end
           %>

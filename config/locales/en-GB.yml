@@ -12107,7 +12107,7 @@ en-GB:
       new_assignment_option: "[ New assignment ]"
       new_file_option: "[ New file ]"
       new_page_option: "[ New page ]"
-      new_quiz_option: "[ New quiz ]"
+      new_quiz_option: "[ New Assessment ]"
       new_tab: "Load this tool in a new tab"
       new_topic_option: "[ New Topic ]"
       options: 
@@ -12137,7 +12137,7 @@ en-GB:
         unpublished: "Not yet available"
       needs_cookies: "Cookies are not enabled on your browser. Please adjust this in your security preferences before continuing."
       needs_login: "Access to this page is limited to authorised users. You do not have currently have permission to view this page."
-      public_course: "This page is part of the content for the course, **%{course}**."
+      public_course: "This page is part of the content for the project, **%{course}**."
       titles: 
         log_in: "Please log in"
         unauthorized_action: Unauthorized

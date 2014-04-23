@@ -548,7 +548,7 @@ class Assignment < ActiveRecord::Base
   def process_if_quiz
     if self.submission_types == "online_quiz"
       self.points_possible = quiz.points_possible if quiz && quiz.available?
-      copy_attrs = %w(due_at lock_at unlock_at)
+      copy_attrs = %w(due_at lock_at unlock_at show_correct_answers_at hide_correct_answers_at)
       if quiz && @saved_by != :quiz &&
          copy_attrs.any? { |attr| changes[attr] }
         copy_attrs.each { |attr| quiz.send "#{attr}=", send(attr) }

@@ -2,10 +2,12 @@
   <% presenter = OverrideListPresenter.new(assignment, user) %>
   <% presenter.visible_due_dates.each do |due_date| %>
     <tr>
-      <td><%= due_date[:due_at] %></td>
+      <!--<td><%#= due_date[:due_at] %></td>-->
       <td><%= due_date[:due_for] %></td>
       <td><%= due_date[:unlock_at] %></td>
       <td><%= due_date[:lock_at] %></td>
+      <td><%= due_date[:show_correct_answers_at] %></td>
+      <td><%= due_date[:hide_correct_answers_at] %></td>
     </tr>
   <% end %>
 </tbody>

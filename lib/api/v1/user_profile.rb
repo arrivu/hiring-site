@@ -53,6 +53,10 @@ module Api::V1::UserProfile
       json[:links] = profile.links.map { |l| user_profile_link_json(l, current_user, session) }
     end
 
+    if includes.include? 'links'
+      json[:links] = profile.links.map { |l| user_profile_link_json(l, current_user, session) }
+    end
+
     json
   end
 
@@ -65,4 +69,9 @@ module Api::V1::UserProfile
   def user_profile_link_json(link, current_user, session)
     api_json(link, current_user, session, :only => %w(url title))
   end
+
+  def user_acedamics_json(link, current_user, session)
+    api_json(link, current_user, session, :only => %w(url title))
+  end
+
 end

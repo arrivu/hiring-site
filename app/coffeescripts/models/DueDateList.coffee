@@ -16,6 +16,8 @@ define [
             due_at: @assignment.get( 'due_at' )
             lock_at: @assignment.get( 'lock_at' )
             unlock_at: @assignment.get( 'unlock_at' )
+            show_correct_answers_at: @assignment.get( 'show_correct_answers_at' )
+            hide_correct_answers_at: @assignment.get( 'hide_correct_answers_at' )
           @overrides.add override
         @sections.add Section.defaultDueDateSection()
       @updateDefaultDueDateSection()
@@ -24,13 +26,13 @@ define [
 
     updateDefaultDueDateSection: =>
       section = @findDefaultDueDateSection()
-      if section?
-        if @overrides.length <= 1
-          section.set 'name', I18n.t('overrides.everyone','Everyone'),
-            silent: true
-        else
-          section.set 'name', I18n.t('overrides.everyone_else','Everyone Else'),
-            silent: true
+#      if section?
+#        if @overrides.length <= 1
+#          section.set 'name', I18n.t('overrides.everyone','Everyone'),
+#            silent: true
+#        else
+#          section.set 'name', I18n.t('overrides.everyone_else','Everyone Else'),
+#            silent: true
 
     findDefaultDueDateSection: =>
       @sections.detect ( section ) ->

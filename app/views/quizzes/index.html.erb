@@ -1,4 +1,9 @@
-<% content_for :page_title, t(:page_titles, "Assessments") %>
+<% content_for :page_title, t(:page_titles, "Assessments")%>
+<% if !can_do(@context.quizzes.new, @current_user, :create)%>
+    <% @headers = false
+
+    @show_left_side = false %>
+<% end %>
 
 <% if @context.feature_enabled?(:draft_state) %>
 
@@ -26,7 +31,6 @@
     :question_banks => feature_enabled?(:question_banks)
   })
 %>
-
 <% else %>
 <% js_bundle :quizzes_index_legacy  %>
 

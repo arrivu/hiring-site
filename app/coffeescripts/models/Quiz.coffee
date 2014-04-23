@@ -19,6 +19,8 @@ define [
       due_at: null
       unlock_at: null
       lock_at: null
+      show_correct_answers_at: null
+      hide_correct_answers_at: null
       unpublishable: true
       points_possible: null
 
@@ -99,6 +101,14 @@ define [
       return @get 'lock_at' unless arguments.length > 0
       @set 'lock_at', date
 
+    showCorrectAnswersAt: (date)  =>
+      return @get 'show_correct_answers_at' unless arguments.length > 0
+      @set 'show_correct_answers_at', date
+
+    hideCorrectAnswersAt: (date)  =>
+      return @get 'hide_correct_answers_at' unless arguments.length > 0
+      @set 'hide_correct_answers_at', date
+
     htmlUrl: =>
       @get 'url'
 
@@ -107,6 +117,8 @@ define [
         due_at:    @get("due_at")
         unlock_at: @get("unlock_at")
         lock_at:   @get("lock_at")
+        show_correct_answers_at:   @get("show_correct_answers_at")
+        hide_correct_answers_at:   @get("hide_correct_answers_at")
 
     multipleDueDates: =>
       dateGroups = @get("all_dates")
@@ -128,7 +140,7 @@ define [
 
     toView: =>
       fields = [
-        'htmlUrl', 'multipleDueDates', 'allDates', 'dueAt', 'lockAt', 'unlockAt', 'singleSectionDueDate'
+        'htmlUrl', 'multipleDueDates', 'allDates', 'dueAt', 'lockAt', 'unlockAt', 'showCorrectAnswersAt', 'hideCorrectAnswersAt', 'singleSectionDueDate'
       ]
       hash = id: @get 'id'
       for field in fields

@@ -24,7 +24,7 @@ define [
       templateLocals =
         assignment: @assignment
         showPointsPossible: @assignment.points_possible || @assignment.points_possible == '0'
-        url: "/courses/#{@gradebook.options.context_id}/gradebook/update_submission"
+        url: "/projects/#{@gradebook.options.context_id}/gradebook/update_submission"
       templateLocals["assignment_grading_type_is_#{@assignment.grading_type}"] = true
       @$dialog = $(setDefaultGradeDialogTemplate(templateLocals))
       @$dialog.dialog(

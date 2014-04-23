@@ -1,6 +1,54 @@
 <% content_for :page_title do %><%= join_title(@quiz.quiz_title || @quiz.readable_type, @context.name) %><% end %>
+<% if can_do(@current_user, :update) %>     <% @headers = false
 
+       @show_left_side = false %>
+<% end %>
+<% js_block do %>
+    <script>
+//    var message="Right Click Disabled!";
+//    function clickIE4(){ if (event.button==2){ alert(message); return false; } }
+//    function clickNS4(e){ if (document.layers||document.getElementById&&!document.all)
+//    { if (e.which==2||e.which==3){ alert(message); return false; } } }
+//    if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; }
+//    else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; }
+//    document.oncontextmenu=new Function("alert(message);return false")
+    var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+
+    if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
+
+    function mischandler(){
+        return false;
+    }
+
+    function mousehandler(e){
+        var myevent = (isNS) ? e : event;
+        var eventbutton = (isNS) ? myevent.which : myevent.button;
+        if((eventbutton==2)||(eventbutton==3)) return false;
+    }
+    document.oncontextmenu = mischandler;
+    document.onmousedown = mousehandler;
+    document.onmouseup = mousehandler;
+    var isCtrl = false;
+    document.onkeyup=function(e)
+    {
+        if(e.which == 17)
+            isCtrl=false;
+    }
+
+    document.onkeydown=function(e)
+    {
+        if(e.which == 17)
+            isCtrl=true;
+        if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
+        {
+// alert(‘Keyboard shortcuts are cool!’);
+            return false;
+        }
+    }
+    </script>
+<% end %>
 <%
+   @body_classes << "gradebook2 full-width"
   # These titles are used in different elements/scopes below
   #
   # Quiz or Survey title
@@ -38,7 +86,7 @@
             </a>
             <a href="<%= course_quiz_invitations_path(@context,@quiz) %>"  data-id="<%= @quiz.id %>" class="send_invitations">
               <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
-            </a>
+           </a>
             <%= render :partial => 'quizzes/download_file_upload_submissions' %>
 
           <% end %>
@@ -57,11 +105,11 @@
         <% end %>
 
         <% if (can_do(@quiz, @current_user, :grade) || can_do(@quiz, @current_user, :review_grades)) && @quiz.available? && @quiz.assignment && @context.allows_speed_grader? && (@quiz.published? || !@context.feature_enabled?(:draft_state)) %>
-          <%# speed_grader_title = t(:speed_grader, "SpeedGrader™") %>
+          <% speed_grader_title = t(:speed_grader, "Quick Grader") %>
           <li>
-            <!--<a target="_blank" href="<%#= context_url(@context, :speed_grader_context_gradebook_url, :assignment_id => @quiz.assignment.id) %>">-->
-             <%#= speed_grader_title %><%#= speed_grader_title %>
-            <!--</a>-->
+            <a target="_blank" href="<%= context_url(@context, :speed_grader_context_gradebook_url, :assignment_id => @quiz.assignment.id) %>">
+             <%= speed_grader_title %>
+            </a>
           </li>
         <% end %>
       </ul>
@@ -91,7 +139,7 @@
 <% js_bundle :quiz_show %>
 <% jammit_css :quizzes, :learning_outcomes %>
 
-<div id="quiz_show">
+<div id="quiz_show" ondragstart="return false" onselectstart="return false">
 <% if @context.feature_enabled?(:draft_state) %>
   <% if can_do(@quiz, @current_user, :update) || can_do(@quiz, @current_user, :manage) %>
   <div class="header-bar">
@@ -112,7 +160,7 @@
         <% if can_do(@quiz, @current_user, :update) %>
         <a href="<%= edit_polymorphic_path([@context, @quiz]) %>" class='btn edit_assignment_link quiz-edit-button'>
           <i class="icon-edit"><span class="screenreader-only"><%= admin_edit_title %></span></i> <%= admin_edit_title %>
-        </a>
+            </a>
         <% end %>
 
         <a class="al-trigger btn" role="button" aria-haspopup="true" aria-owns="toolbar-1" href="#">
@@ -289,6 +337,10 @@
             <a href="<%= edit_polymorphic_path([@context, @quiz]) %>" class='btn edit_assignment_link quiz-edit-button'>
               <i class="icon-edit"><span class="screenreader-only"><%= admin_edit_title %></span></i> <%= admin_edit_title %>
             </a>
+              <%else%>
+              <a href="<%= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>
+                Back to assessments
+              </a>
           <% end %>
 
           <% if can_do(@quiz, @current_user, :update) || can_do(@quiz, @current_user, :grade) || can_do(@quiz, @current_user, :review_grades) %>

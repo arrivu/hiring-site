@@ -5,7 +5,7 @@
     <% text   = @quiz_presenter.answered_text(q) %>
     <% marked = @quiz_presenter.marked_text(q) %>
 
-    <li id="list_question_<%= q[:id] %>" class="<%= @quiz_presenter.question_class(q) %>">
+    <li id="list_question_<%= q[:id] %>" class="<%= @quiz_presenter.question_class(q) %>"  style="font-size:16px;">
       <% if @quiz_presenter.one_question_at_a_time? %>
         <% if @quiz_presenter.cant_go_back? || @quiz_presenter.require_lockdown_browser? %>
           <span>

@@ -128,7 +128,7 @@ define([
       snapshotCache = {},
       sectionToShow,
       header,
-      studentLabel = I18n.t("candidate", "Candidate"),
+      studentLabel = I18n.t("student", "Candidate"),
       groupLabel = I18n.t("group", "Group"),
       gradeeLabel = studentLabel,
       utils;
@@ -1361,7 +1361,7 @@ define([
 	      else {
 	        //load in the iframe preview.  if we are viewing a past version of the file pass the version to preview in the url
 	        $iframe_holder.html(
-            '<iframe id="speedgrader_iframe" src="/courses/' + jsonData.context_id  +
+            '<iframe id="speedgrader_iframe" src="/projects/' + jsonData.context_id  +
             '/assignments/' + this.currentStudent.submission.assignment_id +
             '/submissions/' + this.currentStudent.submission.user_id +
             '?preview=true' + (

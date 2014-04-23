@@ -26,7 +26,6 @@ class AssetUserAccess < ActiveRecord::Base
   has_many :asset_access_ranges
   before_save :infer_defaults
   attr_accessible :user, :asset_code
-
   scope :for_context, lambda { |context| where(:context_id => context, :context_type => context.class.to_s) }
   scope :for_user, lambda { |user| where(:user_id => user) }
   scope :participations, where(:action_level => 'participate')

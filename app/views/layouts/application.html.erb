@@ -47,7 +47,7 @@
     <!--<a id='hideshow' value='hide/show' style="cursor: pointer;"><%#= image_tag "menu.png", :style=> "width: 25px;height: 20px;margin: -17px 10px;" %> </a>-->
         <%end%>
 
-    <a id="header-logo" href="<%= root_url %>" style="left: 45px;"><%= t 'links.dashboard', "My Dashboard" %></a>
+    <a id="header-logo" href="<%= root_url %>" ><%= t 'links.dashboard', "My Dashboard" %></a>
     <b id="header-logo-secondary"></b>
     <!--<div id="topbar">-->
       <!--<%# if (identity = yield :identity) %>-->
@@ -59,10 +59,8 @@
       <!--<%# end %>-->
     <!--</div>-->
     <%= render(:partial => "shared/keyboard_navigation_hint") if keyboard_navigation %>
-
     <% if @current_user %>
         <ul role="navigation" id="menu" aria-label="<%= t('navigation.main', 'Main Navigation') %>">
-
       <%- cache([@current_user, 'home-menu-15m'], :expires_in => 15.minutes) do -%>
       <li id="courses_menu_item" class="menu-item">
         <%- if show_home_menu? -%>
@@ -72,13 +70,6 @@
         <%- end -%>
       </li>
       <%- end -%>
-      <li id="courses_menu_item" class="menu-item">
-        <%- if show_home_menu? -%>
-            <%= render(:partial => 'shared/home_menu1') %>
-        <%- else  -%>
-            <a href="<%= dashboard_path %>" class="menu-item-no-drop"><%= t 'links.home', 'Home' %></a>
-        <%- end -%>
-      </li>
       <li id="assignments_menu_item" class="menu-item">
       <%
       # this will cache the assignments menu for 3 minutes.  the way it is right now it does 3 really expensive queries every page load.
@@ -97,7 +88,7 @@
         total_shown = 0
         if assignment_sets.any?{ |k, v| @current_user.send(k).length > 0 }
       -%>
-        <a href="/assignments" class="menu-item-title"><%= t('menu.assignments', 'Assignments') %><span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
+        <a href="/assignments" class="menu-item-title"><%= t('menu.assignments', 'Assessments') %><span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
         <div class="menu-item-drop">
           <table cellspacing="0">
             <tr>
@@ -133,11 +124,11 @@
       <li id="calendar_menu_item" class="menu-item">
         <!--<a href="<%#= calendar_path %>" class="menu-item-no-drop"><%#= t('menu.calendar', 'Calendar') %></a>-->
       </li>
-          <li class="menu-item" style="float: right;margin-right:30px;">
+          <li class="menu-item" style="float: right;margin-right:7%;">
             <a href="#" class="menu-item-title">
               <%= @current_user.name %>
               <span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
-            <div class="menu-item-drop" style="width: 136px;">
+            <div class="menu-item-drop" style="width: 100%;">
               <table cellspacing="0">
                 <tr>
                   <td class="menu-item-drop-column" id="menu_enrollments">

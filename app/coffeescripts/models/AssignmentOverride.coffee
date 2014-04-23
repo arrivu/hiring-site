@@ -19,6 +19,12 @@ define [
       lock_at_overridden: true
       lock_at: null
 
+      show_correct_answers_at: null
+      show_correct_answers_at_overridden: true
+
+      hide_correct_answers_at: null
+      hide_correct_answers_at_overridden: true
+
     initialize: ->
       super
       @on 'change:course_section_id', @clearID, this

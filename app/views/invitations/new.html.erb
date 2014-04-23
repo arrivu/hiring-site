@@ -1,0 +1,80 @@
+<%
+   jammit_css :profile_show, :tinymce
+   js_bundle  :profile_show
+   @body_classes << "gradebook2 full-width" %>
+<!--<div id="new_form"></div>-->
+
+<style>
+    select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
+    label{margin-top:15px;}
+    .table th, .table td{border:none;   }
+</style>
+<div style="width: 95%;margin: 0px auto;border: 1px solid #efefef;padding: 10px;border-radius: 10px;box-shadow: 3px 0px 0px 2px #D1D0D0;">
+<% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
+    <div class="profile_links">
+      <h2 class="h1 border border-b">Personal Information</h2>
+      <div class="show-if-editing">
+    <table class="table">
+      <tr><td><%= f.label :first_name, "First Name*"%></td><td><%= f.text_field :first_name%></td><td><%= f.label :middle_name, "Middle Name"%></td><td><%= f.text_field :middle_name%></td><td><%= f.label :last_name, "Last Name"%></td><td><%= f.text_field :last_name%></td></tr>
+      <tr><td><%= f.label :dob, "Date Of Birth* (DD-MM-YYYY)"%></td><td><%= f.text_field :dob%></td><td><%= f.label :contact_number, "Contact number"%></td><td><%= f.text_field :contact_number%></td><td></td><td></td></tr>
+      <tr><td><%= f.label :email_id, "E-mail Id*" %></td>
+        <td><%= f.text_field :email_id%></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td><%= f.label :address, "Address" %></td>
+        <td ><%= f.text_field :address%></td>
+        <td><%= f.label :address, "City" %></td><td><%= f.text_field :address%></td><td><%= f.label :address, "State" %></td>
+        <td colspan="5"><%= f.text_field :address%></td>
+      </tr>
+    </table>
+        </div>
+      </div>
+    <div class="profile_links">
+      <h2 class="h1 border border-b">Academic Qualifications</h2>
+      <div class="show-if-editing">
+        <table id="edit_links_table" cellpadding="10" >
+
+          <thead>
+          <th>Degree</th>
+          <th>Discipline</th>
+          <th>School/ College</th>
+          <th>Year of Completion</th>
+          <th>%/ CGPA</th>
+          <th></th>
+          </thead>
+          <tbody id="qual_fields"></tbody>
+        </table>
+        <button data-event="addQualField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Qualification</button>
+        <br/>
+      </div>
+        <br/>
+    </div>
+
+    <div style="width: 100%;background-color: #1994D1;color:white;text-align: center;padding: 10px 0px;font-size: 22px;">Work Experience</div>
+    <div class="profile_links">
+
+        <table id="edit_links_table" cellpadding="10">
+          <thead>
+          <th>Organization</th>
+          <th>From(MM/YYYY)</th>
+          <th>To(MM/YYYY)</th>
+          <th>Designation</th>
+          <th>Permanent/ contract</th>
+          <th>Reason for leaving</th>
+          <th></th>
+          </thead>
+          <tbody id="work_fields"></tbody>
+        </table>
+
+
+        <button data-event="addWorkField" class="btn btn-small" style="margin-left:10px;margin-bottom: 10px;">Add another Experience</button>
+
+      </div>
+
+    </div>
+    <br/>
+    <br/>
+    <div style="text-align: center;"><%= f.submit "SUBMIT", class: "btn btn-small btn-primary" %>
+    </div>
+<% end %>
+
+</div>
+

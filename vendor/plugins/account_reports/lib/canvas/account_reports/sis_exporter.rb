@@ -21,7 +21,7 @@ module Canvas::AccountReports
     include Api
     include Canvas::AccountReports::ReportHelper
 
-    SIS_CSV_REPORTS = ["users", "accounts", "terms", "courses", "sections", "enrollments", "groups", "group_membership", "xlist"]
+    SIS_CSV_REPORTS = ["users", "accounts", "terms", "courses", "sections", "enrollments", "groups", "group_membership", "xlist", "assessment_questions"]
 
     def initialize(account_report, params = {})
       @account_report = account_report
@@ -555,6 +555,52 @@ module Canvas::AccountReports
             row << x.id unless @sis_format
             row << x.sis_source_id
             row << x.workflow_state
+            csv << row
+          end
+        end
+      end
+      filename
+    end
+
+    def assessment_questions
+      filename = Canvas::AccountReports.generate_file(@account_report)
+      CSV.open(filename, "w") do |csv|
+        if @sis_format
+          headers = ['question_bank_title', 'regrade_option', 'points_possible', 'correct_comments', 'incorrect_comments',
+                     'neutral_comments', 'question_type', 'name', 'question_name', 'question_text','status', 'ans1_comments',
+                     'ans1_text', 'ans1_weight', 'ans2_comments', 'ans2_text', 'ans2_weight', 'ans3_comments',  'ans3_text',
+                     'ans3_weight', 'ans4_comments', 'ans4_text', 'ans4_weight', 'ans5_comments', 'ans5_text', 'ans5_weight']
+        end
+        csv << headers
+
+        assessment_questions = root_account.assessment_questions.active
+        if @include_deleted
+          assessment_questions = root_account.assessment_questions
+        end
+
+        Shackles.activate(:slave) do
+          assessment_questions.each do |ques|
+            bank_name = ques.assessment_question_bank_id
+            question_bank_title = AssessmentQuestionBank.find_by_id(bank_name).title
+            row = []
+            row << ques.id unless @sis_format
+            row << question_bank_title
+            row << ques.question_data[:regrade_option]
+            row << ques.question_data[:points_possible]
+            row << ques.question_data[:correct_comments]
+            row << ques.question_data[:incorrect_comments]
+            row << ques.question_data[:neutral_comments]
+            row << ques.question_data[:question_type]
+            row << ques.question_data[:name]
+            row << ques.question_data[:question_name]
+            row << ques.question_data[:question_text]
+            status = ques[:workflow_state]
+            row << status
+                ques.question_data[:answers].each do |question|
+                  row << question[:comments]
+                  row << question[:text]
+                  row << question[:weight]
+                end
             csv << row
           end
         end

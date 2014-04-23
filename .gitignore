@@ -46,9 +46,9 @@ tags
 /public/javascripts/plugins/
 /public/plugins/
 /spec/coffeescripts/plugins/
+/.idea/*
 /vendor/plugins/lms_customization
 /vendor/plugins/canvas-mt
-/.idea/*.*
-.idea/
 /spec/plugins/
 /.rvmrc
+/vendor/bundle

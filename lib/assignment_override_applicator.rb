@@ -210,7 +210,7 @@ module AssignmentOverrideApplicator
     Rails.cache.fetch([assignment_or_quiz, assignment_or_quiz.version_number, self.overrides_hash(overrides)].cache_key) do
       overridden_data = {}
       # clone the assignment_or_quiz, apply overrides, and freeze
-      [:due_at, :all_day, :all_day_date, :unlock_at, :lock_at].each do |field|
+      [:due_at, :all_day, :all_day_date, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
         if assignment_or_quiz.respond_to?(field)
           value = self.send("overridden_#{field}", assignment_or_quiz, overrides)
           # force times to un-zoned UTC -- this will be a cached value and should
@@ -273,6 +273,28 @@ module AssignmentOverrideApplicator
       nil
     else
       applicable_overrides.sort_by(&:lock_at).last.lock_at
+    end
+  end
+
+  def self.overridden_show_correct_answers_at(assignment_or_quiz, overrides)
+    applicable_overrides = overrides.select(&:show_correct_answers_at_overridden)
+    if applicable_overrides.empty?
+      assignment_or_quiz.show_correct_answers_at
+    elsif override = applicable_overrides.detect{ |o| o.show_correct_answers_at.nil? }
+      nil
+    else
+      applicable_overrides.sort_by(&:show_correct_answers_at).last.show_correct_answers_at
+    end
+  end
+
+  def self.overridden_hide_correct_answers_at(assignment_or_quiz, overrides)
+    applicable_overrides = overrides.select(&:hide_correct_answers_at_overridden)
+    if applicable_overrides.empty?
+      assignment_or_quiz.hide_correct_answers_at
+    elsif override = applicable_overrides.detect{ |o| o.hide_correct_answers_at.nil? }
+      nil
+    else
+      applicable_overrides.sort_by(&:hide_correct_answers_at).last.hide_correct_answers_at
     end
   end
 end

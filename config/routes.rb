@@ -14,7 +14,7 @@ else
 end
 
 routes.draw do
-  #resources :submission_comments, :only => :destroy
+  resources :submission_comments, :only => :destroy
   #
   #match 'inbox' => 'context#mark_inbox_as_read', :as => :mark_inbox_as_read, :via => :delete
   #match 'inbox' => 'context#inbox', :as => :inbox
@@ -226,11 +226,14 @@ routes.draw do
     match 'settings' => 'courses#settings', :as => :settings
     match 'details' => 'courses#settings', :as => :details
     match 're_send_invitations' => 'courses#re_send_invitations', :as => :re_send_invitations, :via => :post
+    match 'enter_details' => 'candidate_details#enable_candidate', :as => :enter_details, :via => :post
+    #match 'new_register' => 'invitations#new', :as => :enter_details, :via => :get
+    #match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
     match 'enroll_users' => 'courses#enroll_users', :as => :enroll_users
     match 'link_enrollment' => 'courses#link_enrollment', :as => :link_enrollment
     match 'update_nav' => 'courses#update_nav', :as => :update_nav
     match 'enroll_users.:format' => 'courses#enroll_users', :as => :formatted_enroll_users
-    resource :gradebook ,:path => :evaluations do
+    resource :gradebook do
       match 'submissions_upload/:assignment_id' => 'gradebooks#submissions_zip_upload', :as => :submissions_upload, :via => :post
       collection do
         get :change_gradebook_version
@@ -305,7 +308,7 @@ routes.draw do
     #  end
     #end
 
-    #resources :submissions
+    resources :submissions
     #resources :calendar_events
 
     concerns :files, :file_images, :relative_files, :folders
@@ -344,7 +347,6 @@ routes.draw do
           post :reorder
         end
       end
-
       match 'take' => 'quizzes#show', :as => :take, :take => '1'
       match 'take/questions/:question_id' => 'quizzes#show', :as => :question, :take => '1'
       match 'moderate' => 'quizzes#moderate', :as => :moderate
@@ -414,7 +416,7 @@ routes.draw do
     match 'student_view' => 'courses#student_view', :as => :student_view, :via => :post
     match 'student_view' => 'courses#leave_student_view', :as => :student_view, :via => :delete
     match 'test_student' => 'courses#reset_test_student', :as => :test_student, :via => :delete
-    #match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
+    match 'content_migrations' => 'content_migrations#index', :as => :content_migrations, :via => :get
   end
 
   match 'quiz_statistics/:quiz_statistics_id/files/:file_id/download' => 'files#show', :as => :quiz_statistics_download, :download => '1'
@@ -708,8 +710,11 @@ routes.draw do
   match 'dashboard-sidebar' => 'users#dashboard_sidebar', :as => :dashboard_sidebar, :via => :get
   match 'toggle_dashboard' => 'users#toggle_dashboard', :as => :toggle_dashboard, :via => :post
   match 'styleguide' => 'info#styleguide', :as => :styleguide, :via => :get
-  match 'accept' => 'invitations#accept_code', :as => :take_quiz, :via => :get
-  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :get
+  match 'authenticateKey' => 'invitations#accept_code', :as => :authenticateKey
+  match 'authenticateKey/:access_code' => 'invitations#accept_code'
+  match 'project' => 'courses#candidate' , :as => :project, :via => :get
+  match 'registerCandidate' => 'invitations#fill_registration_form', :as => :registerCandidate
+  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url
@@ -801,7 +806,7 @@ routes.draw do
   # assignments at the top level (without a context) -- we have some specs that
   # assert these routes exist, but just 404. I'm not sure we ever actually want
   # top-level assignments available, maybe we should change the specs instead.
-  #resources :assignments, :only => ["index", "show"]
+  resources :assignments, :only => ["index", "show"]
 
   resources :files do
     match 'download' => 'files#show', :as => :download, :download => '1'
@@ -826,10 +831,7 @@ routes.draw do
   # resources :collections, :only => [:show, :index] do
   #   resources :collection_items, :only => [:show, :index]
   # end
-  #resources :invitations do
-  #  match 'accept' => 'invitations#accept_code', :as => :accept
-  #  match 'register' => 'invitations#optional_register', :as => :register
-  #end
+
   ### API routes ###
 
   # TODO: api routes can't yet take advantage of concerns for DRYness, because of
@@ -948,7 +950,7 @@ routes.draw do
     end
 
     post '/courses/:course_id/assignments/:assignment_id/submissions/:user_id/comments/files',
-         :action => :create_file, :controller => :submission_comments_api
+      :action => :create_file, :controller => :submission_comments_api
 
     scope(:controller => :gradebook_history_api) do
       get "courses/:course_id/gradebook_history/days", :action => :days, :path_name => 'gradebook_history'

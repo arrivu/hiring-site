@@ -132,8 +132,8 @@ require 'set'
 class CoursesController < ApplicationController
   include SearchHelper
 
-  before_filter :require_user, :only => [:index]
-  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file]
+  before_filter :require_user, :only => [:index, :candidate]
+  before_filter :require_context, :only => [:roster, :locks, :switch_role, :create_file, :quiz_list]
 
   include Api::V1::Course
   include Api::V1::Progress
@@ -739,10 +739,12 @@ class CoursesController < ApplicationController
 
       @invited_count = @context.invited_count_visible_to(@current_user)
 
+      @candidate_detail = @context.candidate_detail
+
       js_env(:COURSE_ID => @context.id,
              :USERS_URL => "/api/v1/courses/#{ @context.id }/users",
              :ALL_ROLES => @all_roles,
-             :COURSE_ROOT_URL => "/courses/#{ @context.id }",
+             :COURSE_ROOT_URL => "/projects/#{ @context.id }",
              #:SEARCH_URL => search_recipients_url,
              :CONTEXTS => @contexts,
              :USER_PARAMS => {:include => ['email', 'enrollments', 'locked', 'observed_users']},

@@ -21,7 +21,7 @@ define [
 
     dialogOptions:
       id: 'edit_sections'
-      title: I18n.t 'titles.section_enrollments', 'Section Enrollments'
+      title: 'Batch Enrollments'
 
     render: ->
       @$el.html editSectionsViewTemplate
@@ -32,8 +32,8 @@ define [
     setupContextSearch: ->
       @$('#section_input').contextSearch
         contexts: ENV.CONTEXTS
-        placeholder: I18n.t 'edit_sections_placeholder', 'Enter a section name'
-        title: I18n.t 'edit_sections_title', 'Section name'
+        placeholder: I18n.t 'edit_sections_placeholder', 'Enter a batch name'
+        title: I18n.t 'edit_sections_title', 'Batch name'
         onNewToken: @onNewToken
         added: (data, $token, newToken) =>
           @$('#user_sections').append $token

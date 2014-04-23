@@ -6,9 +6,12 @@ set :user,    "sysadmin"
 set :passenger_user,"canvasuser"
 
 set :stages, ["testing","staging", "production"]
-set :default_stage, "testing"
 
-set :repository,    "https://github.com/m-narayan/canvas-lms.git"
+set :default_stage, "production"
+
+set :repository,    "https://github.com/m-narayan/sublime-hiring.git"
+
+
 set :scm,     :git
 set :deploy_via,  :remote_cache
 set :branch,        "deploy"
@@ -18,7 +21,7 @@ set :deploy_env,    "deploy"
 #set :bundle_dir,    "/var/data/gems"
 set :bundle_without, []
 #set me for future
-set :ping_url, "https://www.arrivuapps.com/login"
+set :ping_url, "https://arrivuhiring.com/login"
 
 def is_hotfix?
   ENV.has_key?('hotfix') && ENV['hotfix'].downcase == "true"
@@ -102,7 +105,6 @@ namespace :canvas do
   task :copy_config do
     folder = 'tmp/files'
     run "ln -nfs #{smart_lms_data_files} #{latest_release}/#{folder}"
-    run "ln -nfs #{shared_path}/config/amazon_s3.yml #{release_path}/config/amazon_s3.yml"
     run "ln -nfs #{shared_path}/config/cache_store.yml #{release_path}/config/cache_store.yml"
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/delayed_jobs.yml #{release_path}/config/delayed_jobs.yml"
@@ -121,12 +123,12 @@ namespace :canvas do
 
   desc "Clone canvas-mt"
   task :clone_canvas_mt do
-    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} git@github.com:m-narayan/canvas-mt.git canvas_mt"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/canvas-mt.git canvas_mt"
   end
 
   desc "Clone lms_customization"
   task :clone_lms_customization do
-    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} git@github.com:m-narayan/lms_customization.git lms_customization"
+    run "cd #{latest_release}/vendor/plugins && git clone -b #{branch} https://github.com/m-narayan/lms_customization.git lms_customization"
   end
 
   desc "Compile static assets"

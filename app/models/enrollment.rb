@@ -123,14 +123,14 @@ class Enrollment < ActiveRecord::Base
       ((record.just_created && record.invited?) || record.changed_state(:invited) || @re_send_confirmation)
     }
 
-    p.dispatch :enrollment_notification
-    p.to { self.user }
-    p.whenever { |record|
-      !record.self_enrolled and
-      record.course &&
-      !record.course.created? &&
-      record.just_created && record.active?
-    }
+    #p.dispatch :enrollment_notification
+    #p.to { self.user }
+    #p.whenever { |record|
+    #  !record.self_enrolled and
+    #  record.course &&
+    #  !record.course.created? &&
+    #  record.just_created && record.active?
+    #}
 
     p.dispatch :enrollment_accepted
     p.to {self.course.admins - [self.user] }
@@ -237,12 +237,12 @@ class Enrollment < ActiveRecord::Base
 
   def self.types_with_indefinite_article
     {
-      'TeacherEnrollment' => t('#enrollment.roles.teacher_with_indefinite_article', "A Teacher"),
-      'TaEnrollment' => t('#enrollment.roles.ta_with_indefinite_article', "A TA"),
+      'TeacherEnrollment' => t('#enrollment.roles.teacher_with_indefinite_article', "A Hiring Manager"),
+      'TaEnrollment' => t('#enrollment.roles.ta_with_indefinite_article', "A Interviewer"),
       'DesignerEnrollment' => t('#enrollment.roles.designer_with_indefinite_article', "A Designer"),
-      'StudentEnrollment' => t('#enrollment.roles.student_with_indefinite_article', "A Student"),
-      'StudentViewEnrollment' => t('#enrollment.roles.student_with_indefinite_article', "A Student"),
-      'ObserverEnrollment' => t('#enrollment.roles.observer_with_indefinite_article', "An Observer")
+      'StudentEnrollment' => t('#enrollment.roles.student_with_indefinite_article', "A Candidate"),
+      'StudentViewEnrollment' => t('#enrollment.roles.student_with_indefinite_article', "A Candidate"),
+      'ObserverEnrollment' => t('#enrollment.roles.observer_with_indefinite_article', "An HR")
     }
   end
 

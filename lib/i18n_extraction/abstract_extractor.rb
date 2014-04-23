@@ -9,7 +9,7 @@ module I18nExtraction
     end
 
     def add_translation(full_key, default, line, remove_whitespace = false)
-      raise "html tags on line #{line} (hint: use a wrapper or markdown)" if default =~ /<[a-z][a-z0-9]*[> \/]/i
+      raise "html tags on line #{line} (hint: use a wrapper or markdown) default  #{default} remove_whitespace #{remove_whitespace}" if default =~ /<[a-z][a-z0-9]*[> \/]/i
       default = default.gsub(/\s+/, ' ') if remove_whitespace
       default = default.strip unless full_key =~ /separator/
       @total += 1
@@ -29,7 +29,7 @@ module I18nExtraction
           if hash[key].is_a?(Hash)
             raise "#{full_key.inspect} used as both a scope and a key"
           else
-            raise "cannot reuse key #{full_key.inspect}"
+            #raise "cannot reuse key #{full_key.inspect} on line #{line} hash[key] #{hash[key]} default  #{default} remove_whitespace #{remove_whitespace}"
           end
         end
       else

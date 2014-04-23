@@ -105,18 +105,18 @@
       </div>
     </div>
 
-    <% if @quiz.hide_results != 'always' %>
-      <div class="control-group">
-        <label class="control-label">
-          <%= t('show_correct_answers', "Show Correct Answers") %>
-        </label>
-        <div class="controls">
-          <span class="value">
-            <%= render_show_correct_answers(@quiz) %>
-          </span>
-        </div>
-      </div>
-    <% end %>
+    <%# if @quiz.hide_results != 'always' %>
+      <!--<div class="control-group">-->
+        <!--<label class="control-label">-->
+          <!--<%#= t('show_correct_answers', "Show Correct Answers") %>-->
+        <!--</label>-->
+        <!--<div class="controls">-->
+          <!--<span class="value">-->
+            <!--<%#= render_show_correct_answers(@quiz) %>-->
+          <!--</span>-->
+        <!--</div>-->
+      <!--</div>-->
+    <%# end %>
 
     <% unless @quiz.access_code.blank? %>
       <div class="control-group">
@@ -208,10 +208,12 @@
 <table class="table assignment_dates">
   <thead>
     <tr>
-      <th scope="col"><%= t(:due, 'Due') %></th>
+      <!--<th scope="col"><%#= t(:due, 'Due') %></th>-->
       <th scope="col"><%= t(:for, 'For') %></th>
       <th scope="col"><%= t(:available_from, 'Available from') %></th>
       <th scope="col"><%= t(:until, 'Until') %></th>
+      <th scope="col">Show correct answer at</th>
+      <th scope="col">Hide correct answer at</th>
     </tr>
   </thead>
 

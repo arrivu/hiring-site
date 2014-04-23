@@ -1,9 +1,9 @@
 <tr>
   <!--Select the term to run the report on-->
-  <td><%= t('account_reports.default.parameters.header', %{Term}) %>
+  <td><%= t('account_reports.default.parameters.header', %{Hiring Period}) %>
     <select name="parameters[enrollment_term_id]">
       <% if all_terms_option %>
-        <option value="" <%= 'selected' unless @term %>><%= t(:all_terms, "All Terms") %></option>
+        <option value="" <%= 'selected' unless @term %>><%= t(:all_terms, "All Hiring periods") %></option>
       <%end%>
       <% @root_account.enrollment_terms.active.each do |term| %>
         <option value="<%= term.id %>" <%= 'selected' if term == @term %>><%= term.name %></option>

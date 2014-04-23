@@ -286,7 +286,7 @@ class RoleOverride < ActiveRecord::Base
         ]
       },
       :view_all_grades => {
-        :label => lambda { t('permissions.view_all_grades', "View all results") },
+        :label => lambda { t('permissions.view_all_grades', "View all grades") },
         :available_to => [
           'TaEnrollment',
           'DesignerEnrollment',
@@ -301,7 +301,7 @@ class RoleOverride < ActiveRecord::Base
         ]
       },
       :manage_grades => {
-        :label => lambda { t('permissions.manage_grades', "Edit results") },
+        :label => lambda { t('permissions.manage_grades', "Edit grades") },
         :available_to => [
           'TaEnrollment',
           'TeacherEnrollment',
@@ -716,7 +716,7 @@ class RoleOverride < ActiveRecord::Base
         :available_to => %w(AccountAdmin AccountMembership TeacherEnrollment TaEnrollment DesignerEnrollment),
       },
       :manage_sections => {
-        :label => lambda { t('permissions.manage_sections', "Manage (create / edit / delete) project sections") },
+        :label => lambda { t('permissions.manage_sections', "Manage (create / edit / delete) project batches") },
         :true_for => %w(AccountAdmin TeacherEnrollment DesignerEnrollment),
         :available_to => %w(AccountAdmin AccountMembership TeacherEnrollment TaEnrollment DesignerEnrollment),
       },

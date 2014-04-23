@@ -16,9 +16,7 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-class
-
-Course < ActiveRecord::Base
+class Course < ActiveRecord::Base
 
   include Context
   include Workflow
@@ -66,13 +64,15 @@ Course < ActiveRecord::Base
 
   serialize :tab_configuration
   serialize :settings, Hash
+  has_one :candidate_detail
   belongs_to :root_account, :class_name => 'Account'
   belongs_to :abstract_course
   belongs_to :enrollment_term
   belongs_to :grading_standard
   belongs_to :template_course, :class_name => 'Course'
+  has_many :course_unique_code_associations
   has_many :templated_courses, :class_name => 'Course', :foreign_key => 'template_course_id'
-
+  has_many :invitations
   has_many :course_sections
   has_many :active_course_sections, :class_name => 'CourseSection', :conditions => {:workflow_state => 'active'}
   has_many :enrollments, :include => [:user, :course], :conditions => ['enrollments.workflow_state != ?', 'deleted'], :dependent => :destroy
@@ -196,6 +196,23 @@ Course < ActiveRecord::Base
   include FeatureFlags
 
   has_a_broadcast_policy
+
+
+    #count = 0
+    #begin
+    #  Invitation.access_code = generate_unique_key
+    #  super
+    #    #ActiveRecord::RecordNotUnique
+    #rescue ActiveRecord::ActiveRecordError, ActiveRecord::StatementInvalid => err
+    #  if (count +=1) < 5
+    #    logger.info("retrying with different unique key")
+    #    retry
+    #  else
+    #    logger.info("too many retries to get an unique code for the Reference, giving up")
+    #    raise
+    #  end
+    #end
+
 
   def events_for(user)
     if user
@@ -949,7 +966,7 @@ Course < ActiveRecord::Base
       entry.updated   = self.updated_at
       entry.published = self.created_at
       entry.links    << Atom::Link.new(:rel => 'alternate',
-                                       :href => "/#{context_url_prefix}/courses/#{self.id}")
+                                       :href => "/#{context_url_prefix}/projects/#{self.id}")
     end
   end
 
@@ -1524,6 +1541,9 @@ Course < ActiveRecord::Base
     enrollment_state ||= self.available? ? "invited" : "creation_pending"
     if type == 'TeacherEnrollment' || type == 'TaEnrollment' || type == 'DesignerEnrollment'
       enrollment_state = 'invited' if enrollment_state == 'creation_pending'
+
+    elsif type == 'StudentEnrollment' || type == 'StudentViewEnrollment'
+      enrollment_state = 'active'
     else
       enrollment_state = 'creation_pending' if enrollment_state == 'invited' && !self.available?
     end
@@ -2436,7 +2456,7 @@ Course < ActiveRecord::Base
         { :id => TAB_GRADES, :label => t('#tabs.grades', "Grades"), :css_class => 'grades', :href => :course_grades_path },
         { :id => TAB_PEOPLE, :label => t('#tabs.people', "People"), :css_class => 'people', :href => :course_users_path },
         { :id => TAB_CHAT, :label => t('#tabs.chat', "Chat"), :css_class => 'chat', :href => :course_chat_path },
-        #{ :id => TAB_PAGES, :label => t('#tabs.pages', "Pages"), :css_class => 'pages', :href => :course_wiki_pages_path },
+        { :id => TAB_PAGES, :label => t('#tabs.pages', "Pages"), :css_class => 'pages', :href => :course_wiki_pages_path },
         { :id => TAB_FILES, :label => t('#tabs.files', "Files"), :css_class => 'files', :href => :course_files_path },
         #{ :id => TAB_SYLLABUS, :label => t('#tabs.syllabus', "Syllabus"), :css_class => 'syllabus', :href => :syllabus_course_assignments_path },
         { :id => TAB_OUTCOMES, :label => t('#tabs.outcomes', "Outcomes"), :css_class => 'outcomes', :href => :course_outcomes_path },

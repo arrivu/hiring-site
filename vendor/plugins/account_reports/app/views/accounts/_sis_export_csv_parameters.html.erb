@@ -15,19 +15,19 @@
   <tr>
     <td>
       <%= check_box_tag "parameters[terms]"   %>
-      <%= label_tag(:terms, t('account_reports.default.terms.check_box','Terms CSV'), "for" => 'parameters_terms') %>
+      <%= label_tag(:terms, t('account_reports.default.terms.check_box','Hiring periods CSV'), "for" => 'parameters_terms') %>
     </td>
   </tr>
   <tr>
     <td>
       <%= check_box_tag "parameters[courses]"   %>
-      <%= label_tag(:courses, t('account_reports.default.courses.check_box','Courses CSV'), "for" => 'parameters_courses') %>
+      <%= label_tag(:courses, t('account_reports.default.courses.check_box','Projects CSV'), "for" => 'parameters_courses') %>
     </td>
   </tr>
   <tr>
     <td>
       <%= check_box_tag "parameters[sections]"   %>
-      <%= label_tag(:sections, t('account_reports.default.sections.check_box','Sections CSV'), "for" => 'parameters_sections') %>
+      <%= label_tag(:sections, t('account_reports.default.sections.check_box','Batches CSV'), "for" => 'parameters_sections') %>
     </td>
   </tr>
   <tr>
@@ -36,18 +36,18 @@
       <%= label_tag(:enrollments, t('account_reports.default.enrollments.check_box','Enrollments CSV'), "for" => 'parameters_enrollments') %>
     </td>
   </tr>
-  <tr>
-    <td>
-      <%= check_box_tag "parameters[groups]"   %>
-      <%= label_tag(:groups, t('account_reports.default.groups.check_box','Groups CSV'), "for" => 'parameters_groups') %>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <%= check_box_tag "parameters[group_membership]"   %>
-      <%= label_tag(:group_membership, t('account_reports.default.group_membership.login.check_box','Group Membership CSV'), "for" => 'parameters_group_membership') %>
-    </td>
-  </tr>
+  <!--<tr>-->
+    <!--<td>-->
+      <!--<%#= check_box_tag "parameters[groups]"   %>-->
+      <!--<%#= label_tag(:groups, t('account_reports.default.groups.check_box','Groups CSV'), "for" => 'parameters_groups') %>-->
+    <!--</td>-->
+  <!--</tr>-->
+  <!--<tr>-->
+    <!--<td>-->
+      <!--<%#= check_box_tag "parameters[group_membership]"   %>-->
+      <!--<%#= label_tag(:group_membership, t('account_reports.default.group_membership.login.check_box','Group Membership CSV'), "for" => 'parameters_group_membership') %>-->
+    <!--</td>-->
+  <!--</tr>-->
   <tr>
     <td>
       <%= check_box_tag "parameters[xlist]"   %>
@@ -56,7 +56,13 @@
   </tr>
   <tr>
     <td>
-      <%= t('account_reports.sis_default.parameters.note', %{*Term settings only impact Courses, Sections, Enrollments, and X list CSV files.}) %>
+      <%= check_box_tag "parameters[assessment_questions]"   %>
+      <%= label_tag(:assessment_questions, t('account_reports.default.assessment_questions.check_box','Assessment Questions CSV'), "for" => 'parameters_assessmnet_questions') %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= t('account_reports.sis_default.parameters.note', %{*Hiring Period settings only impact Projects, Batches, Enrollments, and X list CSV files.}) %>
     </td>
   </tr>
   <%=  render :partial => 'include_deleted_parameter' %>

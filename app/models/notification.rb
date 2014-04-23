@@ -327,7 +327,7 @@ class Notification < ActiveRecord::Base
     t 'categories.appointment_availability', 'Appointment Availability'
     t 'categories.appointment_signups', 'Appointment Signups'
     t 'categories.appointment_cancelations', 'Appointment Cancelations'
-    t 'categories.course_content', 'Course Content'
+    t 'categories.course_content', 'Project Content'
     t 'categories.discussion', 'Discussion'
     t 'categories.discussion_entry', 'DiscussionEntry'
     t 'categories.due_date', 'Due Date'
@@ -352,7 +352,7 @@ class Notification < ActiveRecord::Base
       when 'Announcement'
         t(:announcement_display, 'Announcement')
       when 'Course Content'
-        t(:course_content_display, 'Course Content')
+        t(:course_content_display, 'Project Content')
       when 'Files'
         t(:files_display, 'Files')
       when 'Discussion'
@@ -401,19 +401,19 @@ class Notification < ActiveRecord::Base
   def category_description
     case category
     when 'Announcement'
-      t(:announcement_description, 'New announcement in your course')
+      t(:announcement_description, 'New announcement in your project')
     when 'Course Content'
         mt(:course_content_description, <<-EOS)
-Change to course content:
+Change to project content:
 
 * WikiPage
-* Quiz content
-* Assignment content
+* Assessment content
+
 EOS
     when 'Files'
-      t(:files_description, 'New file added to your course')
+      t(:files_description, 'New file added to your project')
     when 'Discussion'
-      t(:discussion_description, 'New discussion topic in your course')
+      t(:discussion_description, 'New discussion topic in your project')
     when 'DiscussionEntry'
       t(:discussion_post_description, "New discussion post in a topic you're subscribed to")
     when 'Due Date'
@@ -476,7 +476,7 @@ EOS
 * New candidate group
 EOS
     when 'Calendar'
-      t(:calendar_description, 'New and changed items on your course calendar')
+      t(:calendar_description, 'New and changed items on your project calendar')
     when 'Student Appointment Signups'
       mt(:student_appointment_description, <<-EOS)
 *Instructor and Admin only:*

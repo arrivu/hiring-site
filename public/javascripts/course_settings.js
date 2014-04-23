@@ -127,14 +127,15 @@ define([
     $add_section_form.formSubmit({
       required: ['course_section[name]'],
       beforeSubmit: function(data) {
-        $add_section_form.find("button").attr('disabled', true).text(I18n.t('buttons.adding_section', "Adding Batch..."));
+        $add_section_form.find("button:last").attr('disabled', true).text(I18n.t('buttons.adding_section', "Adding Batch..."));
       },
       success: function(data) {
+
         var section = data.course_section,
             $section = $(".section_blank:first").clone(true).attr('class', 'section'),
             $option = $("<option/>");
 
-        $add_section_form.find("button").attr('disabled', false).text(I18n.t('buttons.add_section', "Add Batch"));
+        //$add_section_form.find("button:last").attr('disabled', false).text(I18n.t('buttons.add_section', "Add Batch"));
         $section.fillTemplateData({
           data: section,
           hrefValues: ['id']
@@ -144,6 +145,7 @@ define([
         $("#sections .section_blank").before($section);
         $section.slideDown();
         $("#course_section_name").val();
+        location.reload(true);
       },
       error: function(data) {
         $add_section_form
@@ -156,10 +158,17 @@ define([
       return false;
     });
     $edit_section_form.formSubmit({
+
       beforeSubmit: function(data) {
-        $edit_section_form.hide();
+        //$edit_section_form.hide();
+        $edit_section_form.find("button:last").attr('disabled', true).text("Updating Batch...");
         var $section = $edit_section_form.parents(".section");
-        $section.find(".name").text(data['course_section[name]']).show();
+        $section.find(".batch_name .name").text(data['course_section[name]']).show();
+        $('#batch_start_date').val(data['course_section[start_at]']);
+        $('#batch_end_date').val(data['course_section[end_at]']);
+        $('#batch_sis_id').val(data['course_section[sis_source_id]']);
+        $section.find(".start_date").text(data['course_section[start_at]']).show();
+        $section.find(".end_date").text(data['course_section[end_at]']).show();
         $section.loadingImage({image_size: "small"});
         return $section;
       },
@@ -167,6 +176,13 @@ define([
         var section = data.course_section;
         $section.loadingImage('remove');
         $(".option_for_section_" + section.id).text(section.name);
+        $("#section_" + section.id + " td .name").text(section.name);
+        $("#section_" + section.id + " td .start_date").text($.parseFromISO(section.start_at).datetime_formatted);
+        $("#section_" + section.id + " td  .end_date").text($.parseFromISO(section.end_at).datetime_formatted);
+        $("#section_" + section.id + " td .sis_id").text(section.sis_source_id);
+        $("#section_" + section.id + " td .restrict_enrollments").text(section.restrict_enrollments_to_section_dates);
+        $("#edit_section_form").dialog('close');
+
       },
       error: function(data, $section) {
         $section.loadingImage('remove').find(".edit_section_link").click();
@@ -175,26 +191,67 @@ define([
     })
     .find(":text")
       .bind('blur', function() {
-        $edit_section_form.submit();
+        //$edit_section_form.submit();
       })
       .keycodes('return esc', function(event) {
         if(event.keyString == 'return') {
-          $edit_section_form.submit();
+          //$edit_section_form.submit();
         } else {
           $(this).parents(".section").find(".name").show();
           $("body").append($edit_section_form.hide());
         }
       });
+
+      /*
     $(".edit_section_link").click(function() {
-      var $this = $(this),
-          $section = $this.parents(".section"),
-          data = $section.getTemplateData({textValues: ['name']});
-      $edit_section_form.fillFormData(data, {object_name: "course_section"});
-      $section.find(".name").hide().after($edit_section_form.show());
-      $edit_section_form.attr('action', $this.attr('href'));
-      $edit_section_form.find(":text:first").focus().select();
-      return false;
+     var $this = $(this),
+     $section = $this.parents(".section"),
+     data = $section.getTemplateData({textValues: ['name','start_date','end_date']});
+     $edit_section_form.fillFormData(data, {object_name: "course_section"});
+     $section.find(".name").hide().after($edit_section_form.show());
+     $section.find(".start_date").hide().after($edit_section_form.show());
+     $section.find(".end_date").hide().after($edit_section_form.show());
+     $edit_section_form.attr('action', $this.attr('href'));
+     $edit_section_form.find(":text:first").focus().select();
+     $('#batch_start_date').val(data['start_date']);
+     $('#batch_end_date').val(data['end_date']);
+     return false;
     });
+    */
+      $(".edit_section_link").click(function(event) {
+
+          event.preventDefault();
+          $edit_section_form.find("button:last").attr('disabled', false).text("Update Batch");
+          var $this = $(this),
+          $section = $this.parents(".section"),
+          data = $section.getTemplateData({textValues: ['name','start_date','end_date','sis_id','restrict_enrollments']});
+          $edit_section_form.fillFormData(data, {object_name: "course_section"});
+          $edit_section_form.attr('action', $this.attr('href'));
+          $('#batch_start_date').val(data['start_date']);
+          $('#batch_end_date').val(data['end_date']);
+          if(data['sis_id']=="null")
+          {
+              $('#batch_sis_id').val(" ");
+          }
+          else{
+              $('#batch_sis_id').val(data['sis_id']);
+          }
+
+          if(data['restrict_enrollments'] == "true")
+          {
+              $('#batch_restrict').attr('checked', true);
+          }
+          else
+          {
+              $('#batch_restrict').attr('checked', false);
+          }
+          $("#edit_section_form").dialog({
+              modal: true,
+              resizable: false,
+              width: 600
+          });
+
+      });
     $(".delete_section_link").click(function() {
       $(this).parents(".section").confirmDelete({
         url: $(this).attr('href'),
