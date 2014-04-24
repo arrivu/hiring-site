@@ -17,7 +17,7 @@ class InvitationsController < ApplicationController
 
       search_params = params.slice(:search_term, :course_section_id, :enrollment_type)
       search_term = search_params[:search_term].presence
-      @quiz = Quiz.find(params[:id])
+      @quiz = Quizzes::Quiz.find(params[:id])
       if search_term
         students = UserSearch.for_user_in_context(search_term, @context, @current_user, session, search_params)
       elsif params[:course_section_id]
@@ -35,7 +35,7 @@ class InvitationsController < ApplicationController
 
   def create
     if authorized_action(@context, @current_user, :read_roster)
-      @quiz = Quiz.find(params[:quiz_id])
+      @quiz = Quizzes::Quiz.find(params[:quiz_id])
       params[:login_ids].each do |login_id|
         candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
         @section = @context.course_sections.find(params[:course_section_id])
