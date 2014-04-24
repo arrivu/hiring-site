@@ -1,10 +1,11 @@
 define [
+  'jquery'
   'underscore'
   'Backbone'
   'jst/groups/manage/group'
   'compiled/views/groups/manage/GroupUsersView'
   'compiled/views/groups/manage/GroupDetailView'
-], (_, {View}, template, GroupUsersView, GroupDetailView) ->
+], ($, _, {View}, template, GroupUsersView, GroupDetailView) ->
 
   class GroupView extends View
 
@@ -49,6 +50,7 @@ define [
       @updateFullState()
 
     updateFullState: ->
+      return if @model.isLocked()
       if @model.isFull()
         @$el.droppable("destroy") if @$el.data('droppable')
         @$el.addClass('slots-full')

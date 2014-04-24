@@ -17,8 +17,6 @@
 #
 
 class CommunicationChannel < ActiveRecord::Base
-  extend ActiveSupport::Memoizable
-
   # You should start thinking about communication channels
   # as independent of pseudonyms
   include Workflow
@@ -29,6 +27,7 @@ class CommunicationChannel < ActiveRecord::Base
   has_many :pseudonyms
   belongs_to :user
   has_many :notification_policies, :dependent => :destroy
+  has_many :delayed_messages
   has_many :messages
   belongs_to :access_token
 
@@ -39,7 +38,7 @@ class CommunicationChannel < ActiveRecord::Base
   validate :not_otp_communication_channel, :if => lambda { |cc| cc.path_type == TYPE_SMS && cc.retired? && !cc.new_record? }
   validates_presence_of :access_token_id, if: lambda { |cc| cc.path_type == TYPE_PUSH }
 
-  acts_as_list :scope => :user_id
+  acts_as_list :scope => :user
 
   has_a_broadcast_policy
 
@@ -49,7 +48,6 @@ class CommunicationChannel < ActiveRecord::Base
   # Constants for the different supported communication channels
   TYPE_EMAIL    = 'email'
   TYPE_SMS      = 'sms'
-  TYPE_CHAT     = 'chat'
   TYPE_TWITTER  = 'twitter'
   TYPE_FACEBOOK = 'facebook'
   TYPE_PUSH     = 'push'
@@ -189,10 +187,10 @@ class CommunicationChannel < ActiveRecord::Base
   end
 
   def send_otp!(code)
-    m = self.messages.new
+    m = self.messages.scoped.new
     m.to = self.path
     m.body = t :body, "Your Sublime verification code is %{verification_code}", :verification_code => code
-    Mailer.message(m).deliver rescue nil # omg! just ignore delivery failures
+    Mailer.create_message(m).deliver rescue nil # omg! just ignore delivery failures
   end
 
   # If you are creating a new communication_channel, do nothing, this just
@@ -202,9 +200,9 @@ class CommunicationChannel < ActiveRecord::Base
   def set_confirmation_code(reset=false)
     self.confirmation_code = nil if reset
     if self.path_type == TYPE_EMAIL or self.path_type.nil?
-      self.confirmation_code ||= AutoHandle.generate(nil, 25)
+      self.confirmation_code ||= CanvasUuid::Uuid.generate(nil, 25)
     else
-      self.confirmation_code ||= AutoHandle.generate
+      self.confirmation_code ||= CanvasUuid::Uuid.generate
     end
     true
   end
@@ -325,8 +323,8 @@ class CommunicationChannel < ActiveRecord::Base
 
   # This is setup as a default in the database, but this overcomes misspellings.
   def assert_path_type
-    pt = self.path_type
-    self.path_type = TYPE_EMAIL unless pt == TYPE_EMAIL or pt == TYPE_SMS or pt == TYPE_CHAT or pt == TYPE_FACEBOOK or pt == TYPE_TWITTER or pt == TYPE_PUSH
+    valid_types = [TYPE_EMAIL, TYPE_SMS, TYPE_FACEBOOK, TYPE_TWITTER, TYPE_PUSH]
+    self.path_type = TYPE_EMAIL unless valid_types.include?(path_type)
     true
   end
   protected :assert_path_type
@@ -343,6 +341,7 @@ class CommunicationChannel < ActiveRecord::Base
     scope = CommunicationChannel.active.by_path(self.path).of_type(self.path_type)
     merge_candidates = {}
     Shard.with_each_shard(shards) do
+      scope = scope.shard(Shard.current) unless CANVAS_RAILS2
       scope.where("user_id<>?", self.user_id).includes(:user).map(&:user).select do |u|
         result = merge_candidates.fetch(u.global_id) do
           merge_candidates[u.global_id] = (u.all_active_pseudonyms.length != 0)
@@ -358,7 +357,7 @@ class CommunicationChannel < ActiveRecord::Base
   end
 
     def self.create_push(access_token, device_token)
-      (scope(:find, :shard) || Shard.current).activate do
+      (scoped.shard_value || Shard.current).activate do
         connection.transaction do
           cc = new
           cc.path_type = CommunicationChannel::TYPE_PUSH

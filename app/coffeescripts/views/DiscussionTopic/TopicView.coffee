@@ -56,6 +56,7 @@ define [
 
       # catch when non-root replies are added so we can twiddle the subscribed button
       EntryView.on('addReply', => @setSubscribed(true))
+      $(window).on('keydown', @handleKeyDown)
 
     hideIfFiltering: =>
       if @filterModel.hasFilter()
@@ -92,6 +93,9 @@ define [
       event.preventDefault()
       event.stopPropagation()
       @$textarea.editorBox('toggle')
+      # hide the clicked link, and show the other toggle link.
+      # todo: replace .andSelf with .addBack when JQuery is upgraded.
+      $(event.currentTarget).siblings('.rte_switch_views_link').andSelf().toggle()
 
     subscribeTopic: (event) ->
       event.preventDefault()
@@ -161,6 +165,7 @@ define [
       if ENV.DISCUSSION.PERMISSIONS.CAN_REPLY
         modelData = @model.toJSON()
         modelData.showBoxReplyLink = true
+        modelData.root = true
         html = replyTemplate modelData
         @$('#discussion_topic').append html
       super
@@ -171,7 +176,6 @@ define [
         htmlEscape value
 
     addRootReply: (event) ->
-      $el = @$ event.currentTarget
       target = $('#discussion_topic .discussion-reply-form')
       @addReply event
       $('html, body').animate scrollTop: target.offset().top - 100
@@ -183,3 +187,11 @@ define [
     markAllAsUnread: (event) ->
       event.preventDefault()
       @trigger 'markAllAsUnread'
+
+    handleKeyDown: (e) =>
+      nodeName = e.target.nodeName.toLowerCase()
+      return if nodeName == 'input' || nodeName == 'textarea'
+      return if e.which != 78 # n
+      @addRootReply(e)
+      e.preventDefault()
+      e.stopPropagation()

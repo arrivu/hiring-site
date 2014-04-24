@@ -34,6 +34,21 @@ Delayed::Worker.on_max_failures = proc do |job, err|
   err.is_a?(Delayed::Backend::RecordNotFound)
 end
 
+Delayed::Worker.lifecycle.around(:perform) do |worker, job, &block|
+  starting_mem = Canvas.sample_memory()
+  starting_cpu = Process.times()
+  begin
+    block.call(worker, job)
+  ensure
+    ending_cpu = Process.times()
+    ending_mem = Canvas.sample_memory()
+    user_cpu = ending_cpu.utime - starting_cpu.utime
+    system_cpu = ending_cpu.stime - starting_cpu.stime
+
+    Rails.logger.info "[STAT] #{starting_mem} #{ending_mem} #{ending_mem - starting_mem} #{user_cpu} #{system_cpu}"
+  end
+end
+
 if Rails.env == "development"
   Rails.logger.info "Delayed::Job is executed synchronously in #{Rails.env} mode."
   Delayed::Job.class_eval do
@@ -45,4 +60,3 @@ if Rails.env == "development"
     end
   end
 end
-

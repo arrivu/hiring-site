@@ -13,7 +13,6 @@ define [
       # gets the I18n version of the group name. The display text used for the items gets set through the
       # ProfileController#communication. The values are defined in Notification#category_display_name.
       @groups =
-
         Course: ['Due Date', 'Grading Policies', 'Course Content', 'Files', 'Announcement', 'Grading', 'Invitation',
                  'All Submissions', 'Late Grading', 'Submission Comment']
 #        Discussions: ['Discussion', 'DiscussionEntry']

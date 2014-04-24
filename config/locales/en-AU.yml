@@ -8816,7 +8816,7 @@ en-AU:
     mute_assignment: "Mute Assignment"
     score_change_notifications: "Score change notifications"
     see_grade: "Their grade for the assignment"
-    students_will_see: "candidates will be able to see that this assignment is muted."
+    students_will_see: "Candidates will be able to see that this assignment is muted."
     submission_comments: "Submission comments"
     sure_you_want_to_mute: "Are you sure you want to mute this assignment? While this assignment is muted, candidates will not receive new notifications about or be able to see:"
   name: "Academic Benchmark Importer"

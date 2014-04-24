@@ -1,16 +1,14 @@
 define [
-  'ember',
-  'ic-ajax',
+  'ember'
   '../shared/environment'
-], (Ember, ajax, environment) ->
-
-  # http://emberjs.com/guides/routing/
-  # http://emberjs.com/api/classes/Ember.Route.html
+], (Ember, env) ->
 
   QuizzesRoute = Ember.Route.extend
 
     model: (params) ->
-      environment.setEnv(ENV)
-      id = environment.get('courseId')
-      ajax("/api/v1/courses/#{id}/quizzes").then (result) ->
-        result.response
+      @store.find('quiz').then (quizzes) =>
+        perms = env.get 'env.PERMISSIONS'
+        perms.create = @store.metadataFor('quiz').permissions.quizzes.create
+        env.set 'env.PERMISSIONS', perms
+        quizzes
+

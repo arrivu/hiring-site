@@ -57,6 +57,9 @@ config.active_record.observers = [:cacher, :stream_item_cache]
 
 config.autoload_paths += %W(#{Rails.root}/app/middleware
                             #{Rails.root}/app/observers
+                            #{Rails.root}/app/presenters
+                            #{Rails.root}/app/services
+                            #{Rails.root}/app/serializers
                             #{Rails.root}/app/presenters)
 
 config.middleware.use "Rack::Cors" do
@@ -145,6 +148,7 @@ SafeYAML::OPTIONS[:suppress_warnings] = true
 YAML.whitelist.add(*%w[
   tag:ruby.yaml.org,2002:symbol
   tag:yaml.org,2002:map:HashWithIndifferentAccess
+  tag:yaml.org,2002:map:ActiveSupport::HashWithIndifferentAccess
   tag:ruby.yaml.org,2002:object:OpenStruct
   tag:ruby.yaml.org,2002:object:Scribd::Document
   tag:ruby.yaml.org,2002:object:Mime::Type

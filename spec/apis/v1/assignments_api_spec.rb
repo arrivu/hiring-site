@@ -19,7 +19,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../api_spec_helper')
 require File.expand_path(File.dirname(__FILE__) + '/../locked_spec')
 
-describe AssignmentsApiController, :type => :integration do
+describe AssignmentsApiController, type: :request do
   include Api
   include Api::V1::Assignment
   include Api::V1::Submission
@@ -35,7 +35,7 @@ describe AssignmentsApiController, :type => :integration do
       api_get_assignment_in_course(locked_item, @course)
     end
 
-    it_should_behave_like 'a locked api item'
+    include_examples 'a locked api item'
   end
 
   def create_submitted_assignment_with_user(user=@user)
@@ -147,6 +147,7 @@ describe AssignmentsApiController, :type => :integration do
       @rubric = rubric_model(:user => @user,
                              :context => @course,
                              :data => larger_rubric_data,
+                             :title => 'some rubric',
                              :points_possible => 12,
                               :free_form_criterion_comments => true)
 
@@ -157,6 +158,8 @@ describe AssignmentsApiController, :type => :integration do
       @assignment.rubric_association.save!
       json = api_get_assignments_index_from_course(@course)
       json.first['rubric_settings'].should == {
+        'id' => @rubric.id,
+        'title' => 'some rubric',
         'points_possible' => 12,
         'free_form_criterion_comments' => true
       }
@@ -238,9 +241,6 @@ describe AssignmentsApiController, :type => :integration do
 
     describe "enable draft" do
       before do
-        #set @domain_root_account
-        @domain_root_account = Account.default
-
         course_with_teacher(:active_all => true)
         @assignment = @course.assignments.create :name => 'some assignment'
         @assignment.workflow_state = 'unpublished'
@@ -253,12 +253,31 @@ describe AssignmentsApiController, :type => :integration do
       end
 
       it "should include published flag for accounts that do have enabled_draft" do
-        Account.default.enable_feature!(:draft_state)
+        @course.account.enable_feature!(:draft_state)
 
         @json = api_get_assignment_in_course(@assignment, @course)
 
         @json.has_key?('published').should be_true
         @json['published'].should be_false
+      end
+    end
+
+    describe "differentiated assignments" do
+      before do
+        course_with_teacher(:active_all => true)
+        @assignment = @course.assignments.create :name => 'differentiated assignment'
+      end
+
+      it "should exclude the only_visible_to_overrides flag if differentiated assignments is off" do
+        @json = api_get_assignment_in_course(@assignment, @course)
+        @json.has_key?('only_visible_to_overrides').should be_false
+      end
+
+      it "should include the only_visible_to_overrides flag if differentiated assignments is on" do
+        @course.account.enable_feature!(:differentiated_assignments)
+        @json = api_get_assignment_in_course(@assignment, @course)
+        @json.has_key?('only_visible_to_overrides').should be_true
+        @json['only_visible_to_overrides'].should be_false
       end
     end
 
@@ -277,7 +296,7 @@ describe AssignmentsApiController, :type => :integration do
              )
       assign = json.first
       assign['submission'].should ==
-        json_parse(@controller.submission_json(submission,assignment,@user,session).to_json)
+        json_parse(controller.submission_json(submission,assignment,@user,session).to_json)
     end
     it "returns due dates as they apply to the user" do
         course_with_student(:active_all => true)
@@ -332,11 +351,8 @@ describe AssignmentsApiController, :type => :integration do
     describe "draft state" do
 
       before do
-        Account.default.enable_feature!(:draft_state)
-        @domain_root_account = Account.default
-
         course_with_student_logged_in(:active_all => true)
-
+        @course.account.enable_feature!(:draft_state)
         @published = @course.assignments.create!({:name => "published assignment"})
         @published.workflow_state = 'published'
         @published.save!
@@ -486,7 +502,7 @@ describe AssignmentsApiController, :type => :integration do
           },
           {:assignment => { 'name' => name_too_long} }
         )
-        response.status.to_i.should == 400
+        assert_status(400)
       }.should_not change(Assignment, :count)
     end
 
@@ -511,7 +527,7 @@ describe AssignmentsApiController, :type => :integration do
         },
         { :assignment => { 'name' => name_too_long} }
       )
-      response.status.to_i.should == 400
+      assert_status(400)
       @assignment.reload
       @assignment.name.should == 'some name'
     end
@@ -619,7 +635,7 @@ describe AssignmentsApiController, :type => :integration do
                    'name' => 'some assignment',
                    'assignment_overrides' => {
                        '0' => {
-                         'course_section_id' => @course.active_course_sections.second.id,
+                         'course_section_id' => @student.enrollments.first.course_section.id,
                          'due_at' => @override_due_at.iso8601
                        }
                    }
@@ -630,16 +646,37 @@ describe AssignmentsApiController, :type => :integration do
       @ta.messages.detect{|m| m.notification_id == notification.id}.body.
         should be_include 'Multiple Dates'
     end
+
+    it "should not allow an assignment_group_id that is not a number" do
+      course_with_teacher(:active_all => true)
+      student_in_course(:course => @course, :active_enrollment => true)
+      @user = @teacher
+
+      raw_api_call(:post, "/api/v1/courses/#{@course.id}/assignments",
+        { :controller => 'assignments_api',
+          :action => 'create',
+          :format => 'json',
+          :course_id => @course.id.to_s },
+        { :assignment => {
+            'name' => 'some assignment',
+            'assignment_group_id' => 'foo'
+          }
+        })
+
+      response.should_not be_success
+      json = JSON.parse response.body
+      json['errors']['assignment[assignment_group_id]'].first['message'].
+        should == "must be a positive number"
+    end
+
   end
 
 
   describe "PUT /courses/:course_id/assignments/:id (#update)" do
 
     it "should update published/unpublished" do
-      Account.default.enable_feature!(:draft_state)
-      @domain_root_account = Account.default
-
       course_with_teacher(:active_all => true)
+      @course.account.enable_feature!(:draft_state)
       @assignment = @course.assignments.create({
         :name => "some assignment",
         :points_possible => 15
@@ -952,7 +989,8 @@ describe AssignmentsApiController, :type => :integration do
           'exclude_biblio' => '1',
           'exclude_quoted' => '0',
           'exclude_type' => '2',
-          'exclude_value' => '50'
+          'exclude_value' => '50',
+          's_view_report' => '1'
         }
       end
 
@@ -1005,6 +1043,29 @@ describe AssignmentsApiController, :type => :integration do
         })
         @assignment.title.should == "This changes!"
         response.code.to_i.should eql 201
+      end
+    end
+
+    context "differentiated assignments" do
+      before do
+        course_with_teacher(:active_all => true)
+        @assignment = @course.assignments.create(:name => 'test', :only_visible_to_overrides => false)
+        @flag_before = @assignment.only_visible_to_overrides
+      end
+
+      it "should not update the only_visible_to_overrides flag if differentiated assignments is off" do
+        raw_api_update_assignment(@course,@assignment,{
+          :only_visible_to_overrides => !@flag_before
+        })
+        @assignment.reload.only_visible_to_overrides.should == @flag_before
+      end
+
+      it "should update the only_visible_to_overrides flag if differentiated assignments is on" do
+        @course.account.enable_feature!(:differentiated_assignments)
+        raw_api_update_assignment(@course,@assignment,{
+          :only_visible_to_overrides => !@flag_before
+        })
+        @assignment.reload.only_visible_to_overrides.should == !@flag_before
       end
     end
   end
@@ -1246,7 +1307,7 @@ describe AssignmentsApiController, :type => :integration do
           :id => assignment.id.to_s},
           {:include => ['submission']})
         json['submission'].should ==
-          json_parse(@controller.submission_json(submission,assignment,@user,session).to_json)
+          json_parse(controller.submission_json(submission,assignment,@user,session).to_json)
       end
 
       context "AssignmentFreezer plugin disabled" do
@@ -1323,7 +1384,7 @@ describe AssignmentsApiController, :type => :integration do
         context "assignment with quiz" do
           before do
             course_with_teacher(:active_all => true)
-            @quiz = Quiz.create!(:title => 'Quiz Name', :context => @course)
+            @quiz = Quizzes::Quiz.create!(:title => 'Quiz Name', :context => @course)
             @quiz.did_edit!
             @quiz.offer!
             assignment = @quiz.assignment
@@ -1377,11 +1438,8 @@ describe AssignmentsApiController, :type => :integration do
     context "draft state" do
 
       before do
-        Account.default.enable_feature!(:draft_state)
-        @domain_root_account = Account.default
-
         course_with_student_logged_in(:active_all => true)
-
+        @course.account.enable_feature!(:draft_state)
         @assignment = @course.assignments.create!({
           :name => "unpublished assignment",
           :points_possible => 15
@@ -1431,18 +1489,16 @@ describe AssignmentsApiController, :type => :integration do
     let(:result) { assignment_json(@assignment, @user, {}) }
 
     before do
-      #set @domain_root_account
-      @domain_root_account = Account.default
-
       course_with_teacher(:active_all => true)
       @assignment = @course.assignments.create!(:title => "some assignment")
     end
 
     context "when turnitin_enabled is true on the context" do
       before {
-        @domain_root_account.update_attributes! turnitin_account_id: 1234,
+        @course.account.update_attributes! turnitin_account_id: 1234,
                                                 turnitin_shared_secret: 'foo',
                                                 turnitin_host: 'example.com'
+        @assignment.reload
       }
 
       it "contains a turnitin_enabled key" do

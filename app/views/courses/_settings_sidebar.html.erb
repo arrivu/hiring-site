@@ -1,13 +1,13 @@
 <div class="rs-margin-lr rs-margin-top">
   <% if can_do(@context, @current_user, :use_student_view) %>
-    <% link_to course_student_view_path(@context), :method => :post, :class => 'btn button-sidebar-wide student_view_button' do %>
+    <%= link_to course_student_view_path(@context), :method => :post, :class => 'btn button-sidebar-wide student_view_button' do %>
       <i class="icon-student-view"></i>
       <%= t('links.student_view', 'Candidate View') %>
     <% end %>
   <% end %>
 
   <% if can_do(@context, @current_user, :read_reports) %>
-    <% link_to context_url(@context, :context_statistics_url), :class => 'btn button-sidebar-wide' do %>
+    <%= link_to context_url(@context, :context_statistics_url), :class => 'btn button-sidebar-wide' do %>
       <i class="icon-stats"></i>
       <%= t('links.stats', 'Project Statistics') %>
     <% end %>
@@ -21,6 +21,7 @@
     <%# end %>
   <%#end %>
 
+
   <% if can_do(@context, @current_user, :change_course_state) %>
     <% if @context.completed? %>
       <%= form_tag context_url(@context, :context_unconclude_url) do %>
@@ -30,7 +31,7 @@
         </button>
       <% end %>
     <% elsif !@context.soft_concluded? %>
-      <% link_to context_url(@context, :context_confirm_action_url, :event => 'conclude'), :class => 'btn button-sidebar-wide' do %>
+      <%= link_to context_url(@context, :context_confirm_action_url, :event => 'conclude'), :class => 'btn button-sidebar-wide' do %>
         <i class="icon-lock"></i>
         <%= t('links.conclude', 'Conclude this Project') %>
       <% end %>
@@ -38,19 +39,18 @@
   <% end %>
 
   <% if can_do(@context, @current_user, :delete) && !@context.deleted? %>
-    <% link_to context_url(@context, :context_confirm_action_url, :event => 'delete'), :class => 'btn button-sidebar-wide delete_course_link' do %>
+    <%= link_to context_url(@context, :context_confirm_action_url, :event => 'delete'), :class => 'btn button-sidebar-wide delete_course_link' do %>
       <i class="icon-trash"></i>
       <%= t('links.delete', 'Permanently Delete this Project') %>
     <% end %>
   <% end %>
 
   <% if can_do(@context, @current_user, :read) && show_user_create_course_button(@current_user) %>
-    <% link_to context_url(@context, :context_start_copy_url), :class => 'btn button-sidebar-wide copy_course_link' do %>
+    <%= link_to context_url(@context, :context_start_copy_url), :class => 'btn button-sidebar-wide copy_course_link' do %>
       <i class="icon-copy-course"></i>
       <%= t('links.copy', 'Copy this Project') %>
     <% end %>
   <% end %>
-
 
   <% if can_do(@context, @current_user, :manage_content, :manage_files, :manage_quizzes) && !@domain_root_account.settings[:Sublime_course_import_disable] %>
     <% link_to context_url(@context, :context_content_migrations_url), :class => 'btn button-sidebar-wide import_content' do %>
@@ -67,7 +67,7 @@
   <% end %>
 
   <% if can_do(@context, @current_user, :reset_content) %>
-    <% link_to context_url(@context, :course_reset_url), :class => 'btn button-sidebar-wide reset_course_content_button' do %>
+    <%= link_to context_url(@context, :course_reset_url), :class => 'btn button-sidebar-wide reset_course_content_button' do %>
       <i class="icon-reset"></i>
       <%= t('links.reset', 'Reset Project Content') %>
 

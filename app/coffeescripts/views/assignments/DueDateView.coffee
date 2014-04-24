@@ -50,7 +50,6 @@ define [
       json = @$el.find('form').toJSON()
       for dateField in [ 'due_at', 'lock_at', 'unlock_at', 'show_correct_answers_at', 'hide_correct_answers_at']
         json[dateField] = $.unfudgeDateForProfileTimezone(json[dateField])
-      json.course_section_id = parseInt(json.course_section_id, 10)
       errs = @validateBeforeSave json, {}
       @$el.hideErrors()
       x = $("#quiz_show_correct_answers").is(":checked")
