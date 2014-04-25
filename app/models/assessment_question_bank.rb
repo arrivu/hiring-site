@@ -18,6 +18,9 @@
 
 class AssessmentQuestionBank < ActiveRecord::Base
   include Workflow
+
+  acts_as_tagger
+
   attr_accessible :context, :title, :user, :alignments
   belongs_to :context, :polymorphic => true
   has_many :assessment_questions, :order => 'name, position, created_at'

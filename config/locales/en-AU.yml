@@ -10275,6 +10275,7 @@ en-AU:
       creating_group_failed: "Create Group Failed, Please Try Again"
       field_is_required: "This field is required"
       loading_banks_failed: "Question Banks failed to load, please try again"
+      loading_tags_failed: "Question Tags failed to load, please try again"
       loading_more_questions_failed: "loading more questions failed"
       loading_question_failed: "Loading Question Failed..."
       loading_questions_failed: "Questions failed to load, please try again"

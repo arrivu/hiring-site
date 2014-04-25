@@ -18,9 +18,11 @@
 
 class AssessmentQuestionsController < ApplicationController
   include Api::V1::QuizQuestion
+  include TagsHelper
 
   before_filter :require_context
   before_filter :require_bank
+
   def create
     if authorized_action(@bank.assessment_questions.new, @current_user, :create)
       params[:assessment_question] ||= {}
@@ -29,7 +31,9 @@ class AssessmentQuestionsController < ApplicationController
       @question = @bank.assessment_questions.build(params[:assessment_question])
       if @question.with_versioning(&:save)
         @question.insert_at_bottom
-
+    # arrivu changes
+        tag_list(params[:tag_tokens], @question, @bank)  unless params[:tag_tokens].nil?
+    # arrivu changes
         render json: question_json(@question, @current_user, session, [:assessment_question])
       else
         render :json => @question.errors, :status => :bad_request
@@ -47,7 +51,9 @@ class AssessmentQuestionsController < ApplicationController
       @question.edited_independent_of_quiz_question
       if @question.with_versioning { @question.update_attributes(params[:assessment_question]) }
         @question.ensure_in_list
-
+        # arrivu changes
+        tag_list(params[:tag_tokens], @question, @bank)  unless params[:tag_tokens].nil?
+        # arrivu changes
         render json: question_json(@question, @current_user, session, [:assessment_question])
       else
         render :json => @question.errors, :status => :bad_request

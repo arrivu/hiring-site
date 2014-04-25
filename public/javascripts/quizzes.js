@@ -48,7 +48,8 @@ define([
   'vendor/jquery.placeholder' /* /\.placeholder/ */,
   'vendor/jquery.scrollTo' /* /\.scrollTo/ */,
   'jqueryui/sortable' /* /\.sortable/ */,
-  'jqueryui/tabs' /* /\.tabs/ */
+  'jqueryui/tabs' ,/* /\.tabs/ */
+  'jquery.tokeninput'
 ], function(regradeTemplate, I18n,_,$,calcCmd, htmlEscape, pluralize,
             wikiSidebar, DueDateListView, DueDateOverrideView, Quiz,
             DueDateList,SectionList,
@@ -1194,6 +1195,9 @@ define([
     }
 
     data.quiz.title = quiz.quiz_name;
+    //arrivu changes
+    data.quiz.tag_tokens = quiz.tag_tokens;
+    //arrivu changes
     quiz.questions.forEach(function(question) {
       var q = {};
       q.question_name = question.question_name;
@@ -1673,6 +1677,28 @@ define([
         textValues: ['question_type', 'correct_comments', 'incorrect_comments', 'neutral_comments', 'question_name', 'question_points', 'answer_selection_type', 'blank_id', 'matching_answer_incorrect_matches'],
         htmlValues: ['question_text', 'correct_comments_html', 'incorrect_comments_html', 'neutral_comments_html']
       });
+
+        //arrivu changes
+        // Edit the questions get the tags
+        question_type = $("#question_form_template").data('type')
+        if (question_type != "")
+        {
+           var question_taggable_type = "AssessmentQuestion"
+        }
+        else
+        {
+            var question_taggable_type = "QuizQuestion"
+        }
+
+        if (questionID != "question_new") {
+        $.ajaxJSON('/get_tags' , 'GET', {taggable_type: question_taggable_type,  taggable_id: questionID }  , function(tags) {
+            $('#question_tag_tokens').data('pre',tags);
+            $('#question_tag_tokens').tokenInput('/context_tags.json',{prePopulate: $('#question_tag_tokens').data('load')});
+        }, function(data) {
+            $.flashError(I18n.t('errors.loading_tags_failed', "Question Tags failed to load, please try again"));
+        });
+        }
+        //arrivu changes
       question.question_text = $question.find("textarea[name='question_text']").val();
       var matches = [];
       $question.find(".matching_answer_incorrect_matches_list li").each(function() {
@@ -2017,6 +2043,9 @@ define([
       $question.find(".question_type").change();
       $("html,body").scrollTo({top: $question.offset().top - 10, left: 0});
       $question.find(":input:first").focus().select();
+      //arrivu changes
+      $('#question_tag_tokens').tokenInput('/context_tags.json',{prePopulate: $('#question_tag_tokens').data('load')});
+      //arrivu changes
     });
 
     quiz.$questions.delegate('.group_top input[name="quiz_group[pick_count]"]', {
@@ -2446,14 +2475,17 @@ define([
       event.preventDefault();
       event.stopPropagation();
       var $displayQuestion = $(this).prev();
+      var $tag_tokens = $("#question_tag_tokens").val();   //arrivu changes
       var $form = $(this);
       var $answers = $form.find(".answer");
       var $question = $(this).find(".question");
       var answers = [];
+        //arrivu changes
       var questionData = $question.getFormData({
-        textValues: ['question_type', 'question_name', 'question_points', 'correct_comments', 'incorrect_comments', 'neutral_comments',
+        textValues: ['token_input', 'question_type', 'question_name', 'question_points', 'correct_comments', 'incorrect_comments', 'neutral_comments',
           'question_text', 'answer_selection_type', 'text_after_answers', 'matching_answer_incorrect_matches',
           'regrade_option']
+          //arrivu changes
       });
 
       // save any open html answers
@@ -2589,6 +2621,7 @@ define([
       }
       $displayQuestion.loadingImage();
       quiz.updateDisplayComments();
+      questionData.tag_tokens = $tag_tokens          //arrivu changes
       $.ajaxJSON(url, method, questionData, function(data) {
         $displayQuestion.loadingImage('remove');
         $displayQuestion.find('.question_name').focus();

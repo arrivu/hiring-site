@@ -359,7 +359,7 @@ module ActionController #:nodoc:
 
     # Holds a hash of all the GET, POST, and Url parameters passed to the action. Accessed like <tt>params["post_id"]</tt>
     # to get the post_id. No type casts are made, so all values are returned as strings.
-    attr_internal :params
+    `attr_internal :params
 
     # Holds the response object that's primarily used to set additional HTTP headers through access like
     # <tt>response.headers["Cache-Control"] = "no-cache"</tt>. Can also be used to access the final body HTML after a template

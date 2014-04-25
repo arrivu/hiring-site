@@ -18,6 +18,9 @@
 
 class AssessmentQuestion < ActiveRecord::Base
   include Workflow
+
+  acts_as_taggable_on :tags
+
   attr_accessible :name, :question_data, :form_question_data
   has_many :quiz_questions
   has_many :attachments, :as => :context
