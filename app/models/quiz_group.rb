@@ -17,7 +17,7 @@
 #
 
 class QuizGroup < ActiveRecord::Base
-  attr_accessible :name, :pick_count, :question_points, :assessment_question_bank_id
+  attr_accessible :name, :pick_count, :question_points, :assessment_question_bank_id, :shuffle_question_bank
   attr_readonly :quiz_id
 
   belongs_to :quiz
@@ -53,6 +53,7 @@ class QuizGroup < ActiveRecord::Base
       "id" => self.id,
       "name" => self.name,
       "pick_count" => self.pick_count,
+      "shuffle_question_bank" => self.shuffle_question_bank,
       "question_points" => self.question_points,
       "questions" => self.assessment_question_bank_id ? [] : self.quiz_questions.active.map{|q| q.data},
       "assessment_question_bank_id" => self.assessment_question_bank_id

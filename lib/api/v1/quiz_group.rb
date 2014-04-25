@@ -25,6 +25,7 @@ module Api::V1::QuizGroup
       quiz_id
       name
       pick_count
+      shuffle_question_bank
       question_points
       assessment_question_bank_id
       position
@@ -35,6 +36,7 @@ module Api::V1::QuizGroup
     :only => %w(
       name
       pick_count
+      shuffle_question_bank
       question_points
       assessment_question_bank_id
       position

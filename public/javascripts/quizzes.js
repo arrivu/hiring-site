@@ -2108,30 +2108,6 @@ define([
         });
 
         var $findBankDialog = $("#find_bank_dialog");
-        $( "#filter_question_bank_id" ).keyup(function(event) {
-            event.preventDefault();
-            var $dialog = $findBankDialog;
-            var url = $dialog.find(".find_question_banks_url").attr('href');
-            //console.log(url);
-            $.ajaxJSON(url, 'GET', {}, function(banks) {
-                $dialog.find(".message").hide();
-                $dialog.find(".find_banks").show();
-                $dialog.addClass('loaded');
-                for(idx in banks) {
-                    var bank = banks[idx].assessment_question_bank;
-                    bank.title = TextHelper.truncateText(bank.title)
-                    var $bank = $dialog.find(".bank").removeClass('blank');
-                    $bank.fillTemplateData({data: bank, dataValues: ['id', 'context_type', 'context_id']});
-                    $dialog.find(".bank_list").append($bank);
-                    $bank.data('bank_data', bank);
-                    $bank.show();
-                }
-            }, function(data) {
-                $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
-            });
-            //console.log(url);
-            //console.log( "Handler for .keyup() called." );
-        });
         $(".find_bank_link").click(function(event) {
             event.preventDefault();
             var $dialog = $findBankDialog;
@@ -2979,7 +2955,7 @@ define([
             if ($(this).closest('.group_top').length == 0) { return; }
             event.preventDefault();
             var $top = $(this).parents(".group_top");
-            var data =  $top.getTemplateData({textValues: ['name', 'pick_count', 'question_points']});
+            var data =  $top.getTemplateData({textValues: ['name', 'pick_count', 'question_points', 'shuffle_question_bank']});
             $top.fillFormData(data, {object_name: 'quiz_group'});
             $top.addClass('editing');
             $top.find(":text:visible:first").focus().select();
