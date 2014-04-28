@@ -7,8 +7,21 @@
 
 <% if @context.feature_enabled?(:draft_state) %>
 
-<% jammit_css :quizzes %>
-<% js_bundle :quizzes_index %>
+
+    <% if @context_enrollment.course_section.start_at == nil && @context_enrollment.course_section.end_at == nil %>
+        <% jammit_css :quizzes %>
+        <% js_bundle :quizzes_index %>
+    <%else%>
+ <% if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
+            <% jammit_css :quizzes %>
+            <% js_bundle :quizzes_index %>
+            <% else %>
+
+            <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">
+              <h1>Assesments are unavaiable, please contact your administrator.</h1>
+            </div>
+            <% end %>
+ <% end %>
 
 <%
   @body_classes << 'with_item_groups'
