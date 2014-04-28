@@ -3,6 +3,7 @@
 
        @show_left_side = false %>
 <% end %>
+<% if can_do(@current_user, :update) %>
 <% js_block do %>
     <script>
 //    var message="Right Click Disabled!";
@@ -47,6 +48,7 @@
     }
     </script>
 <% end %>
+    <% end %>
 <%
    @body_classes << "gradebook2 full-width"
   # These titles are used in different elements/scopes below

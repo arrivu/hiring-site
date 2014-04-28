@@ -26,20 +26,20 @@
             </a>
           <% end %>
 
-          <% if @course_home_view != 'feed' %>
-            <a class="button-sidebar-wide" href="<%= context_url(@context, :context_url, :view => 'feed') %>">
-              <i class="icon-stats"></i>
-              <%= t('links.view_course_stream', %{View Project Stream}) %>
-            </a>
-          <% end %>
+          <%# if @course_home_view != 'feed' %>
+            <!--<a class="button-sidebar-wide" href="<%#= context_url(@context, :context_url, :view => 'feed') %>">-->
+              <!--<i class="icon-stats"></i>-->
+              <!--<%#= t('links.view_course_stream', %{View Project Stream}) %>-->
+            <!--</a>-->
+          <%# end %>
 
           <% if @can_manage_content %>
-            <a href="#" class="button-sidebar-wide wizard_popup_link  <%= 'auto_open' if @context.created? || @context.claimed? %>">
-              <i class="icon-question"></i> <%= t('links.course_setup', %{Project Setup Checklist}) %>
-            </a>
+            <!--<a href="#" class="button-sidebar-wide wizard_popup_link  <%#= 'auto_open' if @context.created? || @context.claimed? %>">
+              <i class="icon-question"></i> <%#= t('links.course_setup', %{Project Setup Checklist}) %>
+            <!--</a>
 
-            <a class="button-sidebar-wide" href="<%= context_url(@context, :new_context_discussion_topic_url, :is_announcement => true) %>"><i class="icon-announcement"></i> <%= t('links.new_announcement', %{New Announcement}) %>
-            </a>
+            <a class="button-sidebar-wide" href="<%#= context_url(@context, :new_context_discussion_topic_url, :is_announcement => true) %>"><i class="icon-announcement"></i> <%#= t('links.new_announcement', %{New Announcement}) %>
+            <!--</a>-->
           <% end %>
         </div>
       <% end %>
@@ -159,8 +159,8 @@
     <option value="feed" <%= 'selected' if @context.default_view == 'feed' %>><%= t('draft_state.options.recent_activity_dashboard', %{Recent Activity Dashboard}) %></option>
     <option value="wiki" <%= 'selected' if @context.default_view == 'wiki' %>><%= t('draft_state.options.custom_page', %{Pages Front Page}) %></option>
     <option value="modules" <%= 'selected' if @context.default_view == 'modules' %>><%= t('draft_state.options.modules', %{Project Modules}) %></option>
-    <option value="assignments" <%= 'selected' if @context.default_view == 'assignments' %>><%= t('draft_state.options.assignments', %{Assignments List}) %></option>
-    <option value="syllabus" <%= 'selected' if @context.default_view == 'syllabus' %>><%= t('draft_state.options.syllabus', %{Syllabus}) %></option>
+    <!--<option value="assignments" <%#= 'selected' if @context.default_view == 'assignments' %>><%#= t('draft_state.options.assignments', %{Assignments List}) %></option>-->
+    <!--<option value="syllabus" <%#= 'selected' if @context.default_view == 'syllabus' %>><%#= t('draft_state.options.syllabus', %{Syllabus}) %></option>-->
   </select>
   <div class="button-container">
     <a type="button" class="btn button-secondary dialog_closer"><%= t('draft_state.buttons.cancel', %{Cancel}) %></a>

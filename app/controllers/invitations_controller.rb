@@ -70,7 +70,7 @@ class InvitationsController < ApplicationController
   def fill_registration_form
     @show_left_side = false
     @headers = false
-    reset_session
+    #reset_session
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -82,7 +82,7 @@ class InvitationsController < ApplicationController
           @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
           @current_pseudonym = @pseudonym
         else
-          #password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
+          password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
           @user = User.create!(:name => params[:invitation][:unique_id])
           @user.workflow_state = 'registered'
           @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
@@ -116,7 +116,15 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers = false
     clear_crumbs
-    @user = @current_user.id
+    @user ||= @current_user
+    @context = @user.profile if @user == @current_user
+
+    @user_data = profile_data(
+        @user.profile,
+        @current_user,
+        session,
+        ['links', 'user_services']
+    )
 
     if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages] && params[:link_ids]
       user_academic_ids = @current_user.user_academic_ids

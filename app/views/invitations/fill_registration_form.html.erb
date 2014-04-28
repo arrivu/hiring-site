@@ -1,6 +1,8 @@
 <%
-   jammit_css :profile_show, :tinymce
-   js_bundle  :profile_show
+  jammit_css :profile_show, :tinymce
+   js_bundle :profile_show
+   js_env PROFILE: @user_data
+   js_env(folder_id: @user.profile_pics_folder[:id]) if @user == @current_user
    @body_classes << "gradebook2 full-width" %>
 <style>
     select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
@@ -14,7 +16,8 @@
 
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
-        <div class="show-if-editing">
+        <div style="width: 100%;float: left;">
+        <div class="" style="width: 80%;float: left;">
           <table class="table">
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
@@ -49,6 +52,24 @@
                 </tr>
             <% end %>
           </table>
+        </div>
+        <div class="image-block" style="float: right;" >
+          <div class="image-block-image profile-avatar-wrapper">
+
+            <!--<a href="#" class="profile-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
+            <!--<%#= square_avatar_image @current_user[:id], 128 %>-->
+            <!--<i class="icon-edit"></i>-->
+            <!--</a>-->
+            <% if @user_data %>
+                <a href="#" class="profile-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
+                  <%= square_avatar_image @current_user[:id], 200 %>
+                  <i class="icon-edit"></i>
+                </a>
+            <% else %>
+                <%= square_avatar_image @current_user , 200 %>
+            <% end %>
+          </div>
+          </div>
         </div>
       </div>
       <% if @candidate_filter.academics == TRUE %>

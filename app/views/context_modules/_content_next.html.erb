@@ -164,7 +164,7 @@
 
 <div class="hidden-readable" tabindex="0" aria-label="keyboard instructions">
   <%= t('modules_keyboard_hint',
-        'To change the order of the course modules and module items,
+        'To change the order of the project modules and module items,
         first turn the cursor off on your screen reader. Insert-z in JAWS.
         Press tab to select the first module.
         Press up and down to choose a module or module item.
@@ -184,15 +184,15 @@
   <div id="no_context_modules_message" style="display:none; clear: both;">
     <% if can_do(@context.context_modules.scoped.new, @current_user, :create) %>
       <%= mt 'help.create', <<TEXT, :button => t('#context_modules.buttons.add_module_first', 'Add a New Module')
-  Course modules let you organize your assignments, pages, files, etc. into smaller sections or units. Modules could be centered around a theme, focused on a specific topic, or even just grouped chronologically.
+  Project modules let you organize your assessments, pages, files, etc. into smaller sections or units. Modules could be centered around a theme, focused on a specific topic, or even just grouped chronologically.
 
-  You can also sequence modules by defining criteria and prerequisites for each module. Students won't be able to access modules until they have unlocked all their prerequisites. That way you can prevent students from accessing certain content or files until they have, say, gotten at least 75% on a review quiz.
+  You can also sequence modules by defining criteria and prerequisites for each module. Candidates won't be able to access modules until they have unlocked all their prerequisites. That way you can prevent candidates from accessing certain content or files until they have, say, gotten at least 75% on a review quiz.
 
-  To start organizing your course into modules, click the "%{button}" button to the right.
+  To start organizing your project into modules, click the "%{button}" button to the right.
 TEXT
   %>
     <% else %>
-      <p><%= t('help.no_modules', %{No modules have been defined for this course.}) %></p>
+      <p><%= t('help.no_modules', %{No modules have been defined for this project.}) %></p>
     <% end %>
   </div>
 
@@ -274,7 +274,7 @@ TEXT
     </tr><tr>
         <td colspan="2">
           <%= f.check_box :require_sequential_progress, :id => "require_sequential_progress" %>
-          <%= f.label :require_sequential_progress, :en => "students must move through requirements in this module in sequential order", :for => "require_sequential_progress" %>
+          <%= f.label :require_sequential_progress, :en => "candidates must move through requirements in this module in sequential order", :for => "require_sequential_progress" %>
         </td>
     </tr><tr>
       <td colspan="2">

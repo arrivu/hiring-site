@@ -1,0 +1,47 @@
+# do not create a queue: section for your test environment
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: canvas_test
+  host: localhost
+  username: admin123
+  timeout: 5000
+
+test-in-memory:
+  adapter: sqlite3
+  encoding: utf8
+  database: ':memory:'
+  pool: 1
+
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: metil1_production
+  username: admin123
+  password: admin
+  timeout: 5000
+  queue:
+    adapter: postgresql
+    encoding: utf8
+    database: metil1_queue_production
+    username: admin123
+    password: admin
+    timeout: 5000
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: metil1_production
+  host: localhost
+  username: admin123
+  password: admin
+  timeout: 5000
+  queue:
+    adapter: postgresql
+    encoding: utf8
+    database: metil1_queue_production
+    host: localhost
+    username: admin123
+    password: admin
+    timeout: 5000
+

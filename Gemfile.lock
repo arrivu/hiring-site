@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/kreynolds/cassandra-cql.git
+  remote: git://github.com/kreynolds/cassandra-cql.git
   revision: d100be075b04153cf4116da7512892a1e8c0a7e4
   ref: d100be075b04153cf4116da7512892a1e8c0a7e4
   specs:
@@ -8,7 +8,7 @@ GIT
       thrift_client (>= 0.7.1, < 0.9)
 
 GIT
-  remote: https://github.com/rubyzip/rubyzip.git
+  remote: git://github.com/rubyzip/rubyzip.git
   revision: 2697c7ea4fba6dca66acd4793965501b06ea8df6
   ref: 2697c7ea4fba6dca66acd4793965501b06ea8df6
   specs:
@@ -274,7 +274,7 @@ GEM
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.9.4)
-    rb-inotify (0.9.3)
+    rb-inotify (0.9.4)
       ffi (>= 0.5.0)
     rb-kqueue (0.2.2)
       ffi (>= 0.5.0)
@@ -386,7 +386,7 @@ DEPENDENCIES
   bluecloth (= 2.0.10)
   builder (= 3.0.0)
   bullet (= 4.5.0)
-  bundler (>= 1.5.1, <= 1.5.3)
+  bundler (= 1.6.2)
   canvas_breach_mitigation!
   canvas_cassandra!
   canvas_color!
