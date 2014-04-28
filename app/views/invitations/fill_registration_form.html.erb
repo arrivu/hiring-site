@@ -30,6 +30,17 @@
               <% if @candidate_filter.dob == TRUE %>
                 <td class='alnright'><%= f.label :birthdate, "Date Of Birth*"%></td><td><%= f.text_field :birthdate, :required => true, :placeholder => "DD-MM-YYYY"%></td>
               <% end %>
+
+                <% if @candidate_filter.bio == TRUE %>
+                   <% if @bio == nil %>
+                      <td class='alnright'><%= f.label :bio, "Bio*"%></td><td>
+                      <textarea  name="bio"></textarea>
+                    <% else %>
+                      <td class='alnright'><%= f.label :bio, "Bio*"%></td><td>
+                      <textarea  name="bio"><%= @bio_text %></textarea>
+                    </td>
+                  <% end %>
+                <% end %>
             </tr>
             <tr>
                 <% if @candidate_filter.email_id == TRUE %>

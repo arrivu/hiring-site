@@ -84,6 +84,12 @@
       <!--<input type="checkbox" /><label >Current compensation</label><br><br>-->
       <!--<input type="checkbox" /><label >Expected compensation</label>-->
        </td></tr>
+         <tr>
+         <td style="vertical-align: top;">
+           <%= f.check_box :bio %>
+           <%= f.label :bio, :en => "Bio" %>
+         </td>
+         </tr>
          <tr><td><%= f.submit "submit", class: "btn btn-primary" %></td></tr>
        </table>
          <% end %>
