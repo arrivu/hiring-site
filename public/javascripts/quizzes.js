@@ -2083,6 +2083,13 @@ define([
             $bank.data('bank_data', bank);
             $bank.show();
           }
+            console.log(bank);
+            $.ajaxJSON('/get_tags_filter' , 'GET', {taggable_type: "QuizQuestion", taggable_id: bank.context_id }  , function(filter_tags) {
+                $('#question_tag_tokens').data('pre',filter_tags);
+                $('#question_tag_tokens').tokenInput('/context_tags.json',{prePopulate: $('#question_tag_tokens').data('load')});
+            }, function(data) {
+                $.flashError(I18n.t('errors.loading_tags_failed', "Question Tags failed to load, please try again"));
+            });
         }, function(data) {
           $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
         });

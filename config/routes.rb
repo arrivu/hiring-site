@@ -1460,5 +1460,6 @@ routes.draw do
 
   match '/context_tags' => 'tags#context_tags'
   match '/get_tags' => 'tags#get_tags'
+  match '/get_tags_filter' => 'tags#get_tags_filter'
 
 end
