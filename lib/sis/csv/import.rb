@@ -16,11 +16,14 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+require 'action_controller_test_process'
+require 'csv'
 require 'zip'
 
 module SIS
   module CSV
     class Import
+
       attr_accessor :root_account, :batch, :errors, :warnings, :finished, :counts, :updates_every,
         :override_sis_stickiness, :add_sis_stickiness, :clear_sis_stickiness
 
@@ -344,7 +347,7 @@ module SIS
                   out_csv = nil
                   att = Attachment.new
                   att.context = @batch
-                  att.uploaded_data = ActionController::TestUploadedFile.new(path, Attachment.mimetype(path))
+                  att.uploaded_data = Rack::Test::UploadedFile.new(path, Attachment.mimetype(path))
                   att.display_name = new_csvs.last[:file]
                   att.save!
                   new_csvs.last.delete(:fullpath)
@@ -366,7 +369,7 @@ module SIS
             out_csv = nil
             att = Attachment.new
             att.context = @batch
-            att.uploaded_data = ActionController::TestUploadedFile.new(path, Attachment.mimetype(path))
+            att.uploaded_data = Rack::Test::UploadedFile.new(path, Attachment.mimetype(path))
             att.display_name = new_csvs.last[:file]
             att.save!
             new_csvs.last.delete(:fullpath)

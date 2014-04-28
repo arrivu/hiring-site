@@ -1,4 +1,5 @@
 define [
+  'jquery'
   'underscore'
   'Backbone'
   'compiled/collections/GroupCollection'
@@ -6,18 +7,23 @@ define [
   'compiled/collections/UnassignedGroupUserCollection'
   'compiled/models/progressable'
   'compiled/backbone-ext/DefaultUrlMixin'
-], (_, Backbone, GroupCollection, GroupUserCollection, UnassignedGroupUserCollection, progressable, DefaultUrlMixin) ->
+], ($, _, Backbone, GroupCollection, GroupUserCollection, UnassignedGroupUserCollection, progressable, DefaultUrlMixin) ->
 
   class GroupCategory extends Backbone.Model
 
     resourceName: "group_categories"
     @mixin progressable
 
-    groups: ->
-      @_groups = new GroupCollection null,
+    initialize: ->
+      super
+      if groups = @get('groups')
+        @groups groups
+
+    groups: (models = null) ->
+      @_groups = new GroupCollection models,
         category: this
         loadAll: true
-      if @get('groups_count') is 0
+      if @get('groups_count') is 0 or models?.length
         @_groups.loadedAll = true
       else
         @_groups.fetch()
@@ -83,6 +89,10 @@ define [
     canMessageUnassignedMembers: ->
       @unassignedUsersCount() > 0 and not ENV.IS_LARGE_ROSTER
 
+    isLocked: ->
+      # e.g. SIS groups, we shouldn't be able to edit them
+      @get('role') is 'uncategorized'
+
     assignUnassignedMembers: ->
       $.ajaxJSON "/api/v1/group_categories/#{@id}/assign_unassigned_members", 'POST', {}, @setUpProgress
 
@@ -97,9 +107,7 @@ define [
       data
 
     toJSON: ->
-      data = _.omit(super, 'self_signup', 'split_group_count')
-      data.create_group_count ?= @get('split_group_count') if @get('split_groups')
-      data
+      _.omit(super, 'self_signup')
 
     @mixin DefaultUrlMixin
 

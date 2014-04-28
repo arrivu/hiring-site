@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-require 'rubygems'
-require 'moodle2cc'
-require 'moodle2cc/cli'
-
-Moodle2CC::CLI.start

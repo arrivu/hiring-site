@@ -30,7 +30,7 @@ describe AssignmentsController do
 
   describe "GET 'index'" do
     it "should throw 404 error without a valid context id" do
-      rescue_action_in_public!
+      rescue_action_in_public! if CANVAS_RAILS2
       #controller.use_rails_error_handling!
       get 'index'
       assert_status(404)
@@ -91,6 +91,15 @@ describe AssignmentsController do
 
         @course.reload.assignment_groups.count.should == 1
       end
+
+      it "should separate manage_assignments and manage_grades permissions" do
+        course_with_teacher_logged_in active_all: true
+        @course.account.role_overrides.create! enrollment_type: 'TeacherEnrollment', permission: 'manage_assignments', enabled: false
+        get 'index', course_id: @course.id
+        assigns[:js_env][:PERMISSIONS][:manage_grades].should be_true
+        assigns[:js_env][:PERMISSIONS][:manage_assignments].should be_false
+        assigns[:js_env][:PERMISSIONS][:manage].should be_false
+      end
     end
 
     context "sharding" do
@@ -118,12 +127,12 @@ describe AssignmentsController do
   
   describe "GET 'show'" do
     it "should return 404 on non-existant assignment" do
-      rescue_action_in_public!
+      rescue_action_in_public! if CANVAS_RAILS2
       #controller.use_rails_error_handling!
       course_with_student_logged_in(:active_all => true)
 
       get 'show', :course_id => @course.id, :id => 5
-      response.status.should eql('404 Not Found')
+      assert_status(404)
     end
 
     it "should return unauthorized if not enrolled" do
@@ -193,7 +202,7 @@ describe AssignmentsController do
       assigns[:locked].should be_true
       # make sure that the show.html.erb template is rendered, because
       # in normal cases we redirect to the assignment's external_tool_tag.
-      response.rendered[:template].should eql 'assignments/show.html.erb'
+      response.should render_template('assignments/show')
     end
 
     it "should require login for external tools in a public course" do
@@ -221,7 +230,7 @@ describe AssignmentsController do
   describe "GET 'syllabus'" do
     it "should require authorization" do
       course_with_student
-      rescue_action_in_public!
+      rescue_action_in_public! if CANVAS_RAILS2
       #controller.use_rails_error_handling!
       get 'syllabus', :course_id => @course.id
       assert_unauthorized
@@ -247,7 +256,7 @@ describe AssignmentsController do
 
   describe "GET 'new'" do
     it "should require authorization" do
-      rescue_action_in_public!
+      rescue_action_in_public! if CANVAS_RAILS2
       #controller.use_rails_error_handling!
       course_with_student(:active_all => true)
       get 'new', :course_id => @course.id
@@ -267,7 +276,7 @@ describe AssignmentsController do
   
   describe "POST 'create'" do
     it "should require authorization" do
-      rescue_action_in_public!
+      rescue_action_in_public! if CANVAS_RAILS2
       #controller.use_rails_error_handling!
       course_with_student(:active_all => true)
       post 'create', :course_id => @course.id
@@ -316,7 +325,7 @@ describe AssignmentsController do
   
   describe "GET 'edit'" do
     it "should require authorization" do
-      rescue_action_in_public!
+      rescue_action_in_public! if CANVAS_RAILS2
       #controller.use_rails_error_handling!
       course_with_student(:active_all => true)
       course_assignment
@@ -348,7 +357,7 @@ describe AssignmentsController do
 
   describe "PUT 'update'" do
     it "should require authorization" do
-      rescue_action_in_public!
+      rescue_action_in_public! if CANVAS_RAILS2
       #controller.use_rails_error_handling!
       course_with_student(:active_all => true)
       course_assignment

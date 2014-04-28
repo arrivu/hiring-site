@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../common')
 
 shared_examples_for "quizzes selenium tests" do
-  it_should_behave_like "in-process server selenium tests"
+  include_examples "in-process server selenium tests"
 
   def create_multiple_choice_question
     question = fj(".question_form:visible")
@@ -166,7 +166,7 @@ shared_examples_for "quizzes selenium tests" do
     click_questions_tab
     click_new_question_button
     wait_for_ajaximations
-    Quiz.last
+    Quizzes::Quiz.last
   end
 
   def take_quiz
@@ -185,14 +185,24 @@ shared_examples_for "quizzes selenium tests" do
     driver.switch_to.alert.accept
   end
 
-  def take_and_answer_quiz(submit=true)
+  # @argument answer_chooser [#call]
+  #   You can pass a block to specify which answer to choose, the block will
+  #   receive the set of possible answers. If you don't, the first (and correct)
+  #   answer will be chosen.
+  def take_and_answer_quiz(submit=true, &answer_chooser)
     get "/courses/#{@course.id}/quizzes/#{@quiz.id}/take?user_id=#{@user.id}"
     expect_new_page_load { driver.find_element(:link_text, 'Take the Quiz').click }
 
-    answer = @quiz.stored_questions[0][:answers][0][:id]
+    answer = if block_given?
+      yield(@quiz.stored_questions[0][:answers])
+    else
+      @quiz.stored_questions[0][:answers][0][:id]
+    end
 
-    fj("input[type=radio][value=#{answer}]").click
-    wait_for_js
+    if answer
+      fj("input[type=radio][value=#{answer}]").click
+      wait_for_js
+    end
 
     if submit
       driver.execute_script("$('#submit_quiz_form .btn-primary').click()")
@@ -272,7 +282,7 @@ shared_examples_for "quizzes selenium tests" do
     find_accessible_link('New Question Group').click
     submit_form('#group_top_new form')
     wait_for_ajax_requests
-    @group = QuizGroup.last
+    @group = Quizzes::QuizGroup.last
   end
 
   ##

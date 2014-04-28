@@ -23,7 +23,7 @@ class Announcement < DiscussionTopic
   has_a_broadcast_policy
   include HasContentTags
   
-  sanitize_field :message, Instructure::SanitizeField::SANITIZE
+  sanitize_field :message, CanvasSanitize::SANITIZE
   
   before_save :infer_content
   before_save :respect_context_lock_rules
@@ -31,9 +31,7 @@ class Announcement < DiscussionTopic
   validates_presence_of :context_type
   validates_presence_of :message
 
-  acts_as_list scope: %q{context_id = '#{context_id}' AND
-                         context_type = '#{context_type}' AND
-                         type = 'Announcement'}
+  acts_as_list scope: { context: self, type: 'Announcement' }
 
   def validate_draft_state_change
     old_draft_state, new_draft_state = self.changes['workflow_state']
@@ -93,6 +91,10 @@ class Announcement < DiscussionTopic
   end
 
   def can_unpublish?
+    false
+  end
+
+  def draft_state_enabled?
     false
   end
 

@@ -51,7 +51,7 @@ class ContentZipper
       when Assignment; zip_assignment(attachment, attachment.context)
       when Eportfolio; zip_eportfolio(attachment, attachment.context)
       when Folder; zip_base_folder(attachment, attachment.context)
-      when Quiz; zip_quiz(attachment, attachment.context)
+      when Quizzes::Quiz; zip_quiz(attachment, attachment.context)
       end
     rescue => e
       ErrorReport.log_exception(:default, e, {
@@ -93,6 +93,7 @@ class ContentZipper
           # necessary because we use /_\d+_/ to infer the user/attachment
           # ids when teachers upload graded submissions
           users_name.gsub! /_(\d+)_/, '-\1-'
+          users_name.gsub! /^(\d+)$/, '-\1-'
 
           filename = users_name + (submission.late? ? " LATE_" : "_") + submission.user_id.to_s
           filename = filename.gsub(/ /, "-").gsub(/[^-\w]/, "-").downcase
@@ -298,7 +299,7 @@ class ContentZipper
   end
 
   def zip_quiz(zip_attachment, quiz)
-    QuizSubmissionZipper.new(
+    Quizzes::QuizSubmissionZipper.new(
       quiz: quiz,
       zip_attachment: zip_attachment).zip!
   end
@@ -343,7 +344,7 @@ class ContentZipper
   def complete_attachment!(zip_attachment, zip_name)
     if zipped_successfully?
       @logger.debug("data zipped! uploading to s3...")
-      uploaded_data = ActionController::TestUploadedFile.new(zip_name, 'application/zip')
+      uploaded_data = Rack::Test::UploadedFile.new(zip_name, 'application/zip')
       zip_attachment.uploaded_data = uploaded_data
       zip_attachment.workflow_state = 'zipped'
       zip_attachment.file_state = 'available'

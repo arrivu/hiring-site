@@ -256,7 +256,6 @@ define([
           width: 400,
           title: I18n.t('titles.configure_report', 'Configure Report')
         });
-        $dialog.find(".datetime_field").datetime_field()
       }
       $dialog.dialog('open');
     })
@@ -302,6 +301,10 @@ define([
     // Setup initial display state
     displayCustomEmailFromName();
     $('.notification_from_name_option').trigger('change');
+
+    $('#account_settings_self_registration').change(function() {
+      $('#self_registration_type_radios').toggle(this.checked);
+    }).trigger('change');
 
   });
 

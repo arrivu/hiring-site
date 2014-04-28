@@ -186,7 +186,7 @@
     }
     &.discussion-published {
       .discussion-type, .discussion-title a {
-        color: #34832B;
+        color: #33802a;
       }
     }
   }
@@ -202,8 +202,16 @@
     width: 36px;
   }
 
+  .discussion-date-available {
+    width: 200px;
+
+    .status-description {
+      font-weight: bold;
+    }
+  }
+
   .discussion-due-date {
-    width: 150px;
+    width: 200px;
 
     .discussion-date-type {
       font-weight: bold;

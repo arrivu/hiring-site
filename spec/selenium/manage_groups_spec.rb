@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/helpers/manage_groups_common
 require 'thread'
 
 describe "manage groups" do
-  it_should_behave_like "in-process server selenium tests"
+  include_examples "in-process server selenium tests"
 
   before (:each) do
     course_with_teacher_logged_in
@@ -24,7 +24,7 @@ describe "manage groups" do
         f('#add-group-set').click
         set_value f('#new_category_name'), "zomg"
         f('[name=split_groups]').click
-        set_value f('[name=split_group_count]'), 2
+        set_value f('[name=create_group_count]'), 2
         submit_form f('.group-category-create')
 
         wait_for_ajaximations

@@ -45,22 +45,70 @@ module Api::V1::QuizQuestion
     matching_answer_incorrect_matches
   )
 
-  def questions_json(questions, user, session, context = nil, includes = [])
+  def questions_json(questions, user, session, context = nil, includes = [], censored = false)
     questions.map do |question|
-      question_json(question, user, session, context, includes)
+      question_json(question, user, session, context, includes, censored)
     end
   end
 
-  def question_json(question, user, session, context = nil, includes = [])
+  def question_json(question, user, session, context = nil, includes = [], censored = false)
     hsh = api_json(question, user, session, API_ALLOWED_QUESTION_OUTPUT_FIELDS) do |json, q|
-      API_ALLOWED_QUESTION_DATA_OUTPUT_FIELDS.each { |field| json.send("#{field}=", q.question_data[field]) }
+      API_ALLOWED_QUESTION_DATA_OUTPUT_FIELDS.each do |field|
+        json.send("#{field}=", q.question_data[field])
+      end
     end
 
     if includes.include?(:assessment_question)
       hsh[:assessment_question] = api_json(question.assessment_question, user, session)
+      if censored
+        q_data = hsh[:assessment_question][:question_data]
+        hsh[:assessment_question][:question_data] = censor(q_data)
+      end
     end
 
+    # Remove the answer weights if we're censoring the data for student access;
+    # the answer weights denote the correct answer !!!!!
+    hsh = censor(hsh) if censored
     hsh
+  end
+
+  private
+
+  # Delete sensitive question data that students shouldn't get to see.
+  #
+  # @param [Object] question_data
+  #   The question data record to censor. This would either be the serialized
+  #   quiz_question or the question_data field in a serialized assessment
+  #   question.
+  def censor(question_data)
+    question_data = question_data.with_indifferent_access
+
+    # whitelist question details for students
+    attr_whitelist = %w(
+      id position quiz_group_id quiz_id assessment_question_id
+      assessment_question question_name question_type question_text answers
+    )
+    question_data.keep_if {|k, v| attr_whitelist.include?(k.to_s) }
+
+    # only include answers for types that need it to show choices
+    allow_answer_whitelist = %w(
+      multiple_choice_question
+      true_false_question
+      multiple_answers_question
+    )
+
+    unless allow_answer_whitelist.include?(question_data[:question_type])
+      question_data.delete(:answers)
+    end
+
+    # need the answer text for multiple choice - only info necessary though
+    if question_data[:answers]
+      question_data[:answers].each do |record|
+        record.keep_if {|k, v| %w(id text html).include?(k.to_s) }
+      end
+    end
+
+    question_data
   end
 
 end

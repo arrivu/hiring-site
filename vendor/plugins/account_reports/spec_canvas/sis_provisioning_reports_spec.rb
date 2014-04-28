@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012 - 2013 Instructure, Inc.
+# Copyright (C) 2012 - 2014 Instructure, Inc.
 #
 # This file is part of Canvas.
 #
@@ -194,7 +194,10 @@ describe "Default Account Reports" do
     @enrollment7 = @course2.enroll_user(@user1,'ObserverEnrollment',:enrollment_state => :active,
                                         :associated_user_id => @user3.id)
     @enrollment8 = @course4.enroll_user(@user5,'TeacherEnrollment',:enrollment_state => :active)
-    @enrollment9 = @section1.enroll_user(@user4,'TeacherEnrollment','active')
+    @enrollment9 = @course1.enroll_user(@user4, 'TeacherEnrollment',
+                                        enrollment_state: 'active',
+                                        allow_multiple_enrollments: true,
+                                        section: @section1)
     @enrollment10 = @course1.enroll_user(@user6,'TeacherEnrollment',
                                          :enrollment_state => :completed)
     @enrollment11 = @course2.enroll_user(@user4,'DesignerEnrollment',
@@ -477,6 +480,7 @@ describe "Default Account Reports" do
       end
 
       it "should run the SIS report with sis term and deleted courses" do
+        @course1.complete
         parameters = {}
         parameters["enrollment_term_id"] = "sis_term_id:fall12"
         parameters["include_deleted"] = true
@@ -485,13 +489,16 @@ describe "Default Account Reports" do
 
         parsed.length.should == 2
         parsed[0].should == [@course1.sis_source_id,@course1.course_code,@course1.name,
-                             @sub_account.sis_source_id,@term1.sis_source_id,"active",
+                             @sub_account.sis_source_id,@term1.sis_source_id,"completed",
                              @course1.start_at.iso8601,@course1.conclude_at.iso8601]
         parsed[1].should == ["SIS_COURSE_ID_5","ENG101","Sd Math 100","sub1",
                              "fall12","deleted",nil,nil]
       end
 
       it "should run the provisioning report" do
+        @course6.destroy
+        @course4.destroy
+        Course.where(id: @course6.id).update_all(updated_at: 122.days.ago)
         parameters = {}
         parameters["include_deleted"] = true
         parameters["courses"] = true
@@ -510,10 +517,8 @@ describe "Default Account Reports" do
         parsed[3].should == [@course5.id.to_s,"SIS_COURSE_ID_5","ENG101","Sd Math 100",
                              @sub_account.id.to_s,"sub1",@term1.id.to_s,"fall12","deleted",nil,nil]
         parsed[4].should == [@course4.id.to_s,nil,"self","self help",@course4.account_id.to_s,nil,
-                             @default_term.id.to_s,nil,"unpublished",nil,nil]
-        parsed[5].should == [@course6.id.to_s,nil,"Tal101","talking 101",@course6.account_id.to_s,
-                             nil,@default_term.id.to_s,nil,"concluded",nil,nil]
-        parsed.length.should == 6
+                             @default_term.id.to_s,nil,"deleted",nil,nil]
+        parsed.length.should == 5
       end
 
       it "should run the sis report on a sub account" do

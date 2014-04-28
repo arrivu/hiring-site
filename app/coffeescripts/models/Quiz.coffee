@@ -67,7 +67,8 @@ define [
     initPointsCount: ->
       pts = @get 'points_possible'
       text = ''
-      text = I18n.t('assignment_points_possible', 'pt', count: pts) if pts isnt null
+      if pts && pts > 0
+        text = I18n.t('assignment_points_possible', 'pt', count: pts)
       @set 'possible_points_label', text
 
     initAllDates: ->
@@ -130,13 +131,7 @@ define [
       result = _.map models, (group) -> group.toJSON()
 
     singleSectionDueDate: =>
-      if !@multipleDueDates() && !@dueAt()
-        allDates = @allDates()
-        for section in allDates
-          if section.dueAt
-            return section.dueAt.toISOString()
-      else
-        return @dueAt()
+      _.find(@allDates(), 'dueAt')?.dueAt.toISOString() || @dueAt()
 
     toView: =>
       fields = [

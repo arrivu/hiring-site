@@ -1,0 +1,588 @@
+Removing vendor/plugins/stringex/stringex.gemspec
+Removing vendor/plugins/stringex/lib/stringex.rb
+Removing vendor/plugins/stringex/init.rb
+Removing vendor/plugins/stringex/.gitignore
+Removing vendor/plugins/sanitize_field/lib/sanitize_field.rb
+Removing vendor/plugins/sanitize_field/init.rb
+Removing vendor/plugins/sanitize_field/Rakefile
+Removing vendor/plugins/mimetype_fu/uninstall.rb
+Removing vendor/plugins/mimetype_fu/test/mimetype_fu_test.rb
+Removing vendor/plugins/mimetype_fu/spec/spec_helper.rb
+Removing vendor/plugins/mimetype_fu/spec/fixtures/file.unknown
+Removing vendor/plugins/mimetype_fu/spec/fixtures/file.rb
+Removing vendor/plugins/mimetype_fu/spec/fixtures/file.jpg
+Removing vendor/plugins/mimetype_fu/lib/tasks/mimetype_fu_tasks.rake
+Removing vendor/plugins/mimetype_fu/lib/extensions_const.rb
+Removing vendor/plugins/mimetype_fu/install.rb
+Removing vendor/plugins/mimetype_fu/init.rb
+Removing vendor/plugins/mimetype_fu/Rakefile
+Removing vendor/plugins/crummy/rails/init.rb
+Removing vendor/plugins/crummy/lib/tasks/crummy_tasks.rake
+Removing vendor/plugins/crummy/init.rb
+Removing vendor/plugins/crummy/VERSION
+Removing vendor/plugins/crummy/Rakefile
+Removing vendor/plugins/attachment_fu/test/validation_test.rb
+Removing vendor/plugins/attachment_fu/test/test_helper.rb
+Removing vendor/plugins/attachment_fu/test/schema.rb
+Removing vendor/plugins/attachment_fu/test/processors/rmagick_test.rb
+Removing vendor/plugins/attachment_fu/test/processors/mini_magick_test.rb
+Removing vendor/plugins/attachment_fu/test/processors/image_science_test.rb
+Removing vendor/plugins/attachment_fu/test/processors/gd2_test.rb
+Removing vendor/plugins/attachment_fu/test/processors/core_image_test.rb
+Removing vendor/plugins/attachment_fu/test/geometry_test.rb
+Removing vendor/plugins/attachment_fu/test/fixtures/files/rails.png
+Removing vendor/plugins/attachment_fu/test/fixtures/files/foo.txt
+Removing vendor/plugins/attachment_fu/test/fixtures/files/fake/rails.png
+Removing vendor/plugins/attachment_fu/test/fixtures/attachment.rb
+Removing vendor/plugins/attachment_fu/test/extra_attachment_test.rb
+Removing vendor/plugins/attachment_fu/test/database.yml
+Removing vendor/plugins/attachment_fu/test/basic_test.rb
+Removing vendor/plugins/attachment_fu/test/base_attachment_tests.rb
+Removing vendor/plugins/attachment_fu/test/backends/remote/s3_test.rb
+Removing vendor/plugins/attachment_fu/test/backends/file_system_test.rb
+Removing vendor/plugins/attachment_fu/test/backends/db_file_test.rb
+Removing vendor/plugins/adheres_to_policy/spec_canvas/adheres_to_policy_spec.rb
+Removing vendor/plugins/adheres_to_policy/lib/adheres_to_policy.rb
+Removing vendor/plugins/adheres_to_policy/init.rb
+Removing vendor/plugins/adheres_to_policy/Rakefile
+Auto-merging vendor/plugins/account_reports/lib/canvas/account_reports/sis_exporter.rb
+Auto-merging vendor/plugins/account_reports/init.rb
+CONFLICT (content): Merge conflict in vendor/plugins/account_reports/init.rb
+Auto-merging vendor/plugins/account_reports/app/views/accounts/_students_with_no_submissions_csv_description.html.erb
+CONFLICT (content): Merge conflict in vendor/plugins/account_reports/app/views/accounts/_students_with_no_submissions_csv_description.html.erb
+Auto-merging spec/views/quizzes/quizzes/take_quiz.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/submission_versions.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/statistics.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/show.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/new.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/index.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/history.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_single_answer.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_quiz_summary.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_quiz_submission.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_quiz_right_side.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_question_statistic.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_question_group.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_multi_answer.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_form_question.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_form_answer.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_display_question.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quizzes/_display_answer.html.erb_spec.rb
+Auto-merging spec/views/quizzes/quiz_submissions/show.html.erb_spec.rb
+Auto-merging spec/views/context/undelete_index.html.erb_spec.rb
+Auto-merging spec/views/communication_channels/confirm.html.erb_spec.rb
+Auto-merging spec/spec_helper.rb
+Auto-merging spec/selenium/teacher_wiki_and_tiny_wysiwyg_spec.rb
+Auto-merging spec/selenium/teacher_user_lists_spec.rb
+Auto-merging spec/selenium/people_spec.rb
+Auto-merging spec/selenium/gradebook2_grade_edit_spec.rb
+Auto-merging spec/selenium/eportfolios_spec.rb
+Auto-merging spec/selenium/assignments_student_spec.rb
+Auto-merging spec/selenium/admin/site_admin_permissions_spec.rb
+Auto-merging spec/selenium/admin/admin_users_spec.rb
+Auto-merging spec/selenium/admin/account_admin_question_banks_spec.rb
+Removing spec/selenium/accessibility_assignments_spec.rb
+Auto-merging spec/presenters/quizzes/take_quiz_presenter_spec.rb
+Removing spec/models/user_follow_spec.rb
+Auto-merging spec/models/quizzes/quiz_submission_zipper_spec.rb
+Auto-merging spec/models/quizzes/quiz_submission_spec.rb
+Auto-merging spec/models/quizzes/quiz_submission_history_spec.rb
+Auto-merging spec/models/quizzes/quiz_submission_attempt_spec.rb
+Auto-merging spec/models/quizzes/quiz_statistics_spec.rb
+Auto-merging spec/models/quizzes/quiz_statistics/student_analysis_spec.rb
+Auto-merging spec/models/quizzes/quiz_statistics/item_analysis_spec.rb
+Auto-merging spec/models/quizzes/quiz_statistics/item_analysis/summary_spec.rb
+Auto-merging spec/models/quizzes/quiz_statistics/item_analysis/item_spec.rb
+Auto-merging spec/models/quizzes/quiz_statistics/common.rb
+Auto-merging spec/models/quizzes/quiz_spec.rb
+Auto-merging spec/models/quizzes/quiz_sortables_spec.rb
+Auto-merging spec/models/quizzes/quiz_regrader/submission_spec.rb
+Auto-merging spec/models/quizzes/quiz_regrader/regrader_spec.rb
+Auto-merging spec/models/quizzes/quiz_regrader/attempt_version_spec.rb
+Auto-merging spec/models/quizzes/quiz_regrader/answer_spec.rb
+Auto-merging spec/models/quizzes/quiz_regrade_spec.rb
+Auto-merging spec/models/quizzes/quiz_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question_link_migrator_spec.rb
+Auto-merging spec/models/quizzes/quiz_question_data_fixer_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/user_answer_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/unknown_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/text_only_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/short_answer_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/raw_fields_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/numerical_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/multiple_dropdowns_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/matching_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/match_group_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/fill_in_multiple_blanks_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/file_upload_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/file_upload_answer_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/essay_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/calculated_question_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/answer_parsers/missing_word_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/answer_parsers/matching_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/answer_parsers/calculated_spec.rb
+Auto-merging spec/models/quizzes/quiz_question/answer_group_spec.rb
+Auto-merging spec/models/quizzes/quiz_group_spec.rb
+Removing spec/models/quiz_regrade_run_spec.rb
+Removing spec/models/quiz_question_regrade_spec.rb
+Removing spec/models/quiz_question/question_data_spec.rb
+Removing spec/models/quiz_question/multiple_choice_question_spec.rb
+Removing spec/models/quiz_question/multiple_answers_question_spec.rb
+Removing spec/models/quiz_question/answer_parsers/true_false_spec.rb
+Removing spec/models/quiz_question/answer_parsers/text_only_spec.rb
+Removing spec/models/quiz_question/answer_parsers/short_answer_spec.rb
+Removing spec/models/quiz_question/answer_parsers/numerical_spec.rb
+Removing spec/models/quiz_question/answer_parsers/multiple_dropdowns_spec.rb
+Removing spec/models/quiz_question/answer_parsers/multiple_choice_spec.rb
+Removing spec/models/quiz_question/answer_parsers/multiple_answers_spec.rb
+Removing spec/models/quiz_question/answer_parsers/fill_in_multiple_blanks_spec.rb
+Removing spec/models/quiz_question/answer_parsers/essay_spec.rb
+Removing spec/models/quiz_question/answer_parsers/answer_parser_spec_helper.rb
+Removing spec/models/quiz_question/answer_parsers/answer_parser_spec.rb
+Auto-merging spec/models/discussion_topic/materialized_view_spec.rb
+Auto-merging spec/models/delayed_message_spec.rb
+Removing spec/models/collections_spec.rb
+Removing spec/models/collection_item_spec.rb
+Auto-merging spec/models/cloned_item_spec.rb
+Auto-merging spec/models/account_spec.rb
+Auto-merging spec/models/account_authorization_config_spec.rb
+Removing spec/migrations/count_existing_collection_items_and_followers_spec.rb
+Removing spec/lib/canvas/statsd_spec.rb
+Removing spec/lib/canvas/cassandra_spec.rb
+Auto-merging spec/lib/authentication_methods_spec.rb
+Auto-merging spec/lib/acts_as_list_spec.rb
+Removing spec/javascripts/fixtures/ScrollableList.html
+Auto-merging spec/integration/security_spec.rb
+CONFLICT (content): Merge conflict in spec/integration/security_spec.rb
+Auto-merging spec/integration/pseudonym_sessions_controller_spec.rb
+Removing spec/integration/collection_items_controller_spec.rb
+Auto-merging spec/integration/account_spec.rb
+Removing spec/factories/collections_factory.rb
+Auto-merging spec/controllers/users_controller_spec.rb
+CONFLICT (content): Merge conflict in spec/controllers/users_controller_spec.rb
+Auto-merging spec/controllers/quizzes/quizzes_controller_spec.rb
+Auto-merging spec/controllers/quizzes/quiz_submissions_controller_spec.rb
+Auto-merging spec/controllers/quizzes/quiz_questions_controller_spec.rb
+Auto-merging spec/controllers/pseudonyms_controller_spec.rb
+Auto-merging spec/controllers/pseudonym_sessions_controller_spec.rb
+Auto-merging spec/controllers/communication_channels_controller_spec.rb
+Auto-merging spec/controllers/accounts_controller_spec.rb
+Removing spec/coffeescripts/util/fairSlicerSpec.coffee
+Removing spec/coffeescripts/util/colorSlicerSpec.coffee
+Removing spec/coffeescripts/helpers/testTemplate.coffee
+Auto-merging spec/coffeescripts/gradebook/SubmissionDetailsDialogSpec.coffee
+Removing spec/coffeescripts/TemplateSpec.coffee
+Auto-merging spec/apis/v1/users_api_spec.rb
+CONFLICT (content): Merge conflict in spec/apis/v1/users_api_spec.rb
+Auto-merging spec/apis/v1/submissions_api_spec.rb
+Auto-merging spec/apis/v1/quizzes/quizzes_api_spec.rb
+Auto-merging spec/apis/v1/quizzes/quiz_submission_files_spec.rb
+Auto-merging spec/apis/v1/quizzes/quiz_reports_api_spec.rb
+Auto-merging spec/apis/v1/quizzes/quiz_ip_filters_api_spec.rb
+Auto-merging spec/apis/v1/quizzes/quiz_groups_api_spec.rb
+Removing spec/apis/v1/quiz_submissions_api_spec.rb
+Removing spec/apis/v1/quiz_questions_api_spec.rb
+Removing spec/apis/v1/collections_spec.rb
+Removing spec/apis/helpers/api_specs.rb
+Auto-merging public/locales/en.yml
+CONFLICT (content): Merge conflict in public/locales/en.yml
+Removing public/javascripts/vendor/use.js
+Removing public/javascripts/vendor/underscore.js
+Removing public/javascripts/vendor/tinychat.js
+Removing public/javascripts/vendor/ic-menu/dist/main.amd.js
+Removing public/javascripts/vendor/ic-dialog/dist/main.amd.js
+Removing public/javascripts/vendor/handlebars.vm.js
+Removing public/javascripts/vendor/ember/handlebars.js
+Removing public/javascripts/vendor/ember/ember-model.js
+Removing public/javascripts/vendor/ember/ember-data.js
+Auto-merging public/javascripts/take_quiz.js
+Auto-merging public/javascripts/speed_grader.js
+Auto-merging public/javascripts/quizzes.js
+CONFLICT (content): Merge conflict in public/javascripts/quizzes.js
+Auto-merging public/javascripts/quiz_show.js
+Removing public/javascripts/order.js
+Auto-merging public/javascripts/moderate_quiz.js
+Auto-merging public/javascripts/message_students.js
+Auto-merging public/javascripts/jquery.ui.menu.inputmenu.js
+Auto-merging public/javascripts/instructure.js
+Auto-merging public/javascripts/grading_standards.js
+Auto-merging public/javascripts/gradebooks.js
+Auto-merging public/javascripts/course_settings.js
+Removing public/javascripts/conferences.js
+Auto-merging public/javascripts/bower/ic-ajax/main.js
+Auto-merging public/javascripts/bower/ember/ember.prod.js
+Auto-merging public/javascripts/bower/ember/ember-template-compiler.js
+Auto-merging public/javascripts/account_add_course.js
+Auto-merging public/flash/uploadify/jquery.uploadify-3.1.js
+Removing node_modules/requirejs/require.js
+Removing node_modules/requirejs/package.json
+Removing node_modules/requirejs/bin/r.js
+Removing node_modules/requirejs/.npmignore
+Removing lib/tmail_parser.rb
+Removing lib/tinychat.rb
+Auto-merging lib/tasks/docs.rake
+Auto-merging lib/tasks/db_load_data.rake
+Removing lib/skip_callback.rb
+Auto-merging lib/sis/csv/import.rb
+Removing lib/quiz_regrading/submission.rb
+Removing lib/quiz_regrading/quiz_regrader.rb
+Removing lib/quiz_regrading/attempt_version.rb
+Removing lib/quiz_regrading.rb
+Removing lib/quiz_question_data_fixer.rb
+Removing lib/multipart.rb
+Removing lib/handlebars/vendor/handlebars.js
+Removing lib/handlebars/vendor/handlebars-1.0.0.js
+Auto-merging lib/dates_overridable.rb
+CONFLICT (content): Merge conflict in lib/dates_overridable.rb
+Removing lib/data_fixup/count_existing_collection_items_and_followers.rb
+Removing lib/color.rb
+Removing lib/canvas/statsd.rb
+Auto-merging lib/canvas/plugins/default_plugins.rb
+Removing lib/canvas/embedly.rb
+Auto-merging lib/authentication_methods.rb
+Auto-merging lib/assignment_override_applicator.rb
+Auto-merging lib/api/v1/quiz_report.rb
+Auto-merging lib/api/v1/quiz.rb
+CONFLICT (content): Merge conflict in lib/api/v1/quiz.rb
+Removing lib/api/v1/notification.rb
+Removing lib/api/v1/collection.rb
+Auto-merging gems/multipart/spec/multipart/post_spec.rb
+Auto-merging gems/lti_outbound/lib/lti_outbound/variable_substitutor.rb
+Auto-merging gems/canvas_stringex/test/unidecoder_test.rb
+Auto-merging gems/canvas_stringex/test/unicode_point_suite/basic_latin_test.rb
+Auto-merging gems/canvas_stringex/test/string_extensions_test.rb
+Auto-merging gems/canvas_stringex/test/acts_as_url_test.rb
+Auto-merging gems/canvas_stringex/lib/lucky_sneaks/acts_as_url.rb
+Auto-merging gems/canvas_stringex/Rakefile
+Auto-merging gems/canvas_stringex/README.rdoc
+Auto-merging gems/canvas_stringex/LICENSE.txt
+Auto-merging gems/canvas_statsd/spec/canvas_statsd/canvas_statsd_spec.rb
+Auto-merging gems/canvas_mimetype_fu/spec/canvas_mimetype_fu/mime_type_spec.rb
+Auto-merging gems/canvas_mimetype_fu/lib/canvas_mimetype_fu/mimetype_fu.rb
+Auto-merging gems/canvas_mimetype_fu/LICENSE.txt
+Auto-merging gems/canvas_crummy/lib/canvas_crummy/controller_methods.rb
+Auto-merging gems/canvas_crummy/README.md
+Auto-merging gems/canvas_cassandra/lib/canvas_cassandra/database.rb
+Auto-merging gems/canvas_breach_mitigation/lib/canvas_breach_mitigation/masking_secrets.rb
+Auto-merging gems/canvas_breach_mitigation/README.md
+Auto-merging gems/activesupport-suspend_callbacks/LICENSE.txt
+Removing db/migrate/20120608165707_count_existing_collection_items_and_followers.rb
+Removing db/migrate/20120206182403_remove_duplicate_enrollments_from_sections.rb
+Auto-merging config/shared_boot.rb
+CONFLICT (modify/delete): config/security.yml.example deleted in HEAD and modified in 089440d8c13303bfde20503b48aca40275c5f721. Version 089440d8c13303bfde20503b48aca40275c5f721 of config/security.yml.example left in tree.
+Auto-merging config/routes.rb
+CONFLICT (content): Merge conflict in config/routes.rb
+Auto-merging config/redis.yml.example
+CONFLICT (content): Merge conflict in config/redis.yml.example
+Auto-merging config/locales/generated/en.yml
+CONFLICT (content): Merge conflict in config/locales/generated/en.yml
+Auto-merging config/locales/de.yml
+Auto-merging config/initializers/delayed_job.rb
+CONFLICT (content): Merge conflict in config/initializers/delayed_job.rb
+Removing config/initializers/acts_as_list.rb
+Auto-merging config/initializers/active_record.rb
+Auto-merging config/environments/development.rb
+Auto-merging config/application.rb
+CONFLICT (content): Merge conflict in config/application.rb
+Auto-merging app/views/users/registered.html.erb
+CONFLICT (content): Merge conflict in app/views/users/registered.html.erb
+Auto-merging app/views/users/index.html.erb
+Auto-merging app/views/users/_name.html.erb
+Auto-merging app/views/terms/index.html.erb
+CONFLICT (content): Merge conflict in app/views/terms/index.html.erb
+Auto-merging app/views/submissions/show.html.erb
+Auto-merging app/views/shared/unauthorized.html.erb
+Removing app/views/shared/errors/_backtrace.html.erb
+Auto-merging app/views/shared/_wiki_sidebar.html.erb
+CONFLICT (content): Merge conflict in app/views/shared/_wiki_sidebar.html.erb
+Auto-merging app/views/shared/_sequence_footer.html.erb
+Auto-merging app/views/shared/_select_content_dialog.html.erb
+CONFLICT (content): Merge conflict in app/views/shared/_select_content_dialog.html.erb
+Auto-merging app/views/shared/_rubric.html.erb
+Auto-merging app/views/shared/_profile.html.erb
+Auto-merging app/views/shared/_menu_assignment.html.erb
+Auto-merging app/views/shared/_login.html.erb
+CONFLICT (content): Merge conflict in app/views/shared/_login.html.erb
+Auto-merging app/views/shared/_dashboard_messages.html.erb
+CONFLICT (content): Merge conflict in app/views/shared/_dashboard_messages.html.erb
+Removing app/views/shared/_accounts_secondary_content.html.erb
+Auto-merging app/views/rubrics/index.html.erb
+Auto-merging app/views/quizzes/quizzes/take_quiz.html.erb
+Auto-merging app/views/quizzes/quizzes/show.html.erb
+CONFLICT (content): Merge conflict in app/views/quizzes/quizzes/show.html.erb
+Auto-merging app/views/quizzes/quizzes/read_only.html.erb
+Auto-merging app/views/quizzes/quizzes/new.html.erb
+CONFLICT (content): Merge conflict in app/views/quizzes/quizzes/new.html.erb
+Auto-merging app/views/quizzes/quizzes/moderate.html.erb
+Auto-merging app/views/quizzes/quizzes/managed_quiz_data.html.erb
+Auto-merging app/views/quizzes/quizzes/index.html.erb
+Auto-merging app/views/quizzes/quizzes/history.html.erb
+Auto-merging app/views/quizzes/quizzes/_take_quiz_right_side.html.erb
+Auto-merging app/views/quizzes/quizzes/_submission_version.html.erb
+Auto-merging app/views/quizzes/quizzes/_quiz_summary.html.erb
+Auto-merging app/views/quizzes/quizzes/_quiz_submission.html.erb
+CONFLICT (content): Merge conflict in app/views/quizzes/quizzes/_quiz_submission.html.erb
+Auto-merging app/views/quizzes/quizzes/_quiz_show_teacher.html.erb
+Auto-merging app/views/quizzes/quizzes/_quiz_right_side.html.erb
+Auto-merging app/views/quizzes/quizzes/_quiz_details.html.erb
+Auto-merging app/views/quizzes/quizzes/_question_statistic.html.erb
+Auto-merging app/views/quizzes/quizzes/_question_list_right_side.html.erb
+Auto-merging app/views/quizzes/quizzes/_question_group.html.erb
+Auto-merging app/views/quizzes/quizzes/_multi_answer.html.erb
+Auto-merging app/views/quizzes/quizzes/_form_question.html.erb
+Auto-merging app/views/quizzes/quizzes/_display_question.html.erb
+Auto-merging app/views/question_banks/show.html.erb
+Auto-merging app/views/pseudonym_sessions/new.html.erb
+CONFLICT (content): Merge conflict in app/views/pseudonym_sessions/new.html.erb
+Auto-merging app/views/profile/profile.html.erb
+Removing app/views/plugins/_tinychat_settings.html.erb
+Auto-merging app/views/plugins/_kaltura_settings.html.erb
+Auto-merging app/views/plugins/_facebook_settings.html.erb
+Removing app/views/plugins/_embedly_settings.html.erb
+Auto-merging app/views/layouts/application.html.erb
+CONFLICT (content): Merge conflict in app/views/layouts/application.html.erb
+Auto-merging app/views/layouts/_fixed_bottom.html.erb
+Auto-merging app/views/jst/mute_dialog.handlebars
+CONFLICT (content): Merge conflict in app/views/jst/mute_dialog.handlebars
+Auto-merging app/views/jst/helpDialog.handlebars
+Auto-merging app/views/jst/gradebook2/section_to_show_menu.handlebars
+CONFLICT (content): Merge conflict in app/views/jst/gradebook2/section_to_show_menu.handlebars
+Auto-merging app/views/jst/courses/roster/rosterUser.handlebars
+Auto-merging app/views/jst/assignments/GroupCategorySelector.handlebars
+CONFLICT (content): Merge conflict in app/views/jst/assignments/GroupCategorySelector.handlebars
+Auto-merging app/views/jst/assignments/DueDateOverride.handlebars
+Auto-merging app/views/jst/accounts/admin_tools/CourseSearchForm.handlebars
+CONFLICT (content): Merge conflict in app/views/jst/accounts/admin_tools/CourseSearchForm.handlebars
+Removing app/views/jst/_avatar_circle.handlebars
+Removing app/views/jst/_api_avatar.handlebars
+Auto-merging app/views/jst/SubmissionDetailsDialog.handlebars
+Auto-merging app/views/jst/DiscussionTopics/EditView.handlebars
+Auto-merging app/views/groups/_add_group_category.html.erb
+CONFLICT (content): Merge conflict in app/views/groups/_add_group_category.html.erb
+Auto-merging app/views/gradebooks/grade_summary.html.erb
+CONFLICT (content): Merge conflict in app/views/gradebooks/grade_summary.html.erb
+Auto-merging app/views/gradebooks/_gradebook.html.erb
+Auto-merging app/views/gradebook2/show.html.erb
+CONFLICT (content): Merge conflict in app/views/gradebook2/show.html.erb
+CONFLICT (modify/delete): app/views/gradebook2/jquery_ui_menu_test.html.erb deleted in 089440d8c13303bfde20503b48aca40275c5f721 and modified in HEAD. Version HEAD of app/views/gradebook2/jquery_ui_menu_test.html.erb left in tree.
+Auto-merging app/views/files/full_index.html.erb
+Auto-merging app/views/facebook/settings.html.erb
+Auto-merging app/views/facebook/index.html.erb
+Auto-merging app/views/courses/statistics.html.erb
+CONFLICT (content): Merge conflict in app/views/courses/statistics.html.erb
+Auto-merging app/views/courses/show.html.erb
+CONFLICT (content): Merge conflict in app/views/courses/show.html.erb
+Auto-merging app/views/courses/settings.html.erb
+CONFLICT (content): Merge conflict in app/views/courses/settings.html.erb
+Auto-merging app/views/courses/copy.html.erb
+Auto-merging app/views/courses/_settings_sidebar.html.erb
+CONFLICT (content): Merge conflict in app/views/courses/_settings_sidebar.html.erb
+Removing app/views/courses/_enrollment_type_select.html.erb
+Auto-merging app/views/courses/_course_wizard_box.html.erb
+CONFLICT (content): Merge conflict in app/views/courses/_course_wizard_box.html.erb
+CONFLICT (modify/delete): app/views/courses/_add_users.html.erb deleted in 089440d8c13303bfde20503b48aca40275c5f721 and modified in HEAD. Version HEAD of app/views/courses/_add_users.html.erb left in tree.
+Auto-merging app/views/context_modules/_content_next.html.erb
+Auto-merging app/views/context_modules/_content.html.erb
+CONFLICT (content): Merge conflict in app/views/context_modules/_content.html.erb
+Auto-merging app/views/context/roster_user_services.html.erb
+Auto-merging app/views/context/roster_user.html.erb
+CONFLICT (content): Merge conflict in app/views/context/roster_user.html.erb
+Auto-merging app/views/context/roster.html.erb
+Auto-merging app/views/context/new_roster_user.html.erb
+CONFLICT (modify/delete): app/views/context/chat_iframe.html.erb deleted in 089440d8c13303bfde20503b48aca40275c5f721 and modified in HEAD. Version HEAD of app/views/context/chat_iframe.html.erb left in tree.
+CONFLICT (modify/delete): app/views/context/chat.html.erb deleted in 089440d8c13303bfde20503b48aca40275c5f721 and modified in HEAD. Version HEAD of app/views/context/chat.html.erb left in tree.
+Auto-merging app/views/context/_roster_right_side.html.erb
+CONFLICT (content): Merge conflict in app/views/context/_roster_right_side.html.erb
+Auto-merging app/views/content_imports/files.html.erb
+Auto-merging app/views/content_exports/index.html.erb
+CONFLICT (content): Merge conflict in app/views/content_exports/index.html.erb
+Auto-merging app/views/collection_items/new.html.erb
+Auto-merging app/views/collaborations/_forms.html.erb
+Auto-merging app/views/assignments/edit.html.erb
+CONFLICT (content): Merge conflict in app/views/assignments/edit.html.erb
+Auto-merging app/views/assignments/_wizard_box.html.erb
+Auto-merging app/views/assignments/_submit_assignment.html.erb
+Auto-merging app/views/assignments/_assignments_content.html.erb
+Auto-merging app/views/accounts/settings.html.erb
+CONFLICT (content): Merge conflict in app/views/accounts/settings.html.erb
+Auto-merging app/views/account_authorization_configs/_saml_settings.html.erb
+Auto-merging app/views/account_authorization_configs/_ldap_settings.html.erb
+Auto-merging app/stylesheets/registration.scss
+Auto-merging app/stylesheets/login.sass
+Auto-merging app/stylesheets/conversations.scss
+Auto-merging app/stylesheets/base/_layout.sass
+Auto-merging app/presenters/quizzes/take_quiz_presenter.rb
+Auto-merging app/models/web_conference.rb
+CONFLICT (content): Merge conflict in app/models/web_conference.rb
+Removing app/models/user_follow.rb
+Auto-merging app/models/user.rb
+CONFLICT (content): Merge conflict in app/models/user.rb
+Auto-merging app/models/role_override.rb
+Auto-merging app/models/report_snapshot.rb
+Auto-merging app/models/quizzes/quiz_submission_zipper.rb
+Auto-merging app/models/quizzes/quiz_submission_snapshot.rb
+Auto-merging app/models/quizzes/quiz_submission_history.rb
+Auto-merging app/models/quizzes/quiz_submission_attempt.rb
+Auto-merging app/models/quizzes/quiz_submission.rb
+Auto-merging app/models/quizzes/quiz_statistics/student_analysis.rb
+Auto-merging app/models/quizzes/quiz_statistics/item_analysis/item.rb
+Auto-merging app/models/quizzes/quiz_statistics.rb
+CONFLICT (content): Merge conflict in app/models/quizzes/quiz_statistics.rb
+Auto-merging app/models/quizzes/quiz_sortables.rb
+Auto-merging app/models/quizzes/quiz_regrader/answer.rb
+Auto-merging app/models/quizzes/quiz_regrade_run.rb
+Auto-merging app/models/quizzes/quiz_question_link_migrator.rb
+Auto-merging app/models/quizzes/quiz_question/user_answer.rb
+Auto-merging app/models/quizzes/quiz_question/unknown_question.rb
+Auto-merging app/models/quizzes/quiz_question/text_only_question.rb
+Auto-merging app/models/quizzes/quiz_question/short_answer_question.rb
+Auto-merging app/models/quizzes/quiz_question/question_data.rb
+Auto-merging app/models/quizzes/quiz_question/numerical_question.rb
+Auto-merging app/models/quizzes/quiz_question/multiple_dropdowns_question.rb
+Auto-merging app/models/quizzes/quiz_question/multiple_choice_question.rb
+Auto-merging app/models/quizzes/quiz_question/multiple_answers_question.rb
+Auto-merging app/models/quizzes/quiz_question/matching_question.rb
+Auto-merging app/models/quizzes/quiz_question/match_group.rb
+Auto-merging app/models/quizzes/quiz_question/fill_in_multiple_blanks_question.rb
+Auto-merging app/models/quizzes/quiz_question/file_upload_question.rb
+Auto-merging app/models/quizzes/quiz_question/file_upload_answer.rb
+Auto-merging app/models/quizzes/quiz_question/essay_question.rb
+Auto-merging app/models/quizzes/quiz_question/calculated_question.rb
+Auto-merging app/models/quizzes/quiz_question/base.rb
+Auto-merging app/models/quizzes/quiz_question/answer_parsers/numerical.rb
+Auto-merging app/models/quizzes/quiz_question/answer_parsers/matching.rb
+Auto-merging app/models/quizzes/quiz_question/answer_parsers/calculated.rb
+Auto-merging app/models/quizzes/quiz_question/answer_group.rb
+Auto-merging app/models/quizzes/quiz_question.rb
+Auto-merging app/models/quizzes/quiz_group.rb
+Auto-merging app/models/quizzes/quiz.rb
+CONFLICT (content): Merge conflict in app/models/quizzes/quiz.rb
+Removing app/models/quiz_statistics/item_analysis/summary.rb
+Removing app/models/quiz_statistics/item_analysis.rb
+Removing app/models/quiz_regrade.rb
+Removing app/models/quiz_question_regrade.rb
+Removing app/models/quiz_question/raw_fields.rb
+Removing app/models/quiz_question/file_upload_answer.rb
+Removing app/models/quiz_question/answer_parsers/true_false.rb
+Removing app/models/quiz_question/answer_parsers/text_only.rb
+Removing app/models/quiz_question/answer_parsers/short_answer.rb
+Removing app/models/quiz_question/answer_parsers/multiple_dropdowns.rb
+Removing app/models/quiz_question/answer_parsers/multiple_choice.rb
+Removing app/models/quiz_question/answer_parsers/multiple_answers.rb
+Removing app/models/quiz_question/answer_parsers/missing_word.rb
+Removing app/models/quiz_question/answer_parsers/fill_in_multiple_blanks.rb
+Removing app/models/quiz_question/answer_parsers/essay.rb
+Removing app/models/quiz_question/answer_parsers/answer_parser.rb
+Auto-merging app/models/pseudonym.rb
+Auto-merging app/models/notification.rb
+Auto-merging app/models/message.rb
+Auto-merging app/models/mailer.rb
+Auto-merging app/models/folder.rb
+Auto-merging app/models/error_report.rb
+Auto-merging app/models/enrollment.rb
+Auto-merging app/models/delayed_message.rb
+Auto-merging app/models/course_section.rb
+CONFLICT (content): Merge conflict in app/models/course_section.rb
+Auto-merging app/models/course.rb
+CONFLICT (content): Merge conflict in app/models/course.rb
+Auto-merging app/models/communication_channel.rb
+CONFLICT (content): Merge conflict in app/models/communication_channel.rb
+Removing app/models/collection_item_upvote.rb
+Removing app/models/collection_item_data.rb
+Removing app/models/collection_item.rb
+Removing app/models/collection.rb
+Auto-merging app/models/big_blue_button_conference.rb
+Auto-merging app/models/attachment.rb
+Auto-merging app/models/assignment_override.rb
+CONFLICT (content): Merge conflict in app/models/assignment_override.rb
+Auto-merging app/models/assignment.rb
+Auto-merging app/models/asset_user_access.rb
+Auto-merging app/models/account.rb
+Auto-merging app/messages/summaries.email.html.erb
+Auto-merging app/messages/summaries.email.erb
+Auto-merging app/messages/rubric_assessment_submission_reminder.twitter.erb
+Auto-merging app/messages/conversation_message.summary.erb
+Auto-merging app/messages/conversation_message.sms.erb
+Auto-merging app/messages/conversation_message.facebook.erb
+Auto-merging app/messages/conversation_message.email.html.erb
+Auto-merging app/messages/conversation_message.email.erb
+Auto-merging app/messages/added_to_conversation.twitter.erb
+Auto-merging app/messages/added_to_conversation.summary.erb
+Auto-merging app/messages/added_to_conversation.sms.erb
+Auto-merging app/messages/added_to_conversation.facebook.erb
+Auto-merging app/messages/added_to_conversation.email.html.erb
+Auto-merging app/messages/added_to_conversation.email.erb
+Auto-merging app/helpers/quizzes_helper.rb
+Auto-merging app/helpers/application_helper.rb
+CONFLICT (content): Merge conflict in app/helpers/application_helper.rb
+Auto-merging app/controllers/users_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/users_controller.rb
+Auto-merging app/controllers/tabs_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/tabs_controller.rb
+Auto-merging app/controllers/sections_controller.rb
+Auto-merging app/controllers/role_overrides_controller.rb
+Removing app/controllers/quizzes_api_controller.rb
+Auto-merging app/controllers/quizzes/quizzes_controller.rb
+Auto-merging app/controllers/quizzes/quiz_submissions_controller.rb
+Auto-merging app/controllers/quizzes/quiz_submission_files_controller.rb
+Auto-merging app/controllers/quizzes/quiz_questions_controller.rb
+Auto-merging app/controllers/quizzes/quiz_ip_filters_controller.rb
+Auto-merging app/controllers/quizzes/quiz_groups_controller.rb
+Removing app/controllers/quiz_submissions_api_controller.rb
+Removing app/controllers/quiz_reports_controller.rb
+Auto-merging app/controllers/pseudonym_sessions_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/pseudonym_sessions_controller.rb
+Auto-merging app/controllers/outcomes_controller.rb
+Auto-merging app/controllers/gradebooks_controller.rb
+Auto-merging app/controllers/gradebook2_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/gradebook2_controller.rb
+Auto-merging app/controllers/filters/quizzes.rb
+Auto-merging app/controllers/files_controller.rb
+Auto-merging app/controllers/facebook_controller.rb
+Auto-merging app/controllers/eportfolios_controller.rb
+Auto-merging app/controllers/courses_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/courses_controller.rb
+Auto-merging app/controllers/context_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/context_controller.rb
+Auto-merging app/controllers/communication_channels_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/communication_channels_controller.rb
+Removing app/controllers/collections_controller.rb
+Removing app/controllers/collection_items_controller.rb
+Auto-merging app/controllers/collaborations_controller.rb
+Auto-merging app/controllers/application_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/application_controller.rb
+Auto-merging app/controllers/accounts_controller.rb
+CONFLICT (content): Merge conflict in app/controllers/accounts_controller.rb
+Auto-merging app/coffeescripts/views/assignments/SectionDropdownView.coffee
+CONFLICT (content): Merge conflict in app/coffeescripts/views/assignments/SectionDropdownView.coffee
+Auto-merging app/coffeescripts/views/assignments/DueDateView.coffee
+Auto-merging app/coffeescripts/views/MessageStudentsDialog.coffee
+Auto-merging app/coffeescripts/views/FileBrowserView.coffee
+Auto-merging app/coffeescripts/views/DiscussionTopics/EditView.coffee
+Removing app/coffeescripts/util/fairSlicer.coffee
+Removing app/coffeescripts/util/colorSlicer.coffee
+Auto-merging app/coffeescripts/registration/signupDialog.coffee
+Auto-merging app/coffeescripts/registration/main.coffee
+Auto-merging app/coffeescripts/notifications/NotificationGroupMappings.coffee
+CONFLICT (content): Merge conflict in app/coffeescripts/notifications/NotificationGroupMappings.coffee
+Auto-merging app/coffeescripts/models/Section.coffee
+Auto-merging app/coffeescripts/models/Quiz.coffee
+Auto-merging app/coffeescripts/models/Entry.coffee
+Auto-merging app/coffeescripts/models/DueDateList.coffee
+CONFLICT (content): Merge conflict in app/coffeescripts/models/DueDateList.coffee
+Auto-merging app/coffeescripts/gradebook2/SetDefaultGradeDialog.coffee
+CONFLICT (content): Merge conflict in app/coffeescripts/gradebook2/SetDefaultGradeDialog.coffee
+Auto-merging app/coffeescripts/gradebook2/Gradebook.coffee
+CONFLICT (content): Merge conflict in app/coffeescripts/gradebook2/Gradebook.coffee
+Auto-merging app/coffeescripts/ember/shared/components/ic_lazy_list_component.coffee
+Auto-merging app/coffeescripts/ember/quizzes/controllers/quiz_controller.coffee
+CONFLICT (content): Merge conflict in app/coffeescripts/ember/quizzes/controllers/quiz_controller.coffee
+Auto-merging app/coffeescripts/conversations/introSlideshow.coffee
+Auto-merging app/coffeescripts/bundles/quizzes_index.coffee
+Auto-merging app/coffeescripts/bundles/common.coffee
+CONFLICT (content): Merge conflict in app/coffeescripts/bundles/common.coffee
+Removing app/coffeescripts/bundles/chat.coffee
+Auto-merging Gemfile
+CONFLICT (content): Merge conflict in Gemfile
+Auto-merging .gitignore
+Automatic merge failed; fix conflicts and then commit the result.
