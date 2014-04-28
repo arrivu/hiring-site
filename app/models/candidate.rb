@@ -22,6 +22,6 @@ class Candidate < ActiveRecord::Base
                   :reason_a,:organization_b,
                   :from_b,:to_b,
                   :designation_b,:permanent_b,
-                  :reason_b
+                  :reason_b,:bio
 
 end

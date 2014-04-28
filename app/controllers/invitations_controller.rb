@@ -99,6 +99,10 @@ class InvitationsController < ApplicationController
         @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
         @user_experience = UserWorkExperience.find_all_by_user_id(@candidate_detail.id)
         @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+        @bio = UserProfile.find_by_user_id(@candidate_detail.id)
+        if @bio != nil
+          @bio_text = @bio.bio
+        end
         @candidate_email = params[:invitation][:unique_id]
         if @candidate_filter == nil
           redirect_to course_quizzes_path(@context)
@@ -117,6 +121,15 @@ class InvitationsController < ApplicationController
     @headers = false
     clear_crumbs
     @user = @current_user.id
+
+    if UserProfile.find_by_user_id(@user) != nil
+      @bio_update = UserProfile.find_by_user_id(@user)
+      @bio_update.update_attributes(:bio => params[:bio])
+    else
+      @bio_update = UserProfile.new(:bio => params[:bio])
+      @bio_update.user_id = @user
+      @bio_update.save!
+    end
 
     if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages] && params[:link_ids]
       user_academic_ids = @current_user.user_academic_ids

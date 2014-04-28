@@ -1552,6 +1552,10 @@ class ApplicationController < ActionController::Base
     known_user = viewer.load_messageable_user(profile.user)
     common_courses = []
     common_groups = []
+    #common_academic = []
+    #common_employment = []
+    common_employment = UserWorkExperience.find_all_by_user_id(@user.id)
+    common_academic = UserAcademic.find_all_by_user_id(@user.id)
     if viewer != profile.user
       if known_user
         common_courses = known_user.common_courses.map do |course_id, roles|
@@ -1572,7 +1576,17 @@ class ApplicationController < ActionController::Base
     end
     data[:common_contexts] = [] + common_courses + common_groups
     data[:known_user] = known_user
+    data[:common_academic] = common_academic
+    data[:common_employment] = common_employment
     data
+  end
+
+  def comapre_and_delete(comparable1,comparable2,context_name)
+    deleted_ids = comparable1 - comparable2
+    deleted_ids.each do |deleted_id|
+      context_name = context_name.find(deleted_id)
+      context_name.destroy
+    end
   end
 
   if CANVAS_RAILS2
