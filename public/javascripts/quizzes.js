@@ -3059,13 +3059,6 @@ define([
             event.preventDefault();
             var $top = $(this).parents(".group_top");
             var data =  $top.getTemplateData({textValues: ['name', 'pick_count', 'question_points', 'shuffle_question_bank']});
-//            console.log(JSON.stringify(data));
-//            var sid = new Array();
-//            str_id = $(this).attr('id');
-//            sid = (str_id.split("_"));
-//            shuffle_question_bank_id = sid[1];
-//            console.log(sid[1]);
-
             $top.fillFormData(data, {object_name: 'quiz_group'});
             $top.addClass('editing');
             $top.find(":text:visible:first").focus().select();
