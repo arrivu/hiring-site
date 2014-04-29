@@ -57,7 +57,7 @@
       <li><a href="#tab-alerts" id="tab-alerts-link"><%= t(:tab_alerts, "Alerts") %></a></li>
   <% end %>
   <% if can_do(@context, @current_user, :manage_feature_flags) %>
-      <!--<li><a href="#tab-features" id="tab-features-link"><%#= t(:feature_options, "Feature options") %></a></li>-->
+      <li><a href="#tab-features" id="tab-features-link"><%= t(:feature_options, "Feature options") %></a></li>
   <% end %>
   <%# if can_do(@context, @current_user, :manage_account_settings) %>
       <!--<li><a href="#tab-sms" id="tab-sms-settings-link">SMS Settings</a></li>-->
@@ -89,6 +89,17 @@
                       <span class="sis_source_id"><%= @context.sis_source_id %></span>
                     <% end %>
                   </span>
+                  </td>
+                </tr>
+            <% end %>
+            <% if available_locales.size > 1 %>
+                <tr>
+                  <td><%= f.blabel :default_locale, :default_language, :en => "Default Language" %></td>
+                  <td>
+                    <% no_language = t(:no_language_preference, "Not set (defaults to %{language})", :language => available_locales[infer_locale(:context => @context.parent_account)]) %>
+                    <%= f.select :default_locale, [[no_language, nil]] + available_locales.invert.sort, {:selected => @context.default_locale}, {:class => 'locale'} %>
+                    <%= render :partial => 'shared/locale_warning' %>
+                    <p style="font-size: 0.9em;"><%= t(:default_language_description, "This will override any browser/OS language settings. Preferred languages can still be set at the course/user level.") %></p>
                   </td>
                 </tr>
             <% end %>
@@ -134,6 +145,11 @@
                         <tr>
                           <td colspan="2"><%= settings.check_box :restrict_student_future_view, :checked => @account.settings[:restrict_student_future_view] %>
                             <%= settings.label :restrict_student_future_view, :en => "Restrict candidates from viewing projects before start date" %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2"><%= settings.check_box :restrict_quiz_questions, :checked => @account.settings[:restrict_quiz_questions] %>
+                            <%= settings.label :restrict_quiz_questions, :en => "Restrict students from viewing quiz questions after course end date" %>
                           </td>
                         </tr>
                     <% end %>
@@ -254,6 +270,15 @@
                       <div>
                         <%= settings.check_box :self_registration, :checked => @account.self_registration? %>
                         <%= settings.label :self_registration, :en => "Self Registration" %>
+                      </div>
+                      <div id="self_registration_type_radios">
+                        <%= settings.radio_button :self_registration_type, 'all',
+                                                  :checked => !(@account.settings[:self_registration_type] == 'observer') %>
+                        <%= settings.label :self_registration_type_all, :en => "All Account Types" %>
+                        <br/>
+                        <%= settings.radio_button :self_registration_type, 'observer',
+                                                  :checked => @account.settings[:self_registration_type] == 'observer' %>
+                        <%= settings.label :self_registration_type_observer, :en => "Observer Accounts Only" %>
                       </div>
                       <div>
                         <%= settings.check_box :open_registration, :checked => @account.open_registration? %>
@@ -690,6 +715,26 @@
                     <%= Account.allowable_services[announcement.required_account_service.to_sym].try(:[], :name) %>
                   </div>
               <% end %>
+              <% unless announcement.account_notification_roles.empty? %>
+                  <div>
+                    <%= t :announcement_sent_to_roles, "Send only to the following types of users:" %>
+                    <ul>
+                      <% announcement.account_notification_roles.each do |r| %>
+                          <% @enrollment_types.select {|rt| rt[:name] == r.role_type }.each do |rt| %>
+                              <li><%= rt[:plural_label][] %></li>
+                          <% end %>
+                          <% # NilEnrollment is a special case %>
+                          <% if r.role_type == "NilEnrollment" %>
+                              <li><%= t :no_enrollment_roles, "Unenrolled users" %></li>
+                          <% end %>
+                          <% @role_types.select {|rt| rt[:name] == r.role_type }.each do |rt| %>
+                              <% # no plural_label :( %>
+                              <li><%= rt[:label]  %></li>
+                          <% end %>
+                      <% end %>
+                    </ul>
+                  </div>
+              <% end %>
               <% if announcement.months_in_display_cycle %>
                   <div>
                     <%= t :announcement_sent_to_subset, "Sent to 1 / %{denominator} users each month", denominator: announcement.months_in_display_cycle %>
@@ -737,15 +782,61 @@
                           <input type="checkbox" name="account_notification[required_account_service]" id="account_notification_required_account_service" value="account_survey_notifications" />
                           <label><%= t :survey_announcement, "This is a survey announcement. It will be sent to 1 / %{denominator} of users in enabled accounts for each month that it's active.", denominator: f.text_field(:months_in_display_cycle, value: AccountNotification.default_months_in_display_cycle, disabled: true) %></label>
                           </label>
-
                     </tr>
                 <% end %>
                 <tr>
                   <td><%= f.blabel :message, :en => "Message" %></td>
                 </tr>
+                <tr id="restrict_to_roles">
+                  <td id="restrict_to_enrollment_roles">
+                    <% unless @enrollment_types.nil? %>
+                        <%= t :course_roles, "Course roles:" %>
+                        <ul>
+                          <% @enrollment_types.each do |r| %>
+                              <li id="account_notification_role_<%= r[:name]%>">
+                                <label>
+                                  <%= check_box_tag "account_notification_roles[]", r[:name], false, { :class => "account_notification_role_cbx", :id => "account_notification_role_#{r[:name]}_cbx" } %>
+                                  <%= r[:plural_label][] %>
+                                </label>
+                              </li>
+                          <% end %>
+                          <% # NilEnrollment is a special case, because it's not actually a role, just a status reflecting that the user is not part of any course %>
+                          <li id="account_notification_role_NilEnrollment">
+                            <label>
+                              <%= check_box_tag "account_notification_roles[]", "NilEnrollment", false, { :class => "account_notification_role_cbx", :id => "account_notification_role_NilEnrollment_cbx" } %>
+                              <%= t :no_enrollment_roles, "Unenrolled users" %>
+                            </label>
+                          </li>
+                        </ul>
+                    <% end %>
+                  </td>
+                  <td id="restrict_to_membership_roles">
+                    <% unless @role_types.nil? %>
+                        <%= t :account_roles, "Account roles:" %>
+                        <ul>
+                          <% @role_types.each do |r| %>
+                              <li id="account_notification_role_<%= r[:name]%>">
+                                <label>
+                                  <%= check_box_tag "account_notification_roles[]", r[:name], false, { :class => "account_notification_role_cbx", :id => "account_notification_role_#{r[:name]}_cbx" } %>
+                                  <%= r[:label] %>
+                                </label>
+                              </li>
+                          <% end %>
+                        </ul>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan=2><%= f.blabel :message, :en => "Message" %></td>
+                </tr>
               </table>
               <div>
                 <%= f.text_area :message, :class => 'alert_message', :style => "height: 100px;" %>
+                <% if @account.site_admin? %>
+              <span >
+                *<%= t(:interpolate_account_domain, "Note: enter \"{{ACCOUNT_DOMAIN}}\" to substitute the user's root account domain")  %>
+              </span>
+                <% end %>
               </div>
               <div class="button-container">
                 <button type="submit" class="btn"><%= image_tag "add.png" %> <%= t(:add_announcement_button, "Add Announcement") %></button>
@@ -763,7 +854,7 @@
           <th class="reports"><%= t 'headers.report_last_run', 'Last Run' %></th>
           <th class="reports"></th>
         </tr>
-        <% @available_reports.each do |report, details|
+        <% @available_reports.sort_by {|_, details| details[:title]}.each do |report, details|
           title = details[:title] || details
           description = details[:description]
           description_partial = details[:description_partial]
@@ -842,9 +933,9 @@
       <%= render :partial => 'alerts/alerts' %>
     </div>
 <% end %>
-<%# if can_do(@context, @current_user, :manage_feature_flags) %>
-<!--<div id="tab-features"></div>-->
-<%# end %>
+<% if can_do(@context, @current_user, :manage_feature_flags) %>
+<div id="tab-features"></div>
+<% end %>
 <%#= render :partial => 'accounts/sms_settings' %>
 <%= render :partial => 'accounts/plugin_settings' %>
 </div>

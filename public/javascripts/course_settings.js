@@ -20,7 +20,7 @@ define([
   'jquery' /* $ */,
   'underscore',
   'jquery.ajaxJSON' /* ajaxJSON */,
-  'jquery.instructure_date_and_time' /* parseFromISO, date_field */,
+  'jquery.instructure_date_and_time' /* datetimeString, date_field */,
   'jquery.instructure_forms' /* formSubmit, fillFormData, getFormData, formErrors */,
   'jqueryui/dialog',
   'compiled/jquery/fixDialogButtons' /* fix dialog formatting */,
@@ -177,8 +177,8 @@ define([
         $section.loadingImage('remove');
         $(".option_for_section_" + section.id).text(section.name);
         $("#section_" + section.id + " td .name").text(section.name);
-        $("#section_" + section.id + " td .start_date").text($.parseFromISO(section.start_at).datetime_formatted);
-        $("#section_" + section.id + " td  .end_date").text($.parseFromISO(section.end_at).datetime_formatted);
+        $("#section_" + section.id + " td .start_date").text($.datetimeString(section.start_at));
+        $("#section_" + section.id + " td  .end_date").text($.datetimeString(section.end_at));
         $("#section_" + section.id + " td .sis_id").text(section.sis_source_id);
         $("#section_" + section.id + " td .restrict_enrollments").text(section.restrict_enrollments_to_section_dates);
         $("#edit_section_form").dialog('close');
@@ -348,12 +348,18 @@ define([
     }).change();
     $course_form.formSubmit({
       processData: function(data) {
-        if(data['course[start_at]']) {
-          data['course[start_at]'] += " 12:00am";
+        var date = $.datetime.parse(data['course[start_at]']);
+        if (date) {
+          date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
         }
-        if(data['course[conclude_at]']) {
-          data['course[conclude_at]'] += " 11:55pm";
+        data['course[start_at]'] = date ? $.unfudgeDateForProfileTimezone(date).toISOString() : "";
+
+        date = $.datetime.parse(data['course[conclude_at]']);
+        if (date) {
+          date.setHours(23); date.setMinutes(55); date.setSeconds(0); date.setMilliseconds(0);
         }
+        data['course[conclude_at]'] = date ? $.unfudgeDateForProfileTimezone(date).toISOString() : "";
+
         return data;
       },
       beforeSubmit: function(data) {
@@ -364,8 +370,8 @@ define([
       },
       success: function(data) {
         var course = data.course;
-        course.start_at = $.parseFromISO(course.start_at).datetime_formatted;
-        course.conclude_at = $.parseFromISO(course.conclude_at).datetime_formatted;
+        course.start_at = $.datetimeString(course.start_at);
+        course.conclude_at = $.datetimeString(course.conclude_at);
         course.is_public = course.is_public ? I18n.t('public_course', 'Public') : I18n.t('private_course', 'Private');
         course.indexed = course.indexed ? I18n.t('indexed_course', "Included in public course index") : "";
         course.grading_scheme_set = course.grading_standard_title || (course.grading_standard_id ? I18n.t('grading_standard_set', "Currently Set") : I18n.t('grading_standard_unset', "Not Set"));
@@ -428,7 +434,7 @@ define([
     $(".course_form_more_options_link").click(function(event) {
       event.preventDefault();
       var $moreOptions = $(".course_form_more_options");
-      var optionText = $moreOptions.is(':visible') ? I18n.t('links.more_options', 'more options') : I18n.t('links.less_options', 'less options');
+      var optionText = $moreOptions.is(':visible') ? I18n.t('links.more_options', 'more options') : I18n.t('links.fewer_options', 'fewer options');
       $(this).text(optionText);
       $moreOptions.slideToggle();
     });

@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012 - 2013 Instructure, Inc.
+# Copyright (C) 2012 - 2014 Instructure, Inc.
 #
 # This file is part of Canvas.
 #
@@ -178,10 +178,11 @@ Rails.configuration.to_prepare do
         }
       }
     },
+
     #'students_with_no_submissions_csv'=> {
-    #  :title => 'Candidates with no submissions',
+    #  :title => 'Students with no submissions',
     #  :description_partial => true,
-    #  :parameters_partial => 'term_and_date_pickers_parameters',
+    #  :parameters_partial => true,
     #  :parameters => {
     #    :enrollment_term_id => {
     #      :required => false,
@@ -189,7 +190,7 @@ Rails.configuration.to_prepare do
     #    },
     #    :course_id => {
     #      :required => false,
-    #      :description => 'The project to report on'
+    #      :description => 'The course to report on'
     #    },
     #    :start_at => {
     #      :required => true,
@@ -198,9 +199,18 @@ Rails.configuration.to_prepare do
     #    :end_at => {
     #      :required => true,
     #      :description => 'The end date for submissions. Max time range is 2 weeks.'
+    #    },
+    #    :include_enrollment_state => {
+    #      :required => false,
+    #      :description => 'Include enrollment state.'
+    #    },
+    #    :enrollment_state => {
+    #      :required => false,
+    #      :description => "Enrollment states to include, defaults to 'all', Options 'active'|'invited'|'creation_pending'|'deleted'|'rejected'|'completed'|'inactive'"
     #    }
     #  }
     #},
+
     'unpublished_courses_csv'=> {
       :title => 'Unpublished Projects',
       :description_partial => true,
@@ -223,6 +233,7 @@ Rails.configuration.to_prepare do
         }
       }
     },
+
     #'zero_activity_csv'=> {
     #  :title => 'Zero Activity',
     #  :description_partial => true,
@@ -230,13 +241,18 @@ Rails.configuration.to_prepare do
     #  :parameters => {
     #    :enrollment_term_id => {
     #      :required => false,
-    #      :description => 'The sublime hiring id of the term to get grades from'
+    #      :description => 'The canvas id of the term to get grades from'
+    #    },
+    #    :start_at => {
+    #      :required => false,
+    #      :description => 'The first date in the date range, the second date is the time the report is run.'
     #    },
     #    :course_id => {
     #      :required => false,
-    #      :description => 'The project to report on'
+    #      :description => 'The course to report on'
     #    }
     #  }
     #}
+
   }
 end

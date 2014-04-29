@@ -58,17 +58,21 @@ module Canvas
 
       def paths(cache_busting = false)
         @paths ||= {
-          :ember => 'vendor/ember/ember',
           :common => 'compiled/bundles/common',
           :jqueryui => 'vendor/jqueryui',
-          :use => 'vendor/use',
           :uploadify => '../flash/uploadify/jquery.uploadify-3.1.min',
-          'ic-menu' => 'vendor/ic-menu/dist/main.amd',
-          'ic-dialog' => 'vendor/ic-dialog/dist/main.amd',
-          'ic-ajax' => 'vendor/ic-ajax/main',
+          'ic-dialog' => 'vendor/ic-dialog/dist/main.amd'
         }.update(cache_busting ? cache_busting_paths : {}).update(plugin_paths).update(Canvas::RequireJs::PluginExtension.paths).to_json.gsub(/([,{])/, "\\1\n    ")
       end
-  
+
+      def packages
+        @packages ||= [
+          {'name' => 'ic-ajax', 'location' => 'bower/ic-ajax'},
+          {'name' => 'ic-styled', 'location' => 'bower/ic-styled'},
+          {'name' => 'ic-menu', 'location' => 'bower/ic-menu'},
+        ].to_json
+      end
+
       def plugin_paths
         @plugin_paths ||= begin
           Dir['public/javascripts/plugins/*'].inject({}) { |hash, plugin|
@@ -86,52 +90,36 @@ module Canvas
       def shims
         <<-JS.gsub(%r{\A +|^ {8}}, '')
           {
-            'vendor/backbone': {
-              deps: ['underscore', 'jquery'],
-              attach: function(_, $){
-                return Backbone;
-              }
+            'bower/ember/ember': {
+              deps: ['jquery', 'handlebars'],
+              exports: 'Ember'
             },
-        
-            // slick grid shim
-            'vendor/slickgrid/lib/jquery.event.drag-2.2': {
-              deps: ['jquery'],
-              attach: '$'
+            'bower/ember-data/ember-data': {
+              deps: ['ember'],
+              exports: 'DS'
             },
-            'vendor/slickgrid/slick.core': {
-              deps: ['jquery', 'use!vendor/slickgrid/lib/jquery.event.drag-2.2'],
-              attach: 'Slick'
+            'bower/handlebars/handlebars.runtime': {
+              exports: 'Handlebars'
             },
-            'vendor/slickgrid/slick.grid': {
-              deps: ['use!vendor/slickgrid/slick.core'],
-              attach: 'Slick'
-            },
-            'vendor/slickgrid/slick.editors': {
-              deps: ['use!vendor/slickgrid/slick.core'],
-              attach: 'Slick'
-            },
-            'vendor/slickgrid/plugins/slick.rowselectionmodel': {
-              deps: ['use!vendor/slickgrid/slick.core'],
-              attach: 'Slick'
-            },
-
-            'uploadify' : {
-              deps: ['jquery'],
-              attach: '$'
-            },
-
             'vendor/FileAPI/FileAPI.min': {
               deps: ['jquery', 'vendor/FileAPI/config'],
-              attach: 'FileAPI'
+              exports: 'FileAPI'
             },
-
-            'vendor/bootstrap/bootstrap-dropdown' : {
+            'uploadify': {
               deps: ['jquery'],
-              attach: '$'
+              exports: '$'
             },
             'vendor/bootstrap-select/bootstrap-select' : {
               deps: ['jquery'],
-              attach: '$'
+              exports: '$'
+            },
+            'vendor/jquery.jcrop': {
+              deps: ['jquery'],
+              exports: '$'
+            },
+            'handlebars': {
+              deps: ['bower/handlebars/handlebars.runtime.amd'],
+              exports: 'Handlebars'
             }
           }
         JS

@@ -9,28 +9,42 @@ define [
   class DueDateList
 
     constructor: (@overrides, @sections, @assignment) ->
-      if @assignment?
-        # if we don't have an override for each real section
+      unless @sections.length
+        # If there's no "default" section for the course already present,
+        # such as a course that has been created without one, create a fake one
+        # so that the default due date can still be rendered/updated without
+        # error.
         if @overrides.length < @sections.length
           override = AssignmentOverride.defaultDueDate
             due_at: @assignment.get( 'due_at' )
             lock_at: @assignment.get( 'lock_at' )
             unlock_at: @assignment.get( 'unlock_at' )
+            show_correct_answers_at: @assignment.get( 'show_correct_answers_at' )
+            hide_correct_answers_at: @assignment.get( 'hide_correct_answers_at' )
           @overrides.add override
         @sections.add Section.defaultDueDateSection()
+      # if we don't have an override for each real section
+      if @assignment? && @overrides.length < @sections.length
+        override = AssignmentOverride.defaultDueDate
+          due_at: @assignment.get( 'due_at' )
+          lock_at: @assignment.get( 'lock_at' )
+          unlock_at: @assignment.get( 'unlock_at' )
+        @overrides.add override
+        unless @findDefaultDueDateSection()
+          @sections.add Section.defaultDueDateSection()
       @updateDefaultDueDateSection()
       @overrides.on 'add', @updateDefaultDueDateSection
       @overrides.on 'remove', @updateDefaultDueDateSection
 
     updateDefaultDueDateSection: =>
       section = @findDefaultDueDateSection()
-      if section?
-        if @overrides.length <= 1
-          section.set 'name', I18n.t('overrides.everyone','Everyone'),
-            silent: true
-        else
-          section.set 'name', I18n.t('overrides.everyone_else','Everyone Else'),
-            silent: true
+#      if section?
+#        if @overrides.length <= 1
+#          section.set 'name', I18n.t('overrides.everyone','Everyone'),
+#            silent: true
+#        else
+#          section.set 'name', I18n.t('overrides.everyone_else','Everyone Else'),
+#            silent: true
 
     findDefaultDueDateSection: =>
       @sections.detect ( section ) ->
@@ -60,7 +74,7 @@ define [
 
     containsSectionsWithoutOverrides: =>
       return false if @overrides.containsDefaultDueDate()
-      @sectionsWithOverrides().length != @_sectionsLength()
+      @sectionsWithOverrides().length < @_sectionsLength()
 
     _sectionsLength: =>
       if @assignment?

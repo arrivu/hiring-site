@@ -21,10 +21,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper.rb')
 describe ContentZipper do
   describe "zip_assignment" do
     it "sanitizes user names" do
-      s1, s2 = 2.times.map { course_with_student ; @student }
+      s1, s2, s3 = n_students_in_course(3)
       s1.update_attribute :sortable_name, 'some_999_, _1234_guy'
       s2.update_attribute :sortable_name, 'other 567, guy 8'
-      [s1, s2].each { |s|
+      s3.update_attribute :sortable_name, '45'
+      [s1, s2, s3].each { |s|
         submission_model user: s, assignment: @assignment, body: "blah"
       }
       attachment = Attachment.new(:display_name => 'my_download.zip')
@@ -36,6 +37,7 @@ describe ContentZipper do
       expected_file_patterns = [
         /other-567--guy-8/,
         /some-999----1234-guy/,
+        /-45-/,
       ]
       Zip::File.foreach(attachment.reload.full_filename) { |f|
         expect {
@@ -60,7 +62,7 @@ describe ContentZipper do
       Zip::File.foreach(attachment.full_filename) do |f|
         if f.file?
           f.name.should =~ /some-999----1234-guy/
-          f.get_input_stream.read.should match(%r{This submission was a url, we&#39;re taking you to the url link now.})
+          f.get_input_stream.read.should match(%r{This submission was a url, we&#x27;re taking you to the url link now.})
           f.get_input_stream.read.should be_include("http://www.instructure.com/")
         end
       end
@@ -310,13 +312,13 @@ describe ContentZipper do
       it "creates uploaded data for the assignment and marks it as available" do
         @attachment.expects(:save!).once
         zip_name = "submissions.zip"
+        zip_path = File.join(ActionController::TestCase.fixture_path, zip_name)
         data = "just some stub data"
-        ActionController::TestUploadedFile.expects(:new).
-          with(zip_name, 'application/zip').returns data
+        Rack::Test::UploadedFile.expects(:new).with(zip_path, 'application/zip').returns data
         @attachment.expects(:uploaded_data=).with data
         zipper = ContentZipper.new
         zipper.mark_successful!
-        zipper.complete_attachment!(@attachment,zip_name)
+        zipper.complete_attachment!(@attachment,zip_path)
         @attachment.should be_zipped
         @attachment.file_state.should == 'available'
       end
@@ -327,11 +329,11 @@ describe ContentZipper do
     it "delegates to a QuizSubmissionZipper" do
       course_with_teacher_logged_in(active_all: true)
       attachment = Attachment.new(:display_name => 'download.zip')
-      quiz = Quiz.new(:context => @course)
+      quiz = Quizzes::Quiz.new(:context => @course)
       zipper_stub = stub
       zipper_stub.expects(:zip!).once
       attachment.context = quiz
-      QuizSubmissionZipper.expects(:new).with(
+      Quizzes::QuizSubmissionZipper.expects(:new).with(
         quiz: quiz,
         zip_attachment: attachment
       ).returns zipper_stub

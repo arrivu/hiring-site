@@ -1,4 +1,5 @@
 define [
+  'jquery'
   'underscore'
   'compiled/collections/GroupCollection'
   'compiled/views/PaginatedCollectionView'
@@ -7,7 +8,7 @@ define [
   'jst/groups/manage/groupUsers'
   'jqueryui/draggable'
   'jqueryui/droppable'
-], (_, GroupCollection, PaginatedCollectionView, GroupUserView, EditGroupAssignmentView, template) ->
+], ($, _, GroupCollection, PaginatedCollectionView, GroupUserView, EditGroupAssignmentView, template) ->
 
   class GroupUsersView extends PaginatedCollectionView
 
@@ -72,10 +73,12 @@ define [
 
     toJSON: ->
       count: @model.usersCount()
+      locked: @model.isLocked()
+      ENV: ENV
 
     renderItem: (model) =>
       super
-      @_initDrag(model.view)
+      @_initDrag(model.view) unless @model?.isLocked()
 
     ##
     # enable draggable on the child GroupUserView (view)

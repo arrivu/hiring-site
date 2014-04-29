@@ -71,9 +71,14 @@ define [
           @model.unassignedUsers().fetch()
           @render()
 
-    afterRender: ->
+    cacheEls: ->
+      super
+      # need to be set before their afterRender's run (i.e. before this
+      # view's afterRender)
       @groupsView.$externalFilter = @$filter
       @unassignedUsersView.$externalFilter = @$filterUnassignedUsers
+
+    afterRender: ->
       @setUnassignedHeading()
       @setGroupsHeading()
 
@@ -94,5 +99,8 @@ define [
 
     toJSON: ->
       json = @model.present()
+      json.ENV = ENV
+      json.groupsAreSearchable = ENV.IS_LARGE_ROSTER and
+                                 not json.randomlyAssignStudentsInProgress
       json
 

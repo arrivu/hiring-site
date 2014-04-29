@@ -19,6 +19,8 @@ define [
       due_at: null
       unlock_at: null
       lock_at: null
+      show_correct_answers_at: null
+      hide_correct_answers_at: null
       unpublishable: true
       points_possible: null
 
@@ -47,8 +49,10 @@ define [
       if @get 'html_url'
         @set 'base_url', @get('html_url').replace(/quizzes\/\d+/, "quizzes")
 
-        @set 'url',           "#{@get 'base_url'}/#{@get 'id'}"
-        @set 'edit_url',      "#{@get 'base_url'}/#{@get 'id'}/edit"
+#        @set 'url',           "#{@get 'base_url'}/#{@get 'id'}"
+#        @set 'edit_url',      "#{@get 'base_url'}/#{@get 'id'}/edit"
+        @set 'url',           "#{@get 'base_url'}"
+        @set 'edit_url',      "#{@get 'base_url'}/edit"
         @set 'publish_url',   "#{@get 'base_url'}/publish"
         @set 'unpublish_url', "#{@get 'base_url'}/unpublish"
 
@@ -65,7 +69,8 @@ define [
     initPointsCount: ->
       pts = @get 'points_possible'
       text = ''
-      text = I18n.t('assignment_points_possible', 'pt', count: pts) if pts isnt null
+      if pts && pts > 0
+        text = I18n.t('assignment_points_possible', 'pt', count: pts)
       @set 'possible_points_label', text
 
     initAllDates: ->
@@ -99,6 +104,14 @@ define [
       return @get 'lock_at' unless arguments.length > 0
       @set 'lock_at', date
 
+    showCorrectAnswersAt: (date)  =>
+      return @get 'show_correct_answers_at' unless arguments.length > 0
+      @set 'show_correct_answers_at', date
+
+    hideCorrectAnswersAt: (date)  =>
+      return @get 'hide_correct_answers_at' unless arguments.length > 0
+      @set 'hide_correct_answers_at', date
+
     htmlUrl: =>
       @get 'url'
 
@@ -107,6 +120,8 @@ define [
         due_at:    @get("due_at")
         unlock_at: @get("unlock_at")
         lock_at:   @get("lock_at")
+        show_correct_answers_at:   @get("show_correct_answers_at")
+        hide_correct_answers_at:   @get("hide_correct_answers_at")
 
     multipleDueDates: =>
       dateGroups = @get("all_dates")
@@ -118,17 +133,11 @@ define [
       result = _.map models, (group) -> group.toJSON()
 
     singleSectionDueDate: =>
-      if !@multipleDueDates() && !@dueAt()
-        allDates = @allDates()
-        for section in allDates
-          if section.dueAt
-            return section.dueAt.toISOString()
-      else
-        return @dueAt()
+      _.find(@allDates(), 'dueAt')?.dueAt.toISOString() || @dueAt()
 
     toView: =>
       fields = [
-        'htmlUrl', 'multipleDueDates', 'allDates', 'dueAt', 'lockAt', 'unlockAt', 'singleSectionDueDate'
+        'htmlUrl', 'multipleDueDates', 'allDates', 'dueAt', 'lockAt', 'unlockAt', 'showCorrectAnswersAt', 'hideCorrectAnswersAt', 'singleSectionDueDate'
       ]
       hash = id: @get 'id'
       for field in fields

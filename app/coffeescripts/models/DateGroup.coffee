@@ -12,10 +12,20 @@ define [
       due_at: null
       unlock_at: null
       lock_at: null
+      show_correct_answers_at: null
+      hide_correct_answers_at: null
 
     dueAt: ->
       dueAt = @get("due_at")
       if dueAt then Date.parse(dueAt) else null
+
+    showCorrectAnswersAt: ->
+      showCorrectAnswersAt = @get("show_correct_answers_at")
+      if showCorrectAnswersAt then Date.parse(showCorrectAnswersAt) else null
+
+    hideCorrectAnswersAt: ->
+      hideCorrectAnswersAt = @get("hide_correct_answers_at")
+      if hideCorrectAnswersAt then Date.parse(hideCorrectAnswersAt) else null
 
     unlockAt: ->
       unlockAt = @get("unlock_at")
@@ -58,6 +68,8 @@ define [
       dueAt: @dueAt()
       unlockAt: @unlockAt()
       lockAt: @lockAt()
+      showCorrectAnswersAt: @showCorrectAnswersAt()
+      hideCorrectAnswersAt: @hideCorrectAnswersAt()
       available: @available()
       pending: @pending()
       open: @open()

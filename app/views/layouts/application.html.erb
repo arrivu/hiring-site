@@ -1,11 +1,11 @@
 <%-
   @body_classes ||= []
-  keyboard_navigation = yield :keyboard_navigation
+  keyboard_navigation = (yield :keyboard_navigation).presence
   left_side = nil
   left_side_custom = nil
-  right_side = yield :right_side
-  wizard = yield :wizard_box
-  top_nav = yield :top_nav
+  right_side = (yield :right_side).presence
+  wizard = (yield :wizard_box).presence
+  top_nav = (yield :top_nav).presence
 
   content_for :pre_html do
     @body_class_no_headers = @headers == false
@@ -13,8 +13,8 @@
     @show_fixed_bottom = (@fixed_warnings.present? || (@real_current_user && @real_current_user != @current_user)) && (!@body_class_no_headers || @outer_frame)
     @body_classes << "no-headers" if @body_class_no_headers
     unless (@body_classes.include? "no-headers") || (@show_left_side == false)
-      left_side = yield :left_side
-      left_side_custom = yield :left_side_custom
+      left_side = (yield :left_side).presence
+      left_side_custom = (yield :left_side_custom).presence
       @show_left_side ||= (section_tabs.length > 0 || left_side_custom.try(:length))
     end
     @body_classes << "with-left-side" if @show_left_side
@@ -23,7 +23,7 @@
     @body_classes << "padless-content" if @padless
     @body_classes << "with-embedded-chat" if @show_embedded_chat
     @body_classes << 'with-fixed-bottom' if @show_fixed_bottom
-    @body_classes << 'pages' if @controller.js_env[:WIKI_PAGE].present?
+    @body_classes << 'pages' if controller.js_env[:WIKI_PAGE].present?
     @body_classes << @active_tab
   end
 
@@ -125,8 +125,8 @@
         <!--<a href="<%#= calendar_path %>" class="menu-item-no-drop"><%#= t('menu.calendar', 'Calendar') %></a>-->
       </li>
           <li class="menu-item" style="float: right;margin-right:7%;">
-            <a href="#" class="menu-item-title">
-              <%= @current_user.name %>
+            <a href="#" class="menu-item-title" ">
+              <%= square_avatar_image @current_user[:id], 30%> <%= @current_user.name %>
               <span class="menu-item-title-icon"></span> <i class="icon-mini-arrow-down"></i></a>
             <div class="menu-item-drop" style="width: 100%;">
               <table cellspacing="0">
@@ -246,7 +246,6 @@
 <% end %>
   <div style="display:none;"><!-- Everything inside of this should always stay hidden -->
     <div id="ajax_authenticity_token"><%= form_authenticity_token %></div>
-    <div id="time_zone_offset"><%= ActiveSupport::TimeWithZone.new(Time.now.utc, Time.zone).utc_offset / -60 %></div>
     <% if @context && session && temp_type = session["role_#{@context.asset_string}"] %>
       <span id="switched_role_type" class="<%= @context.asset_string %>" data-role="<%= temp_type %>"><%= Enrollment.readable_type(temp_type) %></span>
     <% end %>

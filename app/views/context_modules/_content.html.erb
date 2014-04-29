@@ -1,6 +1,6 @@
 <% course_home ||= false %>
 <% js_env :COLLAPSED_MODULES => @collapsed_modules %>
-<% js_env :CAN_MANAGE_MODULES  => can_do(@context, @current_user, :manage_grades) || can_do(@context, @current_user, :manage_content) %>
+<% js_env :CAN_MANAGE_MODULES => can_do(@context, @current_user, :manage_content) %>
 <% js_env :COURSE_ID => @context.id %>
 <% js_env :NO_MODULE_PROGRESSIONS => @context.large_roster %>
 <% js_bundle :context_modules %>
@@ -24,7 +24,7 @@
 </div>
 
 <div id="no_context_modules_message" style="display:none; clear: both;">
-  <% if can_do(@context.context_modules.new, @current_user, :create) %>
+  <% if can_do(@context.context_modules.scoped.new, @current_user, :create) %>
     <%= mt 'help.create', <<TEXT, :button => t('#context_modules.buttons.add_module_first', 'Add a New Module')
 Project modules let you organize your assessments, pages, files, etc. into smaller sections or units. Modules could be centered around a theme, focused on a specific topic, or even just grouped chronologically.
 

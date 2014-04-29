@@ -43,40 +43,43 @@ class GradebooksController < ApplicationController
 
     if authorized_action(@presenter.student_enrollment, @current_user, :read_grades)
       log_asset_access("grades:#{@context.asset_string}", "grades", "other")
-      respond_to do |format|
-        if @presenter.student
-          add_crumb(@presenter.student_name, named_context_url(@context, :context_student_grades_url, @presenter.student_id))
+      if @presenter.student
+        add_crumb(@presenter.student_name, named_context_url(@context, :context_student_grades_url, @presenter.student_id))
 
-          Shackles.activate(:slave) do
-            #run these queries on the slave database for speed
-            @presenter.assignments
-            @presenter.groups_assignments = groups_as_assignments(@presenter.groups, :out_of_final => true, :exclude_total => @context.hide_final_grades?)
-            @presenter.submissions
-            @presenter.submission_counts
-            @presenter.assignment_stats
-          end
-
-          submissions_json = @presenter.submissions.map { |s|
-            {
-              assignment_id: s.assignment_id,
-              score: s.grants_right?(@current_user, :read_grade)? s.score  : nil
-            }
-          }
-          ags_json = light_weight_ags_json(@presenter.groups)
-          js_env submissions: submissions_json,
-                 assignment_groups: ags_json,
-                 group_weighting_scheme: @context.group_weighting_scheme
-          format.html { render :action => 'grade_summary' }
-        else
-          format.html { render :action => 'grade_summary_list' }
+        Shackles.activate(:slave) do
+          #run these queries on the slave database for speed
+          @presenter.assignments
+          @presenter.groups_assignments = groups_as_assignments(@presenter.groups, :out_of_final => true, :exclude_total => @context.hide_final_grades?)
+          @presenter.submissions
+          @presenter.submission_counts
+          @presenter.assignment_stats
         end
+
+        submissions_json = @presenter.submissions.map { |s|
+          {
+            'assignment_id' => s.assignment_id,
+            'score' => s.grants_right?(@current_user, :read_grade)? s.score  : nil
+          }
+        }
+        ags_json = light_weight_ags_json(@presenter.groups)
+        js_env submissions: submissions_json,
+               assignment_groups: ags_json,
+               group_weighting_scheme: @context.group_weighting_scheme,
+               show_total_grade_as_points: @context.settings[:show_total_grade_as_points],
+               grading_scheme: @context.grading_standard.try(:data) || GradingStandard.default_grading_standard,
+               student_outcome_gradebook_enabled: @context.feature_enabled?(:student_outcome_gradebook),
+               student_id: @presenter.student_id
+        render :action => 'grade_summary'
+      else
+        render :action => 'grade_summary_list'
       end
     end
   end
 
   def light_weight_ags_json(assignment_groups)
     assignment_groups.map do |ag|
-      assignments = ag.active_assignments.map do |a|
+      assignment_scope = AssignmentGroup.assignment_scope_for_grading(@context)
+      assignments = ag.send(assignment_scope).map do |a|
         {
           :id => a.id,
           :submission_types => a.submission_types_array,
@@ -85,7 +88,7 @@ class GradebooksController < ApplicationController
       end
       {
         :id           => ag.id,
-        :rules        => ag.rules_hash,
+        :rules        => ag.rules_hash({stringify_json_ids: true}),
         :group_weight => ag.group_weight,
         :assignments  => assignments,
       }
@@ -101,7 +104,7 @@ class GradebooksController < ApplicationController
         @rubric_context = Context.find_by_asset_string(params[:context_code])
       end
       @rubric_associations = @context.sorted_rubrics(@current_user, @rubric_context)
-      render :json => @rubric_associations.map{ |r| r.as_json(methods: [:context_name], include: :rubric) }
+      render :json => @rubric_associations.map{ |r| r.as_json(methods: [:context_name], include: {:rubric => {:include_root => false}}) }
     else
       render :json => @rubric_contexts
     end
@@ -111,7 +114,7 @@ class GradebooksController < ApplicationController
     Shackles.activate(:slave) do
       updated = Time.parse(params[:updated]) rescue nil
       updated ||= Time.parse("Jan 1 2000")
-      @new_submissions = @context.submissions.except(:includes).
+      @new_submissions = @context.submissions.
         includes(:submission_comments, :attachments).
           where('submissions.updated_at > ?', updated).all
 
@@ -133,12 +136,11 @@ class GradebooksController < ApplicationController
     if !@enrollment && @context.grants_right?(@current_user, session, :manage_grades)
       @assignments = @context.assignments.active.where(:submission_types => 'attendance').all
       @students = @context.students_visible_to(@current_user).order_by_sortable_name
-      @submissions = @context.submissions
       @at_least_one_due_at = @assignments.any?{|a| a.due_at }
       # Find which assignment group most attendance items belong to,
       # it'll be a better guess for default assignment group than the first
       # in the list...
-      @default_group_id = @assignments.to_a.count_per(&:assignment_group_id).sort_by{|id, cnt| cnt }.reverse.first[0] rescue nil
+      @default_group_id = @assignments.to_a.inject(Hash.new(0)){|h,a| h[a.assignment_group_id] += 1; h}.sort_by{|id, cnt| cnt }.reverse.first[0] rescue nil
     elsif @enrollment && @enrollment.grants_right?(@current_user, session, :read_grades)
       @assignments = @context.assignments.active.where(:submission_types => 'attendance').all
       @students = @context.students_visible_to(@current_user).order_by_sortable_name
@@ -196,7 +198,7 @@ class GradebooksController < ApplicationController
 
           # this can't happen in the slave block because this may trigger
           # writes in ContextModule
-          js_env :assignment_groups => assignment_groups_json,
+          js_env :assignment_groups => assignment_groups_json({:stringify_json_ids => true}),
                  :speed_grader_enabled => @context.allows_speed_grader?
           set_gradebook_warnings(@groups, @just_assignments)
           if params[:view] == "simple"
@@ -219,7 +221,7 @@ class GradebooksController < ApplicationController
         }
         format.json  {
           Shackles.activate(:slave) do
-            @submissions = @context.submissions
+            @submissions = @context.submissions.includes(:quiz_submission)
             @new_submissions = @submissions
             render :json => @new_submissions.map{ |s| s.as_json(include: [:quiz_submission, :submission_comments, :attachments]) }
           end
@@ -237,13 +239,13 @@ class GradebooksController < ApplicationController
         # (in this case, the worst part was the assignment 'description' which could be a massive wikipage)
 
         assignment_fields = ["id", "title", "due_at", "unlock_at", "lock_at",
-          "points_possible", "min_score", "max_score",
-          "mastery_score", "grading_type", "submission_types",
-          "assignment_group_id", "grading_scheme_id",
-          "grading_standard_id", "grade_group_students_individually"].map do |field|
+          "points_possible", "grading_type", "submission_types",
+          "assignment_group_id", "grading_scheme_id", "grading_standard_id",
+          "grade_group_students_individually"].map do |field|
             "assignments.#{field}"
         end
-        render :json => @context.assignments.active.gradeable.
+        workflow_scope = @context.feature_enabled?(:draft_state) ? :published : :active
+        render :json => @context.assignments.send(workflow_scope).gradeable.
           select(assignment_fields + ["group_categories.name as group_category", "quizzes.id as quiz_id"]).
           joins("LEFT OUTER JOIN group_categories ON group_categories.id=assignments.group_category_id").
           joins("LEFT OUTER JOIN quizzes on quizzes.assignment_id=assignments.id") + groups_as_assignments
@@ -254,7 +256,7 @@ class GradebooksController < ApplicationController
         params[:user_ids] ||= params[:user_id]
         user_ids = params[:user_ids].split(",").map(&:to_i) if params[:user_ids]
         assignment_ids = params[:assignment_ids].split(",").map(&:to_i) if params[:assignment_ids]
-        @submissions = @context.submissions.except(:includes).
+        @submissions = @context.submissions.
           includes(:submission_comments, :attachments)
         @submissions = @submissions.where(:user_id => user_ids) if user_ids
         @submissions = @submissions.where(:assignment_id => assignment_ids) if assignment_ids
@@ -416,7 +418,11 @@ class GradebooksController < ApplicationController
   end
 
   def change_gradebook_version
-    @current_user.preferences[:use_gradebook2] = params[:version] == '2'
+    if @context.feature_enabled?(:screenreader_gradebook)
+      @current_user.preferences[:gradebook_version] = params[:version]
+    else
+      @current_user.preferences[:use_gradebook2] = params[:version] == '2'
+    end
     @current_user.save!
     redirect_to_appropriate_gradebook_version
   end
@@ -507,9 +513,13 @@ class GradebooksController < ApplicationController
   private :set_gradebook_warnings
 
 
-  def assignment_groups_json
-    @context.assignment_groups.active.map { |g|
-      assignment_group_json(g, @current_user, session, ['assignments'], {stringify_json_ids: stringify_json_ids?})
+  def assignment_groups_json(opts={})
+    assignment_scope = AssignmentGroup.assignment_scope_for_grading(@context)
+    @context.assignment_groups.active.includes(assignment_scope).map { |g|
+      assignment_group_json(g, @current_user, session, ['assignments'], {
+        stringify_json_ids: opts[:stringify_json_ids] || stringify_json_ids?,
+        assignment_group_assignment_scope: assignment_scope
+      })
     }
   end
 end

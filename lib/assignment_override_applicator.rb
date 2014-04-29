@@ -89,7 +89,7 @@ module AssignmentOverrideApplicator
       # get list of overrides that might apply. adhoc override is highest
       # priority, then group override, then section overrides by position. DO
       # NOT exclude deleted overrides, yet
-      key = assignment_or_quiz.is_a?(Quiz) ? :quiz_id : :assignment_id
+      key = assignment_or_quiz.is_a?(Quizzes::Quiz) ? :quiz_id : :assignment_id
       adhoc_membership = AssignmentOverrideStudent.where(key => assignment_or_quiz, :user_id => user).first
 
       overrides << adhoc_membership.assignment_override if adhoc_membership
@@ -134,7 +134,7 @@ module AssignmentOverrideApplicator
             override
           else
             override_version = override.versions.detect do |version|
-              model_version = assignment_or_quiz.is_a?(Quiz) ? version.model.quiz_version : version.model.assignment_version
+              model_version = assignment_or_quiz.is_a?(Quizzes::Quiz) ? version.model.quiz_version : version.model.assignment_version
               next if model_version.nil?
               model_version <= assignment_or_quiz.version_number
             end
@@ -154,10 +154,11 @@ module AssignmentOverrideApplicator
   def self.setup_overridden_clone(assignment, overrides = [])
     clone = assignment.clone
 
-    # ActiveRecord::Base#clone nils out the primary key; put it back
-    clone.id = assignment.id
-    self.copy_preloaded_associations_to_clone(assignment,
-                                              clone)
+    # ActiveRecord::Base#clone wipes out some important crap; put it back
+    [:id, :updated_at, :created_at].each { |attr|
+      clone[attr] = assignment.send(attr)
+    }
+    self.copy_preloaded_associations_to_clone(assignment, clone)
     yield(clone) if block_given?
 
     clone.applied_overrides = overrides
@@ -192,8 +193,7 @@ module AssignmentOverrideApplicator
 
   def self.copy_preloaded_associations_to_clone(orig, clone)
     orig.class.reflections.keys.each do |association|
-      ivar = "@#{association}"
-      clone.instance_variable_set ivar, orig.instance_variable_get(ivar)
+      clone.send(:association_instance_set, association, orig.send(:association_instance_get, association))
     end
   end
 
@@ -207,10 +207,10 @@ module AssignmentOverrideApplicator
   # the same collapsed assignment or quiz, regardless of the user that ended up at that
   # set of overrides.
   def self.collapsed_overrides(assignment_or_quiz, overrides)
-    Rails.cache.fetch([assignment_or_quiz, assignment_or_quiz.version_number, self.overrides_hash(overrides)].cache_key) do
+    Rails.cache.fetch([assignment_or_quiz, self.overrides_hash(overrides)].cache_key) do
       overridden_data = {}
       # clone the assignment_or_quiz, apply overrides, and freeze
-      [:due_at, :all_day, :all_day_date, :unlock_at, :lock_at].each do |field|
+      [:due_at, :all_day, :all_day_date, :unlock_at, :lock_at, :show_correct_answers_at, :hide_correct_answers_at].each do |field|
         if assignment_or_quiz.respond_to?(field)
           value = self.send("overridden_#{field}", assignment_or_quiz, overrides)
           # force times to un-zoned UTC -- this will be a cached value and should
@@ -273,6 +273,28 @@ module AssignmentOverrideApplicator
       nil
     else
       applicable_overrides.sort_by(&:lock_at).last.lock_at
+    end
+  end
+
+  def self.overridden_show_correct_answers_at(assignment_or_quiz, overrides)
+    applicable_overrides = overrides.select(&:show_correct_answers_at_overridden)
+    if applicable_overrides.empty?
+      assignment_or_quiz.show_correct_answers_at
+    elsif override = applicable_overrides.detect{ |o| o.show_correct_answers_at.nil? }
+      nil
+    else
+      applicable_overrides.sort_by(&:show_correct_answers_at).last.show_correct_answers_at
+    end
+  end
+
+  def self.overridden_hide_correct_answers_at(assignment_or_quiz, overrides)
+    applicable_overrides = overrides.select(&:hide_correct_answers_at_overridden)
+    if applicable_overrides.empty?
+      assignment_or_quiz.hide_correct_answers_at
+    elsif override = applicable_overrides.detect{ |o| o.hide_correct_answers_at.nil? }
+      nil
+    else
+      applicable_overrides.sort_by(&:hide_correct_answers_at).last.hide_correct_answers_at
     end
   end
 end

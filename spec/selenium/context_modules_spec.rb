@@ -1,9 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/helpers/context_modules_common')
 
 describe "context_modules" do
-  it_should_behave_like "in-process server selenium tests"
+  include_examples "in-process server selenium tests"
   context "as a teacher" do
-
     before (:each) do
       course_with_teacher_logged_in
 
@@ -555,40 +554,56 @@ describe "context_modules" do
       @assignment.context_module_tags.each { |tag| tag.title.should == 'again' }
     end
 
-    it "should not rename every text header when you rename one" do
+    it "should truncate long text headers to 98 characters" do
+      set_course_draft_state
+      mod = @course.context_modules.create! name: 'TestModule'
+      tag1 = mod.add_item(title: 'This is a really long module text header that should be truncated to exactly 98 characters plus the ... part so 101 characters really', type: 'sub_header')
+
       get "/courses/#{@course.id}/modules"
+      locked_title = ff("#context_module_item_#{tag1.id} .locked_title")
 
-      add_module('TestModule')
+      locked_title[0].text.length.should == 98
+    end
 
-      # add a text header
-      f('.admin-links.al-trigger').click
-      f('.add_module_item_link').click
-      select_module_item('#add_module_item_select', 'Text Header')
-      wait_for_ajaximations
-      title_input = fj('input[name="title"]:visible')
-      replace_content(title_input, 'First text header')
-      fj('.add_item_button:visible').click
-      wait_for_ajaximations
-      tag1 = ContentTag.last
+    it "should add a title attribute to the text header" do
+      set_course_draft_state
+      text_header = 'This is a really long module text header that should be truncated to exactly 98 characters plus the ... part so 101 characters really'
+      mod = @course.context_modules.create! name: 'TestModule'
+      tag1 = mod.add_item(title: text_header, type: 'sub_header')
 
-      # and another one
-      f('.admin-links.al-trigger').click
-      f('.add_module_item_link').click
-      select_module_item('#add_module_item_select', 'Text Header')
-      wait_for_ajaximations
-      title_input = fj('input[name="title"]:visible')
-      replace_content(title_input, 'Second text header')
-      fj('.add_item_button:visible').click
-      wait_for_ajaximations
-      tag2 = ContentTag.last
+      get "/courses/#{@course.id}/modules"
+      locked_title = ff("#context_module_item_#{tag1.id} .locked_title[title]")
 
-      # rename the second
+      locked_title[0].attribute(:title).should == text_header
+    end
+
+    it "should not rename every text header when you rename one" do
+      mod = @course.context_modules.create! name: 'TestModule'
+      tag1 = mod.add_item(title: 'First text header', type: 'sub_header')
+      tag2 = mod.add_item(title: 'Second text header', type: 'sub_header')
+
+      get "/courses/#{@course.id}/modules"
       item2 = f("#context_module_item_#{tag2.id}")
       edit_module_item(item2) do |edit_form|
         replace_content(edit_form.find_element(:id, 'content_tag_title'), 'Renamed!')
       end
 
-      # verify the first did not change
+      item1 = f("#context_module_item_#{tag1.id}")
+      item1.should_not include_text('Renamed!')
+    end
+
+    it "should not rename every external tool link when you rename one" do
+      tool = @course.context_external_tools.create! name: 'WHAT', consumer_key: 'what', shared_secret: 'what', url: 'http://what.example.org'
+      mod = @course.context_modules.create! name: 'TestModule'
+      tag1 = mod.add_item(title: 'A', type: 'external_tool', id: tool.id, url: 'http://what.example.org/A')
+      tag2 = mod.add_item(title: 'B', type: 'external_tool', id: tool.id, url: 'http://what.example.org/B')
+
+      get "/courses/#{@course.id}/modules"
+      item2 = f("#context_module_item_#{tag2.id}")
+      edit_module_item(item2) do |edit_form|
+        replace_content(edit_form.find_element(:id, 'content_tag_title'), 'Renamed!')
+      end
+
       item1 = f("#context_module_item_#{tag1.id}")
       item1.should_not include_text('Renamed!')
     end
@@ -953,7 +968,7 @@ describe "context_modules" do
       @student_enrollment = @course.enroll_user(@student, 'StudentEnrollment', :enrollment_state => 'active')
 
       @assignment = @course.assignments.create!(:title => 'assignment 1', :name => 'assignment 1')
-      @due_at = 3.days.from_now
+      @due_at = 1.year.from_now
       override_for_student(@student, @due_at)
 
       course_module
@@ -983,7 +998,7 @@ describe "context_modules" do
 
       wait_for_ajaximations
       f(".due_date_display").text.should_not be_blank
-      f(".due_date_display").text.should == @due_at.strftime('%b %-d')
+      f(".due_date_display").text.should == @due_at.strftime('%b %-d, %Y')
     end
 
     it "when not associated, and in multiple sections, it should show the latest due date" do
@@ -1004,7 +1019,7 @@ describe "context_modules" do
 
       wait_for_ajaximations
       f(".due_date_display").text.should_not be_blank
-      f(".due_date_display").text.should == @due_at.strftime('%b %-d')
+      f(".due_date_display").text.should == @due_at.strftime('%b %-d, %Y')
     end
 
     it "when associated with a student, it should show the student's overridden due date" do

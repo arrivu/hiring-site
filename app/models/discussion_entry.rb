@@ -21,6 +21,7 @@ class DiscussionEntry < ActiveRecord::Base
   include SendToInbox
   include SendToStream
   include TextHelper
+  include HtmlTextHelper
 
   attr_accessible :plaintext_message, :message, :discussion_topic, :user, :parent, :attachment, :parent_entry
   attr_readonly :discussion_topic_id, :user_id, :parent_id
@@ -44,10 +45,10 @@ class DiscussionEntry < ActiveRecord::Base
   after_create :create_participants
   validates_length_of :message, :maximum => maximum_text_length, :allow_nil => true, :allow_blank => true
   validates_presence_of :discussion_topic_id
-  before_validation(on: :create, &:set_depth)
+  before_validation :set_depth, :on => :create
   validate :validate_depth, on: :create
 
-  sanitize_field :message, Instructure::SanitizeField::SANITIZE
+  sanitize_field :message, CanvasSanitize::SANITIZE
 
   has_a_broadcast_policy
   attr_accessor :new_record_header
@@ -306,7 +307,7 @@ class DiscussionEntry < ActiveRecord::Base
   scope :after, lambda { |date| where("created_at>?", date) }
   scope :top_level_for_topics, lambda {|topics| where(:root_entry_id => nil, :discussion_topic_id => topics) }
   scope :all_for_topics, lambda { |topics| where(:discussion_topic_id => topics) }
-  scope :newest_first, order("discussion_entries.created_at DESC")
+  scope :newest_first, order("discussion_entries.created_at DESC, discussion_entries.id DESC")
 
   def to_atom(opts={})
     author_name = self.user.present? ? self.user.name : t('atom_no_author', "No Author")
@@ -460,10 +461,11 @@ class DiscussionEntry < ActiveRecord::Base
     participant = discussion_entry_participants.where(:user_id => user).first
     unless participant
       # return a temporary record with default values
-      participant = discussion_entry_participants.new({
+      participant = DiscussionEntryParticipant.new({
         :workflow_state => "unread",
         :forced_read_state => false,
         })
+      participant.discussion_entry = self
       participant.user = user
     end
 

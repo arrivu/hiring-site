@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2013 Instructure, Inc.
+# Copyright (C) 2013 - 2014 Instructure, Inc.
 #
 # This file is part of Canvas.
 #
@@ -18,7 +18,7 @@
 
 require File.expand_path(File.dirname(__FILE__) + '/report_spec_helper')
 
-describe "Outcom Reports" do
+describe "Outcome Reports" do
   include ReportSpecHelper
 
   before(:each) do
@@ -203,7 +203,9 @@ describe "Outcom Reports" do
 
       param = {}
       param["include_deleted"] = true
-      parsed = read_report(@type, {params: param})
+      report = run_report(@type, {params: param})
+      report.parameters["extra_text"].should == "Term: All Terms; Include Deleted Objects: true;"
+      parsed = parse_report(report)
 
       parsed[1].should == [@user1.sortable_name, @user1.id.to_s, "user_sis_id_01",
                            @assignment.title, @assignment.id.to_s,
@@ -345,6 +347,33 @@ describe "Outcom Reports" do
       parsed[1][16].should == @course1.sis_source_id
 
       parsed.length.should == 3
+
+      # NOTE: remove after data migration of polymorphic relationships having: Quiz
+      result = LearningOutcomeResult.where(association_type: 'Quizzes::Quiz').first
+      result.association_type = 'Quiz'
+      result.send(:save_without_callbacks)
+
+      parsed = read_report(@type, {order: [0, 13]})
+      parsed[2][5].should == 'assignment'
+      parsed[0][5].should == 'quiz'
+      parsed[1][5].should == 'quiz'
+
+      # NOTE: remove after data migration of polymorphic relationships having: QuizSubmission
+      result = LearningOutcomeResult.where(artifact_type: 'Quizzes::QuizSubmission').first
+      LearningOutcomeResult.where(id: result).update_all(association_type: 'QuizSubmission')
+
+      parsed = read_report(@type, {order: [0, 13]})
+      parsed[0][6].should == sub.finished_at.iso8601
+      parsed[0][7].should == sub.score.to_s
+      parsed[1][6].should == sub.finished_at.iso8601
+      parsed[1][7].should == sub.score.to_s
+    end
+
+    it 'should include in extra text if option is set' do
+      param = {}
+      param["include_deleted"] = true
+      report = run_report(@type, {params: param})
+      report.parameters["extra_text"].should == "Term: All Terms; Include Deleted Objects: true;"
     end
   end
 end

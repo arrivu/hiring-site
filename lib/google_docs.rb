@@ -20,6 +20,12 @@
 # http://code.google.com/apis/documents/docs/2.0/developers_guide_protocol.html
 module GoogleDocs
 
+  class NoTokenError < StandardError
+    def initialize
+      super("User does not have a valid Google Docs token")
+    end
+  end
+
   def google_docs_retrieve_access_token
     consumer = google_consumer
     return nil unless consumer
@@ -28,7 +34,7 @@ module GoogleDocs
         service = google_docs_user.user_services.find_by_service("google_docs")
         service && [service.token, service.secret]
       end
-      raise "User does not have valid Google Docs token" unless service_token && service_secret
+      raise NoTokenError unless service_token && service_secret
       access_token = OAuth::AccessToken.new(consumer, service_token, service_secret)
     else
       access_token = OAuth::AccessToken.new(consumer, session[:oauth_gdocs_access_token_token], session[:oauth_gdocs_access_token_secret])
@@ -85,7 +91,7 @@ module GoogleDocs
       :service => 'google_docs',
       :token => request_token.token,
       :secret => request_token.secret,
-      :user_secret => AutoHandle.generate(nil, 16),
+      :user_secret => CanvasUuid::Uuid.generate(nil, 16),
       :return_url => return_to,
       :user => google_docs_user,
       :original_host_with_port => request.host_with_port

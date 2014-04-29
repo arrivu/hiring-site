@@ -9,12 +9,12 @@
   <div class="image-block">
     <div class="image-block-image profile-avatar-wrapper">
       <% if @user_data[:can_edit] %>
-        <a href="#" class="profile-link">
-          <%= avatar_image @user_data[:id], 128 %>
+        <a href="#" class="profile-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
+          <%= square_avatar_image @user_data[:id], 128 %>
           <i class="icon-edit"></i>
         </a>
       <% else %>
-        <%= avatar_image @user_data[:id], 128 %>
+        <%= square_avatar_image @user_data[:id], 128 %>
       <% end %>
     </div>
     <div class="image-block-content row-fluid">
@@ -124,6 +124,7 @@
       </div>
 
       <% if @user_data[:can_edit] %>
+        <input type="hidden" name="delete_links" value="1">
         <div class="show-if-editing">
           <table id="edit_links_table">
             <thead>
@@ -159,12 +160,11 @@
 
                   <% @user_data[:common_academic].each do |link| %>
                       <tr>
-                        <input type="hidden" name="link_ids[]" value=<%= link.id.to_i %>>
-                        <td><input type="text" name="link_degrees[]" value="<%= link.degree %>"></td>
-                        <td><input type="text" name="link_disciplines[]" value="<%= link.discipline %>"></td>
-                        <td><input type="text" name="link_colleges[]" value="<%= link.college %>"></td>
-                        <td><input type="text" name="link_year_of_completions[]" value="<%= link.year_of_completion %>"></td>
-                        <td><input type="text" name="link_percentages[]" value="<%= link.percentage %>"></td>
+                        <td><%= link.degree %></td>
+                        <td><%= link.discipline %></td>
+                        <td><%= link.college %></td>
+                        <td><%= link.year_of_completion %></td>
+                        <td><%= link.percentage %></td>
                       </tr>
                   <% end %>
 
@@ -236,13 +236,13 @@
 
               <% @user_data[:common_employment].each do |emp| %>
                   <tr>
-                    <input type="hidden" name="link_experience_ids[]" value="<%= emp.id %>">
-                    <td><input type="text" name="link_organizations[]" value="<%= emp.organization %>"></td>
-                    <td><input type="text" name="link_from_dates[]" value="<%= emp.from_date %>"></td>
-                    <td><input type="text" name="link_end_dates[]" value="<%= emp.end_date %>"></td>
-                    <td><input type="text" name="link_designations[]" value="<%= emp.designation %>"></td>
-                    <td><input type="text" name="link_permanents[]" value="<%= emp.permanent %>"></td>
-                    <td><input type="text" name="link_reason_for_leaving[]" value="<%= emp.reason_for_leaving %>"></td>
+
+                    <td><%= emp.organization %></td>
+                    <td><%= emp.from_date %></td>
+                    <td><%= emp.end_date %></td>
+                    <td><%= emp.designation %></td>
+                    <td><%= emp.permanent %></td>
+                    <td><%= emp.reason_for_leaving %></td>
                   </tr>
               <% end %>
             </table>

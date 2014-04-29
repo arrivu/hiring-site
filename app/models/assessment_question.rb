@@ -22,13 +22,13 @@ class AssessmentQuestion < ActiveRecord::Base
   acts_as_taggable_on :tags
 
   attr_accessible :name, :question_data, :form_question_data
-  has_many :quiz_questions
+  has_many :quiz_questions, :class_name => 'Quizzes::QuizQuestion'
   has_many :attachments, :as => :context
   delegate :context, :context_id, :context_type, :to => :assessment_question_bank
   attr_accessor :initial_context
   belongs_to :assessment_question_bank, :touch => true
   simply_versioned :automatic => false
-  acts_as_list :scope => :assessment_question_bank_id
+  acts_as_list :scope => :assessment_question_bank
   before_validation :infer_defaults
   after_save :translate_links_if_changed
   validates_length_of :name, :maximum => maximum_string_length, :allow_nil => true
@@ -222,7 +222,7 @@ class AssessmentQuestion < ActiveRecord::Base
     previous_data = assessment_question.question_data rescue {}
     previous_data ||= {}
 
-    question = QuizQuestion::QuestionData.generate(
+    question = Quizzes::QuizQuestion::QuestionData.generate(
       id: qdata[:id] || previous_data[:id],
       regrade_option: qdata[:regrade_option] || previous_data[:regrade_option],
       points_possible: qdata[:points_possible] || previous_data[:points_possible],

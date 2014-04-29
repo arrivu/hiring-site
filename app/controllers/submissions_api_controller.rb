@@ -48,7 +48,6 @@ class SubmissionsApiController < ApplicationController
   # @response_field grade The grade for the submission, translated into the assignment grading scheme (so a letter grade, for example).
   # @response_field grade_matches_current_submission A boolean flag which is false if the student has re-submitted since the submission was last graded.
   # @response_field preview_url Link to the URL in canvas where the submission can be previewed. This will require the user to log in.
-  # @response_field submitted_at Timestamp when the submission was made.
   # @response_field url If the submission was made as a URL.
   # @response_field late Whether the submission was made after the applicable due date.
   def index
@@ -202,8 +201,9 @@ class SubmissionsApiController < ApplicationController
         result << hash
       end
     else
-      submissions = @context.submissions.except(:includes, :order).where(:user_id => student_ids).includes(:user).order(:id)
+      submissions = @context.submissions.except(:order).where(:user_id => student_ids).order(:id)
       submissions = submissions.where(:assignment_id => assignments) unless assignments.empty?
+      submissions = CANVAS_RAILS2 ? submissions.includes(:user) : submissions.preload(:user)
       submissions = Api.paginate(submissions, self, polymorphic_url([:api_v1, @section || @context, :student_submissions]))
       Submission.bulk_load_versioned_attachments(submissions)
       result = submissions.map do |s|
@@ -258,6 +258,21 @@ class SubmissionsApiController < ApplicationController
     end
   end
 
+  # @model RubricAssessment
+  #  {
+  #     "id" : "RubricAssessment",
+  #     "required": ["criterion_id"],
+  #     "properties": {
+  #       "criterion_id": {
+  #         "description": "The ID of the quiz question.",
+  #         "example": 1,
+  #         "type": "integer",
+  #         "format": "int64"
+  #       },
+  #     }
+  #  }
+  #
+  #
   # @API Grade or comment on a submission
   #
   # Comment on and/or update the grading for a student's assignment submission.
@@ -355,7 +370,7 @@ class SubmissionsApiController < ApplicationController
     @user = get_user_considering_section(params[:user_id])
 
     authorized = false
-    @submission = @assignment.find_or_initialize_submission(@user)
+    @submission = @assignment.submissions.where(user_id: @user).first || @assignment.submissions.build(user: @user)
 
     if params[:submission] || params[:rubric_assessment]
       authorized = authorized_action(@submission, @current_user, :grade)
@@ -372,7 +387,7 @@ class SubmissionsApiController < ApplicationController
         @submissions = @assignment.grade_student(@user, submission)
         @submission = @submissions.first
       else
-        @submission = @assignment.find_or_create_submission(@user)
+        @submission = @assignment.find_or_create_submission(@user) if @submission.new_record?
         @submissions ||= [@submission]
       end
 

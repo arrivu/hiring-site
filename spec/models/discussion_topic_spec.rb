@@ -39,7 +39,7 @@ describe DiscussionTopic do
   it "should require a valid discussion_type" do
     @topic = course_model.discussion_topics.build(:message => 'test', :discussion_type => "gesundheit")
     @topic.save.should == false
-    @topic.errors.detect { |e| e.first == 'discussion_type' }.should be_present
+    @topic.errors.detect { |e| e.first.to_s == 'discussion_type' }.should be_present
   end
 
   it "should update the assignment it is associated with" do
@@ -617,6 +617,7 @@ describe DiscussionTopic do
       # enroll as a student.
       course_with_student(:course => @course, :user => @ta, :active_enrollment => true)
       @topic.reload
+      DiscussionTopic.clear_cached_contexts
       @topic.user_can_see_posts?(@ta).should == false
     end
 
@@ -1148,7 +1149,7 @@ describe DiscussionTopic do
     it "should return the materialized view if it's up to date" do
       run_jobs
       view = DiscussionTopic::MaterializedView.find_by_discussion_topic_id(@topic.id)
-      @topic.materialized_view.should == [view.json_structure, view.participants_array, view.entry_ids_array, "[]"]
+      @topic.materialized_view.should == [view.json_structure, view.participants_array, view.entry_ids_array, []]
     end
 
     it "should update the materialized view on new entry" do
@@ -1169,7 +1170,7 @@ describe DiscussionTopic do
     it "should return empty data for a materialized view on a new (unsaved) topic" do
       new_topic = DiscussionTopic.new(:context => @topic.context, :discussion_type => DiscussionTopic::DiscussionTypes::SIDE_COMMENT)
       new_topic.should be_new_record
-      new_topic.materialized_view.should == [ "[]", [], [], "[]" ]
+      new_topic.materialized_view.should == [ "[]", [], [], [] ]
       Delayed::Job.strand_size("materialized_discussion:#{new_topic.id}").should == 0
     end
   end

@@ -1,4 +1,10 @@
 @import environment.sass
+@import learning_outcome_gradebook.scss
+
+#footer
+  display: none
+#main
+  margin-bottom: 0
 
 $cell_height: 33px
 
@@ -30,20 +36,23 @@ $cell_height: 33px
 .student-name
   color: #1b7eda
   text-shadow: #fbf8f8 0 0 1px
-.avatar
+
+.meta-cell .avatar
+  width: 25px
+  height: 25px
+  margin-top: 3px
+  margin-right: 4px
   float: left
-  width: 34px
-  img
-    max-width: 30px
-    height: 30px
+  position: relative
+  z-index: 1
+
 .student-placeholder
   display: none
 .student-section
-  position: relative
-  top: -7px
+  margin-top: -7px
   font-size: 10px
   color: #aaa
-.secondary_identifier_cell
+.secondary_identifier_cell, .custom_column
   color: #333
   font-size: 10px
   text-align: center
@@ -168,7 +177,7 @@ $cell_height: 33px
   color: #fff
   +border-radius(3px)
   padding: 5px 10px
-  z-index: 5
+  z-index: 7
   position: absolute
   font-size: 0.8em
   left: 0
@@ -182,17 +191,17 @@ $cell_height: 33px
     width: 0
     left: 15px
     content: ""
-
-  // make the tooltips for the top row pop-under so they fit in the grid
-  .slick-row[row="0"] &
-    bottom: -30px
-    top: auto
-    &:after
-      border-width: 0 5px 5px
-      bottom: auto
-      top: -5px
   .slick-cell.hover &, .gradebook-cell.focus &, .slick-cell.selected &
     display: block
+  &.first-row
+    top: 30px
+    &:after
+      border-top-color: transparent
+      border-left-color: transparent
+      border-right-color: transparent
+      border-bottom: 5px solid #444
+      bottom: 30px
+
 .slick-cell.completely-hidden
   display: none
 
@@ -283,6 +292,7 @@ $cell_height: 33px
   box-shadow: 0 0 5px rgba(81, 203, 238, 1)
 
 #gradebook_grid .slick-cell
+  z-index: auto
   &.active
     background-color: inherit
     z-index: 5
@@ -305,6 +315,8 @@ $cell_height: 33px
     background: none
     box-shadow: none !important
   .grade::-webkit-outer-spin-button
+    display: none
+  .grade::-ms-clear
     display: none
 .gradebook-cell-out-of-formatter
   padding-top: 0
@@ -388,8 +400,8 @@ $gradebook_checkbox_width: 16px
 .gradebook_filter input
   width: 300px
 
-=gradebook_menu_label
-  font-size: 12px
+=gradebook_menu_label($fontsize)
+  font-size: $fontsize
   font-weight: bold
   margin-bottom: 0
   vertical-align: 0px !important
@@ -400,9 +412,9 @@ $gradebook_checkbox_width: 16px
   width: 200px
   overflow-x: hidden
   overflow-y: auto
-  max-height: 550px
+  max-height: 275px
   label
-    +gradebook_menu_label
+    +gradebook_menu_label(12px)
   .ui-state-focus:last-child
     margin: 0 !important
 
@@ -436,6 +448,5 @@ $gradebook_checkbox_width: 16px
   margin-left: -16px
 
 .gradebook_drop_down
-  label
-    +gradebook_menu_label
-
+  li, label
+    +gradebook_menu_label(13px)
