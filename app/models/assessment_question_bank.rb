@@ -64,7 +64,6 @@ class AssessmentQuestionBank < ActiveRecord::Base
   def assessment_question_count
     self.assessment_questions.active.count
   end
-  
   def context_code
     "#{self.context_type.underscore}_#{self.context_id}"
   end

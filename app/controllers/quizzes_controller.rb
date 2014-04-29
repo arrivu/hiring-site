@@ -217,6 +217,7 @@ class QuizzesController < ApplicationController
              :QUIZ => quiz_json(@quiz, @context, @current_user, session),
              :SECTION_LIST => sections.map { |section| { :id => section.id, :name => section.name } },
              :QUIZZES_URL => polymorphic_url([@context, :quizzes]),
+             :TAG_CONTEXT_ID => @context.id,
              :QUIZ_IP_FILTERS_URL => polymorphic_url([:api, :v1, @context, @quiz, :ip_filters]),
              :CONTEXT_ACTION_SOURCE => :quizzes,
              :REGRADE_OPTIONS => regrade_options }

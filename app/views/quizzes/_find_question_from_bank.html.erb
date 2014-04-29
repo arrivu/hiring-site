@@ -62,19 +62,9 @@
     <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Project Question Banks") %></a>
   </div>
   <div class="clear"></div>
-  <fieldset>
-    <div class="control-group">
-      <tr><td>
-        <label for="question_tag" class="control-label"> Add Tags:</label></td>
-        <div class="controls">
-          <td><input type="text" style="width: 99%;"
-                     data-pre=<%= @context %>></td>
+  <div id="show_tag">
 
-        </div>
-      </tr>
-    </div>
-
-  </fieldset>
+  </div>
   <div class="message" style="display: none;"></div>
   <div class="find_banks">
     <%= t(:select_a_question_bank, "Select a question bank from the list below to link it to the this assessment as a question group.") %>

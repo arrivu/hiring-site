@@ -2058,11 +2058,31 @@ define([
         }
       }
     });
+      $(".get_tag_id").click(function(event) {
 
+      });
     var $findBankDialog = $("#find_bank_dialog");
+    var tag_context_id = ENV.TAG_CONTEXT_ID;
 
     $(".find_bank_link").click(function(event) {
       event.preventDefault();
+        console.log(tag_context_id);
+        $.ajaxJSON('/get_tags_filter' , 'GET', {taggable_id: tag_context_id}  , function(filter_tags) {
+            var arrayLength = filter_tags.length;
+            for (var i = 0; i < arrayLength; i++) {
+                console.log(filter_tags[i]);
+                var mydiv = document.getElementById("show_tag");
+                var aTag = document.createElement('a');
+                aTag.setAttribute('id',"yourlink.htm");
+                aTag.setAttribute('class',"get_tag_id");
+                aTag.innerHTML = filter_tags[i];
+                mydiv.appendChild(aTag);
+                //Do something
+            }
+//            console.log(JSON.stringify(filter_tags));
+
+        });
+
       var $dialog = $findBankDialog;
       $dialog.data('form', $(this).closest(".quiz_group_form"));
       if (!$dialog.hasClass('loaded')) {
@@ -2084,12 +2104,6 @@ define([
             $bank.show();
           }
             console.log(bank);
-            $.ajaxJSON('/get_tags_filter' , 'GET', {taggable_type: "QuizQuestion", taggable_id: bank.context_id }  , function(filter_tags) {
-                $('#question_tag_tokens').data('pre',filter_tags);
-                $('#question_tag_tokens').tokenInput('/context_tags.json',{prePopulate: $('#question_tag_tokens').data('load')});
-            }, function(data) {
-                $.flashError(I18n.t('errors.loading_tags_failed', "Question Tags failed to load, please try again"));
-            });
         }, function(data) {
           $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
         });
@@ -2148,6 +2162,7 @@ define([
             $bank.data('bank_data', bank);
             $bank.show();
           }
+            console.log(idx);
           $dialog.find(".bank:not(.blank):first").click();
         }, function(data) {
           $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
