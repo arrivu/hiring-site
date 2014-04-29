@@ -72,7 +72,6 @@ routes.draw do
   #  match 'group_unassigned_members' => 'groups#unassigned_members', :as => :group_unassigned_members, :via => :get
   #end
 
-
   concern :files do
     resources :files do
       match 'inline' => 'files#text_show', :as => :text_inline

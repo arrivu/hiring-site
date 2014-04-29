@@ -20,11 +20,7 @@
     <div class="image-block-content row-fluid">
       <h1 class="h1">
         <span class="hide-if-editing">
-<<<<<<< HEAD
-          <table><tr><td>First Name:</td><td><%= @user_data[:short_name] %></td></tr>
-=======
           <table><tr><td>First Name:</td><td><%= @user_data[:name] %></td></tr>
->>>>>>> question_tag_add
             <tr><td>Last Name:</td><td><%= @user[:last_name] %></td></tr></table></span>
       </h1>
       <% if @user_data[:can_edit] %>
@@ -164,12 +160,11 @@
 
                   <% @user_data[:common_academic].each do |link| %>
                       <tr>
-                        <input type="hidden" name="link_ids[]" value=<%= link.id.to_i %>>
-                        <td><input type="text" name="link_degrees[]" value="<%= link.degree %>"></td>
-                        <td><input type="text" name="link_disciplines[]" value="<%= link.discipline %>"></td>
-                        <td><input type="text" name="link_colleges[]" value="<%= link.college %>"></td>
-                        <td><input type="text" name="link_year_of_completions[]" value="<%= link.year_of_completion %>"></td>
-                        <td><input type="text" name="link_percentages[]" value="<%= link.percentage %>"></td>
+                        <td><%= link.degree %></td>
+                        <td><%= link.discipline %></td>
+                        <td><%= link.college %></td>
+                        <td><%= link.year_of_completion %></td>
+                        <td><%= link.percentage %></td>
                       </tr>
                   <% end %>
 
@@ -241,13 +236,13 @@
 
               <% @user_data[:common_employment].each do |emp| %>
                   <tr>
-                    <input type="hidden" name="link_experience_ids[]" value="<%= emp.id %>">
-                    <td><input type="text" name="link_organizations[]" value="<%= emp.organization %>"></td>
-                    <td><input type="text" name="link_from_dates[]" value="<%= emp.from_date %>"></td>
-                    <td><input type="text" name="link_end_dates[]" value="<%= emp.end_date %>"></td>
-                    <td><input type="text" name="link_designations[]" value="<%= emp.designation %>"></td>
-                    <td><input type="text" name="link_permanents[]" value="<%= emp.permanent %>"></td>
-                    <td><input type="text" name="link_reason_for_leaving[]" value="<%= emp.reason_for_leaving %>"></td>
+
+                    <td><%= emp.organization %></td>
+                    <td><%= emp.from_date %></td>
+                    <td><%= emp.end_date %></td>
+                    <td><%= emp.designation %></td>
+                    <td><%= emp.permanent %></td>
+                    <td><%= emp.reason_for_leaving %></td>
                   </tr>
               <% end %>
             </table>

@@ -177,8 +177,8 @@ define([
         $section.loadingImage('remove');
         $(".option_for_section_" + section.id).text(section.name);
         $("#section_" + section.id + " td .name").text(section.name);
-        $("#section_" + section.id + " td .start_date").text($.parseFromISO(section.start_at).datetime_formatted);
-        $("#section_" + section.id + " td  .end_date").text($.parseFromISO(section.end_at).datetime_formatted);
+        $("#section_" + section.id + " td .start_date").text($.datetimeString(section.start_at));
+        $("#section_" + section.id + " td  .end_date").text($.datetimeString(section.end_at));
         $("#section_" + section.id + " td .sis_id").text(section.sis_source_id);
         $("#section_" + section.id + " td .restrict_enrollments").text(section.restrict_enrollments_to_section_dates);
         $("#edit_section_form").dialog('close');
