@@ -17,7 +17,7 @@
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div style="width: 100%;float: left;">
-        <div class="" style="width: 100%;float: left;">
+        <div class="" style="width: 80%;float: left;">
           <table class="table">
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
@@ -53,23 +53,23 @@
             <% end %>
           </table>
         </div>
-        <!--<div class="image-block" style="float: right;" >-->
-          <!--<div class="image-block-image profile-avatar-wrapper">-->
+        <div class="image-block" style="float: right;" >
+          <div class="image-block-image profile-avatar-wrapper">
 
-            <!--&lt;!&ndash;<a href="#" class="profile-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">&ndash;&gt;-->
-            <!--&lt;!&ndash;<%#= square_avatar_image @current_user[:id], 128 %>&ndash;&gt;-->
-            <!--&lt;!&ndash;<i class="icon-edit"></i>&ndash;&gt;-->
-            <!--&lt;!&ndash;</a>&ndash;&gt;-->
-            <!--<%# if @user_data %>-->
-                <!--<a href="#" class="profile-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
-                  <!--<%#= square_avatar_image @current_user[:id], 200 %>-->
-                  <!--<i class="icon-edit"></i>-->
-                <!--</a>-->
-            <!--<%# else %>-->
-                <!--<%#= square_avatar_image @current_user , 200 %>-->
-            <!--<%# end %>-->
-          <!--</div>-->
-          <!--</div>-->
+            <!--<a href="#" class="profile-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
+            <!--<%#= square_avatar_image @current_user[:id], 128 %>-->
+            <!--<i class="icon-edit"></i>-->
+            <!--</a>-->
+            <% if @candidate_detail %>
+                <a href="#" class="profile-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
+                  <%= square_avatar_image @candidate_detail[:id], 200 %>
+                  <i class="icon-edit"></i>
+                </a>
+            <% else %>
+                <%= square_avatar_image @candidate_detail[:id] , 200 %>
+            <% end %>
+          </div>
+          </div>
         </div>
       </div>
       <% if @candidate_filter.academics == TRUE %>
