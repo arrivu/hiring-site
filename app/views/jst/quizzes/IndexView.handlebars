@@ -1,15 +1,15 @@
 <div class="header-bar">
   <div class="header-bar-left form-inline">
     <label class="hidden-inline-text" for="searchTerm">{{#t "search_for_quiz"}}Search for Quiz{{/t}}</label>
-    <input id="searchTerm" placeholder="{{#t "search_for_quiz"}}Search for Quiz{{/t}}" value="" type="search" />
+    <input id="searchTerm" placeholder="{{#t "search_for_quiz"}}Search for Assessments{{/t}}" value="" type="search" />
   </div>
 
   {{#ifAny permissions.create permissions.manage}}
   <div class="header-bar-right form-inline">
     <a href="{{urls.new_quiz_url}}" class="btn btn-primary new-quiz-link icon-plus" role="button"
-       title='{{#t "title_add_quiz"}}Add Quiz{{/t}}'
+       title='{{#t "title_add_quiz"}}Add Assessment{{/t}}'
        aria-label='{{#t "title_add_quiz"}}Add Quiz{{/t}}'>
-      {{#t "add_quiz"}}Quiz{{/t}}
+      {{#t "add_quiz"}}Assessment{{/t}}
     </a>
 
     <a class="al-trigger btn" role="button" aria-haspopup="true" aria-owns="toolbar-1" href="#">
