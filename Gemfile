@@ -12,10 +12,11 @@ else
 end
 
 # enforce the version of bundler itself, to avoid any surprises
-gem 'bundler', '1.6.2'
+
 #required_bundler_version = '1.5.1'..'1.5.3'
 #gem 'bundler', [">=#{required_bundler_version.first}", "<=#{required_bundler_version.last}"]
-#
+gem 'bundler', '1.6.2'
+
 #unless required_bundler_version.include?(Bundler::VERSION)
 #  if Bundler::VERSION < required_bundler_version.first
 #    bundle_command = "gem install bundler -v #{required_bundler_version.last}"

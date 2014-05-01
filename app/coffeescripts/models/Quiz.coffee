@@ -49,8 +49,10 @@ define [
       if @get 'html_url'
         @set 'base_url', @get('html_url').replace(/quizzes\/\d+/, "quizzes")
 
-        @set 'url',           "#{@get 'base_url'}/#{@get 'id'}"
-        @set 'edit_url',      "#{@get 'base_url'}/#{@get 'id'}/edit"
+#        @set 'url',           "#{@get 'base_url'}/#{@get 'id'}"
+#        @set 'edit_url',      "#{@get 'base_url'}/#{@get 'id'}/edit"
+        @set 'url',           "#{@get 'base_url'}"
+        @set 'edit_url',      "#{@get 'base_url'}/edit"
         @set 'publish_url',   "#{@get 'base_url'}/publish"
         @set 'unpublish_url', "#{@get 'base_url'}/unpublish"
 

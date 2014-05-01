@@ -434,4 +434,5 @@ class AssessmentQuestion < ActiveRecord::Base
   end
 
   scope :active, where("assessment_questions.workflow_state<>'deleted'")
+  scope :not_text_only_question, where("assessment_questions.question_data[:question_type]<>'text_only_question' and assessment_questions.workflow_state<>'deleted'")
 end

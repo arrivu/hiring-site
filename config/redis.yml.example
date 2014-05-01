@@ -11,7 +11,7 @@
     - redis://localhost
 #   - redis://redis02
 
-<<<<<<< HEAD
+
 # test:
 #   # only tests that are exercising the integration with redis require redis to run.
 #   servers:
@@ -20,13 +20,3 @@
 #   # use this server for anything else, make sure to set aside a database id for
 #   # these tests to use.
 #   database: 1
-=======
-test:
-  # only tests that are exercising the integration with redis require redis to run.
-  servers:
-    - redis://localhost
-  # warning: the redis database will get cleared before each test, so if you
-  # use this server for anything else, make sure to set aside a database id for
-  # these tests to use.
-  database: 1
->>>>>>> 089440d8c13303bfde20503b48aca40275c5f721

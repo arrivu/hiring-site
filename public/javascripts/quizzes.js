@@ -2229,7 +2229,6 @@ define([
                 var $bank = $findBankDialog.find(".bank.selected:first");
                 var bank = $bank.getTemplateData({textValues: ['title'], dataValues: ['id', 'context_id', 'context_type']});
                 var $form = $findBankDialog.data('form');
-                console.log($('.shuffle_question_bank_id:checked').val());
                 if($('.shuffle_question_bank_id:checked').val() == "on" )
                 {
                     shuffle_id = "true";
@@ -2238,7 +2237,6 @@ define([
                 {
                     shuffle_id = "false";
                 }
-                console.log(shuffle_id);
                 $form.find(".shuffle_question_bank").val(shuffle_id);
                 $form.find(".bank_id").val(bank.id);
                 bank.bank_name = bank.title;

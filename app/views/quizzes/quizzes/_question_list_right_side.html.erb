@@ -20,10 +20,12 @@
         <% end %>
 
       <% else %>
-        <a class="jump_to_question_link" href="#question_<%= q[:id] %>">
-          <i class="placeholder <%= icon %>"><span class="screenreader-only icon-text"><%= text %></span></i><%= q[:question_name] %>
-          <span class="screenreader-only marked-status"><%= marked %></span>
-        </a>
+        <% unless q[:question_type] == "text_only_question" %>
+            <a class="jump_to_question_link" href="#question_<%= q[:id] %>">
+              <i class="placeholder <%= icon %>"><span class="screenreader-only icon-text"><%= text %></span></i><%= q[:question_name] %>
+              <span class="screenreader-only marked-status"><%= marked %></span>
+            </a>
+        <% end %>
       <% end %>
     </li>
   <% end %>

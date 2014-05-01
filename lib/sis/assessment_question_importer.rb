@@ -102,7 +102,7 @@ module SIS
                       if ans1_weight != ans2_weight
                         if question.with_versioning(&:save)
                           question.workflow_state = status
-                          question.insert_at_bottom
+                          #question.insert_at_bottom
                         end
                       else
                         raise ImportError, "Improper weight for question #{question_row}"
@@ -160,7 +160,7 @@ module SIS
                          if @weight_count == 1
                            if question.with_versioning(&:save)
                              question.workflow_state = status
-                             question.insert_at_bottom
+                             #question.insert_at_bottom
                            end
                          else
                            raise ImportError, "Improper weight for question #{question_row}"
@@ -200,7 +200,7 @@ module SIS
                              ans4_weight == "100" || ans4_weight == nil and ans5_weight == "100" || ans5_weight == nil
                             if question.with_versioning(&:save)
                               question.workflow_state = status
-                              question.insert_at_bottom
+                              #question.insert_at_bottom
                             end
                           else
                             raise ImportError, "Improper weight for question #{question_row}"
@@ -236,7 +236,7 @@ module SIS
                          ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
                         if question.with_versioning(&:save)
                           question.workflow_state = status
-                          question.insert_at_bottom
+                          #question.insert_at_bottom
                         end
                       else
                         raise ImportError, "Improper weight for question #{question_row}"
@@ -272,7 +272,7 @@ module SIS
                     if ans1_weight != ans2_weight
                       if question.with_versioning(&:save)
                         question.workflow_state = status
-                        question.insert_at_bottom
+                        #question.insert_at_bottom
                       end
                     else
                       raise ImportError, "Improper weight for question #{question_row}"
@@ -329,7 +329,7 @@ module SIS
                       if @weight_count == 1
                         if question.with_versioning(&:save)
                           question.workflow_state = status
-                          question.insert_at_bottom
+                          #question.insert_at_bottom
                         end
                       else
                         raise ImportError, "Improper weight for question #{question_row}"
@@ -369,7 +369,7 @@ module SIS
                       ans4_weight == "100" || ans4_weight == nil and ans5_weight == "100" || ans5_weight == nil
                     if question.with_versioning(&:save)
                       question.workflow_state = status
-                      question.insert_at_bottom
+                      #question.insert_at_bottom
                     end
                   else
                     raise ImportError, "Improper weight for question #{question_row}"
@@ -405,7 +405,7 @@ module SIS
                        ans5_weight == "100" || ans5_weight == "0" || ans5_weight == nil
                       if question.with_versioning(&:save)
                         question.workflow_state = status
-                        question.insert_at_bottom
+                        #question.insert_at_bottom
                       end
                     else
                       raise ImportError, "Improper weight for question #{question_row}"

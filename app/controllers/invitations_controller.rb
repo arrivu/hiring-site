@@ -70,7 +70,7 @@ class InvitationsController < ApplicationController
   def fill_registration_form
     @show_left_side = false
     @headers = false
-    reset_session
+    #reset_session
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -82,7 +82,7 @@ class InvitationsController < ApplicationController
           @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
           @current_pseudonym = @pseudonym
         else
-          #password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
+          password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
           @user = User.create!(:name => params[:invitation][:unique_id])
           @user.workflow_state = 'registered'
           @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
@@ -99,6 +99,10 @@ class InvitationsController < ApplicationController
         @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
         @user_experience = UserWorkExperience.find_all_by_user_id(@candidate_detail.id)
         @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+        @bio = UserProfile.find_by_user_id(@candidate_detail.id)
+        if @bio != nil
+          @bio_text = @bio.bio
+        end
         @candidate_email = params[:invitation][:unique_id]
         if @candidate_filter == nil
           redirect_to course_quizzes_path(@context)
@@ -116,7 +120,24 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers = false
     clear_crumbs
-    @user = @current_user.id
+    @user ||= @current_user
+    @context = @user.profile if @user == @current_user
+
+    @user_data = profile_data(
+        @user.profile,
+        @current_user,
+        session,
+        ['links', 'user_services']
+    )
+
+    if UserProfile.find_by_user_id(@user) != nil
+      @bio_update = UserProfile.find_by_user_id(@user)
+      @bio_update.update_attributes(:bio => params[:bio])
+    else
+      @bio_update = UserProfile.new(:bio => params[:bio])
+      @bio_update.user_id = @user
+      @bio_update.save!
+    end
 
     if params[:link_degrees] && params[:link_disciplines] && params[:link_colleges] && params[:link_year_of_completions] && params[:link_percentages] && params[:link_ids]
       user_academic_ids = @current_user.user_academic_ids

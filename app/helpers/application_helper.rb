@@ -90,7 +90,7 @@ module ApplicationHelper
         end
       end
       image_tag(image_url,
-        :style => "width: #{width}px; min-height: #{(width/1.6).to_i}px; max-height: #{(width*1.6).to_i}px",
+        :style => "width: #{width}px; min-height: #{(width/1.6).to_i}px; max-height: #{(width*1.6).to_i}px; border-radius: 25px; border: 2px solid #7C7B7B;",
         :alt => alt_tag,
         :class => Array(opts[:image_class]).join(' '))
     end

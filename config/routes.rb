@@ -72,7 +72,6 @@ routes.draw do
   #  match 'group_unassigned_members' => 'groups#unassigned_members', :as => :group_unassigned_members, :via => :get
   #end
 
-
   concern :files do
     resources :files do
       match 'inline' => 'files#text_show', :as => :text_inline
@@ -1345,6 +1344,7 @@ routes.draw do
       put "courses/:course_id/quizzes/:id", :action => :update, :path_name => 'course_quiz_update'
       delete "courses/:course_id/quizzes/:id", :action => :destroy, :path_name => 'course_quiz_destroy'
       post "courses/:course_id/quizzes/:id/reorder", :action => :reorder, :path_name => 'course_quiz_reorder'
+      #post "courses/:course_id/quizzes/:id/publish", :action => :publish, :path_name => 'course_quiz_publish'
     end
 
     scope(:controller => 'quizzes/quiz_groups') do

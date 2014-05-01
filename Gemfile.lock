@@ -274,7 +274,7 @@ GEM
     rb-fchange (0.0.6)
       ffi
     rb-fsevent (0.9.4)
-    rb-inotify (0.9.3)
+    rb-inotify (0.9.4)
       ffi (>= 0.5.0)
     rb-kqueue (0.2.2)
       ffi (>= 0.5.0)
