@@ -117,13 +117,13 @@ class AssessmentQuestionBank < ActiveRecord::Base
       ids = (ids - exclude_ids).shuffle[0...count]
       ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids).shuffle
     else
-      text_only_question =0
-      self.assessment_questions.active.each do |assessment_question|
-        if assessment_question.question_data[:question_type] =='text_only_question'
-          text_only_question+=1
-        end
-      end
-      count += text_only_question
+      #text_only_question =0
+      #self.assessment_questions.active.each do |assessment_question|
+      #  if assessment_question.question_data[:question_type] =='text_only_question'
+      #    text_only_question+=1
+      #  end
+      #end
+      #count += text_only_question
       ids = ids - exclude_ids
       ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids[0...count])
     end
