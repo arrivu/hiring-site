@@ -666,6 +666,7 @@ class Quizzes::Quiz < ActiveRecord::Base
           bank = ::AssessmentQuestionBank.find_by_id(q[:assessment_question_bank_id]) if q[:assessment_question_bank_id].present?
           if bank
             questions = bank.select_for_submission(q[:pick_count], exclude_ids, q[:shuffle_question_bank])
+            @qroup_name = q[:name]
             questions = questions.map { |aq| aq.data }
             questions.each do |question|
               if question[:answers]
@@ -674,6 +675,7 @@ class Quizzes::Quiz < ActiveRecord::Base
               end
               question[:points_possible] = q[:question_points] unless question[:question_type] == "text_only_question"
               question[:published_at] = q[:published_at]
+              question[:group_name] = @qroup_name
               user_questions << generate_submission_question(question)
             end
           end

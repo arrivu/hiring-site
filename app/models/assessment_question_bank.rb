@@ -112,20 +112,20 @@ class AssessmentQuestionBank < ActiveRecord::Base
   
   def select_for_submission(count, exclude_ids=[], shuffle_id)
     ids = self.assessment_questions.active.pluck(:id)
-
     if shuffle_id
       ids = (ids - exclude_ids).shuffle[0...count]
       ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids).shuffle
     else
-      #text_only_question =0
-      #self.assessment_questions.active.each do |assessment_question|
-      #  if assessment_question.question_data[:question_type] =='text_only_question'
-      #    text_only_question+=1
-      #  end
-      #end
-      #count += text_only_question
+      text_only_question =0
+      self.assessment_questions.active.each do |assessment_question|
+        if assessment_question.question_data[:question_type] =='text_only_question'
+          text_only_question+=1
+        end
+      end
+      count += text_only_question
       ids = ids - exclude_ids
-      ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids[0...count])
+      ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids[0...count], :order => "id")
+
     end
   end
   
