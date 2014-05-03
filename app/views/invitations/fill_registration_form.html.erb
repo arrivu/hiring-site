@@ -1,7 +1,7 @@
 <%
-  jammit_css :profile_show, :tinymce
-   js_bundle :profile_show
-   js_env PROFILE: @user_data
+   jammit_css :profile_show, :tinymce
+   js_bundle :fill_registration
+   js_env PROFILE: @user
    js_env(folder_id: @user.profile_pics_folder[:id]) if @user == @current_user
    @body_classes << "gradebook2 full-width" %>
 <style>

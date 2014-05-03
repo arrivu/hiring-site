@@ -42,7 +42,7 @@ define ['jquery', 'compiled/util/ProximityLoader'], ($, ProximityLoader) ->
     _initializeLoader: ->
       @loader = new ProximityLoader @$el,
         callback: @_initializeDialog
-        dependencies: ['compiled/views/profiles/AvatarDialogView']
+        dependencies: ['compiled/views/profiles/AvatarDialogView', 'compiled/views/fill_registration/AvatarDialogView']
 
     # Internal: Create/cache an instance of AvatarDialogView.
     #
