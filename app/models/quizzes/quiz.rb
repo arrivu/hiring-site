@@ -668,7 +668,9 @@ class Quizzes::Quiz < ActiveRecord::Base
             questions = bank.select_for_submission(q[:pick_count], exclude_ids, q[:shuffle_question_bank])
             @qroup_name = q[:name]
             questions = questions.map { |aq| aq.data }
+            cnts = 0
             questions.each do |question|
+              cnts += 1
               if question[:answers]
                 question[:answers] = prepare_answers(question)
                 question[:matches] = question[:matches].sort_by { |m| m[:text] || ::SortFirst } if question[:matches]
@@ -676,6 +678,7 @@ class Quizzes::Quiz < ActiveRecord::Base
               question[:points_possible] = q[:question_points] unless question[:question_type] == "text_only_question"
               question[:published_at] = q[:published_at]
               question[:group_name] = @qroup_name
+              question[:counter] = cnts
               user_questions << generate_submission_question(question)
             end
           end

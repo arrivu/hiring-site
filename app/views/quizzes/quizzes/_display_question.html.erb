@@ -24,8 +24,13 @@
     right_answers = (hash_get(question, :matches) || hash_get(question, :answers).sort_by{|a| rand }) if question_type.entry_type == "matching" rescue {}
   end
 %>
-<% question[:group_name] %>
+
 <div class="question_holder <%= "group" if in_group %>" id="<%= "question_template" unless question %>" style="<%= hidden unless question %>">
+<% if hash_get(question, :counter) == 1 %>
+    <% if hash_get(question, :group_name) %>
+      <div class="display_question question" style="text-align:center;"><h1><%= hash_get(question, :group_name) %></h1></div>
+    <% end %>
+<% end %>
   <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
   <a name="question_<%= hash_get(question, :id, "blank") %>"></a>
   <% marked = assessing && @stored_params && @stored_params["question_#{hash_get(question, :id)}_marked"].present? %>
