@@ -1502,7 +1502,30 @@ define([
             }
 
         });
+        $("#online_proctoring_option").click(function() {
+            var x = $("#online_proctoring_option").is(":checked");
+            if(x)
+            {
+                $("#img_proctoring").show();
+            }
+            else
+            {
+                $("#img_proctoring").hide();
+            }
 
+        });
+        $("#web_proctoring_option").click(function() {
+            var x = $("#web_proctoring_option").is(":checked");
+            if(x)
+            {
+                $("#max_limits").show();
+            }
+            else
+            {
+                $("#max_limits").hide();
+            }
+
+        });
         $("#ip_filters_dialog").delegate('.ip_filter', 'click', function(event) {
             event.preventDefault();
             var filter = $(this).getTemplateData({textValues: ['filter']}).filter;

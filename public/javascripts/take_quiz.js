@@ -356,6 +356,17 @@ define([
   $(function() {
     $.scrollSidebar();
     autoBlurActiveInput();
+      var window_focus;
+      $(window).focus(function() {
+          window_focus = true;
+      })
+          .blur(function() {
+              window_focus = false;
+          });
+
+      $(document).ready(function(){
+          setInterval(function() { $('body').append('has focus? ' + window_focus + '<br>'); }, 1000000);
+      });
 
     if($("#preview_mode_link").length == 0) {
       window.onbeforeunload = function() {
