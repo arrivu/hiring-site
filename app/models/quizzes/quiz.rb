@@ -1100,6 +1100,10 @@ class Quizzes::Quiz < ActiveRecord::Base
       shuffle_answers
       show_correct_answers
       online_proctoring
+      image_proctoring
+      web_proctoring
+      maximum_web_proctoring
+      show_remaining_counts
       points_possible
       hide_results
       access_code

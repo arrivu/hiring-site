@@ -1502,16 +1502,49 @@ define([
             }
 
         });
+        var online_proctoring = $("#online_proctoring_option").is(":checked");
+        if(online_proctoring)
+        {
+            $("#img_proctoring").show();
+        }
+        else
+        {
+            $("#img_proctoring").hide();
+            $("#max_limits").hide();
+        }
+        var web_proctoring = $("#web_proctoring_option").is(":checked");
+        if(web_proctoring)
+        {
+            $("#max_limits").show();
+        }
+        else
+        {
+            $("#max_limits").hide();
+        }
+
         $("#online_proctoring_option").click(function() {
             var x = $("#online_proctoring_option").is(":checked");
-            if(x)
+            if($('#online_proctoring_option:checked').val() == "on")
             {
                 $("#img_proctoring").show();
+
             }
             else
             {
                 $("#img_proctoring").hide();
+                $("#max_limits").hide();
+                document.getElementById("maximum_web_proctoring").value= "";
+                if($('#show_remaining_counts:checked').val() == "on" )
+                {
+                    show_remaining_counts = "true";
+                }
+                else
+                {
+                    show_remaining_counts = "false";
+                }
+                $("#show_remaining_counts").val(show_remaining_counts);
             }
+
 
         });
         $("#web_proctoring_option").click(function() {
@@ -1523,6 +1556,17 @@ define([
             else
             {
                 $("#max_limits").hide();
+                document.getElementById("maximum_web_proctoring").value= "";
+                if($('#show_remaining_counts:checked').val() == "on" )
+                {
+                    show_remaining_counts = "true";
+                }
+                else
+                {
+                    show_remaining_counts = "false";
+                }
+                $("#show_remaining_counts").val(show_remaining_counts);
+
             }
 
         });
