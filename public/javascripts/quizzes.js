@@ -1502,10 +1502,12 @@ define([
             }
 
         });
+
         var online_proctoring = $("#online_proctoring_option").is(":checked");
         if(online_proctoring)
         {
             $("#img_proctoring").show();
+            $('#img_proctoring').css('display','block');
         }
         else
         {
@@ -1516,15 +1518,28 @@ define([
         if(web_proctoring)
         {
             $("#max_limits").show();
+            $('#max_limits').css('display','block');
         }
         else
         {
             $("#max_limits").hide();
         }
+        $("#image_proctoring_option").click(function() {
 
+            var image_proctoring = $("#image_proctoring_option").is(":checked");
+            if(image_proctoring)
+            {
+                image_proctoring_option = "1";
+            }
+            else
+            {
+                image_proctoring_option = "0";
+            }
+            $("#image_proctoring_option").val(image_proctoring_option);
+        });
         $("#online_proctoring_option").click(function() {
             var x = $("#online_proctoring_option").is(":checked");
-            if($('#online_proctoring_option:checked').val() == "on")
+            if(x)
             {
                 $("#img_proctoring").show();
 
@@ -1536,13 +1551,17 @@ define([
                 document.getElementById("maximum_web_proctoring").value= "";
                 if($('#show_remaining_counts:checked').val() == "on" )
                 {
-                    show_remaining_counts = "true";
+                    show_remaining_counts = "1";
                 }
                 else
                 {
-                    show_remaining_counts = "false";
+                    show_remaining_counts = "0";
                 }
                 $("#show_remaining_counts").val(show_remaining_counts);
+                $("#image_proctoring_option").val("0");
+                $("#web_proctoring_option").val("0");
+                $("#image_proctoring_option").attr("checked", false);
+                $("#web_proctoring_option").attr("checked", false);
             }
 
 
@@ -1557,6 +1576,7 @@ define([
             {
                 $("#max_limits").hide();
                 document.getElementById("maximum_web_proctoring").value= "";
+                $("#show_remaining_counts").attr("checked", false);
                 if($('#show_remaining_counts:checked').val() == "on" )
                 {
                     show_remaining_counts = "true";

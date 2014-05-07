@@ -363,16 +363,19 @@
                 </div>
                 <div class="option-group">
                   <label class="checkbox" for="image_proctoring">
-                    <input type="checkbox" name="quiz[online_proctoring]" <%= "checked" if @quiz.online_proctoring %> value="<%= @quiz.online_proctoring %>" id="online_proctoring_option" />
+                    <%= hidden_field_tag "quiz[online_proctoring]", "0" %>
+                    <input type="checkbox" name="quiz[online_proctoring]" <%= "checked" if @quiz.online_proctoring %> value="1" id="online_proctoring_option" />
                     Online Proctoring
                   </label>
                   <div class="options" id="img_proctoring" style="display:none;">
                       <label class="checkbox" for="image_proctoring">
-                        <input type="checkbox" name="quiz[image_proctoring]" <%= "checked" if @quiz.image_proctoring %> value="<%= @quiz.image_proctoring %>" id="image_proctoring_option" />
+                        <%= hidden_field_tag "quiz[image_proctoring]", "0" %>
+                        <input type="checkbox" name="quiz[image_proctoring]" <%= "checked" if @quiz.image_proctoring %> value="1" id="image_proctoring_option" />
                         Image Proctoring
                       </label>
                       <label class="checkbox" for="web_proctoring">
-                        <input type="checkbox" name="quiz[web_proctoring]" <%= "checked" if @quiz.web_proctoring %> value="<%= @quiz.web_proctoring %>" id="web_proctoring_option" />
+                        <%= hidden_field_tag "quiz[web_proctoring]", "0" %>
+                        <input type="checkbox" name="quiz[web_proctoring]" <%= "checked" if @quiz.web_proctoring %> value="1" id="web_proctoring_option" />
                         Web Proctoring
                       </label>
                   </div>
