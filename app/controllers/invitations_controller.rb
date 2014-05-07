@@ -75,7 +75,7 @@ class InvitationsController < ApplicationController
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
         @course_section = unique_code_association.course_section
-        @context = unique_code_association.course(@course_section)
+        @course = unique_code_association.course(@course_section)
         @pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
         if @pseudonym
           @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
@@ -90,22 +90,23 @@ class InvitationsController < ApplicationController
           @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
           @user.save!
           @user_pseudonym.save!
-          @enrollment = @context.enroll_user(@user, type='StudentEnrollment',:enrollment_state => 'active',:section => @course_section)
+          @enrollment = @course.enroll_user(@user, type='StudentEnrollment',:enrollment_state => 'active',:section => @course_section)
           @enrollment.save!
         end
+        @context = @current_user
         @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
         @candidate_detail= @get_pseudonym.user
         @user ||= @current_user
         @user_data = UserAcademic.find_all_by_user_id(@candidate_detail.id)
         @user_experience = UserWorkExperience.find_all_by_user_id(@candidate_detail.id)
-        @candidate_filter = CandidateDetail.find_by_course_id(@context.id)
+        @candidate_filter = CandidateDetail.find_by_course_id(@course.id)
         @bio = UserProfile.find_by_user_id(@candidate_detail.id)
         if @bio != nil
           @bio_text = @bio.bio
         end
         @candidate_email = params[:invitation][:unique_id]
         if @candidate_filter == nil
-          redirect_to course_quizzes_path(@context)
+          redirect_to course_quizzes_path(@course)
         end
       else
         flash[:error] = "Invalid Access Code "
@@ -122,7 +123,7 @@ class InvitationsController < ApplicationController
     clear_crumbs
     @user ||= @current_user
     @context = @user.profile if @user == @current_user
-
+    #
     @user_data = profile_data(
         @user.profile,
         @current_user,

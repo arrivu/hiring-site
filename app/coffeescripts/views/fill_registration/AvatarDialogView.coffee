@@ -17,16 +17,13 @@
 #
 
 define [
-  'i18n!profile'
   'jquery'
   'underscore'
   'compiled/views/DialogBaseView'
-  'compiled/views/fill_registration/UploadFileView'
   'compiled/views/fill_registration/TakePictureView'
-  'compiled/views/fill_registration/GravatarView'
   'jst/fill_registration/avatarDialog'
   'jst/fill_registration/avatar'
-], (I18n, $, _, DialogBaseView, UploadFileView, TakePictureView, GravatarView, template, avatarTemplate) ->
+], ($, _, DialogBaseView, TakePictureView, template, avatarTemplate) ->
 
   class AvatarDialogView extends DialogBaseView
 
@@ -36,9 +33,7 @@ define [
       h: 128
       w: 128
 
-    #@child 'uploadFileView',  '#upload-picture'
     @child 'takePictureView', '#take-picture'
-    #@child 'gravatarView', '#from-gravatar'
 
     dialogOptions: ->
       title: @messages.selectAvatar
@@ -54,10 +49,10 @@ define [
       width: 600
 
     messages:
-      selectAvatar:    I18n.t('buttons.select_profile_picture', 'Select Profile Picture')
-      cancel:         I18n.t('#buttons.cancel', 'Cancel')
-      selectImage:    I18n.t('buttons.save', 'Save')
-      selectingImage: I18n.t('buttons.selecting_image', 'Selecting Image...')
+      selectAvatar:     'Select Profile Picture'
+      cancel:           'Cancel'
+      selectImage:      'Save'
+      selectingImage:   'Selecting Image...'
 
     events:
       'click .nav-pills a'       : 'onNav'
@@ -65,9 +60,7 @@ define [
       'change #selected-photo'   : 'onSelectAvatar'
 
     initialize: () ->
-      #@uploadFileView = new UploadFileView(avatarSize: @AVATAR_SIZE)
       @takePictureView = new TakePictureView(avatarSize: @AVATAR_SIZE)
-      #@gravatarView   = new GravatarView(avatarSize: @AVATAR_SIZE)
       super
 
     show: ->
@@ -178,7 +171,7 @@ define [
       }).then(_.partial(@updateDomAvatar, url))
 
     updateDomAvatar: (url) =>
-      $('.profile_pic_link img, .profile-link img')
+      $('.profile-pic-link img')
       .attr('src', url)
       @close()
 
@@ -202,6 +195,7 @@ define [
 
     teardown: ->
       _.each(@children, (child) -> child.teardown())
+
 
     toJSON: ->
       hasFileReader = !!window.FileReader

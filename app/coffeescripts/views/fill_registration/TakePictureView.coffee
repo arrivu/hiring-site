@@ -34,6 +34,9 @@ define [
       'click .take-snapshot-btn'  : 'onSnapshot'
       'click .retry-snapshot-btn' : 'onRetry'
 
+#    ready = ($) ->
+#      @onSnapshot
+
     els:
       '.webcam-live-preview'         : '$video'
       '.webcam-clip'                 : '$clip'

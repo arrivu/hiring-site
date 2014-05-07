@@ -2,7 +2,7 @@
    jammit_css :profile_show, :tinymce
    js_bundle :fill_registration
    js_env PROFILE: @user
-   js_env(folder_id: @user.profile_pics_folder[:id]) if @user == @current_user
+   js_env(folder_id: @user.profile_pics_folder.id) if @user == @current_user
    @body_classes << "gradebook2 full-width" %>
 <style>
     select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
@@ -12,7 +12,7 @@
 </style>
 
 <div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
-  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @context.id } do |f| %>
+  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @course.id } do |f| %>
 
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
@@ -72,12 +72,12 @@
             <!--<i class="icon-edit"></i>-->
             <!--</a>-->
             <% if @candidate_detail %>
-                <a href="#" class="profile-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
-                  <%= square_avatar_image @candidate_detail[:id], 200 %>
+                <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
+                  <%= square_avatar_image @user[:id], 200 %>
                   <i class="icon-edit"></i>
                 </a>
             <% else %>
-                <%= square_avatar_image @candidate_detail[:id] , 200 %>
+                <%= square_avatar_image @user[:id] , 200 %>
             <% end %>
           </div>
           </div>
