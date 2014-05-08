@@ -333,14 +333,51 @@ define([
       }
     };
   })();
-
+  var window_focus;
   $(window).focus(function(evt) {
+    //window_focus = true;
     quizSubmission.updateSubmission();
   });
 
   $(window).blur(function(evt) {
+    //window_focus = false;
     quizSubmission.inBackground = true;
   });
+    var isActive = true;
+    function onBlur() {
+        isActive = false;
+    };
+    function onFocus(){
+        //console.log(isActive);
+        isActive = true;
+    };
+
+    if (/*@cc_on!@*/false) { // check for Internet Explorer
+        document.onfocusin = onFocus;
+        document.onfocusout = onBlur;
+    } else {
+        window.onfocus = onFocus;
+        window.onblur = onBlur;
+    }
+
+    var timerId = 0;
+    timerId = setInterval(function() { check_value(); }, 1000);
+    function check_value()
+    {
+        //console.log(isActive);
+        if(isActive == false)
+        {
+            //alert("ok");
+            //clearInterval(timerId);
+            isActive = true;
+            $("#navigate_away").dialog({
+                modal: true,
+                resizable: false,
+                width: 600
+            });
+
+        }
+    }
 
   $(document).mousedown(function(event) {
     lastAnswerSelected = $(event.target).parents(".answer")[0];
@@ -356,17 +393,6 @@ define([
   $(function() {
     $.scrollSidebar();
     autoBlurActiveInput();
-      var window_focus;
-      $(window).focus(function() {
-          window_focus = true;
-      })
-          .blur(function() {
-              window_focus = false;
-          });
-
-      $(document).ready(function(){
-          setInterval(function() { $('body').append('has focus? ' + window_focus + '<br>'); }, 1000000);
-      });
 
     if($("#preview_mode_link").length == 0) {
       window.onbeforeunload = function() {

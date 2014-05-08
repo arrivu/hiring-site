@@ -141,7 +141,11 @@
 </div>
 
 <% end %>
-
+<div id="navigate_away" title="Navigating Away" style="display:none;">
+  You had navigated away from the test window.
+  <button type="button" class="btn cancel_button button-secondary"><%= t('buttons.cancel', 'Cancel') %></button>
+  <button type="submit" class="btn btn-primary submit_button">Continue</button>
+</div>
 <form id="deauthorized_dialog"
   class="hide"
   title="<%= t :login_required, "Login Required" %>"
