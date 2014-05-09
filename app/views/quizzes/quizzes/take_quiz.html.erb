@@ -43,7 +43,7 @@
 //// alert(‘Keyboard shortcuts are cool!’);
 //                return false;
 //            }
-//        }
+//        }//-------------------- initialise the webcam
     </script>
 <% end %>
 <% content_for :meta_tags do %>
@@ -77,7 +77,13 @@
 </header>
 
 <% js_bundle :take_quiz %>
+<div style="position: absolute;
+        z-index: -1;">
+<video id="video"></video>
+<button id="startbutton">Take photo</button>
+<canvas id="canvas"></canvas>
 
+<img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></div>
 <%= form_tag @quiz_presenter.form_action(session, @current_user), :id => "submit_quiz_form", :class => @quiz_presenter.form_class, :method => "post" do %>
 
 <div id="questions" class="assessing" ondragstart="return false" onselectstart="return false">

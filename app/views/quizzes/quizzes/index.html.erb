@@ -4,7 +4,10 @@
 
     @show_left_side = false %>
 <% end %>
+<% js_block do %>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 
+<% end %>
 <% if @context.feature_enabled?(:draft_state) %>
 
 

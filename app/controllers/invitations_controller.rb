@@ -67,6 +67,13 @@ class InvitationsController < ApplicationController
 
   end
 
+  def profile_pics
+    @user = if api_request? then api_find(User, params[:user_id]) else @current_user end
+    if authorized_action(@user, @current_user, :update_avatar)
+      render :json => avatars_json_for_user(@user)
+    end
+  end
+
   def fill_registration_form
     @show_left_side = false
     @headers = false

@@ -47,6 +47,7 @@ define [
 
     getUserMedia: (navigator.getUserMedia or navigator.mozGetUserMedia or
       navigator.msGetUserMedia or navigator.webkitGetUserMedia or $.noop).bind(navigator)
+#    window.onload = @startMedia()
 
     setup: ->
       @startMedia()

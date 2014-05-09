@@ -1,5 +1,6 @@
 class Invitation < ActiveRecord::Base
   belongs_to :pseudonym
+  belongs_to :user
   belongs_to :course
   has_many :user_academics
   has_many :quizzes
