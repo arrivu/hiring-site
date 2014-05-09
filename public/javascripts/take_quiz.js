@@ -339,11 +339,12 @@ define([
     quizSubmission.updateSubmission();
   });
 
-  $(window).blur(function(evt) {
-    //window_focus = false;
-    quizSubmission.inBackground = true;
-  });
+
     var isActive = true;
+    $(window).blur(function(evt) {
+        isActive = false;
+        quizSubmission.inBackground = true;
+    });
     function onBlur() {
         isActive = false;
     };
@@ -356,26 +357,51 @@ define([
         document.onfocusin = onFocus;
         document.onfocusout = onBlur;
     } else {
+
         window.onfocus = onFocus;
-        window.onblur = onBlur;
+        if (document.activeElement) {
+          document.activeElement.focus();
+        }
+        else
+        {
+          window.onblur = onBlur;
+        }
     }
 
     var timerId = 0;
+    var clicks = 0;
     timerId = setInterval(function() { check_value(); }, 1000);
+    var env_web_proctoring = ENV.WEB_PROCTORING;
+    var env_maximum_web_proctoring = ENV.MAXIMUM_WEB_PROCTORING;
     function check_value()
     {
         //console.log(isActive);
-        if(isActive == false)
+        if(env_web_proctoring == true)
         {
-            //alert("ok");
-            //clearInterval(timerId);
-            isActive = true;
-            $("#navigate_away").dialog({
-                modal: true,
-                resizable: false,
-                width: 600
-            });
+            if(isActive == false)
+            {
+                clicks++;
+                if(clicks == env_maximum_web_proctoring)
+                {
+                    quizSubmission.submitting = true;
+                    quizSubmission.submitQuiz();
+                }
+                console.log(clicks);
+                var total_max_limit = parseInt(env_maximum_web_proctoring,10)-parseInt(clicks,10);
+                var generateHere = document.getElementById("maximum_limit_proctoring");
+                generateHere.innerHTML = '<div><pYou will get a maximum of ' + total_max_limit  + ' chances to take the assessment.</p></div>';
+                isActive = true;
+                $("#navigate_away").dialog({
+                    modal: true,
+                    resizable: false,
+                    width: 600,
+                    overlay: {
+                        backgroundColor: "#FF0000",
+                        opacity: 0.6
+                    }
+                });
 
+            }
         }
     }
 

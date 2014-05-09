@@ -157,6 +157,8 @@ class Quizzes::QuizzesController < ApplicationController
              :IS_SURVEY => @quiz.survey?,
              :QUIZ => quiz_json(@quiz,@context,@current_user,session),
              :COURSE_ID => @context.id,
+             :WEB_PROCTORING => @quiz[:web_proctoring],
+             :MAXIMUM_WEB_PROCTORING => @quiz[:maximum_web_proctoring],
              :LOCKDOWN_BROWSER => @quiz.require_lockdown_browser?,
              :ATTACHMENTS => Hash[@attachments.map { |_,a| [a.id,attachment_hash(a)]}],
              :CONTEXT_ACTION_SOURCE => :quizzes  }

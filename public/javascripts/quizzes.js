@@ -1474,6 +1474,7 @@ define([
             $('.correct_answer_at_css').css('display','block');
 
         }
+
         $("#quiz_show_correct_answers").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
             if(x)
