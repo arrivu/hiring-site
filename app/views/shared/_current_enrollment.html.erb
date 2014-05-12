@@ -47,13 +47,10 @@
         <% if show_link %></a><% end %>
     <% end %>
     <% unless dashboard %>
-<<<<<<< HEAD
+
         </li>
     <% end %>
-=======
-      </li>
-<% end %>
->>>>>>> question_tag_add
+
 <%else%>
     <% if Date.today.to_s.to_date < current_enrollment.course_section.start_at.to_s.to_date || Date.today.to_s.to_date > current_enrollment.course_section.end_at.to_s.to_date %>
         <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">

@@ -2186,7 +2186,6 @@ define([
         });
 
         var $findBankDialog = $("#find_bank_dialog");
-
         $(".find_bank_link").click(function(event) {
             event.preventDefault();
             var $dialog = $findBankDialog;
@@ -2230,6 +2229,15 @@ define([
                 var $bank = $findBankDialog.find(".bank.selected:first");
                 var bank = $bank.getTemplateData({textValues: ['title'], dataValues: ['id', 'context_id', 'context_type']});
                 var $form = $findBankDialog.data('form');
+                if($('.shuffle_question_bank_id:checked').val() == "on" )
+                {
+                    shuffle_id = "true";
+                }
+                else
+                {
+                    shuffle_id = "false";
+                }
+                $form.find(".shuffle_question_bank").val(shuffle_id);
                 $form.find(".bank_id").val(bank.id);
                 bank.bank_name = bank.title;
                 var $formBank = $form.closest('.group_top').next(".assessment_question_bank")
@@ -3048,7 +3056,7 @@ define([
             if ($(this).closest('.group_top').length == 0) { return; }
             event.preventDefault();
             var $top = $(this).parents(".group_top");
-            var data =  $top.getTemplateData({textValues: ['name', 'pick_count', 'question_points']});
+            var data =  $top.getTemplateData({textValues: ['name', 'pick_count', 'question_points', 'shuffle_question_bank']});
             $top.fillFormData(data, {object_name: 'quiz_group'});
             $top.addClass('editing');
             $top.find(":text:visible:first").focus().select();

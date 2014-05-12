@@ -16,15 +16,13 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-class Quizzes::QuizGroup < ActiveRecord::Base
-  self.table_name = 'quiz_groups' unless CANVAS_RAILS2
-
+class QuizGroup < ActiveRecord::Base
   attr_accessible :name, :pick_count, :question_points, :assessment_question_bank_id, :shuffle_question_bank
   attr_readonly :quiz_id
 
-  belongs_to :quiz, class_name: 'Quizzes::Quiz'
+  belongs_to :quiz
   belongs_to :assessment_question_bank
-  has_many :quiz_questions, :class_name => 'Quizzes::QuizQuestion', :dependent => :destroy
+  has_many :quiz_questions, :dependent => :destroy
 
   validates_presence_of :quiz_id
   validates_length_of :name, maximum: maximum_string_length, allow_nil: true
@@ -36,18 +34,18 @@ class Quizzes::QuizGroup < ActiveRecord::Base
 
   def actual_pick_count
     count = if self.assessment_question_bank
-              # don't do a valid question check because we don't want to instantiate all the bank's questions
-              self.assessment_question_bank.assessment_question_count
-            else
-              self.quiz_questions.active.count
-            end
+      # don't do a valid question check because we don't want to instantiate all the bank's questions
+      self.assessment_question_bank.assessment_question_count
+    else
+      self.quiz_questions.active.count
+    end
 
     [self.pick_count.to_i, count].min
   end
 
   # QuizGroup.data is used when creating and editing a quiz, but
   # once the quiz is "saved" then the "rendered" version of the
-  # quiz is stored in Quizzes::Quiz.quiz_data.  Hence, the teacher can
+  # quiz is stored in Quiz.quiz_data.  Hence, the teacher can
   # be futzing with questions and groups and not affect
   # the quiz, as students see it.
   def data
@@ -57,7 +55,7 @@ class Quizzes::QuizGroup < ActiveRecord::Base
       "pick_count" => self.pick_count,
       "shuffle_question_bank" => self.shuffle_question_bank,
       "question_points" => self.question_points,
-      "questions" => self.assessment_question_bank_id ? [] : self.quiz_questions.active.map { |q| q.data },
+      "questions" => self.assessment_question_bank_id ? [] : self.quiz_questions.active.map{|q| q.data},
       "assessment_question_bank_id" => self.assessment_question_bank_id
     }.with_indifferent_access
   end
@@ -74,13 +72,13 @@ class Quizzes::QuizGroup < ActiveRecord::Base
 
   def self.import_from_migration(hash, context, quiz, question_data, position = nil, migration = nil)
     hash = hash.with_indifferent_access
-    item ||= Quizzes::QuizGroup.find_by_quiz_id_and_migration_id(quiz.id, hash[:migration_id].nil? ? nil : hash[:migration_id].to_s)
+    item ||= QuizGroup.find_by_quiz_id_and_migration_id(quiz.id, hash[:migration_id].nil? ? nil : hash[:migration_id].to_s)
     item ||= quiz.quiz_groups.new
     item.migration_id = hash[:migration_id]
     item.question_points = hash[:question_points]
     item.pick_count = hash[:pick_count]
     item.position = position
-    item.name = hash[:title] || t('#quizzes.quiz_group.question_group', "Question Group")
+    item.name = hash[:title] || t('question_group', "Question Group")
     if hash[:question_bank_migration_id]
       if hash[:question_bank_is_external] && migration && migration.user && hash[:question_bank_context].present? && hash[:question_bank_migration_id].present?
         bank = nil
@@ -100,10 +98,10 @@ class Quizzes::QuizGroup < ActiveRecord::Base
           if bank.grants_right?(migration.user, nil, :read)
             item.assessment_question_bank_id = bank.id
           else
-            migration.add_warning(t('#quizzes.quiz_group.errors.no_permissions', "User didn't have permission to reference question bank in quiz group %{group_name}", :group_name => item.name))
+            migration.add_warning(t('errors.no_permissions', "User didn't have permission to reference question bank in quiz group %{group_name}", :group_name => item.name))
           end
         else
-          migration.add_warning(t('#quizzes.quiz_group.errors.no_bank', "Couldn't find the question bank for quiz group %{group_name}", :group_name => item.name))
+          migration.add_warning(t('errors.no_bank', "Couldn't find the question bank for quiz group %{group_name}", :group_name => item.name))
         end
       else
         if bank = context.assessment_question_banks.find_by_migration_id(hash[:question_bank_migration_id])
@@ -119,17 +117,17 @@ class Quizzes::QuizGroup < ActiveRecord::Base
           if aq = question_data[:aq_data][qq[:assessment_question_migration_id]]
             qq['assessment_question_id'] = aq['assessment_question_id']
             aq_hash = AssessmentQuestion.prep_for_import(qq, context)
-            Quizzes::QuizQuestion.import_from_migration(aq_hash, context, quiz, item)
+            QuizQuestion.import_from_migration(aq_hash, context, quiz, item)
           else
             aq_hash = AssessmentQuestion.import_from_migration(qq, context)
             qq['assessment_question_id'] = aq_hash['assessment_question_id']
-            Quizzes::QuizQuestion.import_from_migration(aq_hash, context, quiz, item)
+            QuizQuestion.import_from_migration(aq_hash, context, quiz, item)
           end
         end
       elsif aq = question_data[:aq_data][question[:migration_id]]
         aq[:points_possible] = question[:points_possible] if question[:points_possible]
         aq[:position] = i + 1
-        Quizzes::QuizQuestion.import_from_migration(aq, context, quiz, item)
+        QuizQuestion.import_from_migration(aq, context, quiz, item)
       end
     end
 
@@ -139,7 +137,7 @@ class Quizzes::QuizGroup < ActiveRecord::Base
   private
 
   def update_quiz
-    Quizzes::Quiz.mark_quiz_edited(self.quiz_id)
+    Quiz.mark_quiz_edited(self.quiz_id)
   end
 
   def infer_position

@@ -26,6 +26,7 @@ unless required_bundler_version.include?(Bundler::VERSION)
   exit 1
 end
 
+
 require File.expand_path("../config/canvas_rails3", __FILE__)
 
 # force a different lockfile for rails 3

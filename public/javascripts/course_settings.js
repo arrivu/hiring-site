@@ -188,6 +188,7 @@ define([
         $section.loadingImage('remove').find(".edit_section_link").click();
         $edit_section_form.formErrors(data);
       }
+
     })
     .find(":text")
       .bind('blur', function() {

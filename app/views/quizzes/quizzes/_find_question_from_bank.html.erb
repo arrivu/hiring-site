@@ -5,6 +5,7 @@
   <div style="float: right; padding-right: 5px; line-height: 2.5em;">
     <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Project Question Banks") %></a>
   </div>
+
   <div class="clear"></div>
   <div class="message" style="display: none;"></div>
   <table class="side_tabs_table" style="width: 100%;">
@@ -57,10 +58,12 @@
   </table>
 </div>
 <div id="find_bank_dialog" style="display: none;">
+
   <a href="<%= context_url(@context, :context_question_banks_url, :include_bookmarked => '1', :inherited => '1') %>" class="find_question_banks_url" style="display: none;">&nbsp;</a>
   <div style="float: right; padding-right: 5px; line-height: 2.5em;">
     <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Project Question Banks") %></a>
   </div>
+  <input type="checkbox" name='shuffle_question_bank' class="shuffle_question_bank_id" checked="true" <%#= 'checked="checked"' if hash_get(group, :shuffle_question_bank) %> />Shuffle Questions
   <div class="clear"></div>
   <div class="message" style="display: none;"></div>
   <div class="find_banks">

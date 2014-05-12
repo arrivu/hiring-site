@@ -143,6 +143,7 @@ class Quizzes::QuizGroupsController < ApplicationController
 
       quiz_group_params = params[:quiz_groups][0]
       quiz_group_params.delete(:assessment_question_bank_id)
+      quiz_group_params.delete(:shuffle_question_bank)
       quiz_group_params.delete(:position) # position is taken care of in reorder
 
       if update_api_quiz_group(@group, quiz_group_params)

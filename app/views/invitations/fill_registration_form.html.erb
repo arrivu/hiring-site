@@ -34,10 +34,10 @@
                 <% if @candidate_filter.bio == TRUE %>
                    <% if @bio == nil %>
                       <td class='alnright'><%= f.label :bio, "Bio*"%></td><td>
-                      <textarea  name="bio"></textarea>
+                      <textarea  name="bio" ></textarea>
                     <% else %>
                       <td class='alnright'><%= f.label :bio, "Bio*"%></td><td>
-                      <textarea  name="bio"><%= @bio_text %></textarea>
+                      <textarea  name="bio" required="true"><%= @bio_text %></textarea>
                     </td>
                   <% end %>
                 <% end %>
