@@ -2,7 +2,8 @@
    jammit_css :profile_show, :tinymce
    js_bundle :fill_registration
    js_env PROFILE: @user
-   js_env(folder_id: @user.profile_pics_folder.id) if @user == @current_user
+
+   js_env(folder_id: @user.profile_pics_folder.id) unless (@user ||= @current_user).nil?
    @body_classes << "gradebook2 full-width" %>
 <style>
     select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
@@ -66,19 +67,23 @@
         </div>
         <div class="image-block" style="float: right;" >
           <div class="image-block-image profile-avatar-wrapper">
-
-            <!--<a href="#" class="profile-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
-            <!--<%#= square_avatar_image @current_user[:id], 128 %>-->
-            <!--<i class="icon-edit"></i>-->
-            <!--</a>-->
             <% if @candidate_detail %>
-                <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
-                  <%= square_avatar_image @user[:id], 200 %>
-                  <i class="icon-edit"></i>
-                </a>
-            <% else %>
-                <%= square_avatar_image @user[:id] , 200 %>
-            <% end %>
+                <% if @user.avatar_image_url.nil? %>
+                      <a href="#" class="profile-pic-link " title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %> ">
+                        <%= square_avatar_image @user[:id], 200 %>
+                        <i class="icon-edit"></i>
+                      </a>
+
+                      <% else %>
+                    <a href="#" class="profile-pic-link " title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %> ">
+                      <%= square_avatar_image @user[:id], 200 %>
+                      <i class="icon-edit"></i>
+                    </a>
+                  <%  end %>
+                <%  end %>
+
+
+
           </div>
           </div>
         </div>

@@ -2,6 +2,10 @@
 <% content_for :page_title do %>
 <%= join_title @quiz.readable_type, @quiz.quiz_title %>
 <% end %>
+<% if !can_do(@context.quizzes.new, @current_user, :create)%>
+    <% @headers = false
+
+       @show_left_side = false %>
 <% js_block do %>
     <script>
 //        var message="Right Click Disabled!";
@@ -46,6 +50,7 @@
 //        }//-------------------- initialise the webcam
     </script>
 <% end %>
+<% end %>
 <% content_for :meta_tags do %>
   <% if !params[:persist_headless] %>
     <meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=yes,width=device-width">
@@ -76,11 +81,15 @@
   </div>
 </header>
 
-<% js_bundle :take_quiz %>
+<% js_bundle :take_quiz, :image_proctoring %>
+<!--<a href="#" class="quiz-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
+
+  <!--<i class="icon-edit"></i>-->
+<!--</a>-->
 <div style="position: absolute;
-        z-index: -1;">
+        z-index: -1;display:none;">
 <video id="video"></video>
-<button id="startbutton">Take photo</button>
+<button id="startbutton ">Take photo</button>
 <canvas id="canvas"></canvas>
 
 <img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></div>
