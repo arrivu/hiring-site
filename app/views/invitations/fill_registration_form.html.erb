@@ -23,8 +23,7 @@
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
               <% if @candidate_filter.last_name == TRUE %><td class='alnright'><%= f.label :last_name, "Last Name*"%></td><td><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></td><% end %>
-              <% if @candidate_filter.profile_picture == TRUE %><td><button name="profile_picture" class="btn btn-small btn-primary">Take Profile Picture</button></td><% end %>
-            </tr>
+                    </tr>
             <tr>
               <td class='alnright'><%= f.label :gender, "Gender"%></td>
               <td style="padding-top: 17px;"><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</td>
@@ -65,6 +64,7 @@
             <% end %>
           </table>
         </div>
+          <% if @candidate_filter.profile_picture == TRUE %>
         <div class="image-block" style="float: right;" >
           <div class="image-block-image profile-avatar-wrapper">
             <% if @candidate_detail %>
@@ -86,6 +86,7 @@
 
           </div>
           </div>
+              <% end %>
         </div>
       </div>
       <% if @candidate_filter.academics == TRUE %>
