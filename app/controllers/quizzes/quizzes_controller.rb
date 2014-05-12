@@ -159,6 +159,7 @@ class Quizzes::QuizzesController < ApplicationController
              :COURSE_ID => @context.id,
              :WEB_PROCTORING => @quiz[:web_proctoring],
              :MAXIMUM_WEB_PROCTORING => @quiz[:maximum_web_proctoring],
+             :SHOW_REMAINING_COUNTS => @quiz[:show_remaining_counts],
              :LOCKDOWN_BROWSER => @quiz.require_lockdown_browser?,
              :ATTACHMENTS => Hash[@attachments.map { |_,a| [a.id,attachment_hash(a)]}],
              :CONTEXT_ACTION_SOURCE => :quizzes  }

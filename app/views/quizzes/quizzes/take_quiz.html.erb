@@ -142,10 +142,11 @@
 
 <% end %>
 <div id="navigate_away" title="Navigating Away" style="display:none;">
-  You had navigated away from the test window.<br/>
-  <div id="maximum_limit_proctoring">test</div>
-  <button type="button" class="btn cancel_button button-secondary"><%= t('buttons.cancel', 'Cancel') %></button>
-  <button type="submit" class="btn btn-primary submit_button">Continue</button>
+  <div id="navigate_description">You had navigated away from the test window.
+  <br/>
+  </div>
+  <div id="navigate_count"></div>
+  <button type="submit" class="btn btn-primary submit_button click_continue" id="navigate_button">Continue...</button>
 </div>
 <form id="deauthorized_dialog"
   class="hide"

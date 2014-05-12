@@ -386,6 +386,7 @@
                         <input type="text" name="quiz[maximum_web_proctoring]" id="maximum_web_proctoring" value="<%= @quiz.maximum_web_proctoring %>"/>
                       </label>
                       <label class="checkbox" for="web_proctoring">
+                        <%= hidden_field_tag "quiz[show_remaining_counts]", "0" %>
                         <input type="checkbox" name="quiz[show_remaining_counts]" <%= "checked" if @quiz.show_remaining_counts %> value="<%= @quiz.show_remaining_counts %>" id="show_remaining_counts" />
                         Show remaining counts
                       </label>

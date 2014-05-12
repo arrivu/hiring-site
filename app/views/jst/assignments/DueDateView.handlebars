@@ -15,9 +15,9 @@
 
   <div class="date_field_container to">
     <input name="lock_at" value="{{datetimeFormatted lock_at}}" type="text"
-    class="date_field" aria-labelledby="overrides_lock_at">
+    class="date_field" aria-labelledby="overrides_lock_at">{{ ENV.SHOW_CORRECT_ANSWER }}
   </div>
-  {{#if ENV.SHOW_CORRECT_ANSWER}}
+  {{#if quiz_show_answers }}
   <div class="date_field_container correct_answer_at" style="display:block;">
       <input name="show_correct_answers_at" value="{{datetimeFormatted show_correct_answers_at}}" type="text"
       class="date_field value_empty" aria-labelledby="overrides_show_correct_answer_at">

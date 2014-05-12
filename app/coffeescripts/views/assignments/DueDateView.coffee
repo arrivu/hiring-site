@@ -17,6 +17,9 @@ define [
       'click .remove-link' : 'removeDueDate'
       'click #quiz_show_correct_answers' : 'QuizShowCorrectOption'
 
+    initialize: ->
+      console.log(ENV.SHOW_CORRECT_ANSWER)
+      
     # Method Summary
     #  Apply bindings and calendar js to each view
     afterRender: =>
@@ -54,9 +57,9 @@ define [
       @$el.hideErrors()
       x = $("#quiz_show_correct_answers").is(":checked")
       if(x)
-        json.quiz_show_answers = x
+        json.quiz_show_answers = "true"
       else
-        json.quiz_show_answers = json.quiz_show_answers
+        json.quiz_show_answers = "false"
       for own el, msg of errs.assignmentOverrides
         @$("[name=#{el}]").errorBox msg
       json

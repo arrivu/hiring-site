@@ -1465,6 +1465,7 @@ define([
             }
 
         });
+
         var x = $("#quiz_show_correct_answers").is(":checked");
         if(x)
         {
@@ -1474,7 +1475,18 @@ define([
             $('.correct_answer_at_css').css('display','block');
 
         }
-
+        /*
+        $("#add_due_date").click(function() {
+            var x = $("#quiz_show_correct_answers").is(":checked");
+            if(x)
+            {
+                $(".correct_answer_at").show();
+                $("#overrides_show_correct_answer_at").show();
+                $("#overrides_hide_correct_answers_at").show();
+                $('.correct_answer_at_css').css('display','block');
+            }
+        });
+        */
         $("#quiz_show_correct_answers").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
             if(x)
@@ -1538,6 +1550,19 @@ define([
             }
             $("#image_proctoring_option").val(image_proctoring_option);
         });
+        $("#show_remaining_counts").click(function() {
+
+            var show_remaining_counts = $("#show_remaining_counts").is(":checked");
+            if(show_remaining_counts)
+            {
+                show_remaining_counts = "1";
+            }
+            else
+            {
+                show_remaining_counts = "0";
+            }
+            $("#show_remaining_counts").val(show_remaining_counts);
+        });
         $("#online_proctoring_option").click(function() {
             var x = $("#online_proctoring_option").is(":checked");
             if(x)
@@ -1550,19 +1575,12 @@ define([
                 $("#img_proctoring").hide();
                 $("#max_limits").hide();
                 document.getElementById("maximum_web_proctoring").value= "";
-                if($('#show_remaining_counts:checked').val() == "on" )
-                {
-                    show_remaining_counts = "1";
-                }
-                else
-                {
-                    show_remaining_counts = "0";
-                }
-                $("#show_remaining_counts").val(show_remaining_counts);
+                $("#show_remaining_counts").val("0");
                 $("#image_proctoring_option").val("0");
                 $("#web_proctoring_option").val("0");
                 $("#image_proctoring_option").attr("checked", false);
                 $("#web_proctoring_option").attr("checked", false);
+                $("#show_remaining_counts").attr("checked", false);
             }
 
 
