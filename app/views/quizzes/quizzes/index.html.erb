@@ -8,7 +8,7 @@
 <% if @context.feature_enabled?(:draft_state) %>
 
 
-    <% if @context_enrollment.course_section.start_at == nil && @context_enrollment.course_section.end_at == nil %>
+    <% if @context_enrollment == nil && @context_enrollment == nil %>
         <% jammit_css :quizzes %>
         <% js_bundle :quizzes_index %>
     <%else%>

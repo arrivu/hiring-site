@@ -77,7 +77,7 @@ class InvitationsController < ApplicationController
   def fill_registration_form
     @show_left_side = false
     @headers = false
-    #reset_session
+    reset_session
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
