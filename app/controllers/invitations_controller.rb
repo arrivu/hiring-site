@@ -77,7 +77,7 @@ class InvitationsController < ApplicationController
   def fill_registration_form
     @show_left_side = false
     @headers = false
-    #reset_session
+    reset_session
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -88,6 +88,7 @@ class InvitationsController < ApplicationController
           @pseudonym_session = @domain_root_account.pseudonym_sessions.new(@pseudonym.user)
           @pseudonym_session = @domain_root_account.pseudonym_sessions.create!(@pseudonym, false)
           @current_pseudonym = @pseudonym
+          @user = @pseudonym.user
         else
           password=(0...10).map{ ('a'..'z').to_a[rand(26)] }.join
           @user = User.create!(:name => params[:invitation][:unique_id])
@@ -128,7 +129,7 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers = false
     clear_crumbs
-    @user ||= @current_user
+    @user = @current_user
     @context = @user.profile if @user == @current_user
     #
     @user_data = profile_data(
