@@ -173,6 +173,7 @@
 class Quizzes::QuizQuestionsController < ApplicationController
   include Api::V1::QuizQuestion
   include Filters::Quizzes
+  include TagsHelper
 
   before_filter :require_context, :require_quiz
   before_filter :require_question, :only => [:show]
@@ -270,6 +271,11 @@ class Quizzes::QuizQuestionsController < ApplicationController
       @question = @quiz.quiz_questions.create(:quiz_group => @group, :question_data => question_data)
       @quiz.did_edit if @quiz.created?
 
+      # arrivu changes
+      @bank = AssessmentQuestionBank.find_by_context_id_and_context_type(params[:context_id], params[:context_type])
+      tag_list(params[:tag_tokens], @question, @bank)  unless params[:tag_tokens].nil?
+      # arrivu changes
+
       render json: question_json(@question, @current_user, session, [:assessment_question])
 
     end
@@ -348,6 +354,10 @@ class Quizzes::QuizQuestionsController < ApplicationController
       @question.question_data = question_data
       @question.save
       @quiz.did_edit if @quiz.created?
+
+      # arrivu changes
+      tag_list(params[:tag_tokens], @question, @quiz)  unless params[:tag_tokens].nil?
+      # arrivu changes
       render json: question_json(@question, @current_user, session, [:assessment_question])
     end
   end

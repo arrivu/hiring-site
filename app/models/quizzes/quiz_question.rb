@@ -20,6 +20,7 @@ class Quizzes::QuizQuestion < ActiveRecord::Base
   self.table_name = 'quiz_questions' unless CANVAS_RAILS2
 
   include Workflow
+  acts_as_taggable_on :tags
 
   attr_accessible :quiz, :quiz_group, :assessment_question, :question_data, :assessment_question_version
   attr_readonly :quiz_id

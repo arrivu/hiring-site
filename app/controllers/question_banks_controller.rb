@@ -34,15 +34,9 @@ class QuestionBanksController < ApplicationController
       @question_banks = @question_banks.select{|b| b.grants_right?(@current_user, nil, :manage) } if params[:managed] == '1'
       @question_banks = Canvas::ICU.collate_by(@question_banks.uniq) { |b| b.title || SortLast }
 
-      #@tag_filter =  ActsAsTaggableOn::Tag.find_all_by_account_id(params[:context_id])
-      #@tag_filter.each do |tags_filter|
-      #  @tags = tags_filter.name
-
-      #end
       respond_to do |format|
         format.html
         format.json { render :json => @question_banks.map{ |b| b.as_json(methods: [:cached_context_short_name, :assessment_question_count]) }}
-        #format.json { render :json => @tag_filter}
       end
     end
   end

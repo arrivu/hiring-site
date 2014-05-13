@@ -19,6 +19,6 @@ class FeatureWishsController < ApplicationController
   else
      flash[:error] = "The last request didn't work "
   end
-  
+
   end
 end
