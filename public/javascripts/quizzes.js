@@ -1475,7 +1475,7 @@ define([
             $('.correct_answer_at_css').css('display','block');
 
         }
-        /*
+
         $("#add_due_date").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
             if(x)
@@ -1485,8 +1485,22 @@ define([
                 $("#overrides_hide_correct_answers_at").show();
                 $('.correct_answer_at_css').css('display','block');
             }
+            else
+            {
+                $(".correct_answer_at").hide();
+                $("#overrides_show_correct_answer_at").hide();
+                $("#overrides_hide_correct_answers_at").hide();
+                $('.correct_answer_at_css').css('display','none');
+                $(".correct_answer_at .datetime_suggest").html("");
+                var elements = [] ;
+                elements = document.getElementsByClassName("value_empty");
+
+                for(var i=0; i<elements.length ; i++){
+                    elements[i].value = "" ;
+                }
+            }
         });
-        */
+
         $("#quiz_show_correct_answers").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
             if(x)

@@ -18,8 +18,14 @@ define [
       'click #quiz_show_correct_answers' : 'QuizShowCorrectOption'
 
     initialize: ->
-      console.log(ENV.SHOW_CORRECT_ANSWER)
-      
+      super
+      @showDatesOption = ENV.SHOW_CORRECT_ANSWER
+
+    toJSON: ->
+      json = super
+      json['shouldHideShowDate'] = @showDatesOption
+      json
+
     # Method Summary
     #  Apply bindings and calendar js to each view
     afterRender: =>
@@ -55,11 +61,7 @@ define [
         json[dateField] = $.unfudgeDateForProfileTimezone(json[dateField])
       errs = @validateBeforeSave json, {}
       @$el.hideErrors()
-      x = $("#quiz_show_correct_answers").is(":checked")
-      if(x)
-        json.quiz_show_answers = "true"
-      else
-        json.quiz_show_answers = "false"
+      json.quiz_show_answers = ENV.SHOW_CORRECT_ANSWER
       for own el, msg of errs.assignmentOverrides
         @$("[name=#{el}]").errorBox msg
       json
