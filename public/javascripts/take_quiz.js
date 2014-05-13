@@ -39,6 +39,9 @@ define([
   var lastAnswerSelected = null;
   var lastSuccessfulSubmissionData = null;
   var showDeauthorizedDialog;
+  var timerId = 0;
+  var clicks = 0;
+  timerId = setInterval(function() { check_value(); }, 1000);
   var quizSubmission = (function() {
     var timeMod = 0,
         startedAt =  $(".started_at"),
@@ -334,14 +337,97 @@ define([
     };
   })();
 
+  var isActive = true;
   $(window).focus(function(evt) {
+    isActive = true;
+    check_value();
     quizSubmission.updateSubmission();
   });
 
-  $(window).blur(function(evt) {
-    quizSubmission.inBackground = true;
-  });
+    $(window).blur(function(evt) {
+        //alert("ok");
+        isActive = false;
+        //check_value();
+        quizSubmission.inBackground = true;
 
+    });
+    function onBlur() {
+        isActive = false;
+
+    };
+    function onFocus(){
+        //console.log(isActive);
+        isActive = true;
+
+    };
+
+    if (/*@cc_on!@*/false) { // check for Internet Explorer
+       document.onfocusin = onFocus;
+       document.onfocusout = onBlur;
+    }
+    else {
+
+        window.onfocus = onFocus;
+        if (document.activeElement) {
+          document.activeElement.focus();
+        }
+        else
+        {
+          window.onblur = onBlur;
+        }
+    }
+    var env_web_proctoring = ENV.WEB_PROCTORING;
+    var env_maximum_web_proctoring = ENV.MAXIMUM_WEB_PROCTORING;
+    var env_show_remaining_counts = ENV.SHOW_REMAINING_COUNTS;
+    function check_value()
+    {
+
+        if(env_web_proctoring == true)
+        {
+            if(isActive == false)
+            {
+                clicks++;
+                console.log(clicks);
+                if(clicks == env_maximum_web_proctoring)
+                {
+                    quizSubmission.submitting = true;
+                    quizSubmission.submitQuiz();
+                }
+                //console.log(clicks);
+                var total_max_limit = env_maximum_web_proctoring - clicks;
+                if(env_show_remaining_counts == true)
+                {
+                    if(total_max_limit <= 0)
+                    {
+                        $('#navigate_description').hide();
+                        var generateHere = document.getElementById("navigate_count");
+                        generateHere.innerHTML = '<div><p>You have exceeded the permissible limit for navigating away from your assessment.Your assessment has finished and it is submitted automatically.</p></div>';
+                        document.getElementById("navigate_button").innerText = "Close";
+                    }
+                    else
+                    {
+                        var generateHere = document.getElementById("navigate_count");
+                        generateHere.innerHTML = '<div><p>You will get a maximum of '+ total_max_limit +' chances to take the assessment.</p></div>';
+                    }
+                }
+                isActive = true;
+                $("#navigate_away").dialog({
+                    modal: true,
+                    resizable: false,
+                    width: 600,
+                    overlay: {
+                        backgroundColor: "#FF0000",
+                        opacity: 0.6
+                    }
+                });
+
+            }
+        }
+    }
+
+    $(".click_continue").click(function() {
+        $("#navigate_away").dialog('close');
+    });
   $(document).mousedown(function(event) {
     lastAnswerSelected = $(event.target).parents(".answer")[0];
   }).keydown(function() {

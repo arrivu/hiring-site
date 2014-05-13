@@ -1465,6 +1465,42 @@ define([
             }
 
         });
+
+        var x = $("#quiz_show_correct_answers").is(":checked");
+        if(x)
+        {
+            $(".correct_answer_at").show();
+            $("#overrides_show_correct_answer_at").show();
+            $("#overrides_hide_correct_answers_at").show();
+            $('.correct_answer_at_css').css('display','block');
+
+        }
+
+        $("#add_due_date").click(function() {
+            var x = $("#quiz_show_correct_answers").is(":checked");
+            if(x)
+            {
+                $(".correct_answer_at").show();
+                $("#overrides_show_correct_answer_at").show();
+                $("#overrides_hide_correct_answers_at").show();
+                $('.correct_answer_at_css').css('display','block');
+            }
+            else
+            {
+                $(".correct_answer_at").hide();
+                $("#overrides_show_correct_answer_at").hide();
+                $("#overrides_hide_correct_answers_at").hide();
+                $('.correct_answer_at_css').css('display','none');
+                $(".correct_answer_at .datetime_suggest").html("");
+                var elements = [] ;
+                elements = document.getElementsByClassName("value_empty");
+
+                for(var i=0; i<elements.length ; i++){
+                    elements[i].value = "" ;
+                }
+            }
+        });
+
         $("#quiz_show_correct_answers").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
             if(x)
@@ -1494,6 +1530,99 @@ define([
 
         });
 
+        var online_proctoring = $("#online_proctoring_option").is(":checked");
+        if(online_proctoring)
+        {
+            $("#img_proctoring").show();
+            $('#img_proctoring').css('display','block');
+        }
+        else
+        {
+            $("#img_proctoring").hide();
+            $("#max_limits").hide();
+        }
+        var web_proctoring = $("#web_proctoring_option").is(":checked");
+        if(web_proctoring)
+        {
+            $("#max_limits").show();
+            $('#max_limits').css('display','block');
+        }
+        else
+        {
+            $("#max_limits").hide();
+        }
+        $("#image_proctoring_option").click(function() {
+
+            var image_proctoring = $("#image_proctoring_option").is(":checked");
+            if(image_proctoring)
+            {
+                image_proctoring_option = "1";
+            }
+            else
+            {
+                image_proctoring_option = "0";
+            }
+            $("#image_proctoring_option").val(image_proctoring_option);
+        });
+        $("#show_remaining_counts").click(function() {
+
+            var show_remaining_counts = $("#show_remaining_counts").is(":checked");
+            if(show_remaining_counts)
+            {
+                show_remaining_counts = "1";
+            }
+            else
+            {
+                show_remaining_counts = "0";
+            }
+            $("#show_remaining_counts").val(show_remaining_counts);
+        });
+        $("#online_proctoring_option").click(function() {
+            var x = $("#online_proctoring_option").is(":checked");
+            if(x)
+            {
+                $("#img_proctoring").show();
+
+            }
+            else
+            {
+                $("#img_proctoring").hide();
+                $("#max_limits").hide();
+                document.getElementById("maximum_web_proctoring").value= "";
+                $("#show_remaining_counts").val("0");
+                $("#image_proctoring_option").val("0");
+                $("#web_proctoring_option").val("0");
+                $("#image_proctoring_option").attr("checked", false);
+                $("#web_proctoring_option").attr("checked", false);
+                $("#show_remaining_counts").attr("checked", false);
+            }
+
+
+        });
+        $("#web_proctoring_option").click(function() {
+            var x = $("#web_proctoring_option").is(":checked");
+            if(x)
+            {
+                $("#max_limits").show();
+            }
+            else
+            {
+                $("#max_limits").hide();
+                document.getElementById("maximum_web_proctoring").value= "";
+                $("#show_remaining_counts").attr("checked", false);
+                if($('#show_remaining_counts:checked').val() == "on" )
+                {
+                    show_remaining_counts = "true";
+                }
+                else
+                {
+                    show_remaining_counts = "false";
+                }
+                $("#show_remaining_counts").val(show_remaining_counts);
+
+            }
+
+        });
         $("#ip_filters_dialog").delegate('.ip_filter', 'click', function(event) {
             event.preventDefault();
             var filter = $(this).getTemplateData({textValues: ['filter']}).filter;

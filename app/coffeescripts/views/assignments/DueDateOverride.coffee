@@ -45,6 +45,11 @@ define [
 
     toJSON: =>
       json = super
+      x = $("#quiz_show_correct_answers").is(":checked")
+      if(x)
+        json.quiz_show_answers = "true"
+      else
+        json.quiz_show_answers = "false"
       json.shouldHideDueDate = @shouldHideDueDate()
       json
 
