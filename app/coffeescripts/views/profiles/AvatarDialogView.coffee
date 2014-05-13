@@ -178,7 +178,7 @@ define [
       }).then(_.partial(@updateDomAvatar, url))
 
     updateDomAvatar: (url) =>
-      $('.profile_pic_link img, .profile-link img')
+      $('.profile-pic-link img')
         .attr('src', url)
       @close()
 

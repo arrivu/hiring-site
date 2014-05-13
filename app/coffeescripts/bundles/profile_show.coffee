@@ -39,7 +39,7 @@ require [
 
     initialize: ->
       super
-      new AvatarWidget('.profile-link')
+      new AvatarWidget('.profile-pic-link')
       @addQualField()
       @addWorkField()
 #      @initEditUser()
