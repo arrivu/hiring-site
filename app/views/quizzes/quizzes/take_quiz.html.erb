@@ -4,7 +4,6 @@
 <% end %>
 <% if !can_do(@context.quizzes.new, @current_user, :create)%>
     <% @headers = false
-
        @show_left_side = false %>
 <% js_block do %>
     <script>
