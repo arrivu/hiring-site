@@ -25,8 +25,6 @@ unless required_bundler_version.include?(Bundler::VERSION)
   warn "Bundler version #{required_bundler_version.first} is required; you're currently running #{Bundler::VERSION}. Maybe try `#{bundle_command}`."
   exit 1
 end
-
-
 require File.expand_path("../config/canvas_rails3", __FILE__)
 
 # force a different lockfile for rails 3

@@ -67,17 +67,10 @@ class InvitationsController < ApplicationController
 
   end
 
-  def profile_pics
-    @user = if api_request? then api_find(User, params[:user_id]) else @current_user end
-    if authorized_action(@user, @current_user, :update_avatar)
-      render :json => avatars_json_for_user(@user)
-    end
-  end
-
   def fill_registration_form
     @show_left_side = false
     @headers = false
-    reset_session
+    #reset_session
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -129,7 +122,7 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers = false
     clear_crumbs
-    @user = @current_user
+    @user ||= @current_user
     @context = @user.profile if @user == @current_user
     #
     @user_data = profile_data(
