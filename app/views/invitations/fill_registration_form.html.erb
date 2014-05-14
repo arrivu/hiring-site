@@ -69,14 +69,14 @@
           <div class="image-block-image profile-avatar-wrapper">
             <% if @candidate_detail %>
                 <% if @user.avatar_image_url.nil? %>
-                      <a href="#" class="profile-pic-link " title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %> ">
+                <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
                         <%= square_avatar_image @user[:id], 200 %>
                         <i class="icon-edit"></i>
                       </a>
 
                       <% else %>
                     <a href="#" class="profile-pic-link " title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %> ">
-                      <%= square_avatar_image @user[:id], 200 %>
+                <%= square_avatar_image @user[:id] , 200 %>
                       <i class="icon-edit"></i>
                     </a>
                   <%  end %>
