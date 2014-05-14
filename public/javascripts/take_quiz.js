@@ -386,7 +386,7 @@ define([
         {
             if(isActive == false)
             {
-                clicks++;
+
                 console.log(clicks);
                 if(clicks == env_maximum_web_proctoring)
                 {
@@ -410,6 +410,7 @@ define([
                         generateHere.innerHTML = '<div><p>You will get a maximum of '+ total_max_limit +' chances to take the assessment.</p></div>';
                     }
                 }
+                clicks++;
                 isActive = true;
                 $("#navigate_away").dialog({
                     modal: true,

@@ -23,7 +23,11 @@ define [
 
     toJSON: ->
       json = super
-      json['shouldHideShowDate'] = @showDatesOption
+      x = $("#quiz_show_correct_answers").is(":checked")
+      if(x)
+        json['shouldHideShowDate'] = @showDatesOption
+      else
+        json['shouldHideShowDate'] = "false"
       json
 
     # Method Summary

@@ -1476,31 +1476,6 @@ define([
 
         }
 
-        $("#add_due_date").click(function() {
-            var x = $("#quiz_show_correct_answers").is(":checked");
-            if(x)
-            {
-                $(".correct_answer_at").show();
-                $("#overrides_show_correct_answer_at").show();
-                $("#overrides_hide_correct_answers_at").show();
-                $('.correct_answer_at_css').css('display','block');
-            }
-            else
-            {
-                $(".correct_answer_at").hide();
-                $("#overrides_show_correct_answer_at").hide();
-                $("#overrides_hide_correct_answers_at").hide();
-                $('.correct_answer_at_css').css('display','none');
-                $(".correct_answer_at .datetime_suggest").html("");
-                var elements = [] ;
-                elements = document.getElementsByClassName("value_empty");
-
-                for(var i=0; i<elements.length ; i++){
-                    elements[i].value = "" ;
-                }
-            }
-        });
-
         $("#quiz_show_correct_answers").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
             if(x)
@@ -1509,6 +1484,7 @@ define([
                 $("#overrides_show_correct_answer_at").show();
                 $("#overrides_hide_correct_answers_at").show();
                 $('.correct_answer_at_css').css('display','block');
+                $(".correct_answer_at").css('display','block');
 
             }
             else
@@ -1517,8 +1493,6 @@ define([
                 $("#overrides_show_correct_answer_at").hide();
                 $("#overrides_hide_correct_answers_at").hide();
                 $('.correct_answer_at_css').css('display','none');
-                //$( "input[name*='correct_answers_at']" ).val(" ");
-                //$(".correct_answer_at .date_field").val("");
                 $(".correct_answer_at .datetime_suggest").html("");
                 var elements = [] ;
                 elements = document.getElementsByClassName("value_empty");
