@@ -399,13 +399,14 @@ define([
                     if(total_max_limit < 0)
                     {
                         $('#navigate_description').hide();
-                        var generateHere = document.getElementById("navigate_count");
-                        generateHere.innerHTML = '<div><p>You have exceeded the permissible limit for navigating away from your assessment.Your assessment has finished and it is submitted automatically.</p></div>';
+                        $('#navigate_count').hide();
+                        $('.navigate_permissible').css('display','block');
+
                         $('#navigate_button').text("Close");
                     }
                     else
                     {
-                        if(total_max_limit == 0)
+                        if(total_max_limit == 0 || total_max_limit == 1)
                         {
                             var chance = "chance";
                         }

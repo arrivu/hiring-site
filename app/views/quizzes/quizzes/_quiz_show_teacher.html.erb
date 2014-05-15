@@ -70,6 +70,28 @@
       </div>
     </div>
 
+    <div class="control-group">
+      <label class="control-label">
+        Image Proctoring
+      </label>
+      <div class="controls">
+        <span class="value">
+          <%= @quiz.image_proctoring ? t('#options.yes', "Yes") : t('#options.no', "No") %>
+        </span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label">
+        Web Proctoring
+      </label>
+      <div class="controls">
+        <span class="value">
+          <%= @quiz.web_proctoring ? t('#options.yes', "Yes") : t('#options.no', "No") %>
+        </span>
+      </div>
+    </div>
+
     <% unless @quiz.single_attempt? %>
       <div class="control-group">
         <label class="control-label">
