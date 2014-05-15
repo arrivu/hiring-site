@@ -386,30 +386,39 @@ define([
         {
             if(isActive == false)
             {
+
                 clicks++;
-                console.log(clicks);
-                if(clicks == env_maximum_web_proctoring)
+                var total_max_limit = env_maximum_web_proctoring - clicks;
+                if(total_max_limit < 0)
                 {
                     quizSubmission.submitting = true;
                     quizSubmission.submitQuiz();
                 }
-                //console.log(clicks);
-                var total_max_limit = env_maximum_web_proctoring - clicks;
                 if(env_show_remaining_counts == true)
                 {
-                    if(total_max_limit <= 0)
+                    if(total_max_limit < 0)
                     {
                         $('#navigate_description').hide();
-                        var generateHere = document.getElementById("navigate_count");
-                        generateHere.innerHTML = '<div><p>You have exceeded the permissible limit for navigating away from your assessment.Your assessment has finished and it is submitted automatically.</p></div>';
-                        document.getElementById("navigate_button").innerText = "Close";
+                        $('#navigate_count').hide();
+                        $('.navigate_permissible').css('display','block');
+
+                        $('#navigate_button').text("Close");
                     }
                     else
                     {
+                        if(total_max_limit == 0 || total_max_limit == 1)
+                        {
+                            var chance = "chance";
+                        }
+                        else
+                        {
+                            var chance = "chances";
+                        }
                         var generateHere = document.getElementById("navigate_count");
-                        generateHere.innerHTML = '<div><p>You will get a maximum of '+ total_max_limit +' chances to take the assessment.</p></div>';
+                        generateHere.innerHTML = '<div><p>You will get a maximum of '+ total_max_limit +' ' + chance + ' to take the assessment.</p></div>';
                     }
                 }
+
                 isActive = true;
                 $("#navigate_away").dialog({
                     modal: true,
