@@ -709,6 +709,11 @@ class Quizzes::QuizzesController < ApplicationController
 
     @quiz_presenter = Quizzes::TakeQuizPresenter.new(@quiz, @submission, params)
     render :action => 'take_quiz'
+
+    #data = params[:dataUrl]
+    #file_obj=File.open("#{Rails.root}/public/images/test.png","wb") do |file|
+    #  file.write(Base64.decode64(params[:image_data]))
+    #end
   end
 
   def valid_question?(submission, question_id)

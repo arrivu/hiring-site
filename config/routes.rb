@@ -321,6 +321,7 @@ routes.draw do
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
 
+
       collection do
         get :fabulous_quizzes
       end

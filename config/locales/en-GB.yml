@@ -10644,7 +10644,7 @@ en-GB:
         manage_question_banks: "Manage question banks"
         publish_multiple_quizzes: "Publish multiple quizzes"
       multiple_due_dates: "Multiple dates"
-      no_quizzes: "No quizzes available"
+      no_quizzes: "No assessments available"
       page_titles: Quizzes
       titles: 
         this_quiz_is_locked: "This quiz is currently locked. Click for more details."
@@ -10831,8 +10831,8 @@ en-GB:
     no_filters_found: "No filters found"
     no_quizzes_view: 
       headers: 
-        course_quizzes: "Course quizzes"
-      no_quizzes: "No quizzes available"
+        course_quizzes: "Project assessments"
+      no_quizzes: "No assessments available"
     notices: 
       cant_view_submission_while_muted: "You cannot view the quiz history while the quiz is muted."
       has_submissions_already: "Keep in mind, some students have already taken or started taking this quiz"
@@ -10915,7 +10915,7 @@ en-GB:
         other: "%{count} minutes"
       unlimited: Unlimited
     quiz_item_group_view: 
-      no_quizzes: "There are no quizzes to show."
+      no_quizzes: "There are no assessments to show."
       no_surveys: "There are no surveys to show."
     quiz_item_view: 
       links: 
