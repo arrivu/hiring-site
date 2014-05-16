@@ -259,6 +259,11 @@
                         <%= settings.check_box :enable_profiles, :checked => @account.settings[:enable_profiles] %>
                         <%= settings.label :enable_profiles, :en => "Enable Profiles" %>
                       </div>
+                      <div>
+                        <%= settings.check_box :enable_candidate_login, :checked => @account.settings[:enable_candidate_login] %>
+                        <label for="account_settings_enable_candidate_login">Enable Candidate login</label>
+                      </div>
+
                       <% if @account.account_authorization_config %>
                           <div>
                             <%= settings.check_box :canvas_authentication, :checked => @account.canvas_authentication? %>
