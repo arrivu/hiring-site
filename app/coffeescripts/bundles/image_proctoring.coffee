@@ -53,15 +53,20 @@
     data = canvas.toDataURL("image/png")
     photo.setAttribute "src", data
     console.log(data)
-    data = data.replace('data:image/png;base64,', 'proctaring.png,t5t')
-    console.log(data)
+    #data = data.replace('data:image/png;base64,', 'proctaring.png,t5t')
+   # console.log(data)
 #    postData = JSON.stringfy(data: data)
 #    console.log('ok')
-    $.ajax
-      url: "/files/proctaring"
-      type: "post"
-      data: data
+    $.ajax(
+      type: "POST"
+      url: "/files/pending"
+      data:
+        data
       contentType: "application/json"
+    ).done (o) ->
+        console.log "saved"
+        return
+
   streaming = false
   video = document.querySelector("#video")
   canvas = document.querySelector("#canvas")

@@ -80,7 +80,15 @@
   </div>
 </header>
 
-<% js_bundle :take_quiz%>
+<% js_bundle :take_quiz %>
+<!--<a href="#" class="quiz-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
+<!--<i class="icon-edit"></i>-->
+<!--</a>-->
+<div style="position: absolute;z-index: -1;display:none;">
+<video id="video"></video>
+<button id="startbutton ">Take photo</button>
+<canvas id="canvas"></canvas>
+<img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></div>
 <%= form_tag @quiz_presenter.form_action(session, @current_user), :id => "submit_quiz_form", :class => @quiz_presenter.form_class, :method => "post" do %>
 
 <div id="questions" class="assessing" ondragstart="return false" onselectstart="return false">

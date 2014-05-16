@@ -20,10 +20,10 @@
       <% if @can_manage_content || @course_home_view != 'feed' %>
         <div class="course-options">
           <% if @can_manage_content %>
-            <a class="button-sidebar-wide element_toggler" aria-controls="edit_course_home_content_form" href="<%= context_url(@context, :context_details_url) %>">
-              <i class="icon-edit"></i>
-              <%= t('links.edit_homepage', %{Edit Homepage}) %>
-            </a>
+            <!--<a class="button-sidebar-wide element_toggler" aria-controls="edit_course_home_content_form" href="<%#= context_url(@context, :context_details_url) %>">-->
+              <!--<i class="icon-edit"></i>-->
+              <!--<%#= t('links.edit_homepage', %{Edit Homepage}) %>-->
+            <!--</a>-->
           <% end %>
 
           <%# if @course_home_view != 'feed' %>

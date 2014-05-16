@@ -677,6 +677,10 @@ class FilesController < ApplicationController
     end
   end
 
+  def image_proctoring
+
+  end
+
   def s3_success
     if params[:id].present?
       @attachment = Attachment.find_by_id_and_workflow_state_and_uuid(params[:id], 'unattached', params[:uuid])

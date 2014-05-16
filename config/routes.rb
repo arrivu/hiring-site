@@ -311,7 +311,7 @@ routes.draw do
 
     match 'quizzes/publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
     match 'quizzes/unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
-
+    match 'files/pending' => 'files#create_pending', :as => :file_create_pending
     resources :quizzes, :path => :assesments , controller: 'quizzes/quizzes' do
       match 'managed_quiz_data' => 'quizzes/quizzes#managed_quiz_data', :as => :managed_quiz_data
       match 'submission_versions' => 'quizzes/quizzes#submission_versions', :as => :submission_versions
@@ -320,7 +320,7 @@ routes.draw do
       match 'read_only' => 'quizzes/quizzes#read_only', :as => :read_only
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
-
+      match 'files/pending' => 'files#create_pending', :as => :file_create_pending
 
       collection do
         get :fabulous_quizzes
@@ -752,6 +752,7 @@ routes.draw do
   match 'files/:id/public_url' => 'files#public_url', :as => :public_url
   match 'files/preflight' => 'files#preflight', :as => :file_preflight
   match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+  match 'files/proctoring' => 'files#image_proctoring'
   resources :assignments, :only => [:index] do
     resources :files, :only => [] do
       match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'
