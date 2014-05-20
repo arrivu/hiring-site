@@ -2365,7 +2365,9 @@ define([
                 $dialog.find(".side_tabs_table").hide();
                 $dialog.find(".message").show().text(I18n.t('loading_question_banks', "Loading Question Banks..."));
                 var url = $dialog.find(".find_question_banks_url").attr('href');
+
                 $.ajaxJSON(url, 'GET', {}, function(banks) {
+                    //console.log(JSON.stringify(banks));
                     $dialog.find(".message").hide();
                     $dialog.find(".side_tabs_table").show();
                     $dialog.addClass('loaded');
