@@ -18,6 +18,7 @@
 
 class AssessmentQuestionsController < ApplicationController
   include Api::V1::QuizQuestion
+  include TagsHelper
 
   before_filter :require_context
   before_filter :require_bank
@@ -28,13 +29,16 @@ class AssessmentQuestionsController < ApplicationController
       params[:assessment_question][:form_question_data] ||= params[:question]
       @question = @bank.assessment_questions.build(params[:assessment_question])
       if @question.with_versioning(&:save)
+        # arrivu changes
+        tag_list(params[:tag_tokens], @question, @bank)  unless params[:tag_tokens].nil?
+        # arrivu changes
         render json: question_json(@question, @current_user, session, [:assessment_question])
       else
         render :json => @question.errors, :status => :bad_request
       end
     end
   end
-  
+
   def update
     @question = @bank.assessment_questions.find(params[:id])
     if authorized_action(@question, @current_user, :update)
@@ -44,13 +48,16 @@ class AssessmentQuestionsController < ApplicationController
       params[:assessment_question][:form_question_data] ||= params[:question]
       @question.edited_independent_of_quiz_question
       if @question.with_versioning { @question.update_attributes(params[:assessment_question]) }
+        # arrivu changes
+        tag_list(params[:tag_tokens], @question, @bank)  unless params[:tag_tokens].nil?
+        # arrivu changes
         render json: question_json(@question, @current_user, session, [:assessment_question])
       else
         render :json => @question.errors, :status => :bad_request
       end
     end
   end
-  
+
   def destroy
     @question = @bank.assessment_questions.find(params[:id])
     if authorized_action(@question, @current_user, :delete)
@@ -58,7 +65,7 @@ class AssessmentQuestionsController < ApplicationController
       render :json => @question
     end
   end
-  
+
   private
   def require_bank
     @bank = @context.assessment_question_banks.active.find(params[:question_bank_id])

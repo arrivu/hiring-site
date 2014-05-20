@@ -10966,13 +10966,8 @@ en:
       delicious_description: "Delicious is a tool that lets you store and share your bookmarks with others. Sublime's rich content editor will let you search your Delicious tags to easily link from within Sublime to other resources you find useful."
       diigo_description: "Diigo is a social bookmarking tool tailored specifically to research and education. Sublime's rich content editor will let you search your Diigo tags to easily link from within Sublime to other resources you find useful."
       error_loading_token_details: "Error Loading Token Details"
-<<<<<<< HEAD
       facebook_description: "If you have a Facebook account, you can install the Sublime app and receive course notifications on your profile. You can specify which types of notifications you want and how often you'd like them sent."
       feature_options: "Feature options"
-=======
-      facebook_description: "If you have a Facebook account, you can install the Canvas app and receive course notifications on your profile. You can specify which types of notifications you want and how often you'd like them sent."
-      feature_options: "Feature Options"
->>>>>>> 089440d8c13303bfde20503b48aca40275c5f721
       full_token_warning: |-
           **Copy this token down now**. Once you leave this page you won't be able to
           retrieve the full token anymore, you'll have to regenerate it to get a new

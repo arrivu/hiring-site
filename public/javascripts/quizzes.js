@@ -48,7 +48,8 @@ define([
     'vendor/jquery.placeholder' /* /\.placeholder/ */,
     'vendor/jquery.scrollTo' /* /\.scrollTo/ */,
     'jqueryui/sortable' /* /\.sortable/ */,
-    'jqueryui/tabs' /* /\.tabs/ */
+    'jqueryui/tabs', /* /\.tabs/ */
+    'jquery.tokeninput'
 ], function(regradeTemplate, I18n,_,$,calcCmd, htmlEscape, pluralize,
             wikiSidebar, DueDateListView, DueDateOverrideView, Quiz,
             DueDateList,SectionList,
@@ -918,6 +919,7 @@ define([
             that.installValidators();
         },
 
+
         /**
          * Install handlers for validating show_correct_answers (and related fields)
          * values, as well as error handlers for bad values that show friendly
@@ -1241,6 +1243,9 @@ define([
         }
 
         data.quiz.title = quiz.quiz_name;
+        //arrivu changes
+        data.quiz.tag_tokens = quiz.tag_tokens;
+        //arrivu changes
         quiz.questions.forEach(function(question) {
             var q = {};
             q.question_name = question.question_name;
@@ -1262,6 +1267,7 @@ define([
 
             q.answers = question.answers;
             data.questions.push(q);
+
         });
 
         return data;
@@ -1428,23 +1434,23 @@ define([
             });
         });
         /*
-        var select = $('select.section-list');
-        select.change(function () {
+         var select = $('select.section-list');
+         select.change(function () {
 
-            alert(this.value);
+         alert(this.value);
 
-        });
-        */
+         });
+         */
         /*
-        $(function () {
-            var select = $('select.section-list');
-            select.change(function () {
+         $(function () {
+         var select = $('select.section-list');
+         select.change(function () {
 
-                alert(this.value);
+         alert(this.value);
 
-            });
-        });
-        */
+         });
+         });
+         */
         $("#never_hide_results").click(function() {
             var x = $("#never_hide_results").is(":checked");
             if(!x)
@@ -1614,25 +1620,25 @@ define([
                     return false;
                 }
                 /*
-                else if (overrideView.containsSectionsWithoutOverrides() && !hasCheckedOverrides) {
-                    sections = overrideView.sectionsWithoutOverrides();
-                    var missingDateView = new MissingDateDialog({
-                        validationFn: function(){ return sections },
-                        labelFn: function( section ) { return section.get('name')},
-                        success: function(){
-                            missingDateView.$dialog.dialog('close').remove();
-                            missingDateView.remove();
-                            hasCheckedOverrides = true;
-                            $quiz_options_form.trigger('submit');
-                        }
-                    });
-                    missingDateView.cancel = function() {
-                        missingDateView.$dialog.dialog('close').remove();
-                    };
-                    missingDateView.render();
-                    return false;
-                } */
-                 else {
+                 else if (overrideView.containsSectionsWithoutOverrides() && !hasCheckedOverrides) {
+                 sections = overrideView.sectionsWithoutOverrides();
+                 var missingDateView = new MissingDateDialog({
+                 validationFn: function(){ return sections },
+                 labelFn: function( section ) { return section.get('name')},
+                 success: function(){
+                 missingDateView.$dialog.dialog('close').remove();
+                 missingDateView.remove();
+                 hasCheckedOverrides = true;
+                 $quiz_options_form.trigger('submit');
+                 }
+                 });
+                 missingDateView.cancel = function() {
+                 missingDateView.$dialog.dialog('close').remove();
+                 };
+                 missingDateView.render();
+                 return false;
+                 } */
+                else {
                     var finalQuiz = overrideView.getDefaultDueDate();
                     if (finalQuiz) {
                         finalQuiz = finalQuiz.toJSON().assignment_override;
@@ -1799,6 +1805,29 @@ define([
                     'matching_answer_incorrect_matches', 'regrade_option', 'regrade_disabled'],
                 htmlValues: ['question_text', 'correct_comments_html', 'incorrect_comments_html', 'neutral_comments_html']
             });
+
+            //arrivu changes
+            // Edit the questions get the tags
+            question_type = $("#question_form_template").data('type')
+            if (question_type != "")
+            {
+                var question_taggable_type = "AssessmentQuestion"
+            }
+            else
+            {
+                var question_taggable_type = "Quizzes::QuizQuestion"
+            }
+
+            if (questionID != "question_new") {
+                $.ajaxJSON('/get_tags' , 'GET', {taggable_type: question_taggable_type,  taggable_id: questionID }  , function(tags) {
+                    $('#question_tag_tokens').data('pre',tags);
+                    $('#question_tag_tokens').tokenInput('/context_tags.json',{prePopulate: $('#question_tag_tokens').data('load')});
+                }, function(data) {
+                    $.flashError(I18n.t('errors.loading_tags_failed', "Question Tags failed to load, please try again"));
+                });
+            }
+            //arrivu changes
+
             question.question_text = $question.find("textarea[name='question_text']").val();
             var matches = [];
             $question.find(".matching_answer_incorrect_matches_list li").each(function() {
@@ -2172,6 +2201,9 @@ define([
             $question.find(".question_type").change();
             $("html,body").scrollTo({top: $question.offset().top - 10, left: 0});
             $question.find(":input:first").focus().select();
+            //arrivu changes
+            $('#question_tag_tokens').tokenInput('/context_tags.json',{prePopulate: $('#question_tag_tokens').data('load')});
+            //arrivu changes
         });
 
         quiz.$questions.delegate('.group_top input[name="quiz_group[pick_count]"]', {
@@ -2187,38 +2219,103 @@ define([
 
         var $findBankDialog = $("#find_bank_dialog");
         $(".find_bank_link").click(function(event) {
-            event.preventDefault();
+            var find_bank = "find_banklink";
             var $dialog = $findBankDialog;
-            $dialog.data('form', $(this).closest(".quiz_group_form"));
-            if (!$dialog.hasClass('loaded')) {
-                $dialog.data('banks', {});
-                $dialog.find(".find_banks").hide();
-                $dialog.find(".message").show().text(I18n.t('loading_question_banks', "Loading Question Banks..."));
-                var url = $dialog.find(".find_question_banks_url").attr('href');
-                $.ajaxJSON(url, 'GET', {}, function(banks) {
-                    $dialog.find(".message").hide();
-                    $dialog.find(".find_banks").show();
-                    $dialog.addClass('loaded');
-                    for(idx in banks) {
-                        var bank = banks[idx].assessment_question_bank;
-                        bank.title = TextHelper.truncateText(bank.title)
-                        var $bank = $dialog.find(".bank.blank:first").clone(true).removeClass('blank');
-                        $bank.fillTemplateData({data: bank, dataValues: ['id', 'context_type', 'context_id']});
-                        $dialog.find(".bank_list").append($bank);
-                        $bank.data('bank_data', bank);
-                        $bank.show();
-                    }
-                }, function(data) {
-                    $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
-                });
-            }
-            $dialog.find(".bank.selected").removeClass('selected');
-            $dialog.find(".submit_button").attr('disabled', true);
-            $dialog.dialog({
-                title: I18n.t('titles.find_question_bank', "Find Question Bank"),
-                width: 600,
-                height: 400
+            var url = $dialog.find(".find_question_banks_url").attr('href');
+            //arrivu changes
+            $.ajaxJSON(url, 'GET', {group_link: find_bank }, function(banks) {
+                $('.bank').hide();
+                $('.blank').hide();
             });
+            //arrivu changes
+                event.preventDefault();
+                var $dialog = $findBankDialog;
+                $dialog.data('form', $(this).closest(".quiz_group_form"));
+                if (!$dialog.hasClass('loaded')) {
+                    $dialog.data('banks', {});
+                    $dialog.find(".find_banks").hide();
+                    $dialog.find(".message").show().text(I18n.t('loading_question_banks', "Loading Question Banks..."));
+                    var url = $dialog.find(".find_question_banks_url").attr('href');
+                    $.ajaxJSON(url, 'GET', {}, function(banks) {
+                        $dialog.find(".message").hide();
+                        $dialog.find(".find_banks").show();
+                        $dialog.addClass('loaded');
+                        for(idx in banks) {
+                            var bank = banks[idx].assessment_question_bank;
+                            bank.title = TextHelper.truncateText(bank.title)
+                            var $bank = $dialog.find(".bank.blank:first").clone(true).removeClass('blank');
+                            $bank.fillTemplateData({data: bank, dataValues: ['id', 'context_type', 'context_id']});
+                            $dialog.find(".bank_list").append($bank);
+                            $bank.data('bank_data', bank);
+                            $bank.show();
+                        }
+                        // arrivu changes
+                        for(idx in banks) {
+                            var bank_id = banks[idx].assessment_question_bank.id
+                            $.ajaxJSON('/get_tags_filter' , 'GET', {tagger_id: bank_id}  , function(filter_tags) {
+                                for(idx in filter_tags) {
+                                    var arrayLength = filter_tags[idx].length;
+                                    for (var i = 0; i < arrayLength; i++) {
+                                        var mydiv = document.getElementById("show_tag_find");
+                                        var atag = document.createElement('input');
+                                        atag.setAttribute("type", "button");
+                                        atag.setAttribute('id',"tag_"+filter_tags[idx][i].id);
+                                        atag.setAttribute('value',filter_tags[idx][i].name);
+                                        atag.setAttribute('href', "#");
+                                        atag.setAttribute('class',"get_tag");
+                                        atag.setAttribute('style','background-color: #e0eaf1;');
+                                        atag.innerHTML = filter_tags[idx][i].name;
+                                        mydiv.appendChild(atag);
+                                        //Do something
+                                    }
+                                }
+                            });
+                        }
+                        // arrivu changes
+
+
+                    }, function(data) {
+                        $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
+                    });
+                }
+//                arrivu changes
+//            $(document).ready(function() {
+                $dialog.delegate('.get_tag').click(function(event) {
+                    $(".get_tag").click(function(event) {
+                        event.preventDefault();
+                        var id = event.target.id.split('_');
+                        $.ajaxJSON('/get_tag_to_bank' , 'GET', {tag_id: id[1]}  , function(filter_tags_to_bank) {
+                            var count = 0 ;
+                            for(idx in filter_tags_to_bank) {
+                                var bank = filter_tags_to_bank[idx].assessment_question_bank;
+                                bank.title = TextHelper.truncateText(bank.title)
+                                var $bank = $dialog.find(".bank.blank:first").clone(true).removeClass('blank');
+                                $bank.fillTemplateData({data: bank, dataValues: ['id', 'context_type', 'context_id']});
+                                if(count != 1) {
+                                    $('.bank').hide();
+                                }
+                                $dialog.find(".bank_list").append($bank);
+                                $bank.data('bank_data', bank);
+                                $bank.show();
+                                count = 1;
+                            }
+                        });
+                    });
+//                    delegate('.cancel_button', 'click', function() {
+//                        $("#add_question_group_dialog").dialog('close');
+//                        $("#quiz_group_select").val("none");
+                });
+                // arrivu changes
+
+                $dialog.find(".bank.selected").removeClass('selected');
+                $dialog.find(".submit_button").attr('disabled', true);
+                $dialog.dialog({
+                    title: I18n.t('titles.find_question_bank', "Find Question Bank"),
+                    width: 600,
+                    height: 400
+                });
+
+//            });
         });
 
         $findBankDialog.delegate('.bank', 'click', function() {
@@ -2255,41 +2352,115 @@ define([
         var $findQuestionDialog = $("#find_question_dialog");
 
         $(".find_question_link").click(function(event) {
-            event.preventDefault();
+            $('.bank').show();
+            var find_question = "find_question_link";
             var $dialog = $findQuestionDialog;
-            if (!$dialog.hasClass('loaded')) {
-                $dialog.data('banks', {});
-                $dialog.find(".side_tabs_table").hide();
-                $dialog.find(".message").show().text(I18n.t('loading_question_banks', "Loading Question Banks..."));
-                var url = $dialog.find(".find_question_banks_url").attr('href');
-                $.ajaxJSON(url, 'GET', {}, function(banks) {
-                    $dialog.find(".message").hide();
-                    $dialog.find(".side_tabs_table").show();
-                    $dialog.addClass('loaded');
-                    for(idx in banks) {
-                        var bank = banks[idx].assessment_question_bank;
-                        bank.title = TextHelper.truncateText(bank.title)
-                        var $bank = $dialog.find(".bank.blank:first").clone(true).removeClass('blank');
-                        $bank.fillTemplateData({data: bank});
-                        $dialog.find(".bank_list").append($bank);
-                        $bank.data('bank_data', bank);
-                        $bank.show();
-                    }
-                    $dialog.find(".bank:not(.blank):first").click();
-                }, function(data) {
-                    $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
-                });
-            }
-            $dialog.data('add_source', '');
-            $dialog.dialog({
-                title: I18n.t('titles.find_quiz_question', "Find Assessment Question"),
-                open: function() {
-                    if ($dialog.find(".selected_side_tab").length == 0) {
+            var url = $dialog.find(".find_question_banks_url").attr('href');
+            $.ajaxJSON(url, 'GET', {question_link: find_question }, function(banks) {
+                $('.bank').show();
+                $('.blank').hide();
+                event.preventDefault();
+                var $dialog = $findQuestionDialog;
+                if (!$dialog.hasClass('loaded')) {
+                    $dialog.data('banks', {});
+                    $dialog.find(".side_tabs_table").hide();
+                    $dialog.find(".message").show().text(I18n.t('loading_question_banks', "Loading Question Banks..."));
+                    // arrivu changes
+                    var find_question = "find_question_link";
+                    // arrivu changes
+                    var url = $dialog.find(".find_question_banks_url").attr('href');
+                    $.ajaxJSON(url, 'GET', {question_link: find_question }, function(banks) {
+                        $dialog.find(".message").hide();
+                        $dialog.find(".side_tabs_table").show();
+                        $dialog.addClass('loaded');
+                        for(idx in banks) {
+                            var bank = banks[idx].assessment_question_bank;
+                            bank.title = TextHelper.truncateText(bank.title)
+                            var $bank = $dialog.find(".bank.blank:first").clone(true).removeClass('blank');
+                            $bank.fillTemplateData({data: bank});
+                            $dialog.find(".bank_list").append($bank);
+                            $bank.data('bank_data', bank);
+                            $bank.show();
+                        }
+                        for(idx in banks) {
+                            var bank_id = banks[idx].assessment_question_bank.id
+                            $.ajaxJSON('/get_tags_filter' , 'GET', {tagger_id: bank_id}  , function(filter_tags) {
+                                for(idx in filter_tags) {
+                                    var arrayLength = filter_tags[idx].length;
+                                    for (var i = 0; i < arrayLength; i++) {
+                                        var mydiv = document.getElementById("show_tag");
+                                        var atag = document.createElement('input');
+                                        atag.setAttribute("type", "button");
+                                        atag.setAttribute('id',"tag_"+filter_tags[idx][i].id);
+                                        atag.setAttribute('value',filter_tags[idx][i].name);
+                                        atag.setAttribute('href', "#");
+                                        atag.setAttribute('class',"get_tag_find");
+                                        atag.setAttribute('style','background-color: #e0eaf1;');
+                                        atag.innerHTML = filter_tags[idx][i].name;
+                                        mydiv.appendChild(atag);
+                                    }
+                                }
+                            });
+                        }
+
                         $dialog.find(".bank:not(.blank):first").click();
-                    }
-                },
-                width: 600,
-                height: 400
+                    }, function(data) {
+                        $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
+                    });
+                }
+                $(".get_tag_find").click(function(event){
+                    var id = event.target.id.split('_');
+                    event.preventDefault();
+                    var $link = $(this);
+                    if ($link.hasClass('loading')) { return; }
+                    $link.addClass('loading');
+                    $findQuestionDialog.find(".page_link").text(I18n.t('loading_more_questions', "loading more questions..."));
+                    var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
+                    var bank = $bank.data('bank_data');
+                    var url = $findQuestionDialog.find(".question_bank_questions_url").attr('href');
+                    url = $.replaceTags(url, 'question_bank_id', bank.id);
+                    var page = ($findQuestionDialog.find(".page_link").data('page') || 0) + 1;
+                    url += "&page=" + page;
+                    $.ajaxJSON(url, 'GET', {tag_id: id[1]}, function(data) {
+
+                        $link.removeClass('loading');
+                        $findQuestionDialog.find(".page_link").data('page', page);
+                        $findQuestionDialog.find(".page_link").text(I18n.t('more_questions', "more questions"));
+                        var questions = data.questions;
+                        var count = 0;
+                        var banks = $findQuestionDialog.data('banks') || {};
+                        var bank_data = banks[bank.id] || {};
+                        bank_data.pages = data.pages;
+                        bank_data.questions = (bank_data.questions || []).concat(data.questions);
+                        bank_data.last_page = page;
+                        banks[bank.id] = bank_data;
+                        $findQuestionDialog.data('banks', banks);
+                        $findQuestionDialog.find(".question_message").hide();
+                        $findQuestionDialog.find(".question_list_holder").show();
+                        if(count != 1) {
+                            $('.found_question').hide();
+                        }
+                        showQuestions(data);
+                        count = 1;
+                    }, function(data) {
+                        $link.removeClass('loading');
+                        $findQuestionDialog.find(".question_message").text(I18n.t('errors.loading_questions_failed', "Questions failed to load, please try again"));
+                        $findQuestionDialog.find(".page_link").text(I18n.t('errors.loading_more_questions_failed', "loading more questions failed"));
+                    });
+
+                });
+
+                $dialog.data('add_source', '');
+                $dialog.dialog({
+                    title: I18n.t('titles.find_quiz_question', "Find Assessment Question"),
+                    open: function() {
+                        if ($dialog.find(".selected_side_tab").length == 0) {
+                            $dialog.find(".bank:not(.blank):first").click();
+                        }
+                    },
+                    width: 600,
+                    height: 400
+                });
             });
         });
 
@@ -2616,15 +2787,18 @@ define([
             event.preventDefault();
             event.stopPropagation();
             var $displayQuestion = $(this).prev();
+            var $tag_tokens = $("#question_tag_tokens").val();   //arrivu changes
             var $form = $(this);
             var $answers = $form.find(".answer");
             var $question = $(this).find(".question");
             var answers = [];
+            // arrivu changes
             var questionData = $question.getFormData({
-                textValues: ['question_type', 'question_name', 'question_points', 'correct_comments', 'incorrect_comments', 'neutral_comments',
+                textValues: ['token_input', 'question_type', 'question_name', 'question_points', 'correct_comments', 'incorrect_comments', 'neutral_comments',
                     'question_text', 'answer_selection_type', 'text_after_answers', 'matching_answer_incorrect_matches',
                     'regrade_option', 'regrade_disabled']
             });
+            // arrivu changes
 
             // save any open html answers
             $form.find('.edit_html_done').trigger('click');
@@ -2766,6 +2940,7 @@ define([
             }
             $displayQuestion.loadingImage();
             quiz.updateDisplayComments();
+            questionData.tag_tokens = $tag_tokens          //arrivu changes
             $.ajaxJSON(url, method, questionData, function(data) {
                 $displayQuestion.loadingImage('remove');
                 $displayQuestion.find('.question_name').focus();
