@@ -29,6 +29,7 @@ class AssessmentQuestionBank < ActiveRecord::Base
   has_many :quiz_groups, class_name: 'Quizzes::QuizGroup'
   before_save :infer_defaults
   validates_length_of :title, :maximum => maximum_string_length, :allow_nil => true
+  cattr_accessor :tag_id
   
   workflow do
     state :active
@@ -62,8 +63,25 @@ class AssessmentQuestionBank < ActiveRecord::Base
   end
   
   def assessment_question_count
+    if self.tag_id != nil
+      assessment_question_count_filter
+    else
     self.assessment_questions.active.count
+    end
   end
+  def assessment_question_count_filter
+    @assessment_questions = []
+    @bank_id = self.id
+    @assessment_ques_find_id = ActsAsTaggableOn::Tagging.find_all_by_tag_id_and_tagger_id(tag_id,@bank_id)
+    @assessment_ques_find_id.each do |ques_id|
+      @ques_taggable_id = ques_id.taggable_id
+      @find_assessment_ques = AssessmentQuestion.find_by_id(@ques_taggable_id)
+      @assessment_questions << @find_assessment_ques
+    end
+      @assessment_questions.count
+  end
+
+
   def context_code
     "#{self.context_type.underscore}_#{self.context_id}"
   end

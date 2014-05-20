@@ -10460,6 +10460,7 @@ en-GB:
       options: 
         new_group: "[ New group ]"
         no_group: "[No group ]"
+      select_a_question_tag: "Click a tag to filter the questions."
       select_a_question_bank: "Select a question bank from the list below to link it to the this quiz as a question group."
       titles: 
         add_new_question_group: "Add a new question group"

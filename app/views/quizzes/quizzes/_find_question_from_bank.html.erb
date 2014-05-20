@@ -1,14 +1,17 @@
 <div id="find_question_dialog" style="display: none;">
   <a href="<%= context_url(@context, :context_question_banks_url, :include_bookmarked => '1', :inherited => '1') %>" class="find_question_banks_url" style="display: none;">&nbsp;</a>
-  <a href="/<%= @quiz.context_url_prefix %>/question_banks/{{ question_bank_id }}/questions?inherited=1" class="question_bank_questions_url" style="display: none;">&nbsp;</a>
+  <a href="/<%= @quiz.context_url_prefix %>/question_banks/{{ question_bank_id }}/questions?inherited=1" class="question_bank_questions_url" id="get_question_url" style="display: none;">&nbsp;</a>
   <a href="<%= context_url(@context, :context_quiz_quiz_questions_url, @quiz.id) %>" class="add_questions_url" style="display: none;">&nbsp;</a>
   <div style="float: right; padding-right: 5px; line-height: 2.5em;">
     <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Project Question Banks") %></a>
   </div>
   <div class="clear"></div>
+
+  <!--arrivu changes-->
   <div id="show_tag">
 
   </div>
+  <!--arrivu changes-->
   <div class="message" style="display: none;"></div>
   <table class="side_tabs_table" style="width: 100%;">
     <tr>
@@ -19,12 +22,15 @@
               <span class="title"><%= t('headers.bank_name', "Bank Name") %></span>
               <span class="id" style="display: none;">&nbsp;</span>
             </a>
+
             <div class="sub_content">
               <%= t(:bank_description, "%{bank_name}, %{n} questions",
                     :bank_name => raw('<span class="cached_context_short_name">&nbsp;</span>'),
                     :n => raw('<span class="assessment_question_count">&nbsp;</span>')) %>
             </div>
+
           </li>
+
         </ul>
       </td>
       <td class="right">
@@ -65,9 +71,12 @@
     <a href="<%= context_url(@context, :context_question_banks_url) %>"><%= t('links.manage_question_banks', "Manage Project Question Banks") %></a>
   </div>
   <div class="clear"></div>
+  <!--arrivu changes-->
+  <%= t(:select_a_question_tag, "Click a tag to filter the questions.") %>
   <div id="show_tag_find">
 
   </div>
+  <!--arrivu changes-->
   <div class="message" style="display: none;"></div>
   <div class="find_banks">
     <%= t(:select_a_question_bank, "Select a question bank from the list below to link it to the this assessment as a question group.") %>

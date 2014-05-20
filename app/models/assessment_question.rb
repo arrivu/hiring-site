@@ -437,4 +437,5 @@ class AssessmentQuestion < ActiveRecord::Base
   end
 
   scope :active, where("assessment_questions.workflow_state<>'deleted'")
+  scope :active, where(:workflow_state => 'active')
 end
