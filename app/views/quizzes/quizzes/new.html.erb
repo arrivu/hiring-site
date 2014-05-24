@@ -232,7 +232,20 @@
                     <%= t('anonymous_submissions', "Keep Submissions Anonymous") %>
                   </label>
                 </div>
-
+                <div class="option-group">
+                  <label class="checkbox" for="quiz_one_question_at_a_time">
+                    <%= hidden_field_tag "quiz[one_question_at_a_time]", "0", :id => nil %>
+                    <%= check_box_tag "quiz[one_question_at_a_time]", "1", @quiz.one_question_at_a_time?, :class => "element_toggler"  %>
+                    <%= t('one_question_at_a_time', 'Show one question at a time') %>
+                  </label>
+                  <div id="one_question_at_a_time_options" style="<%= 'display:none;' unless @quiz.one_question_at_a_time? %>" class="options">
+                    <label class="checkbox" for="quiz_cant_go_back">
+                      <%= hidden_field_tag "quiz[cant_go_back]", "0", :id => nil %>
+                      <%= check_box_tag "quiz[cant_go_back]", "1", @quiz.cant_go_back? %>
+                      <%= t('cant_go_back', "Lock questions after answering") %>
+                    </label>
+                  </div>
+                </div>
                 <!-- Multiple Attempts -->
                 <div class="option-group">
                   <label class="checkbox" for="multiple_attempts_option">
@@ -323,21 +336,20 @@
                 <% end %>
 
                 <!-- OQAAT -->
+
                 <div class="option-group">
-                  <label class="checkbox" for="quiz_one_question_at_a_time">
-                    <%= hidden_field_tag "quiz[one_question_at_a_time]", "0", :id => nil %>
-                    <%= check_box_tag "quiz[one_question_at_a_time]", "1", @quiz.one_question_at_a_time?, :class => "element_toggler"  %>
-                    <%= t('one_question_at_a_time', 'Show one question at a time') %>
+                  <label class="checkbox" for="show_result_id">
+                    <%= hidden_field_tag "quiz[show_result]", "0" %>
+                    <input type="checkbox" name="quiz[show_result]" <%= "checked" if @quiz.show_result %>  value="1" id="show_result_id" />
+                    Show Result
                   </label>
-                  <div id="one_question_at_a_time_options" style="<%= 'display:none;' unless @quiz.one_question_at_a_time? %>" class="options">
-                    <label class="checkbox" for="quiz_cant_go_back">
-                      <%= hidden_field_tag "quiz[cant_go_back]", "0", :id => nil %>
-                      <%= check_box_tag "quiz[cant_go_back]", "1", @quiz.cant_go_back? %>
-                      <%= t('cant_go_back', "Lock questions after answering") %>
+                  <div class="options" id="percentage_option" style="display:none;">
+                    <label class="checkbox" for="percentage_of_marks" style="margin-left: -20px;">
+                      Enter the percentage of marks
+                      <input type="text" name="quiz[percentage_of_marks]" id="percentage_of_marks" value="<%= @quiz.percentage_of_marks %>" style="width: 30px;"/>%
                     </label>
                   </div>
                 </div>
-
                 <p class="option-caption"><strong><%= t('labels.restrict_quiz', "Assessment Restrictions") %></strong></p>
 
                 <!-- Quiz Restrictions -->
@@ -361,19 +373,20 @@
                     <%= link_to(image_tag("find.png"), '#', :class => 'ip_filtering_link', :title => t('titles.find_ip_address_filter', 'Find IP Address Filter')) %>
                   </div>
                 </div>
+
                 <div class="option-group">
-                  <label class="checkbox" for="image_proctoring">
+                  <label class="checkbox" for="online_proctoring_option">
                     <%= hidden_field_tag "quiz[online_proctoring]", "0" %>
                     <input type="checkbox" name="quiz[online_proctoring]" <%= "checked" if @quiz.online_proctoring %> value="1" id="online_proctoring_option" />
                     Online Proctoring
                   </label>
                   <div class="options" id="img_proctoring" style="display:none;">
-                      <label class="checkbox" for="image_proctoring">
+                      <label class="checkbox" for="image_proctoring_option">
                         <%= hidden_field_tag "quiz[image_proctoring]", "0" %>
                         <input type="checkbox" name="quiz[image_proctoring]" <%= "checked" if @quiz.image_proctoring %> value="1" id="image_proctoring_option" />
                         Image Proctoring
                       </label>
-                      <label class="checkbox" for="web_proctoring">
+                      <label class="checkbox" for="web_proctoring_option">
                         <%= hidden_field_tag "quiz[web_proctoring]", "0" %>
                         <input type="checkbox" name="quiz[web_proctoring]" <%= "checked" if @quiz.web_proctoring %> value="1" id="web_proctoring_option" />
                         Web Proctoring
@@ -385,7 +398,7 @@
                         Maximum web proctoring limit
                         <input type="text" name="quiz[maximum_web_proctoring]" id="maximum_web_proctoring" value="<%= @quiz.maximum_web_proctoring %>"/>
                       </label>
-                      <label class="checkbox" for="web_proctoring">
+                      <label class="checkbox" for="show_remaining_counts">
                         <%= hidden_field_tag "quiz[show_remaining_counts]", "0" %>
                         <input type="checkbox" name="quiz[show_remaining_counts]" <%= "checked" if @quiz.show_remaining_counts %> value="<%= @quiz.show_remaining_counts %>" id="show_remaining_counts" />
                         Show remaining counts
@@ -513,7 +526,7 @@
 </div>
 <%= render :partial => 'equations_help' %>
 <div id="ip_filters_dialog" style="display: none;">
-  <h2><%= t('headers.ip_filters', "What are Quiz IP Filters?") %></h2>
+  <h2>What are Assessment IP Filters?</h2>
   <p class="explanation"><%= t(:ip_filters, <<-TEXT)
   Assessment IP filters are a way to limit access to assessments to
   computers in a specified IP range.  Filters can be a comma-separated

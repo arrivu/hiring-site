@@ -1481,6 +1481,13 @@ define([
             $('.correct_answer_at_css').css('display','block');
 
         }
+        else
+        {
+            $(".correct_answer_at").hide();
+            $("#overrides_show_correct_answer_at").hide();
+            $("#overrides_hide_correct_answers_at").hide();
+            $('.correct_answer_at_css').css('display','none');
+        }
 
         $("#quiz_show_correct_answers").click(function() {
             var x = $("#quiz_show_correct_answers").is(":checked");
@@ -1602,6 +1609,28 @@ define([
 
             }
 
+        });
+        var check = $("#show_result_id").is(":checked");
+        if(check)
+        {
+            $("#percentage_option").show();
+        }
+        else
+        {
+            document.getElementById("percentage_of_marks").value= "";
+            $("#percentage_option").hide();
+        }
+        $("#show_result_id").click(function() {
+            var check = $("#show_result_id").is(":checked");
+            if(check)
+            {
+                $("#percentage_option").show();
+            }
+            else
+            {
+                document.getElementById("percentage_of_marks").value= "";
+                $("#percentage_option").hide();
+            }
         });
         $("#ip_filters_dialog").delegate('.ip_filter', 'click', function(event) {
             event.preventDefault();
@@ -2536,7 +2565,6 @@ define([
         //$(".get_tag_find").click(function(event){
             $('.token-input-token').removeClass('token-input-selected-token');
             $(this).addClass('token-input-selected-token');
-            //$('.token-input-selected-token').css('background-color', 'red');
             var id = event.target.id.split('_');
             event.preventDefault();
             var $link = $(this);

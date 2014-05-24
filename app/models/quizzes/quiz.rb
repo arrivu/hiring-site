@@ -37,7 +37,7 @@ class Quizzes::Quiz < ActiveRecord::Base
     :require_lockdown_browser_for_results, :context, :notify_of_update,
     :one_question_at_a_time, :cant_go_back, :show_correct_answers_at, :hide_correct_answers_at,
     :require_lockdown_browser_monitor, :lockdown_browser_monitor_data, :online_proctoring, :image_proctoring,
-    :web_proctoring, :maximum_web_proctoring, :show_remaining_counts
+    :web_proctoring, :maximum_web_proctoring, :show_result, :percentage_of_marks, :show_remaining_counts
 
   attr_readonly :context_id, :context_type
   attr_accessor :notify_of_update
@@ -1105,6 +1105,8 @@ class Quizzes::Quiz < ActiveRecord::Base
       image_proctoring
       web_proctoring
       maximum_web_proctoring
+      show_result
+      percentage_of_marks
       show_remaining_counts
       points_possible
       hide_results

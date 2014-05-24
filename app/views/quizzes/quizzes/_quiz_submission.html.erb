@@ -19,6 +19,17 @@
     <%= t(:quiz_not_yet_taken, "The assessment hasn't been taken yet.") %>
   <% end %>
 <% elsif !(@current_submission || @submission).results_visible? && !can_do(@quiz, @current_user, :grade) %>
+    <div>
+      <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
+      <% if @quiz.show_result %>
+          Result Status:
+          <% if percentage >= @quiz.percentage_of_marks %>
+              <h1>Passed</h1>
+          <% else %>
+              <h1>Failed</h1>
+          <% end %>
+      <% end %>
+    </div>
   <div class="quiz_score" style="<%= hidden if @quiz.ungraded? %>">
     <% if @quiz.allowed_attempts != 1 %>
       <%= before_label(:score_for_attempt, "Score for this attempt") %>
@@ -73,6 +84,17 @@
     <% end %>
   <% end %>
 <% end %>
+<div>
+  <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
+  <% if @quiz.show_result %>
+      Result Status:
+      <% if percentage >= @quiz.percentage_of_marks %>
+          Passed
+      <% else %>
+          Failed
+      <% end %>
+  <% end %>
+</div>
 <div class="quiz_score" style="<%= hidden if @quiz.ungraded? %>">
   <% if @quiz.allowed_attempts != 1 %>
     <%= before_label(:score_for_attempt, "Score for this attempt") %>
@@ -82,8 +104,10 @@
     <%= before_label(:score_for_quiz, "Score for this assessment") %>
   <% end %>
   <%= score_out_of_points_possible(@submission.score, params[:preview] ? @submission.points_possible_at_submission_time : @quiz.points_possible, :class => 'score_value') %>
+
   <%= '*' if @submission.pending_review? %>
     </div>
+
 <% if @submission.pending_review? %>
   <div class='question-not-graded-text'>
     *
