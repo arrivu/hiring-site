@@ -24,9 +24,9 @@
       <% if @quiz.show_result %>
           Result Status:
           <% if percentage >= @quiz.percentage_of_marks %>
-              <h1>Passed</h1>
+              <span class="quiz_result_pass">Passed</span>
           <% else %>
-              <h1>Failed</h1>
+              <span class="quiz_result_fail">Failed</span>
           <% end %>
       <% end %>
     </div>
@@ -89,9 +89,9 @@
   <% if @quiz.show_result %>
       Result Status:
       <% if percentage >= @quiz.percentage_of_marks %>
-          Passed
+          <span class="quiz_result_pass">Passed</span>
       <% else %>
-          Failed
+          <span class="quiz_result_fail">Failed</span>
       <% end %>
   <% end %>
 </div>

@@ -1538,16 +1538,28 @@ define([
         {
             $("#max_limits").hide();
         }
+        var if_img_proctoring = $("#image_proctoring_option").is(":checked");
+        if(if_img_proctoring)
+        {
+            $("#max_img_limits").show();
+        }
+        else
+        {
+            $("#max_img_limits").hide();
+        }
         $("#image_proctoring_option").click(function() {
 
             var image_proctoring = $("#image_proctoring_option").is(":checked");
             if(image_proctoring)
             {
                 image_proctoring_option = "1";
+                $("#max_img_limits").show();
             }
             else
             {
                 image_proctoring_option = "0";
+                $("#max_img_limits").hide();
+                document.getElementById("maximum_image_proctoring").value= "";
             }
             $("#image_proctoring_option").val(image_proctoring_option);
         });
