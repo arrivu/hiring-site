@@ -286,18 +286,6 @@ class ApplicationController < ActionController::Base
   #   render
   # end
   def authorized_action(object, *opts)
-
-    #i=0
-    #role_type = ""
-    #roles = @current_pseudonym.user.roles
-    candidate_login = @domain_root_account.settings[:enable_candidate_login]
-    #@current_user.roles do |role|
-    #
-    #  if role[i] == "student"
-    #    role_type = "student"
-    #  end
-    #    i+=1
-    #end
     can_do = is_authorized_action?(object, *opts)
     render_unauthorized_action unless can_do
     can_do
@@ -1723,7 +1711,5 @@ class ApplicationController < ActionController::Base
 
     js_env hash
   end
-  def candidate_login
-    candidate_login = @domain_root_account.settings[:enable_candidate_login]
-  end
+
 end
