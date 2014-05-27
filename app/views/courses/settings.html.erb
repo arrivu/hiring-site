@@ -500,7 +500,7 @@
     <%= form_for :course_section, :url => "", :html => {:id => "edit_section_form", :title => "Edit Batch", :method => :put} do |f| %>
       <table>
       <tr><td>Batch Name</td><td><%= f.text_field :name %></td></tr>
-      <tr><td>SIS Id</td><td><%= f.text_field :sis_source_id, :id => "batch_sis_id" %></td></tr>
+      <tr><td>CSV Import ID</td><td><%= f.text_field :sis_source_id, :id => "batch_sis_id" %></td></tr>
       <tr><td>Start Date</td><td><%= f.text_field :start_at, :class => "date_entry", :id => "batch_start_date" %></td></tr>
       <tr><td>End Date</td><td><%= f.text_field :end_at, :class => "date_entry", :id => "batch_end_date" %></td></tr>
         <tr>

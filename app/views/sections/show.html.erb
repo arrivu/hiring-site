@@ -118,7 +118,7 @@ h3 .tally {
       <td>
         <span class="course_form">
           <% if can_do(@context.root_account, @current_user, :manage_sis) %>
-            <%= f.text_field :sis_source_id, :style => "width: 50px;", :title => "SIS ID", :value => @section.sis_source_id %>
+            <%= f.text_field :sis_source_id, :style => "width: 50px;", :title => "CSV Import ID", :value => @section.sis_source_id %>
           <% else %>
             <%= @section.sis_source_id %>
           <% end %>

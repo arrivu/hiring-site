@@ -99,7 +99,7 @@
                     <% no_language = t(:no_language_preference, "Not set (defaults to %{language})", :language => available_locales[infer_locale(:context => @context.parent_account)]) %>
                     <%= f.select :default_locale, [[no_language, nil]] + available_locales.invert.sort, {:selected => @context.default_locale}, {:class => 'locale'} %>
                     <%= render :partial => 'shared/locale_warning' %>
-                    <p style="font-size: 0.9em;"><%= t(:default_language_description, "This will override any browser/OS language settings. Preferred languages can still be set at the course/user level.") %></p>
+                    <p style="font-size: 0.9em;">This will override any browser/OS language settings. Preferred languages can still be set at the project/user level.<%#= t(:default_language_description, "This will override any browser/OS language settings. Preferred languages can still be set at the course/user level.") %></p>
                   </td>
                 </tr>
             <% end %>
@@ -149,7 +149,8 @@
                         </tr>
                         <tr>
                           <td colspan="2"><%= settings.check_box :restrict_quiz_questions, :checked => @account.settings[:restrict_quiz_questions] %>
-                            <%= settings.label :restrict_quiz_questions, :en => "Restrict students from viewing quiz questions after course end date" %>
+                            <%#= settings.label :restrict_quiz_questions, :en => "Restrict students from viewing quiz questions after course end date" %>
+                            <label for="account_settings_restrict_quiz_questions">Restrict candidates from viewing assessments after project end date</label>
                           </td>
                         </tr>
                     <% end %>
@@ -259,6 +260,11 @@
                         <%= settings.check_box :enable_profiles, :checked => @account.settings[:enable_profiles] %>
                         <%= settings.label :enable_profiles, :en => "Enable Profiles" %>
                       </div>
+                      <div>
+                        <%= settings.check_box :enable_candidate_login, :checked => @account.settings[:enable_candidate_login] %>
+                        <label for="account_settings_enable_candidate_login">Enable Candidate login</label>
+                      </div>
+
                       <% if @account.account_authorization_config %>
                           <div>
                             <%= settings.check_box :canvas_authentication, :checked => @account.canvas_authentication? %>

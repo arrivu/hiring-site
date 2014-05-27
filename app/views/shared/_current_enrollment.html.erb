@@ -48,8 +48,8 @@
     <% end %>
     <% unless dashboard %>
 
-        </li>
-    <% end %>
+      </li>
+<% end %>
 
 <%else%>
     <% if Date.today.to_s.to_date < current_enrollment.course_section.start_at.to_s.to_date || Date.today.to_s.to_date > current_enrollment.course_section.end_at.to_s.to_date %>
