@@ -2577,6 +2577,8 @@ define([
         //$(".get_tag_find").click(function(event){
             $('.token-input-token').removeClass('token-input-selected-token');
             $(this).addClass('token-input-selected-token');
+            //var $dialog = $findQuestionDialog;
+            //$dialog.data('banks', {});
             var id = event.target.id.split('_');
             event.preventDefault();
             var $link = $(this);

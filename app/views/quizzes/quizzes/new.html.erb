@@ -350,6 +350,20 @@
                     </label>
                   </div>
                 </div>
+
+                <div class="option-group">
+                  <label class="checkbox" for="allow_negative_marks">
+                    <%= hidden_field_tag "quiz[allow_negative_marks]", "0" %>
+                    <input type="checkbox" name="quiz[allow_negative_marks]" <%= "checked" if @quiz.allow_negative_marks %>  value="1" id="allow_negative_marks" />
+                    Allow Negative Marks
+                  </label>
+                  <div class="options" id="percentage_option">
+                    <label class="checkbox" for="negative_mark" style="margin-left: -20px;">
+                      Enter negative marks for each questions
+                      <input type="text" name="quiz[negative_mark]" id="negative_mark" value="<%= @quiz.negative_mark %>" style="width: 30px;"/>
+                    </label>
+                  </div>
+                </div>
                 <p class="option-caption"><strong><%= t('labels.restrict_quiz', "Assessment Restrictions") %></strong></p>
 
                 <!-- Quiz Restrictions -->
