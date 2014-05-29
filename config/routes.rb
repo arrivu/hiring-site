@@ -707,6 +707,7 @@ routes.draw do
   match 'project' => 'courses#candidate' , :as => :project, :via => :get
   match 'registerCandidate' => 'invitations#fill_registration_form', :as => :registerCandidate
   match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  match 'candidateReport' => 'candidate_reports#view_reports', :as => :candidateReport
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url
