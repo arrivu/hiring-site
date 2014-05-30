@@ -534,25 +534,25 @@ class RoleOverride < ActiveRecord::Base
           'AccountAdmin'
         ]
       },
-      :manage_calendar => {
-        :label => lambda { t('permissions.manage_calendar', "Add, edit and delete events on the project calendar") },
-        :available_to => [
-          'StudentEnrollment',
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'TeacherlessStudentEnrollment',
-          'ObserverEnrollment',
-          'AccountAdmin',
-          'AccountMembership'
-        ],
-        :true_for => [
-          'TaEnrollment',
-          'DesignerEnrollment',
-          'TeacherEnrollment',
-          'AccountAdmin'
-        ]
-      },
+      #:manage_calendar => {
+      #  :label => lambda { t('permissions.manage_calendar', "Add, edit and delete events on the project calendar") },
+      #  :available_to => [
+      #    'StudentEnrollment',
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'TeacherlessStudentEnrollment',
+      #    'ObserverEnrollment',
+      #    'AccountAdmin',
+      #    'AccountMembership'
+      #  ],
+      #  :true_for => [
+      #    'TaEnrollment',
+      #    'DesignerEnrollment',
+      #    'TeacherEnrollment',
+      #    'AccountAdmin'
+      #  ]
+      #},
       :read_reports => {
         :label => lambda { t('permissions.read_reports', "View usage reports for the project") },
         :available_to => [
