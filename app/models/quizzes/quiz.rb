@@ -668,7 +668,7 @@ class Quizzes::Quiz < ActiveRecord::Base
         if q[:assessment_question_bank_id]
           bank = ::AssessmentQuestionBank.find_by_id(q[:assessment_question_bank_id]) if q[:assessment_question_bank_id].present?
           if bank
-            questions = bank.select_for_submission(q[:pick_count], exclude_ids, q[:shuffle_question_bank])
+            questions = bank.select_for_submission(q[:pick_count], exclude_ids, q[:shuffle_question_bank], q[:tag_id])
             @qroup_name = q[:name]
             questions = questions.map { |aq| aq.data }
             cnts = 0

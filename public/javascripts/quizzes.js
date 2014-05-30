@@ -2308,6 +2308,9 @@ define([
         });
 
         $(".add_question_group_link").click(function(event) {
+//arrivu changes
+            $('.selected_tag_id').val("");
+//arrivu changes
             event.preventDefault();
             if (questionLimitReached()) return;
             $(".question_form .submit_button:visible,.quiz_group_form .submit_button:visible").each(function() {
@@ -2368,8 +2371,7 @@ define([
             var url = $dialog.find(".find_question_banks_url").attr('href');
             //arrivu changes
             $.ajaxJSON(url, 'GET', {group_link: find_bank }, function(banks) {
-                $('.bank').hide();
-                $('.blank').hide();
+                $("#show_tag_find").empty();
             });
             //arrivu changes
                 event.preventDefault();
@@ -2393,65 +2395,27 @@ define([
                             $bank.data('bank_data', bank);
                             $bank.show();
                         }
-                        // arrivu changes
-                        for(idx in banks) {
-                            var bank_id = banks[idx].assessment_question_bank.id
-                            $.ajaxJSON('/get_tags_filter' , 'GET', {tagger_id: bank_id}  , function(filter_tags) {
-                                for(idx in filter_tags) {
-                                    var arrayLength = filter_tags[idx].length;
-                                    for (var i = 0; i < arrayLength; i++) {
-                                        var mydiv = document.getElementById("show_tag_find");
-                                        var atag = document.createElement('li');
-                                        //atag.setAttribute("type", "button");
-                                        atag.setAttribute('id',"tag_"+filter_tags[idx][i].id);
-                                        atag.setAttribute('value',filter_tags[idx][i].name);
-                                        //atag.setAttribute('href', "#");
-                                        atag.setAttribute('class',"get_tag token-input-token");
-                                        //atag.setAttribute('style','background-color: #e0eaf1;');
-                                        atag.innerHTML = filter_tags[idx][i].name;
-                                        mydiv.appendChild(atag);
-                                        //Do something
-                                    }
-                                }
-                            });
-                        }
-                        // arrivu changes
-
-
                     }, function(data) {
                         $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
                     });
                 }
-//                arrivu changes
-//            $(document).ready(function() {
-                $dialog.delegate('.get_tag').click(function(event) {
-                    $(".get_tag").click(function(event) {
-                        event.preventDefault();
-                        var id = event.target.id.split('_');
+              // arrivu changes
+
+                $('#find_bank_dialog').on('click', '.get_tag', function(event){
+
                         $('.token-input-token').removeClass('token-input-selected-token');
                         $(this).addClass('token-input-selected-token');
-                        $.ajaxJSON('/get_tag_to_bank' , 'GET', {tag_id: id[1]}  , function(filter_tags_to_bank) {
-                            var count = 0 ;
-                            for(idx in filter_tags_to_bank) {
-                                var bank = filter_tags_to_bank[idx].assessment_question_bank;
-                                bank.title = TextHelper.truncateText(bank.title)
-                                var $bank = $dialog.find(".bank.blank:first").clone(true).removeClass('blank');
-                                $bank.fillTemplateData({data: bank, dataValues: ['id', 'context_type', 'context_id']});
-                                if(count != 1) {
-                                    $('.bank').hide();
-                                }
-                                $dialog.find(".bank_list").append($bank);
-                                $bank.data('bank_data', bank);
-                                $bank.show();
-                                count = 1;
-                            }
-                        });
+                        event.preventDefault();
+                        var id = event.target.id.split('_');
+                          $('.selected_tag_id').val(id[1]);
                     });
-//                    delegate('.cancel_button', 'click', function() {
-//                        $("#add_question_group_dialog").dialog('close');
-//                        $("#quiz_group_select").val("none");
-                });
-                // arrivu changes
+
+
+            $('#find_bank_dialog').on('click', '.token-input-selected-token', function(event){
+                $('.token-input-token').removeClass('token-input-selected-token');
+                $('.selected_tag_id').val("");
+            });
+//                // arrivu changes
 
                 $dialog.find(".bank.selected").removeClass('selected');
                 $dialog.find(".submit_button").attr('disabled', true);
@@ -2460,15 +2424,38 @@ define([
                     width: 600,
                     height: 400
                 });
-
-//            });
         });
 
         $findBankDialog.delegate('.bank', 'click', function() {
             $findBankDialog.find(".bank.selected").removeClass('selected');
             $(this).addClass('selected');
+//arrivu changes
+// select the bank and filter the tags
+            var $bank = $findBankDialog.find(".bank.selected:first");
+            var bank = $bank.getTemplateData({textValues: ['title'], dataValues: ['id', 'context_id', 'context_type']});
+                            $.ajaxJSON('/get_tags_filter' , 'GET', {tagger_id: bank.id}  , function(filter_tags) {
+                                $("#show_tag_find").empty();
+                                for(idx in filter_tags) {
+                                    var arrayLength = filter_tags[idx].length;
+                                    for (var i = 0; i < arrayLength; i++) {
+                                        var mydiv = document.getElementById("show_tag_find");
+                                        var atag = document.createElement('li');
+                                        atag.setAttribute('id',"tag_"+filter_tags[idx][i].id);
+                                        atag.setAttribute('value',filter_tags[idx][i].name);
+                                        atag.setAttribute('class',"get_tag token-input-token");
+                                        atag.innerHTML = filter_tags[idx][i].name;
+                                        mydiv.appendChild(atag);
+                                        //Do something
+                                    }
+                                }
+                            });
+
+
+//arrivu changes
+
             $findBankDialog.find(".submit_button").attr('disabled', false);
-        }).delegate('.submit_button', 'click', function() {
+        }).delegate('.submit_button', 'click', function(event) {
+                var tag = $('.token-input-selected-token').text();  // arrivu changes
                 var $bank = $findBankDialog.find(".bank.selected:first");
                 var bank = $bank.getTemplateData({textValues: ['title'], dataValues: ['id', 'context_id', 'context_type']});
                 var $form = $findBankDialog.data('form');
@@ -2483,6 +2470,16 @@ define([
                 $form.find(".shuffle_question_bank").val(shuffle_id);
                 $form.find(".bank_id").val(bank.id);
                 bank.bank_name = bank.title;
+//  arrivu changes
+                if (tag != "")
+                {
+                   bank.tag_name = tag;
+                }
+                else
+                {
+                    bank.tag_name = "No tags selected";
+                }
+// arrivu changes
                 var $formBank = $form.closest('.group_top').next(".assessment_question_bank")
                 if ($formBank.length == 0) {
                     $formBank = $("#group_top_template").next(".assessment_question_bank").clone(true);
@@ -2498,15 +2495,15 @@ define([
         var $findQuestionDialog = $("#find_question_dialog");
 
         $(".find_question_link").click(function(event) {
-            $('.token-input-token').removeClass('token-input-selected-token');
-            $('.bank').show();
-            var find_question = "find_question_link";
-            var $dialog = $findQuestionDialog;
-
-            var url = $dialog.find(".find_question_banks_url").attr('href');
-            $.ajaxJSON(url, 'GET', {question_link: find_question }, function(banks) {
-                $('.bank').show();
-                $('.blank').hide();
+// arrivu changes
+//            var find_question = "find_question_link";
+//            var $dialog = $findQuestionDialog;
+//            var url = $dialog.find(".find_question_banks_url").attr('href');
+//            $.ajaxJSON(url, 'GET', {question_link: find_question }, function(banks) {
+//                $('.bank').show();
+//                $('.blank').hide();
+//            });
+// arrivu changes
                 event.preventDefault();
                 var $dialog = $findQuestionDialog;
                 if (!$dialog.hasClass('loaded')) {
@@ -2530,35 +2527,12 @@ define([
                             $bank.data('bank_data', bank);
                             $bank.show();
                         }
-                        for(idx in banks) {
-                            var bank_id = banks[idx].assessment_question_bank.id
-                            $.ajaxJSON('/get_tags_filter' , 'GET', {tagger_id: bank_id}  , function(filter_tags) {
-                                for(idx in filter_tags) {
-                                    var arrayLength = filter_tags[idx].length;
-                                    for (var i = 0; i < arrayLength; i++) {
-                                        var mydiv = document.getElementById("show_tag");
-                                        //var atag = document.createElement('input');
-                                        var atag = document.createElement('li');
-                                        //atag.setAttribute("type", "button");
-                                        atag.setAttribute('id',"tag_"+filter_tags[idx][i].id);
-                                        atag.setAttribute('value',filter_tags[idx][i].name);
-                                        //atag.setAttribute('href', "#");
-                                        atag.setAttribute('class',"get_tag_find token-input-token");
-                                        //atag.setAttribute('style','background-color: #e0eaf1;');
-                                        atag.innerHTML = filter_tags[idx][i].name;
-                                        mydiv.appendChild(atag);
-                                    }
-                                }
-                            });
-                        }
-
 
                         $dialog.find(".bank:not(.blank):first").click();
                     }, function(data) {
                         $dialog.find(".message").text(I18n.t('errors.loading_banks_failed', "Question Banks failed to load, please try again"));
                     });
                 }
-
 
                 $dialog.data('add_source', '');
                 $dialog.dialog({
@@ -2571,52 +2545,8 @@ define([
                     width: 600,
                     height: 400
                 });
-            });
         });
-        $('#find_question_dialog').on('click', '.get_tag_find', function(){
-        //$(".get_tag_find").click(function(event){
-            $('.token-input-token').removeClass('token-input-selected-token');
-            $(this).addClass('token-input-selected-token');
-            var id = event.target.id.split('_');
-            event.preventDefault();
-            var $link = $(this);
-            if ($link.hasClass('loading')) { return; }
-            $link.addClass('loading');
-            $findQuestionDialog.find(".page_link").text(I18n.t('loading_more_questions', "loading more questions..."));
-            var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
-            var bank = $bank.data('bank_data');
-            var url = $findQuestionDialog.find(".question_bank_questions_url").attr('href');
-            url = $.replaceTags(url, 'question_bank_id', bank.id);
-            var page = ($findQuestionDialog.find(".page_link").data('page') || 0) + 1;
-            url += "&page=" + page;
-            $.ajaxJSON(url, 'GET', {tag_id: id[1]}, function(data) {
 
-                $link.removeClass('loading');
-                $findQuestionDialog.find(".page_link").data('page', page);
-                $findQuestionDialog.find(".page_link").text(I18n.t('more_questions', "more questions"));
-                var questions = data.questions;
-                var count = 0;
-                var banks = $findQuestionDialog.data('banks') || {};
-                var bank_data = banks[bank.id] || {};
-                bank_data.pages = data.pages;
-                bank_data.questions = (bank_data.questions || []).concat(data.questions);
-                bank_data.last_page = page;
-                banks[bank.id] = bank_data;
-                $findQuestionDialog.data('banks', banks);
-                $findQuestionDialog.find(".question_message").hide();
-                $findQuestionDialog.find(".question_list_holder").show();
-                if(count != 1) {
-                    $('.found_question').hide();
-                }
-                showQuestions(data);
-                count = 1;
-            }, function(data) {
-                $link.removeClass('loading');
-                $findQuestionDialog.find(".question_message").text(I18n.t('errors.loading_questions_failed', "Questions failed to load, please try again"));
-                $findQuestionDialog.find(".page_link").text(I18n.t('errors.loading_more_questions_failed', "loading more questions failed"));
-            });
-
-        });
         var updateFindQuestionDialogQuizGroups = function(id) {
             var groups = [];
             $findQuestionDialog.find(".quiz_group_select").find("option.group").remove();
@@ -2695,12 +2625,19 @@ define([
             $("#add_question_group_dialog").dialog('close');
             $("#quiz_group_select").val("none");
         });
-        //$('.found_question').html('');
-            var showQuestions = function(questionData) {
+
+        var showQuestions = function(questionData,forTag) {
             var questionList = questionData.questions;
             var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
             var bank = $bank.data('bank_data');
             var bank_data = $findQuestionDialog.data('banks')[bank.id];
+
+            if (forTag == true) {
+                bank_data.last_page = questionData.last_page;
+                bank_data.pages = questionData.pages;
+                $("#find_question_dialog").find(".page_link").data('page',questionData.last_page)
+            }
+
             if (!$bank.hasClass('selected_side_tab')) { return; }
             var existingIDs = {};
             $(".display_question:visible").each(function() {
@@ -2713,7 +2650,15 @@ define([
             updateFindQuestionDialogQuizGroups();
             var $div = $("<div/>");
             for(var idx in questionList) {
-                var question = questionList[idx].assessment_question;
+                var bank_type = bank.context_type;
+//                if (bank_type == "Account") {
+                    var question = questionList[idx].assessment_question;
+//                }
+//                else
+//                {
+//                    var question = questionList[idx].quiz_question;
+//                }
+
                 if (!existingIDs[question.id] || true) {
                     $div.html(question.question_data.question_text);
                     question.question_text = TextHelper.truncateText($div.text(), {max: 75});
@@ -2729,11 +2674,71 @@ define([
                 }
             }
         };
+// arrivu new chnages for tag click
+
+        $('#find_question_dialog').on('click', '.get_tag_find', function(event){
+            event.preventDefault();
+            if ($('.token-input-token').hasClass('token-input-selected-token')) {
+                $('.token-input-token').removeClass('token-input-selected-token');
+                $(".found_question:visible").remove();
+                var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
+                var bank = $bank.data('bank_data');
+                var id = bank.id;
+                var $dialog = $findQuestionDialog;
+                var url = $findQuestionDialog.find(".question_bank_questions_url").attr('href');
+                url = $.replaceTags(url, 'question_bank_id',id);
+                $.ajaxJSON(url, 'GET', {}, function(data) {
+                    var id = $('.selected_side_tab a .id').text();
+                    $('.token-input-token').removeClass('token-input-selected-token');
+                    data.last_page = 1;
+                    showQuestions(data,true);
+                });
+            }
+            else {
+                var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
+                var bank = $bank.data('bank_data');
+            $('.token-input-token').removeClass('token-input-selected-token');
+            $(this).addClass('token-input-selected-token');
+            $findQuestionDialog.find(".found_question:visible").remove();
+            var id = event.target.id.split('_');
+            var $link = $(this);
+            var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
+            var bank = $bank.data('bank_data');
+            var url = $findQuestionDialog.find(".question_bank_questions_url").attr('href');
+            url = $.replaceTags(url, 'question_bank_id', bank.id);
+            $.ajaxJSON(url, 'GET', {tag_id: id[1]}, function(data) {
+                $findQuestionDialog.find(".found_question:visible").remove();
+                data.last_page = 1;
+                showQuestions(data,true);
+            });
+            }
+        });
+
+// arrivu new chnages for tag click
+
 
         $("#find_question_dialog").delegate('.bank', 'click', function(event) {
             event.preventDefault();
             var id = $(this).getTemplateData({textValues: ['id']}).id;
             var data = $findQuestionDialog.data('banks')[id];
+// select bank first display tag_filter top
+//// arrivu changes
+            $.ajaxJSON('/get_tags_filter' , 'GET', {tagger_id: id}  , function(filter_tags) {
+                $("#show_tag").empty();
+                for(idx in filter_tags) {
+                    var arrayLength = filter_tags[idx].length;
+                    for (var i = 0; i < arrayLength; i++) {
+                        var mydiv = document.getElementById("show_tag");
+                        var atag = document.createElement('li');
+                        atag.setAttribute('id',"tag_"+filter_tags[idx][i].id);
+                        atag.setAttribute('value',filter_tags[idx][i].name);
+                        atag.setAttribute('class',"get_tag_find token-input-token");
+                        atag.innerHTML = filter_tags[idx][i].name;
+                        mydiv.appendChild(atag);
+                    }
+                }
+            });
+//// arrivu changes
             $findQuestionDialog.find(".bank").removeClass('selected');
             $findQuestionDialog.find(".selected_side_tab").removeClass('selected_side_tab');
             $(this).addClass('selected_side_tab');
@@ -2762,7 +2767,15 @@ define([
                 url = $.replaceTags(url, 'question_bank_id', bank.id);
                 var page = ($findQuestionDialog.find(".page_link").data('page') || 0) + 1;
                 url += "&page=" + page;
-                $.ajaxJSON(url, 'GET', {}, function(data) {
+// arrivu changes
+                if ($('.token-input-token').hasClass('token-input-selected-token')) {
+                    var id = $('.token-input-selected-token').attr('id').split('_');
+                }
+                else{
+                    var id  = "";
+                }
+                $.ajaxJSON(url, 'GET', {tag_id: id[1]}, function(data) {
+// arrivu changes
                     $link.removeClass('loading');
                     $findQuestionDialog.find(".page_link").data('page', page);
                     $findQuestionDialog.find(".page_link").text(I18n.t('more_questions', "more questions"));

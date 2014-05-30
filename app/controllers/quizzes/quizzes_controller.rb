@@ -213,6 +213,17 @@ class Quizzes::QuizzesController < ApplicationController
           @banks_hash[bank.id] = bank
         end
       end
+      # arrivu changes
+      @tag_hash = {}
+      tag_ids = @quiz.quiz_groups.map(&:tag_id)
+      tag_ids.each do|tag_id|
+       if  tag_id != nil
+          ActsAsTaggableOn::Tag.find_all_by_id(tag_id).each do |tag|
+            @tag_hash[tag.id] = tag
+          end
+        end
+      end
+      # arrivu changes
       if @has_student_submissions = @quiz.has_student_submissions?
         flash[:notice] = t('notices.has_submissions_already', "Keep in mind, some candidates have already taken or started taking this assessment")
       end
