@@ -17,7 +17,7 @@
     <input name="lock_at" value="{{datetimeFormatted lock_at}}" type="text"
     class="date_field" aria-labelledby="overrides_lock_at">
   </div>
-  {{#if ENV.SHOW_CORRECT_ANSWER}}
+  {{#ifEqual  ../shouldHideShowDate true}}
   <div class="date_field_container correct_answer_at" style="display:block;">
       <input name="show_correct_answers_at" value="{{datetimeFormatted show_correct_answers_at}}" type="text"
       class="date_field value_empty" aria-labelledby="overrides_show_correct_answer_at">
@@ -28,16 +28,17 @@
         class="date_field value_empty" aria-labelledby="overrides_hide_correct_answers_at">
   </div>
   {{else}}
-    <div class="date_field_container correct_answer_at_css" style="display:none;">
-        <input name="show_correct_answers_at" value="{{datetimeFormatted}}" type="text"
-        class="date_field value_empty" aria-labelledby="overrides_show_correct_answer_at">
-    </div>
+      <div class="date_field_container correct_answer_at_css" style="display:none;">
+         <input name="show_correct_answers_at" value="{{datetimeFormatted}}" type="text"
+         class="date_field value_empty" aria-labelledby="overrides_show_correct_answer_at">
+      </div>
 
-    <div class="date_field_container correct_answer_at_css" style="display:none;">
-          <input name="hide_correct_answers_at" value="{{datetimeFormatted}}" type="text"
-          class="date_field value_empty" aria-labelledby="overrides_hide_correct_answers_at">
-    </div>
-  {{/if}}
+     <div class="date_field_container correct_answer_at_css" style="display:none;">
+           <input name="hide_correct_answers_at" value="{{datetimeFormatted}}" type="text"
+           class="date_field value_empty" aria-labelledby="overrides_hide_correct_answers_at">
+     </div>
+  {{/ifEqual}}
+
   <div>
     <a
       href="#"
