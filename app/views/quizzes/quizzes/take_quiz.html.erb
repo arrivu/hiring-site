@@ -2,8 +2,12 @@
 <% content_for :page_title do %>
 <%= join_title @quiz.readable_type, @quiz.quiz_title %>
 <% end %>
+<% if !can_do(@context.quizzes.new, @current_user, :create)%>
+    <% @headers = false
+       @show_left_side = false %>
 <% js_block do %>
     <script>
+
 //        var message="Right Click Disabled!";
 //        function clickIE4(){ if (event.button==2){ alert(message); return false; } }
 //        function clickNS4(e){ if (document.layers||document.getElementById&&!document.all)
@@ -11,40 +15,41 @@
 //        if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; }
 //        else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; }
 //        document.oncontextmenu=new Function("alert(message);return false")
-//        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-//
-//        if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
-//
-//        function mischandler(){
-//            return false;
-//        }
-//
-//        function mousehandler(e){
-//            var myevent = (isNS) ? e : event;
-//            var eventbutton = (isNS) ? myevent.which : myevent.button;
-//            if((eventbutton==2)||(eventbutton==3)) return false;
-//        }
-//        document.oncontextmenu = mischandler;
-//        document.onmousedown = mousehandler;
-//        document.onmouseup = mousehandler;
-//        var isCtrl = false;
-//        document.onkeyup=function(e)
-//        {
-//            if(e.which == 17)
-//                isCtrl=false;
-//        }
-//
-//        document.onkeydown=function(e)
-//        {
-//            if(e.which == 17)
-//                isCtrl=true;
-//            if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
-//            {
-//// alert(‘Keyboard shortcuts are cool!’);
-//                return false;
-//            }
-//        }
+        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+
+        if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
+
+        function mischandler(){
+            return false;
+        }
+
+        function mousehandler(e){
+            var myevent = (isNS) ? e : event;
+            var eventbutton = (isNS) ? myevent.which : myevent.button;
+            if((eventbutton==2)||(eventbutton==3)) return false;
+        }
+        document.oncontextmenu = mischandler;
+        document.onmousedown = mousehandler;
+        document.onmouseup = mousehandler;
+        var isCtrl = false;
+        document.onkeyup=function(e)
+        {
+            if(e.which == 17)
+                isCtrl=false;
+        }
+
+        document.onkeydown=function(e)
+        {
+            if(e.which == 17)
+                isCtrl=true;
+            if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
+            {
+// alert(‘Keyboard shortcuts are cool!’);
+                return false;
+            }
+        }//-------------------- initialise the webcam
     </script>
+<% end %>
 <% end %>
 <% content_for :meta_tags do %>
   <% if !params[:persist_headless] %>
@@ -76,8 +81,7 @@
   </div>
 </header>
 
-<% js_bundle :take_quiz %>
-
+<% js_bundle :take_quiz%>
 <%= form_tag @quiz_presenter.form_action(session, @current_user), :id => "submit_quiz_form", :class => @quiz_presenter.form_class, :method => "post" do %>
 
 <div id="questions" class="assessing" ondragstart="return false" onselectstart="return false">
@@ -140,7 +144,16 @@
 </div>
 
 <% end %>
-
+<div id="navigate_away" title="Navigating Away" style="display:none;">
+  <div id="navigate_description"><%= @current_user.name %>,You had navigated away from the test window.
+  <br/>
+  </div>
+  <div id="navigate_count"></div>
+  <div class="navigate_permissible" style="display:none;">
+    <div><p>You have exceeded the permissible limit for navigating away from your assessment.Your assessment has finished and it is submitted automatically.</p></div>
+  </div>
+  <button type="submit" class="btn btn-primary submit_button click_continue" id="navigate_button">Continue...</button>
+</div>
 <form id="deauthorized_dialog"
   class="hide"
   title="<%= t :login_required, "Login Required" %>"

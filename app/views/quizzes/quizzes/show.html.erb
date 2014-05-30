@@ -1,9 +1,9 @@
 <% content_for :page_title do %><%= join_title(@quiz.quiz_title || @quiz.readable_type, @context.name) %><% end %>
-<% if can_do(@current_user, :update) %>     <% @headers = false
+<% if !can_do(@context.quizzes.new, @current_user, :create)%>
+    <% @headers = false
 
        @show_left_side = false %>
-<% end %>
-<% if can_do(@current_user, :update) %>
+
 <% js_block do %>
     <script>
 //    var message="Right Click Disabled!";
@@ -305,13 +305,26 @@
       </div>
     </div>
     <% end %>
-
-    <h2 id="quiz_title">
-      <%= @quiz.quiz_title || @quiz.readable_type %>
-    </h2>
-
+      <% if !can_do(@quiz, @current_user, :update) %>
+      <div class='row-fluid'>
+      <div class='span8'>
+        <h2 id="quiz_title">
+          <%= @quiz.quiz_title || @quiz.readable_type %>
+        </h2>
+      </div>
+      <div class='span4' style="text-align: right;line-height: 36px">
+      <div class="admin-link-hover-area">
+          <a href="<%= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>
+            Back to assessments
+          </a>
+      </div>
+      </div>
+      <% else %>
+          <h2 id="quiz_title">
+            <%= @quiz.quiz_title || @quiz.readable_type %>
+          </h2>
+      <% end %>
   <% else %>
-
     <% if needs_unpublished_warning?(@quiz) %>
       <div class="alert">
         <div class='row-fluid'>

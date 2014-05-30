@@ -129,10 +129,55 @@ class AssessmentQuestionBank < ActiveRecord::Base
   def bookmarked_for?(user)
     user && self.assessment_question_bank_users.map(&:user_id).include?(user.id)
   end
-  
-  def select_for_submission(count, exclude_ids=[], shuffle_id)
-    ids = self.assessment_questions.active.pluck(:id)
+# arrivu changes
+  def select_for_submission(count, exclude_ids=[], shuffle_id, tag_id)
+    if tag_id
+         @assessment_questions = []
+        @bank_id = self.id
+         @bank_type = self.context_type
+         if @bank_type == "Course"
+           @assessment_ques_find_id = ActsAsTaggableOn::Tagging.find_all_by_tag_id_and_tagger_id(tag_id,@bank_id)
+             @assessment_ques_find_id.each do |ques_id|
+               @ques_taggable_id = ques_id.taggable_id
+               @find_assessment_ques = Quizzes::QuizQuestion.find_by_id(@ques_taggable_id)
+               @assessment_questions << @find_assessment_ques
+             end
+         else
+              @assessment_ques_find_id = ActsAsTaggableOn::Tagging.find_all_by_tag_id_and_tagger_id(tag_id,@bank_id)
+              @assessment_ques_find_id.each do |ques_id|
+                @ques_taggable_id = ques_id.taggable_id
+                @find_assessment_ques = AssessmentQuestion.find_by_id(@ques_taggable_id)
+                @assessment_questions << @find_assessment_ques
+              end
+         end
+      ids = @assessment_questions
+         if shuffle_id
+           ids = (ids - exclude_ids).shuffle[0...count]
+           if @bank_type == "Course"
+              ids.empty? ? [] : Quizzes::QuizQuestion.find_all_by_id(ids).shuffle
+           else
+              ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids).shuffle
+           end
+         else
+           text_only_question =0
+           self.assessment_questions.active.each do |assessment_question|
+             if assessment_question.question_data[:question_type] =='text_only_question'
+               text_only_question+=1
+             end
+           end
+           count += text_only_question
+           ids = ids - exclude_ids
+           if @bank_type == "Course"
+             ids.empty? ? [] : Quizzes::QuizQuestion.find_all_by_id(ids[0...count], :order => "id")
+           else
+             ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids[0...count], :order => "id")
+           end
+           #ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids[0...count], :order => "id")
+         end
 
+    else
+  # arrivu changes
+    ids = self.assessment_questions.active.pluck(:id)
     if shuffle_id
       ids = (ids - exclude_ids).shuffle[0...count]
       ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids).shuffle
@@ -145,8 +190,9 @@ class AssessmentQuestionBank < ActiveRecord::Base
       end
       count += text_only_question
       ids = ids - exclude_ids
-      ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids[0...count])
+      ids.empty? ? [] : AssessmentQuestion.find_all_by_id(ids[0...count], :order => "id")
     end
+  end
   end
   
   alias_method :destroy!, :destroy

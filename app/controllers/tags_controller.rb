@@ -11,8 +11,8 @@ class TagsController < ApplicationController
 
   def get_tags
     if params[:taggable_type] && params[:taggable_id]
-     @context =  params[:taggable_type].constantize.find(params[:taggable_id].split("_")[1])
-     @tags = @context.tags.map(&:attributes).to_json(:except => ["account_id","created_at","updated_at"])
+     @tag_context =  params[:taggable_type].constantize.find(params[:taggable_id].split("_")[1])
+     @tags = @tag_context.tags.map(&:attributes).to_json(:except => ["account_id","created_at","updated_at"])
      respond_to do |format|
        format.html
        format.json { render json: @tags }
@@ -60,12 +60,4 @@ class TagsController < ApplicationController
       end
     end
   end
-  #def tag_to_question
-  #  if params[:tag_id]
-  #    @bank_id = ActsAsTaggableOn::Tagging.find_all_by_tag_id(params[:tag_id])
-  #    @bank_id.each do |question|
-  #      @ques_filter = question.taggable_id
-  #    end
-  #  end
-  #end
 end

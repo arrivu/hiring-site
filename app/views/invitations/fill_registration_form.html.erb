@@ -1,8 +1,8 @@
 <%
-  jammit_css :profile_show, :tinymce
-   js_bundle :profile_show
-   js_env PROFILE: @user_data
-   js_env(folder_id: @user.profile_pics_folder[:id]) if @user == @current_user
+   jammit_css :profile_show, :tinymce
+   js_bundle :fill_registration
+   js_env PROFILE: @user
+   js_env(folder_id: @user.profile_pics_folder.id) unless (@user ||= @current_user).nil?
    @body_classes << "gradebook2 full-width" %>
 <style>
     select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
@@ -12,7 +12,7 @@
 </style>
 
 <div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
-  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @context.id } do |f| %>
+  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @course.id } do |f| %>
 
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
@@ -22,7 +22,7 @@
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
               <% if @candidate_filter.last_name == TRUE %><td class='alnright'><%= f.label :last_name, "Last Name*"%></td><td><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></td><% end %>
-              <% if @candidate_filter.profile_picture == TRUE %><td><button name="profile_picture" class="btn btn-small btn-primary">Take Profile Picture</button></td><% end %>
+
             </tr>
             <tr>
               <td class='alnright'><%= f.label :gender, "Gender"%></td>
@@ -64,23 +64,28 @@
             <% end %>
           </table>
         </div>
+          <% if @candidate_filter.profile_picture == TRUE %>
         <div class="image-block" style="float: right;" >
           <div class="image-block-image profile-avatar-wrapper">
-
-            <!--<a href="#" class="profile-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
-            <!--<%#= square_avatar_image @current_user[:id], 128 %>-->
-            <!--<i class="icon-edit"></i>-->
-            <!--</a>-->
             <% if @candidate_detail %>
-                <a href="#" class="profile-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
-                  <%= square_avatar_image @candidate_detail[:id], 200 %>
+                <% if @user.avatar_image_url.nil? %>
+                <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
+                  <%= square_avatar_image @user[:id], 200 %>
                   <i class="icon-edit"></i>
                 </a>
             <% else %>
-                <%= square_avatar_image @candidate_detail[:id] , 200 %>
+                    <a href="#" class="profile-pic-link " title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %> ">
+                <%= square_avatar_image @user[:id] , 200 %>
+                      <i class="icon-edit"></i>
+                    </a>
             <% end %>
+                <%  end %>
+
+
+
           </div>
           </div>
+          <% end %>
         </div>
       </div>
       <% if @candidate_filter.academics == TRUE %>

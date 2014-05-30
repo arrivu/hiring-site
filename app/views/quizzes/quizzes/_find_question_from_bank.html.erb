@@ -9,9 +9,18 @@
   <div class="clear"></div>
 
   <!--arrivu changes-->
-  <div id="show_tag">
+  <%= t(:select_a_question_tag, "Select a tag to filter the questions.") %>
+  <!--<div id="show_tag">-->
 
+  <!--</div>-->
+  <div style="float:left;height:auto;width:545px;background: #fff;border: 1px solid #c1c7cf;border-radius: 3px;color: #696969;padding: 5px 0 5px 10px;">
+    <ul id="show_tag" class="collectionViewItems ig-list discussion" style="margin: 0 0 33px 0px;">
+
+    </ul>
   </div>
+  <br/>
+  <br/>
+  <br/>
   <!--arrivu changes-->
   <div class="message" style="display: none;"></div>
   <table class="side_tabs_table" style="width: 100%;">
@@ -75,10 +84,15 @@
   <input type="checkbox" name='shuffle_question_bank' class="shuffle_question_bank_id" checked="true" <%#= 'checked="checked"' if hash_get(group, :shuffle_question_bank) %> />Shuffle Questions
   <div class="clear"></div>
   <!--arrivu changes-->
-  <%= t(:select_a_question_tag, "Click a tag to filter the questions.") %>
-  <div id="show_tag_find">
+  <%= t(:select_a_bank_tag, "Select a bank first and select a tag to filter the questions.") %>
 
+  <div style="float:left;height:auto;width:553px;background: #fff;border: 1px solid #c1c7cf;border-radius: 3px;color: #696969;padding: 5px 0 5px 10px;">
+    <ul id="show_tag_find" class="collectionViewItems ig-list discussion" style="margin: 0 0 33px 0px;">
+
+    </ul>
   </div>
+  <br/>
+  <br/>
   <!--arrivu changes-->
   <div class="message" style="display: none;"></div>
   <div class="find_banks">

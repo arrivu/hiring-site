@@ -269,7 +269,7 @@ en-AU:
     titles: 
       configure_report: "Configure Report"
       open_registration_delegated_warning_dialog: "An External Identity Provider is Enabled"
-      what_are_quiz_ip_filters: "What are Quiz IP Filters?"
+      what_are_quiz_ip_filters: "What are Assessment IP Filters?"
   account_user: 
     types: 
       account_admin: "Account Admin"
@@ -571,13 +571,13 @@ en-AU:
         ace: 
           quiz_data_description: 
             header: Example
-            text: "This report shows quiz questions and answers for all quizzes in a given term. The resulting csv file will have one row per quiz question and answer."
+            text: "This report shows assessment questions and answers for all assessments in a given term. The resulting csv file will have one row per assessment question and answer."
     quiz_statistics_csv_description: 
       account_reports: 
         ace: 
           quiz_statistics_description: 
             header: Example
-            text: "This report shows quiz questions, how many users answered the questions, and how many users answered them correctly for all quizzes in a given term. The resulting csv file will have one row per quiz question."
+            text: "This report shows assessment questions, how many users answered the questions, and how many users answered them correctly for all assessments in a given term. The resulting csv file will have one row per assessment question."
     quota_integer_required: "An integer value is required"
     quota_must_be_positive: "Value must be positive"
     quota_not_updated: "Quota was not updated"
@@ -619,7 +619,7 @@ en-AU:
       account_reports: 
         edison: 
           quiz_id: 
-            field: "Quiz id"
+            field: "Assessment id"
           section_id: 
             field: "Batch ID"
     settings: 
@@ -761,12 +761,12 @@ en-AU:
       open_registration_delegated_warning_tooltip: "An External Identity Provider is Enabled"
       page_title: "Account Settings"
       quiz_ip_filters_help_message: |-
-          Quiz IP filters are a way to limit access to quizzes to computers in a specified IP range.
+          Assessment IP filters are a way to limit access to assessments to computers in a specified IP range.
           
-          Specify a set of IP address filters that Hiring Managers can use to protect access to quizzes.  Filters can be a comma-separated list of addresses, or an address followed by a mask ("192.168.217.1/24" or "192.168.217.1/255.255.255.0")."
-      quiz_ip_filters_help_title: "What are Quiz IP Filters?"
-      quiz_ip_filters_help_tooltip: "What are Quiz IP Filters?"
-      quiz_ip_filters_title: "Quiz IP Address Filters"
+          Specify a set of IP address filters that Hiring Managers can use to protect access to assessments.  Filters can be a comma-separated list of addresses, or an address followed by a mask ("192.168.217.1/24" or "192.168.217.1/255.255.255.0")."
+      quiz_ip_filters_help_title: "What are Assessment IP Filters?"
+      quiz_ip_filters_help_tooltip: "What are Assessment IP Filters?"
+      quiz_ip_filters_title: "Assessment IP Address Filters"
       quotas: 
         default_account_quota_title: "Default Account Quotas"
         default_course_storage_quota: "Project Quota"
@@ -1007,7 +1007,7 @@ en-AU:
           description: 
             header: Example
           main: 
-            text: "This is a report of all Projects that have none of the following items: assignments, announcements, discussions, files, modules, pages, or quizzes."
+            text: "This is a report of all Projects that have none of the following items: assignments, announcements, discussions, files, modules, pages, or assessments."
     update_failed_notice: "Account settings update failed"
     user_add_failed_message: "Adding User Failed, please try again"
     user_deleted_message: "%{username} successfully deleted"
@@ -1277,7 +1277,7 @@ en-AU:
       a_discussion_post: "a discussion post"
       a_file_upload: "a file upload"
       a_media_recording: "a media recording"
-      a_quiz: "a quiz"
+      a_quiz: "a assessment"
       a_text_entry_box: "a text entry box"
       a_website_url: "a website url"
     titles: 
@@ -1330,7 +1330,7 @@ en-AU:
       labels: 
         due: due
         points: points
-        quiz_points: "quiz pts."
+        quiz_points: "assessment pts."
         type: type
       links: 
         full_edit: "Full Edit"
@@ -1341,9 +1341,9 @@ en-AU:
         discussion: Discussion
         external_tool: "External Tool"
         not_graded: "Not Graded"
-        quiz: Quiz
+        quiz: Assessment
       tooltips: 
-        assignment_is_quiz: "This assignment is a quiz, so points possible comes from the questions and can't be set manually."
+        assignment_is_quiz: "This assignment is a assessment, so points possible comes from the questions and can't be set manually."
     add_assignment_group_form: 
       drop_x_scores_for_each_student: "%{scores} scores for each candidate"
       labels: 
@@ -1471,7 +1471,7 @@ en-AU:
       external_tool_type: "External Tool"
       more: "More Options"
       not_graded_type: "Not Graded"
-      quiz_type: Quiz
+      quiz_type: Assessment
       save: Save
       saving: Saving...
     create_group: 
@@ -1514,7 +1514,7 @@ en-AU:
     edit: 
       edit_assignment: "Edit Assignment"
       new_discussion: "New Discussion"
-      new_quiz: "New Quiz"
+      new_quiz: "New Assessment"
     edit_header_view: 
       buttons: 
         not_published: "Not Published"
@@ -1739,7 +1739,7 @@ en-AU:
           download_attachment: "Download %{attachment_display_name}"
           view_original_entry: "View the Original Entry"
           view_original_page: "View the Original Page"
-          view_quiz: "View the Quiz Submission"
+          view_quiz: "View the Assessment Submission"
           view_survey: "View the Survey Submission"
         submit: "Submit Assignment"
         view_rubric_evaluation: "View Rubric Evaluation"
@@ -1889,14 +1889,14 @@ en-AU:
           group: 
             step1: "Assignment groups are used to organize assignments. You provide a name for each group. If you choose to weight the final grade based on groups (*where?*) then you can also set a percentage score for each group. Click \"Add Assignment Group\" to create a group."
           overview: "This page is for setting up your project at a high level. You can add assignments, group them and then weight those groups. The idea is to get yourself organized first, dive into the specifics second. Even still, there's a lot you can do from here."
-          quizzes: "Quizzes are special types of assignments. You can create or import quizzes by clicking the \"Quizzes\" link on the left sidebar."
+          quizzes: "Assessments are special types of assignments. You can create or import assessments by clicking the \"Assessments\" link on the left sidebar."
           step1: "Assignments are always organized into groups, so to add an assignment you first need to know what group you want to add it to. Select the group and click \"Add Assignment to\" or Click the %{add_icon} icon to start a new assignment for a group."
           step2: "Great! Now fill in your details. You can enter a title for your assignment, a due date and the number of points possible. If you want to do more than that you can, but only after the assignment has been created."
           step3: "Done! The assignment is now added to the group! If you hover your mouse over the assignment, you'll see a bunch of options. Here's what they mean:"
       links: 
         create_assignment: "Create a New Assignment"
         create_assignment_group: "Create an Assignment Group"
-        create_or_import_quiz: "Create/Import a Quiz"
+        create_or_import_quiz: "Create/Import a Assessment"
         edit_assignment_in_detail: "Edit Assignments in Detail"
         show_me_where: "Show Me Where"
       subtitles: 
@@ -2767,8 +2767,8 @@ en-AU:
       this_may_take_a_bit: "this may take a bit..."
     quiz_export_checklist: 
       labels: 
-        all_quizzes: "All Quizzes"
-      select_quizzes: "Select Quizzes to Export"
+        all_quizzes: "All Assessments"
+      select_quizzes: "Select Assessments to Export"
   content_imports: 
     errors: 
       failed: "project Import failed with the following error:"
@@ -2805,10 +2805,10 @@ en-AU:
       page_locked_module: "This page is part of the module *%{module}* and hasn't been unlocked yet."
       page_locked_no_reason: "This page is locked.  No other reason has been provided."
       page_locked_until: "This page is locked until %{date}."
-      quiz_locked_at: "This quiz was locked %{at}."
-      quiz_locked_module: "This quiz is part of the module *%{module}* and hasn't been unlocked yet."
-      quiz_locked_no_reason: "This quiz is locked.  No other reason has been provided."
-      quiz_locked_until: "This quiz is locked until %{date}."
+      quiz_locked_at: "This assessment was locked %{at}."
+      quiz_locked_module: "This assessment is part of the module *%{module}* and hasn't been unlocked yet."
+      quiz_locked_no_reason: "This assessment is locked.  No other reason has been provided."
+      quiz_locked_until: "This assessment is locked until %{date}."
       topic_locked_at: "This topic was locked %{at}."
       topic_locked_module: "This topic is part of the module *%{module}* and hasn't been unlocked yet."
       topic_locked_no_reason: "This topic is locked.  No other reason has been provided."
@@ -3159,7 +3159,7 @@ en-AU:
         create: |-
             project modules let you organize your assignments, pages, files, etc. into smaller batches or units. Modules could be centered around a theme, focused on a specific topic, or even just grouped chronologically.
             
-            You can also sequence modules by defining criteria and prerequisites for each module. Candidates won't be able to access modules until they have unlocked all their prerequisites. That way you can prevent candidates from accessing certain content or files until they have, say, gotten at least 75% on a review quiz.
+            You can also sequence modules by defining criteria and prerequisites for each module. Candidates won't be able to access modules until they have unlocked all their prerequisites. That way you can prevent candidates from accessing certain content or files until they have, say, gotten at least 75% on a review assessment.
             
             To start organizing your project into modules, click the "%{button}" button to the right.
         no_modules: "No modules have been defined for this project."
@@ -3336,7 +3336,7 @@ en-AU:
       external_tools: "External Tools"
       external_urls: "External URLs"
       files: Files
-      quizzes: Quizzes
+      quizzes: Assessments
       wiki_pages: "Wiki Pages"
     points_possible_short: "%{points} pts"
     prerequisits_footer: 
@@ -3681,9 +3681,9 @@ en-AU:
       module_meta: "Failed to export module meta data"
       organization: "Failed to generate organization structure."
       question_bank: "The question bank \"%{title}\" failed to export"
-      quiz: "The quiz \"%{title}\" failed to export"
-      quiz_is_locked: "The quiz \"%{title}\" could not be copied because it is locked."
-      quizzes: "Some quizzes failed to export"
+      quiz: "The assessment \"%{title}\" failed to export"
+      quiz_is_locked: "The assessment \"%{title}\" could not be copied because it is locked."
+      quizzes: "Some assessments failed to export"
       resources: "Failed to link some resources."
       rubrics: "Failed to export rubrics"
       topic: "The discussion topic \"%{title}\" failed to export"
@@ -3874,7 +3874,7 @@ en-AU:
         files: "The Files tab is the place to share lecture slides, example documents, study helps -- anything your candidates will want to download. Uploading and organizing your files is easy with Canvas. We'll show you how."
         home: "When people visit the project, this is the page they'll see. You can set it to show an activity stream, the list of project modules, a syllabus, or a custom page you write yourself. The default is the project activity stream. To customize this, just click %{change_layout}."
         import: "If you've been using another project management system, you probably have stuff in there that you're going to want moved over to Canvas. We can walk you through the process of easily migrating your content into Canvas."
-        navigation: "By default all links are enabled for a project. Candidates won't see links to batches that don't have content. For example, if you haven't created any quizzes, they won't see the quizzes link. You can sort and explicitly disable these links if there are areas of the project you don't want your candidates accessing."
+        navigation: "By default all links are enabled for a project. Candidates won't see links to batches that don't have content. For example, if you haven't created any assessments, they won't see the assessments link. You can sort and explicitly disable these links if there are areas of the project you don't want your candidates accessing."
         publish: 
           form: |-
               All finished?  Time to publish your project!  Click the button below to make it official!
@@ -4197,7 +4197,7 @@ en-AU:
       headings: 
         current_users: "Current Users"
       help: 
-        reset_course_content: "Resetting project content will permanently delete all associated assignments, discussions, quizzes, modules, rubrics, pages, files, learning outcomes, question banks, collaborations, conferences, or any other content. This action is irreversible, and the data *cannot* be recovered. Are you sure you wish to continue?"
+        reset_course_content: "Resetting project content will permanently delete all associated assignments, discussions, assessments, modules, rubrics, pages, files, learning outcomes, question banks, collaborations, conferences, or any other content. This action is irreversible, and the data *cannot* be recovered. Are you sure you wish to continue?"
       links: 
         calendar: "project Calendar"
         conclude: "End this project"
@@ -4294,10 +4294,10 @@ en-AU:
       num_assignments: "# Assignments"
       num_submissions: "# Submissions"
       page_title: "project Statistics"
-      quiz: Quiz
-      quiz_questions: "Quiz Questions"
-      quiz_submissions: "Quiz Submissions"
-      quizzes: Quizzes
+      quiz: Assessment
+      quiz_questions: "Assessment Questions"
+      quiz_submissions: "Assessment Submissions"
+      quizzes: Assessments
       submission_type: "Submission Type"
       tabs: 
         assignments: Assignments
@@ -4354,7 +4354,7 @@ en-AU:
     plugins: Plugins
     prior_users: "Prior Users"
     question_banks: "Question Banks"
-    quizzes: Quizzes
+    quizzes: Assessments
     registered_services: "Registered Services"
     revisions: Revisions
     rubrics: Rubrics
@@ -4399,7 +4399,7 @@ en-AU:
       title: "Question Title"
     quiz: 
       question: 
-        count: "Quiz Question Count"
+        count: "Assessment Question Count"
     standard: 
       deviation: "Standard Deviation"
     top: 
@@ -4651,7 +4651,7 @@ en-AU:
     edit: 
       edit_topic: "Edit Discussion Topic"
       new_assignment: "New Assignment"
-      new_quiz: "New Quiz"
+      new_quiz: "New Assessment"
     edit_crumb: Edit
     edit_view: 
       allow_threaded_replies: "Allow threaded replies"
@@ -5631,7 +5631,7 @@ en-AU:
     confirms: 
       delete_comment: "Are you sure you want to delete this comment?"
       unsaved_changes: |-
-          The following Candidates have unsaved changes to their quiz submissions:
+          The following Candidates have unsaved changes to their assessment submissions:
           
            %{users}
           Continue anyway?
@@ -5659,10 +5659,10 @@ en-AU:
       details: Details
     links: 
       download_attachment: "Download %{attachment}"
-      finish_scoring: "Finish Scoring this Quiz"
+      finish_scoring: "Finish Scoring this Assessment"
       go_to_submission: "Go To Submission URL"
       submission_details: "Submission Details"
-      view_quiz: "View this Quiz"
+      view_quiz: "View this Assessment"
       view_submission: "View Submission"
     loud_late: LATE
     message_students_who: "Message Candidates Who..."
@@ -5778,12 +5778,12 @@ en-AU:
       scored_more_than: "Scored more than"
     submitted_late: "Submitted late"
     title: 
-      quiz: "Quiz Submission"
+      quiz: "Assessment Submission"
       turnitin: "Has Turnitin score"
     titles: 
       discussion: "Discussion Submission"
       media: "Media Comment Submission"
-      quiz_review: "This quiz needs review"
+      quiz_review: "This assessment needs review"
       text: "Text Entry Submission"
       upload: "File Upload Submission"
       url: "URL Submission"
@@ -5811,7 +5811,7 @@ en-AU:
         other: "Successfully updated %{count} submissions."
     show: 
       assignment_answer: "This Assignment is"
-      assignment_example: "Equity Indices Quiz"
+      assignment_example: "Equity Indices Assessment"
       assignment_question: "Assignment in question"
       buttons: 
         continue: "Continue %{icon}"
@@ -6005,7 +6005,7 @@ en-AU:
       overwrite: "Overwrite already-entered grades"
       submissions: submissions
       title: 
-        quiz: "Quiz Submission"
+        quiz: "Assessment Submission"
       titles: 
         choose_section: "Choose A Batch To Show"
         comments: "Submission Comments"
@@ -6016,7 +6016,7 @@ en-AU:
         media: "Media Comment Submission"
         new_message: "New message for this submission"
         pass: Pass
-        quiz_review: "This quiz needs review"
+        quiz_review: "This assessment needs review"
         submission_review: "This submission needs review"
         text: "Text Entry Submission"
         total: Total
@@ -6176,7 +6176,7 @@ en-AU:
         discussion_submission: "Discussion Submission"
         file_upload_submission: "File Upload Submission"
         online_url_submission: "Online Url Submission"
-        quiz_submission: "Quiz Submission"
+        quiz_submission: "Assessment Submission"
         text_entry_submission: "Text Entry Submission"
     submissions_zip_upload: 
       comments_made: 
@@ -7620,7 +7620,7 @@ en-AU:
           link: "Click to view exports"
           subject: "project Export Finished: %{course}"
         subject: "project Export Finished: %{course}"
-    content_locked: "This quiz is currently locked."
+    content_locked: "This assessment is currently locked."
     content_locked_at: "This content was locked %{at}."
     content_locked_module: "This content is part of the module *%{module}* and hasn't been unlocked yet."
     content_locked_until: "This content is locked until %{date}."
@@ -8459,14 +8459,14 @@ en-AU:
           subject: "Finish Registration: Canvas"
         link_message: "To finish the registration process, please visit the following url:"
         subject: "Finish Registration: Canvas"
-    quiz_locked: "This quiz is currently locked."
-    quiz_locked_at: "This quiz was locked %{at}."
-    quiz_locked_module: "This quiz is part of the module *%{module}* and hasn't been unlocked yet."
-    quiz_locked_until: "This quiz is locked until %{date}."
+    quiz_locked: "This assessment is currently locked."
+    quiz_locked_at: "This assessment was locked %{at}."
+    quiz_locked_module: "This assessment is part of the module *%{module}* and hasn't been unlocked yet."
+    quiz_locked_until: "This assessment is locked until %{date}."
     quiz_regrade_finished: 
       sms: 
         more_info: "More info at %{url}"
-    quiz_unpublished_module: "This quiz is part of an unpublished module and is not available yet."
+    quiz_unpublished_module: "This assessment is part of an unpublished module and is not available yet."
     report_generated: 
       email: 
         html: 
@@ -8663,17 +8663,17 @@ en-AU:
         tweet: "Canvas Alert - Graded: %{assignment}, %{context}"
     submission_needs_grading: 
       email: 
-        body: "%{user_name} has completed the quiz %{quiz_title}, and it requires manual grading."
+        body: "%{user_name} has completed the assessment %{quiz_title}, and it requires manual grading."
         html: 
-          body: "%{user_name} has completed the quiz %{quiz_title}, and it requires manual grading."
+          body: "%{user_name} has completed the assessment %{quiz_title}, and it requires manual grading."
           link_message: "You can review the submission here"
-          subject: "Quiz Submitted: %{quiz}, %{context}"
+          subject: "Assessment Submitted: %{quiz}, %{context}"
           submitted_date: "submitted: %{date}"
         link_message: "You can review the submission here:"
-        subject: "Quiz Submitted: %{quiz}, %{context}"
+        subject: "Assessment Submitted: %{quiz}, %{context}"
         submitted_date: "submitted: %{date}"
       facebook: 
-        body: "%{user_name} has completed the quiz %{quiz_title}, and it requires manual grading."
+        body: "%{user_name} has completed the assessment %{quiz_title}, and it requires manual grading."
         submitted_date: "submitted: %{date}"
       sms: 
         body_sms: "Your grade for %{title}, %{context} just changed."
@@ -8684,11 +8684,11 @@ en-AU:
         score: "score:  %{score} out of %{total}"
         score_pending: "score pending review by the Hiring Manager"
       summary: 
-        body: "A submission has been turned in for your quiz, *%{title}*, and it requires manual grading."
-        subject: "Quiz Submitted: %{quiz}, %{context}"
+        body: "A submission has been turned in for your assessment, *%{title}*, and it requires manual grading."
+        subject: "Assessment Submitted: %{quiz}, %{context}"
         submitted_date: "submitted: %{date}"
       twitter: 
-        body: "Canvas Alert - Quiz Submitted: %{quiz}, %{user_name}"
+        body: "Canvas Alert - Assessment Submitted: %{quiz}, %{user_name}"
     summaries: 
       email: 
         daily_body: "You're signed up to receive a daily report of some notifications from your Canvas account.  Below is the report for %{date}:"
@@ -8764,8 +8764,8 @@ en-AU:
     group_type: Group
     learning_outcome_type: "Learning Outcome"
     module_type: Module
-    quiz_question_type: "Quiz Question"
-    quiz_type: Quiz
+    quiz_question_type: "Assessment Question"
+    quiz_type: Assessment
     rubric_type: Rubric
     webct: 
       course_not_found: "The Blackboard project wasn't found."
@@ -8780,7 +8780,7 @@ en-AU:
     external_url: "External URL"
     file: File
     page: Page
-    quiz: Quiz
+    quiz: Assessment
     sub_header: "Sub Header"
   modules: 
     add_module_item_dialog: 
@@ -8872,7 +8872,7 @@ en-AU:
         Change to project content:
         
         * WikiPage
-        * Quiz content
+        * Assessment content
         * Assignment content
     course_content_display: "Projects Content"
     discussion_description: "New discussion topic in your project"
@@ -10095,7 +10095,7 @@ en-AU:
         submit_retry_moving: "Moving Question Failed, please try again..."
       default_name: "No Name"
       delete_are_you_sure: "Are you sure you want to delete this bank of questions?"
-      edit_warning: "Remember, changes to question templates won't automatically update quizzes that are already using those questions."
+      edit_warning: "Remember, changes to question templates won't automatically update assessments that are already using those questions."
       error_loading_banks: "Error loading banks"
       headings: 
         aligned_outcomes: "Aligned Outcomes"
@@ -10137,19 +10137,19 @@ en-AU:
   quiz: 
     default_question_input: "[ Select ]"
     default_text_only_question_name: Spacer
-    default_title: "Unnamed Quiz"
+    default_title: "Unnamed Assessment"
     errors: 
       invalid_hide_results: "Hide results is not valid"
       invalid_ip_filter: "IP filter is not valid"
-      invalid_quiz_type: "Quiz type is not valid"
+      invalid_quiz_type: "Assessment type is not valid"
     question_name_counter: "Question %{question_number}"
     types: 
-      quiz: Quiz
+      quiz: Assessment
       survey: Survey
   quiz_group: 
     errors: 
-      no_bank: "Couldn't find the question bank for quiz group %{group_name}"
-      no_permissions: "User didn't have permission to reference question bank in quiz group %{group_name}"
+      no_bank: "Couldn't find the question bank for assessment group %{group_name}"
+      no_permissions: "User didn't have permission to reference question bank in assessment group %{group_name}"
     question_group: "Question Group"
   quiz_question: 
     defaults: 
@@ -10167,9 +10167,9 @@ en-AU:
       student_analysis: "Candidate Analysis"
   quiz_submissions: 
     errors: 
-      invalid_submissions: "This quiz submission could not be verified as belonging to you.  Please try again."
-      late_quiz: "You submitted this quiz late, and your answers may not have been recorded."
-      protected_quiz: "This quiz is protected and is only available from certain locations.  The computer you are currently using does not appear to be at a valid location for taking this quiz."
+      invalid_submissions: "This assessment submission could not be verified as belonging to you.  Please try again."
+      late_quiz: "You submitted this assessment late, and your answers may not have been recorded."
+      protected_quiz: "This assessment is protected and is only available from certain locations.  The computer you are currently using does not appear to be at a valid location for taking this assessment."
     show: 
       score_out_of: "You got %{score} out of %{points_possible}"
     still_zipping: "File zipping still in process..."
@@ -10179,7 +10179,7 @@ en-AU:
         submit: Submit
       labels: 
         access_code: "Access Code"
-      quiz_restricted: "This assesment is restricted by an access code. You'll need to ask your Hiring Manager or proctor to type in or tell you the access code in order to take the assesment."
+      quiz_restricted: "This assessment is restricted by an access code. You'll need to ask your Hiring Manager or proctor to type in or tell you the access code in order to take the assesment."
       survey_restricted: "This survey is restricted by an access code. You'll need to ask your Hiring Manager or proctor to type in or tell you the access code in order to take the survey."
     after_last_attempt: "After Last Attempt"
     alerts: 
@@ -10206,8 +10206,8 @@ en-AU:
     choose_option: "[ Choose ]"
     confirms: 
       delete_question: "Are you sure you want to delete this question?"
-      delete_quiz: "Are you sure you want to delete this quiz?"
-      scrap_and_restart: "Scrap this quiz and start from scratch?"
+      delete_quiz: "Are you sure you want to delete this assessment?"
+      scrap_and_restart: "Scrap this assessment and start from scratch?"
     current_filter: "Current Filter"
     default_answer_comments: "Response if the candidate chooses this answer"
     default_answer_comments_on_match: "Response if the candidate matches this answer"
@@ -10215,10 +10215,10 @@ en-AU:
     default_history_crumb: History
     default_quesiton_name: Question
     default_question_name: Question
-    default_quiz_title: Quiz
+    default_quiz_title: Assessment
     default_response_to_essay: "Response to show candidate after they submit an answer"
     default_response_to_file_upload: "Response to show candidate after they submit an answer"
-    default_title: "New Quiz"
+    default_title: "New Assessment"
     display_answer: 
       correct_answer: "This was the correct answer."
       labels: 
@@ -10255,9 +10255,9 @@ en-AU:
         question_correct_comment: "Candidates will see this comment if they get the question correct"
         question_incorrect_comment: "Candidates will see this comment if they get the question wrong"
         question_neutral_comment: "Candidates will see this comment once they've answered the question"
-      unsupported_question_type: "This question was imported from an external source. It was a '%{question_type}' question, which is not supported in this quiz tool."
+      unsupported_question_type: "This question was imported from an external source. It was a '%{question_type}' question, which is not supported in this assessment tool."
       you_left_this_blank: "(You left this blank)"
-    download_all_quiz_file_upload_submissions: "Download All Quiz File Upload Submissions"
+    download_all_quiz_file_upload_submissions: "Download All Assessment File Upload Submissions"
     download_file_upload_submissions: 
       links: 
         download_submissions: "Download All Files"
@@ -10281,10 +10281,10 @@ en-AU:
       loading_questions_failed: "Questions failed to load, please try again"
       no_answer: "Please add at least one answer"
       no_correct_answer: "Please choose a correct answer"
-      no_more_attempts: "You have no quiz attempts left"
+      no_more_attempts: "You have no assessment attempts left"
       no_possible_solution: "Please generate at least one possible solution"
-      quiz_deleted: "That quiz has been deleted"
-      quiz_update_failed: "Quiz failed to update"
+      quiz_deleted: "That assessment has been deleted"
+      quiz_update_failed: "Assessment failed to update"
       retrieving_filters_failed: "Retrieving Filters Failed"
     ? "false"
     : "False"
@@ -10294,7 +10294,7 @@ en-AU:
         files_removed: "%{display_name} has been removed."
     final_answer: "Final Answer"
     find_question_from_bank: 
-      already_added: "this question is already on the quiz"
+      already_added: "this question is already on the assessment"
       bank_description: "%{bank_name}, %{n} questions"
       buttons: 
         add_questions: "Add Questions"
@@ -10307,7 +10307,7 @@ en-AU:
       hints: 
         group_pick_count: "%{pick_count} selected so far"
       labels: 
-        add_questions_to_group: "Add questions to the quiz group"
+        add_questions_to_group: "Add questions to the assessment group"
         group_name: "Group Name"
         group_pick_count: Pick
         group_points: Points
@@ -10319,9 +10319,10 @@ en-AU:
       options: 
         new_group: "[ New Group ]"
         no_group: "[ No Group ]"
-      select_a_question_tag: "Click a tag to filter the questions."
+      select_a_bank_tag: "Select a bank first and select a tag to filter the questions."
+      select_a_question_tag: "Select a tag to filter the questions."
       select_a_question_bank: "Select a question bank from the list below to link it to the this quiz as a question group."
-      titles: 
+      titles:
         add_new_question_group: "Add a New Question Group"
     form_answer: 
       answer_in_range_accessible: "between *range start* and #range end#"
@@ -10350,7 +10351,7 @@ en-AU:
       distractor_instructions: "type each distractor on its own line"
       equation_example: "i.e. \"What is 5 plus [x]?\""
       explanation: 
-        generate_possible_solutions: "Finally, build as many variable-solution combinations as you need for your quiz."
+        generate_possible_solutions: "Finally, build as many variable-solution combinations as you need for your assessment."
       explanations: 
         calculated: "Enter your question, build a formula, and generate a set of possible answer combinations. Candidates will see the question with a randomly selected set of variables filled in and have to type the correct numerical answer."
         equations: "You can define variables by typing variable names surrounded by brackets"
@@ -10421,24 +10422,24 @@ en-AU:
         click_to_enter_general_answer_comments: "Click to enter general comments"
         click_to_enter_wrong_answer_comments: "Click to enter comments for a wrong answer"
       wrong_answer_comments: "Wrong answer comments"
-    graded_quiz: "Graded Quiz"
+    graded_quiz: "Graded Assessment"
     graded_survey: "Graded Survey"
     headers: 
-      assignment_quizzes: "Assignment Quizzes"
-      practice_quizzes: "Practice Quizzes"
+      assignment_quizzes: "Assignment Assessments"
+      practice_quizzes: "Practice Assessments"
       submitted_students_quiz_title: 
-        one: "Candidates who have taken the quiz (%{count})"
-        other: "Candidates who have taken the quiz (%{count})"
-        zero: "Candidates who have taken the quiz"
+        one: "Candidates who have taken the assessment (%{count})"
+        other: "Candidates who have taken the assessment (%{count})"
+        zero: "Candidates who have taken the assessment"
       submitted_students_survey_title: 
         one: "Candidates who have taken the survey (%{count})"
         other: "Candidates who have taken the survey (%{count})"
         zero: "Candidates who have taken the survey"
       surveys: Surveys
       unsubmitted_students_quiz_title: 
-        one: "Candidates who haven't taken the quiz (%{count})"
-        other: "Candidates who haven't taken the quiz (%{count})"
-        zero: "Candidate who haven't taken the quiz"
+        one: "Candidates who haven't taken the assessment (%{count})"
+        other: "Candidates who haven't taken the assessment (%{count})"
+        zero: "Candidate who haven't taken the assessment"
       unsubmitted_students_survey_title: 
         one: "Candidates who haven't taken the survey (%{count})"
         other: "Candidates who haven't taken the survey (%{count})"
@@ -10462,19 +10463,19 @@ en-AU:
       headers: 
         quiz_submissions: "Assesment Submissions"
         survey_submissions: "Survey Submissions"
-      latest_quiz_results: "Here's the latest quiz results for %{user}. You can modify the points for any question and add more comments, then click \"Update Scores\" at the bottom of the page."
+      latest_quiz_results: "Here's the latest assessment results for %{user}. You can modify the points for any question and add more comments, then click \"Update Scores\" at the bottom of the page."
       latest_survey_results: "Here's the latest survey results for %{user}. You can modify the points for any question and add more comments, then click \"Update Scores\" at the bottom of the page."
       links: 
-        back_to_quiz: "Back to Quiz"
+        back_to_quiz: "Back to Assessment"
         back_to_survey: "Back to Survey"
       logged_out_user: "Logged Out User %{index}"
       named_quiz_results: "%{quiz_name} Results for %{user}"
       no_more_attempts: "%{user} has no attempts left"
-      page_title_quiz: "%{user}'s Quiz History"
+      page_title_quiz: "%{user}'s Assessment History"
       page_title_survey: "%{user}'s Survey History"
-      quiz_not_yet_taken: "Quiz hasn't been taken yet."
-      quiz_not_yet_taken_or_in_progress: "Quiz hasn't been taken yet or is currently in progress"
-      quiz_unlimited_attempts: "This quiz has unlimited attempts"
+      quiz_not_yet_taken: "Assessment hasn't been taken yet."
+      quiz_not_yet_taken_or_in_progress: "Assessment hasn't been taken yet or is currently in progress"
+      quiz_unlimited_attempts: "This assessment has unlimited attempts"
       score_for_attempt: "Attempt %{attempt_number}: %{score}"
       survey_not_yet_taken: "Survey hasn't been taken yet."
       survey_not_yet_taken_or_in_progress: "Survey hasn't been taken yet or is currently in progress"
@@ -10482,42 +10483,42 @@ en-AU:
       titles: 
         score_pending_review: "This score is pending review, and may change"
         submission_needs_review: "This submission needs review"
-      unnamed_quiz_results: "Quiz Results for %{user}"
+      unnamed_quiz_results: "Assessment Results for %{user}"
       unnamed_survey_results: "Survey Results for %{user}"
     index: 
       buttons: 
-        publish_quizzes: "Publish Quizzes"
-        publishing_quizzes: "Publishing Quizzes..."
+        publish_quizzes: "Publish Assessments"
+        publishing_quizzes: "Publishing Assessments..."
       confirms: 
-        delete_quiz: "Are you sure you want to delete this quiz?"
-      default_title: "Unnamed Quiz"
+        delete_quiz: "Are you sure you want to delete this assessment?"
+      default_title: "Unnamed Assessment"
       headers: 
-        assignment_quizzes: "Assignment Quizzes"
-        course_quizzes: "Project Quizzes"
-        practice_quizzes: "Practice Quizzes"
-        publish_multiple_quizzes: "Publish Multiple Quizzes"
+        assignment_quizzes: "Assignment Assessments"
+        course_quizzes: "Project Assessments"
+        practice_quizzes: "Practice Assessments"
+        publish_multiple_quizzes: "Publish Multiple Assessments"
         surveys: Surveys
-        unpublished_quizzes: "Unpublished Quizzes"
+        unpublished_quizzes: "Unpublished Assessments"
       labels: 
-        publish_multiple_quizzes: "Select the quizzes you would like to publish at this time"
+        publish_multiple_quizzes: "Select the Assessments you would like to publish at this time"
       links: 
-        create_new_quiz: "Create a New Quiz"
+        create_new_quiz: "Create a New Assessment"
         manage_question_banks: "Manage Question Banks"
-        publish_multiple_quizzes: "Publish Multiple Quizzes"
+        publish_multiple_quizzes: "Publish Multiple Assessments"
       multiple_due_dates: "Multiple Dates"
-      no_quizzes: "No quizzes available"
-      page_titles: Quizzes
+      no_quizzes: "No asessments available"
+      page_titles: Assessments
       titles: 
-        this_quiz_is_locked: "This quiz is currently locked. Click for more details."
+        this_quiz_is_locked: "This assessment is currently locked. Click for more details."
     index_view: 
       links: 
-        create_new_quiz: "New Quiz"
+        create_new_quiz: "New Assessment"
         manage_question_banks: "Manage Question Banks"
-        publish_multiple_quizzes: "Publish Multiple Quizzes"
+        publish_multiple_quizzes: "Publish Multiple Assessments"
         settings: Settings
-      search_for_quiz: "Search for Quiz"
+      search_for_quiz: "Search for Assessment"
     invalid_ip: 
-      quiz_protected: "This quiz is protected and is only available from certain locations. The computer you are currently using does not appear to be at a valid location for taking this quiz."
+      quiz_protected: "This assessment is protected and is only available from certain locations. The computer you are currently using does not appear to be at a valid location for taking this assessment."
       survey_protected: "This survey is protected and is only available from certain locations. The computer you are currently using does not appear to be at a valid location for taking this survey."
     keep_highest: Highest
     keep_latest: Latest
@@ -10527,7 +10528,7 @@ en-AU:
       question: 
         instructions: "Question instructions, rich text area"
       quiz: 
-        instructions: "Quiz instructions, rich text area"
+        instructions: "Assessment instructions, rich text area"
     labels: 
       answer_text: "Answer text"
       comments_on_answer: "Comments, if the user chooses this answer"
@@ -10537,10 +10538,10 @@ en-AU:
       other_incorrect_matches: "Other Incorrect Match Options"
       possible_answer: "Possible Answer"
     links: 
-      resume_quiz: "Resume Quiz"
+      resume_quiz: "Resume Assessment"
       resume_survey: "Resume Survey"
-      take_the_quiz: "Take the Quiz"
-      take_the_quiz_again: "Take the Quiz Again"
+      take_the_quiz: "Take the Assessment"
+      take_the_quiz_again: "Take the Assessment Again"
       take_the_survey: "Take the Survey"
       take_the_survey_again: "Take the Survey Again"
       will_keep_highest_score: "Will keep the highest of all your scores"
@@ -10556,7 +10557,7 @@ en-AU:
         download_lockdown: "If you have not already installed the browser, please download it from here"
       links: 
         download_lockdown: "[Download Respondus LockDown Browser]"
-      requires_lockdown: "This quiz requires Respondus LockDown Browser. Please launch Respondus LockDown Browser to take this quiz or view your quiz results."
+      requires_lockdown: "This assessment requires Respondus LockDown Browser. Please launch Respondus LockDown Browser to take this assessment or view your assessment results."
     managed_quiz_data: 
       anonymous_student: "Candidate %{user_counter}"
       logged_out_user: "Logged Out User %{user_counter}"
@@ -10565,9 +10566,9 @@ en-AU:
     message_students: "Message Candidates"
     message_students_for_context: "Message Candidates for %{context}"
     messages: 
-      no_submitted_students_quiz: "No Candidates have taken the quiz yet"
+      no_submitted_students_quiz: "No Candidates have taken the assessment yet"
       no_submitted_students_survey: "No Candidates have taken the survey yet"
-      no_unsubmitted_students_quiz: "All Candidates have taken the quiz"
+      no_unsubmitted_students_quiz: "All Candidates have taken the assessment"
       no_unsubmitted_students_survey: "All Candidates have taken the survey"
     moderate: 
       add_time: "Add Time"
@@ -10584,10 +10585,10 @@ en-AU:
         taking_time_away: "That would be less time than the Candidate currently has.  Continue anyway?"
       end_quiz_reference_time_current_end: "the current end time"
       end_quiz_reference_time_now: now
-      end_quiz_when: "End the quiz %{n} minutes from %{reference_time}."
+      end_quiz_when: "End the assessment %{n} minutes from %{reference_time}."
       errors: 
         server_communication_failed: "There was a problem communicating with the server.  The system will try again in five minutes, or you can reload the page"
-      extended_quiz_time_explanation: "You can give this Candidate extra time on their current quiz attempt. How much time would you like to give them?"
+      extended_quiz_time_explanation: "You can give this Candidate extra time on their current assessment attempt. How much time would you like to give them?"
       extensions_for_student: "Extensions for %{student}"
       extensions_for_students: 
         one: "Extensions for 1 Candidate"
@@ -10598,7 +10599,7 @@ en-AU:
       headers: 
         attempt: Attempt
         attempts_left: "Attempts Left"
-        extended_quiz_time: "Extend Quiz Time"
+        extended_quiz_time: "Extend Assessment Time"
         score: Score
         student: Candidate
         student_extensions: "Candidate Extensions"
@@ -10608,16 +10609,16 @@ en-AU:
         ending: Ending
         extra_attempts: "Extra Attempts"
         extra_time_per_attempt: "Extra Time on Every Attempt"
-        manually_unlock: "Manually unlock the quiz for the next attempt"
+        manually_unlock: "Manually unlock the assessment for the next attempt"
         started: Started
       minutes: minutes
-      page_title: "Moderate Quiz"
+      page_title: "Moderate Assessment"
       student_gets_extra_time: "*%{student_name}* **gets %{extra_time} extra minutes on each attempt**"
       student_n: "Candidate %{n}"
       time_up: "Time Up!"
       titles: 
         change_user_extensions: "Change user extensions"
-        extend_quiz_time: "Extend Quiz Time"
+        extend_quiz_time: "Extend Assessment Time"
         manually_unlocked: "Manually Unlocked"
         minutes_to_add: "minutes to add"
         select_deselect_all: "Select/Deselect All"
@@ -10627,8 +10628,8 @@ en-AU:
     multi_answer: 
       choose_answer: Choose
     muted: 
-      muted_quiz_description: "Your quiz score is unavailable because your instructor has not finished grading it. When your instructor finishes grading this quiz, your score will be available on this page."
-      muted_quiz_header: "Your quiz has been muted"
+      muted_quiz_description: "Your assessment score is unavailable because your instructor has not finished grading it. When your instructor finishes grading this assessment, your score will be available on this page."
+      muted_quiz_header: "Your assessment has been muted"
     new: 
       allowed_attempts: "Number of allowed attempts"
       anonymous_submissions: "Keep Submissions Anonymous"
@@ -10638,27 +10639,27 @@ en-AU:
         save: Save
       cant_go_back: "Lock questions after answering"
       code: "Access Code"
-      default_page_title: "New Quiz"
+      default_page_title: "New Assessment"
       filter: "IP Filter"
       group: "Assignment Group"
       headers: 
-        ip_filters: "What are Quiz IP Filters?"
+        ip_filters: "What are Assessment IP Filters?"
       hints: 
         question_detail_disabled: "NOTE: Question details not available when more than %{question_count}."
         quiz_score: "Candidates will automatically receive full credit once they take the survey"
-      ip_filters: "Quiz IP filters are a way to limit access to quizzes to computers in a specified IP range. Filters can be a comma-separated list of addresses, or an address followed by a mask (\"192.168.217.1\", \"192.168.217.1/24\" or \"192.168.217.1/255.255.255.0\")."
+      ip_filters: "Assessment IP filters are a way to limit access to assessments to computers in a specified IP range. Filters can be a comma-separated list of addresses, or an address followed by a mask (\"192.168.217.1\", \"192.168.217.1/24\" or \"192.168.217.1/255.255.255.0\")."
       label: 
         time_limit: "Time Limit"
       labels: 
         allow_multiple_attempts: "Allow Multiple Attempts"
         hide_results_only_after_last: "Only After their Last Attempt"
         ip_filter: "Filter IP Addresses"
-        never_hide_results: "Let Candidates See their Quiz Responses"
-        quiz_instructions: "Quiz Instructions"
-        quiz_notify: "Notify users this quiz has changed"
+        never_hide_results: "Let Candidates See their Assessment Responses"
+        quiz_instructions: "Assessment Instructions"
+        quiz_notify: "Notify users this assessment has changed"
         quiz_score: Score
         require_access_code: "Require an access code"
-        restrict_quiz: "Restrict this Quiz"
+        restrict_quiz: "Restrict this Assessment"
         show_question_details: "Show Question Details"
       limited_attempts: "Allowed Attempts"
       links: 
@@ -10674,11 +10675,11 @@ en-AU:
       new_discussion: "New Discussion"
       one_question_at_a_time: "Show one question at a time"
       points_possible: "%{n} Points Possible"
-      quiz_type: "Quiz Type"
+      quiz_type: "Assessment Type"
       require_lockdown_browser: "Require Respondus LockDown Browser"
-      require_lockdown_browser_for_results: "Required to view quiz results"
+      require_lockdown_browser_for_results: "Required to view assessment results"
       retrieving_filters: "Retrieving Filters..."
-      score_to_keep: "Quiz Score to Keep"
+      score_to_keep: "Assessment Score to Keep"
       show_correct_answers: "Show Which Answers Were Correct"
       shuffle_answers: "Shuffle Answers"
       time_limit: "How many minutes?"
@@ -10687,23 +10688,23 @@ en-AU:
         delete: Delete
         find_ip_address_filter: "Find IP Address Filter"
       warnings: 
-        has_student_submissions: "Candidates have either already taken or started taking this quiz, so be careful about editing it. If you change any quiz questions in a significant way, you may want to consider re-grading Candidates who took the old version of the quiz."
+        has_student_submissions: "Candidates have either already taken or started taking this assessment, so be careful about editing it. If you change any assessment questions in a significant way, you may want to consider re-grading Candidates who took the old version of the assessment."
     no_filters_found: "No filters found"
     no_quizzes_view: 
       headers: 
-        course_quizzes: "Project Quizzes"
-      no_quizzes: "No quizzes available"
+        course_quizzes: "Project Assessments"
+      no_quizzes: "No assessments available"
     notices: 
-      cant_view_submission_while_muted: "You cannot view the quiz history while the quiz is muted."
-      has_submissions_already: "Keep in mind, some Candidates have already taken or started taking this quiz"
-      less_than_allotted_time: "You started this quiz near when it was due, so you won't have the full amount of time to take the quiz."
+      cant_view_submission_while_muted: "You cannot view the assessment history while the assessment is muted."
+      has_submissions_already: "Keep in mind, some Candidates have already taken or started taking this assessment"
+      less_than_allotted_time: "You started this assessment near when it was due, so you won't have the full amount of time to take the assessment."
       message_sent: "Message Sent!"
       no_submission_for_user: "There is no submission available for that user"
-      quiz_updated: "Quiz successfully updated"
+      quiz_updated: "Assessment successfully updated"
       quizzes_published: 
-        one: "1 quiz successfully published!"
-        other: "%{count} quizzes successfully published!"
-    practice_quiz: "Practice Quiz"
+        one: "1 assessment successfully published!"
+        other: "%{count} assessments successfully published!"
+    practice_quiz: "Practice Assessment"
     question_colon: "Question:"
     question_group: 
       buttons: 
@@ -10721,7 +10722,7 @@ en-AU:
         delete_group: "Delete Group"
         edit_group_details: "Edit Group Details"
         expand_group: "Expand Group"
-    question_limit_reached: "You have reached the maximum number of questions allowed for a quiz (%{count}/%{limit}).\\n\\nAs a workaround, consider spreading the material across multiple quizzes."
+    question_limit_reached: "You have reached the maximum number of questions allowed for a assessment (%{count}/%{limit}).\\n\\nAs a workaround, consider spreading the material across multiple assessments."
     question_list_right_side: 
       headers: 
         questions: Questions
@@ -10745,8 +10746,8 @@ en-AU:
         click_to_show_details: "Click to show full question details"
         delete_this_question: "Delete this Question"
         edit_this_question: "Edit this Question"
-    quiz_attempts_length_error: "Quiz attempts are limited to 3 digits, if you would like to give your Candidates unlimited attempts, do not check Allow Multiple Attempts box to the left"
-    quiz_attempts_nan_error: "Quiz attempts can only be specified in numbers"
+    quiz_attempts_length_error: "Assessment attempts are limited to 3 digits, if you would like to give your Candidates unlimited attempts, do not check Allow Multiple Attempts box to the left"
+    quiz_attempts_nan_error: "Assessment attempts can only be specified in numbers"
     quiz_details: 
       allowed_attempts: "Allowed Attempts"
       headers: 
@@ -10769,7 +10770,7 @@ en-AU:
         other: "%{count} Minutes"
       unlimited: Unlimited
     quiz_item_group_view: 
-      no_quizzes: "There are no quizzes to show."
+      no_quizzes: "There are no assessments to show."
       no_surveys: "There are no surveys to show."
     quiz_item_view: 
       links: 
@@ -10778,8 +10779,8 @@ en-AU:
       quiz_available: Available
       quiz_due: Due
       settings: Settings
-      title_delete: "Delete Quiz"
-      title_edit: "Edit Quiz"
+      title_delete: "Delete Assessment"
+      title_edit: "Edit Assessment"
     quiz_right_side: 
       attempts_left: 
         one: "1 More Attempt available"
@@ -10794,7 +10795,7 @@ en-AU:
         submission_details: "Submission Details"
         time: Time
       links: 
-        preview_quiz_again: "Preview the Quiz Again"
+        preview_quiz_again: "Preview the Assessment Again"
         preview_survey_again: "Preview the Survey Again"
       no_more_attempts: "No More Attempts available"
       questions_not_graded: "Some questions not yet graded"
@@ -10817,9 +10818,9 @@ en-AU:
       no_time_limit: "No Time Limit"
       one_question_at_a_time: "One Question at a Time"
       points: Points
-      quiz_type: "Quiz Type"
+      quiz_type: "Assessment Type"
       require_lockdown_browser: "Require Respondus LockDown Browser"
-      require_lockdown_browser_for_results: "Required to View Quiz Results"
+      require_lockdown_browser_for_results: "Required to View Assessment Results"
       score_to_keep: "Score to Keep"
       show_correct_answers: "Show Correct Answers"
       shuffle_answers: "Shuffle Answers"
@@ -10830,25 +10831,25 @@ en-AU:
       labels: 
         final_score: "Final Score"
         fudge_points: "Fudge Points"
-        fudge_points_changed_points_quiz: "Since %{user} took this quiz, the points possible for the quiz has changed by %{difference}. You can adjust for this change and manually add positive or negative points using this box:"
+        fudge_points_changed_points_quiz: "Since %{user} took this assessment, the points possible for the assessment has changed by %{difference}. You can adjust for this change and manually add positive or negative points using this box:"
         fudge_points_changed_points_survey: "Since %{user} took this survey, the points possible for the survey has changed by %{difference}. You can adjust for this change and manually add positive or negative points using this box:"
         fudge_points_generic_explanation: "You can manually adjust the score by adding positive or negative points to this box:"
         questions_need_review: "The following questions need review"
-        quiz_score: "Quiz Score"
+        quiz_score: "Assessment Score"
         score_for_attempt: "Score for this attempt"
-        score_for_quiz: "Score for this quiz"
+        score_for_quiz: "Score for this assessment"
         score_for_survey: "Score for this survey"
         survey_score: "Survey Score"
       links: 
         click_to_view_results: "Click here to view the results."
       questions_not_graded: "Some questions not yet graded"
-      quiz_fudged_negative: "This quiz score has been manually adjusted by %{fudge} points."
-      quiz_fudged_positive: "This quiz score has been manually adjusted by +%{fudge} points."
-      quiz_not_yet_taken: "The quiz hasn't been taken yet."
-      quiz_results_protected: "Quiz results are protected for this quiz, and are not visible to Candidates."
-      quiz_results_protected_until_last_attempt: "Quiz results are protected for this quiz, and are not visible to Candidates until they have submitted their last attempt."
-      quiz_submission_needs_review: "The quiz has changed significantly since this submission was made. This submission may need re-grading."
-      requires_lockdown: "Respondus LockDown Browser is required to view your quiz results."
+      quiz_fudged_negative: "This assessment score has been manually adjusted by %{fudge} points."
+      quiz_fudged_positive: "This assessment score has been manually adjusted by +%{fudge} points."
+      quiz_not_yet_taken: "The assessment hasn't been taken yet."
+      quiz_results_protected: "Assessment results are protected for this assessment, and are not visible to Candidates."
+      quiz_results_protected_until_last_attempt: "Assessment results are protected for this assessment, and are not visible to Candidates until they have submitted their last attempt."
+      quiz_submission_needs_review: "The assessment has changed significantly since this submission was made. This submission may need re-grading."
+      requires_lockdown: "Respondus LockDown Browser is required to view your assessment results."
       submitted_at: "Submitted %{when}"
       survey_fudged_negative: "This survey score has been manually adjusted by %{fudge} points."
       survey_fudged_positive: "This survey score has been manually adjusted by +%{fudge} points."
@@ -10866,7 +10867,7 @@ en-AU:
         attempts_left: "Attempts Left"
         attempts_so_far: "Attempts So Far"
         latest_submission: "Latest Submission"
-        quiz_details: "Quiz Details"
+        quiz_details: "Assessment Details"
         quiz_due: Due
         quiz_time_limit: "Time Limit"
         survey_details: "Survey Details"
@@ -10883,17 +10884,17 @@ en-AU:
       student_mute_notification: "Instructor is working on grades"
       unlimited_attempts: "Unlimited Attempts"
     read_only: 
-      default_page_title: "New Quiz"
+      default_page_title: "New Assessment"
       headers: 
-        quiz_details: "Quiz Details"
+        quiz_details: "Assessment Details"
       labels: 
         question_details: "Show Question Details"
-        quiz_instructions: "Quiz Instructions"
+        quiz_instructions: "Assessment Instructions"
       links: 
-        back_to_quiz_page: "Back to Quiz Page"
+        back_to_quiz_page: "Back to Assessment Page"
     refresh_quiz_after_popup: 
       headers: 
-        loading_in_lockdown: "Loading Quiz in Respondus LockDown Browser"
+        loading_in_lockdown: "Loading Assessment in Respondus LockDown Browser"
     retrieving_filters: "Retrieving Filters..."
     rubric: 
       loading: Loading...
@@ -10910,52 +10911,52 @@ en-AU:
         you_answered: "You Answered"
       buttons: 
         already_published: Published!
-        lock_quiz: "Lock this Quiz Now"
+        lock_quiz: "Lock this Assessment Now"
         lock_survey: "Lock this Survey Now"
         publish: Publish
         publishing: Publishing...
         republish: Re-Publish
-        unlock_quiz: "Let Candidates Take this Quiz Now"
+        unlock_quiz: "Let Candidates Take this Assessment Now"
         unlock_survey: "Let Candidates Take this Survey Now"
       confirms: 
-        delete_quiz: "Are you sure you want to delete this quiz?"
+        delete_quiz: "Are you sure you want to delete this assessment?"
         delete_quiz_submissions_warning: 
-          one: "Warning: 1 Candidate has already taken this quiz. If you delete it, any completed submissions will be deleted and no longer appear in the gradebook."
-          other: "Warning: %{count} Candidates have already taken this quiz. If you delete it, any completed submissions will be deleted and no longer appear in the gradebook."
+          one: "Warning: 1 Candidate has already taken this assessment. If you delete it, any completed submissions will be deleted and no longer appear in the gradebook."
+          other: "Warning: %{count} Candidates have already taken this assessment. If you delete it, any completed submissions will be deleted and no longer appear in the gradebook."
       labels: 
         available_until: Until
         no_time_limit: "No time limit"
         warning_icon: Warning
       links: 
         edit: Edit
-        hide_student_quiz_results: "Hide Candidate Quiz Results"
+        hide_student_quiz_results: "Hide Candidate Assessment Results"
         hide_student_survey_results: "Hide Candidate Survey Results"
-        keep_editing_this_quiz: "Keep Editing This Quiz"
+        keep_editing_this_quiz: "Keep Editing This Assessment"
         keep_editing_this_survey: "Keep Editing This Survey"
         message_students_who: "Message Candidates Who..."
-        moderate_this_quiz: "Moderate This Quiz"
+        moderate_this_quiz: "Moderate This Assessment"
         moderate_this_survey: "Moderate This Survey"
         preview: Preview
-        quiz_statistics: "Quiz Statistics"
-        see_full_quiz: "See Full Quiz"
+        quiz_statistics: "Assessment Statistics"
+        see_full_quiz: "See Full Assessment"
         show_assignment_rubric: "Show Assignment Rubric"
-        show_student_quiz_results: "Show Candidate Quiz Results"
+        show_student_quiz_results: "Show Candidate Assessment Results"
         show_student_survey_results: "Show Candidate Survey Results"
         survey_statistics: "Survey Statistics"
       manage: Manage
-      only_registered_users: "Only registered, enrolled users can take graded quizzes"
+      only_registered_users: "Only registered, enrolled users can take graded assessments"
       speed_grader: QuickGrader
       students_submitted_so_far: 
         one: "1 Candidate submitted so far"
         other: "%{count} Candidates submitted so far"
-      students_who_have_not_taken_the_quiz: "Candidates who have NOT taken the quiz"
-      students_who_have_taken_the_quiz: "Candidates who have taken the quiz"
+      students_who_have_not_taken_the_quiz: "Candidates who have NOT taken the assessment"
+      students_who_have_taken_the_quiz: "Candidates who have taken the assessment"
       titles: 
         delete: Delete
         related_items: "Related Items"
-        unlock_for_how_long: "How long would you like to unlock the quiz for?"
+        unlock_for_how_long: "How long would you like to unlock the assessment for?"
       warnings: 
-        draft_version: "This is a preview of the draft version of the quiz"
+        draft_version: "This is a preview of the draft version of the assessment"
     single_answer: 
       upload: Upload
     statistics: 
@@ -10965,9 +10966,9 @@ en-AU:
         other: "%{count} attempts"
       headers: 
         for_question: "For %{question_name}"
-        quiz_statistics: "Quiz Statistics"
+        quiz_statistics: "Assessment Statistics"
         survey_statistics: "Survey Statistics"
-        users_have_taken_this_quiz: "%{count} users have taken this quiz"
+        users_have_taken_this_quiz: "%{count} users have taken this assessment"
         users_have_taken_this_survey: "%{count} users have taken this survey"
       labels: 
         average_correct: "Average Correct"
@@ -10982,8 +10983,8 @@ en-AU:
         count_all_attempts: "Count **All** Attempts"
         count_only_latest_attempts: "Count Only Each Latest Attempt"
       page_title: Statistics
-      quiz_all_version_disclaimer: "This report is showing quiz statistics based on all attempts for all users."
-      quiz_latest_version_disclaimer: "This report is showing quiz statistics based on the latest attempt for each user."
+      quiz_all_version_disclaimer: "This report is showing assessment statistics based on all attempts for all users."
+      quiz_latest_version_disclaimer: "This report is showing assessment statistics based on the latest attempt for each user."
       student_n: "Candidate %{student_counter}"
       survey_all_version_disclaimer: "This report is showing survey statistics based on all attempts for all users."
       survey_latest_version_disclaimer: "This report is showing survey statistics based on the latest attempt for each user."
@@ -11002,14 +11003,14 @@ en-AU:
         next: Next
         out_of_time_submit: "Ok, fine"
         previous: Previous
-        submit_quiz: "Submit Quiz"
+        submit_quiz: "Submit Assessment"
       confirms: 
         cant_go_back_blank: "You can't come back to this question once you click next. Are you sure you want to leave it blank?"
         navigate_away: "You're about to navigate away from this page.  Continue anyway?"
         unanswered_questions: 
           one: "You have 1 unanswered question (see the right sidebar for details).  Submit anyway?"
           other: "You have %{count} unanswered questions (see the right sidebar for details).  Submit anyway?"
-        unfinished_quiz: "You're about to leave the quiz unfinished.  Continue anyway?"
+        unfinished_quiz: "You're about to leave the assessment unfinished.  Continue anyway?"
       days_count: 
         one: "1 Day"
         other: "%{count} Days"
@@ -11017,7 +11018,7 @@ en-AU:
         connection_lost: "Connection to %{host} was lost.  Please make sure you're connected to the Internet before continuing."
         only_numerical_values: "only numerical values are accepted"
       headers: 
-        draft_preview: "This is a preview of the draft version of the quiz"
+        draft_preview: "This is a preview of the draft version of the assessment"
       hide_time_link: Hide
       hours_count: 
         one: "1 Hour"
@@ -11037,13 +11038,13 @@ en-AU:
       notices: 
         extra_time: "You have been given extra time on this attempt"
         five_minutes_left: "Five Minutes Left"
-        less_time: "Your time for this quiz has been reduced."
+        less_time: "Your time for this assessment has been reduced."
         one_minute_left: "One Minute Left"
         thirty_minutes_left: "Thirty Minutes Left"
         twelve_hours_left: "Twelve Hours Left"
       question_answered: Answered
       question_unanswered: "Haven't Answered Yet"
-      quiz_instructions: "Quiz Instructions"
+      quiz_instructions: "Assessment Instructions"
       saved_at: "Saved at %{t}"
       saving: Saving...
       seconds_count: 
@@ -11060,9 +11061,9 @@ en-AU:
         other: "%{count} Years"
     take_quiz_in_popup: 
       headers: 
-        loading_in_lockdown: "Loading Quiz in Respondus LockDown Browser"
+        loading_in_lockdown: "Loading Assessment in Respondus LockDown Browser"
       links: 
-        return_to_quiz_page: "[Click here](%{url}) to return to the quiz page."
+        return_to_quiz_page: "[Click here](%{url}) to return to the assessment page."
     take_quiz_right_side: 
       labels: 
         attempt_due: "Attempt due"
@@ -11070,7 +11071,7 @@ en-AU:
         time_running: "Time Running"
       links: 
         hide_time_running: Hide
-        keep_editing_quiz: "Keep Editing This Quiz"
+        keep_editing_quiz: "Keep Editing This Assessment"
         keep_editing_survey: "Keep Editing This Survey"
     timing: 
       labels: 
@@ -11083,16 +11084,16 @@ en-AU:
       click_to_set_as_correct: "Click to set this answer as correct"
       click_to_unset_as_correct: "Click to unset this answer as correct"
       find_question_bank: "Find Question Bank"
-      find_quiz_question: "Find Quiz Question"
-      help_with_formulas: "Help with Quiz Question Formulas"
+      find_quiz_question: "Find Assessment Question"
+      help_with_formulas: "Help with Assessment Question Formulas"
       ip_address_filtering: "IP Address Filtering"
       set_as_correct: "This answer is set as correct"
     ? "true"
     : "True"
     ungraded_survey: "Ungraded Survey"
     warnings: 
-      unpublished_changes: "*You have made unpublished changes to this quiz.* These changes will not appear for Candidates until you publish or republish the quiz."
-      unpublished_quiz: "*This quiz is unpublished* Only Hiring Managers can see the quiz until it is published."
+      unpublished_changes: "*You have made unpublished changes to this assessment.* These changes will not appear for Candidates until you publish or republish the assessment."
+      unpublished_quiz: "*This assessment is unpublished* Only Hiring Managers can see the assessment until it is published."
   re_upload_submissions_form: 
     buttons: 
       upload: "Upload Files"
@@ -11165,7 +11166,7 @@ en-AU:
       manage_account_settings: "Manage account-level settings"
       manage_admin_users: "Add/remove other Hiring Managers, project designers or Interviewers to the project"
       manage_announcements: "Manage global announcements"
-      manage_assignments: "Manage (add / edit / delete) assignments and quizzes"
+      manage_assignments: "Manage (add / edit / delete) assignments and assessments"
       manage_calendar: "Add, edit and delete events on the project calendar"
       manage_canvasnet_courses: "Manage Canvas Network projects"
       manage_content: "Manage all other project content"
@@ -11937,7 +11938,7 @@ en-AU:
         indentation: Indentation
         page_name: "Page Name"
         quiz_group: Group
-        quiz_name: "Quiz Name"
+        quiz_name: "Assessment Name"
         topic_name: "Topic Name"
         url: URL
       loading: Loading...
@@ -11949,8 +11950,8 @@ en-AU:
       new_topic_option: "[ New Topic ]"
       options: 
         assignments: Assignments
-      quiz_item: Quiz
-      quiz_notice: "Select the quiz you want to associate with this *module*, or add a new one by selecting \"New Quiz\"."
+      quiz_item: Assessment
+      quiz_notice: "Select the assessment you want to associate with this *module*, or add a new one by selecting \"New Assessment\"."
       sub_header_notice: "Type the text you'd like to add as a *module* sub-header"
       text_header_item: "Text Header"
       topic_notice: "Select the topic you want to associate with this *module*, or add a topic by selecting \"New Topic\"."
@@ -12036,7 +12037,7 @@ en-AU:
         grades_page: "Click to insert a link to the grades page"
         modules: "Click to insert a link to this module"
         modules_page: "Click to insert a link to the modules page"
-        quizzes: "Click to insert a link to this quiz"
+        quizzes: "Click to insert a link to this assessment"
         syllabus_page: "Click to insert a link to the syllabus"
         users_page: "Click to insert a link to the people page"
         wiki_pages: "Click to insert a link to this page"
@@ -12057,7 +12058,7 @@ en-AU:
         modules: "Modules List"
         modules_page: Modules
         new_page: "Link to a New Page"
-        quizzes: "Quiz List"
+        quizzes: "Assessment List"
         syllabus: "Project Syllabus"
         upload_file: "Upload a new file"
         upload_image: "Upload a new image"
@@ -12071,7 +12072,7 @@ en-AU:
         nav: 
           course: "Project Navigation"
           group: "Group Navigation"
-        quizzes: Quizzes
+        quizzes: Assessments
         wiki_pages: "Wiki Pages"
       messages: 
         loading: Loading...
@@ -12297,7 +12298,7 @@ en-AU:
       paper_view: "Paper View"
       plain_view: "Plain Text View"
       preview_document: "Preview the document"
-      quiz_submission: "This submission was a quiz submission. Redirecting to quiz page."
+      quiz_submission: "This submission was a assessment submission. Redirecting to assessment page."
       show_entire_discussion: "Show the Entire Discussion"
       student: Candidate
       url_preview: "URL Preview"
@@ -12447,11 +12448,11 @@ en-AU:
     announcement: Announcement
     announcements: Announcements
     assignments: Assignments
-    delete_quiz: "Delete Quiz"
+    delete_quiz: "Delete Assessment"
     delete_survey: "Delete Survey"
     discussion: Discussion
     discussions: Discussions
-    edit_quiz: "Edit Quiz"
+    edit_quiz: "Edit Assessment"
     edit_survey: "Edit Survey"
     error_reports: "Error Reports"
     learning_outcomes: "Learning Outcomes"
@@ -12479,7 +12480,7 @@ en-AU:
       resubmit_to_turnitin: "Resubmit to Turnitin"
   unknown: Unknown
   unknown_question_bank: "Unknown question bank"
-  unknown_quiz: "Unknown quiz"
+  unknown_quiz: "Unknown assessment"
   user: 
     default_collection_name: "%{user_name}'s Collection"
     default_user_name: User

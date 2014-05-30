@@ -157,6 +157,9 @@ class Quizzes::QuizzesController < ApplicationController
              :IS_SURVEY => @quiz.survey?,
              :QUIZ => quiz_json(@quiz,@context,@current_user,session),
              :COURSE_ID => @context.id,
+             :WEB_PROCTORING => @quiz[:web_proctoring],
+             :MAXIMUM_WEB_PROCTORING => @quiz[:maximum_web_proctoring],
+             :SHOW_REMAINING_COUNTS => @quiz[:show_remaining_counts],
              :LOCKDOWN_BROWSER => @quiz.require_lockdown_browser?,
              :ATTACHMENTS => Hash[@attachments.map { |_,a| [a.id,attachment_hash(a)]}],
              :CONTEXT_ACTION_SOURCE => :quizzes  }
@@ -210,6 +213,17 @@ class Quizzes::QuizzesController < ApplicationController
           @banks_hash[bank.id] = bank
         end
       end
+      # arrivu changes
+      @tag_hash = {}
+      tag_ids = @quiz.quiz_groups.map(&:tag_id)
+      tag_ids.each do|tag_id|
+       if  tag_id != nil
+          ActsAsTaggableOn::Tag.find_all_by_id(tag_id).each do |tag|
+            @tag_hash[tag.id] = tag
+          end
+        end
+      end
+      # arrivu changes
       if @has_student_submissions = @quiz.has_student_submissions?
         flash[:notice] = t('notices.has_submissions_already', "Keep in mind, some candidates have already taken or started taking this assessment")
       end
@@ -706,6 +720,11 @@ class Quizzes::QuizzesController < ApplicationController
 
     @quiz_presenter = Quizzes::TakeQuizPresenter.new(@quiz, @submission, params)
     render :action => 'take_quiz'
+
+    #data = params[:dataUrl]
+    #file_obj=File.open("#{Rails.root}/public/images/test.png","wb") do |file|
+    #  file.write(Base64.decode64(params[:image_data]))
+    #end
   end
 
   def valid_question?(submission, question_id)
