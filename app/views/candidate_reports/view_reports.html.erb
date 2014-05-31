@@ -1,4 +1,50 @@
 <% @body_classes << "gradebook2 full-width" %>
-<div>
-        hiii
+<div style="height:100%;width:100%;">
+   <header class="quiz-header">
+    <h2>
+      Assessment Report for <%= @candidate_detail.name %>
+    </h2>
+    <hr>
+    <h3>
+      <% if @quiz.quiz_title %>
+          <%= @quiz.quiz_title %>
+      <% end %>
+    </h3>
+  </header>
+  Taken Date :  <%= datetime_string(@submission.finished_at) %><br/>
+  Total Score : <%= @submission.score %> out of <%= @quiz.points_possible %><br/>
+  Total no. of attempts : <%= @submission && !@submission.settings_only? ? @submission.attempt : "--" %><br/>
+  <% if @quiz.points_possible && @submission.score %>
+      Percentage : <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
+      <%= percentage.round(2) %> % <br/>
+  <% end %>
+  Time Taken : <%= duration_in_minutes(@submission.duration) %>
+  <!--<iframe id="speedgrader_iframe" src="/projects/4/assignments/<%#= @assignment.id %>/submissions/<%#= @candidate_detail.id %>?preview=true" frameborder="0" style="height:100%;width:100%;"></iframe>-->
+  <br/>
+  <br/>
+  <br/>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <td>Assessment Name</td>
+      <td>No. of questions</td>
+      <td>Marks Scored / Max Marks</td>
+      <td>Percentage Scored</td>
+      <td>Time Taken</td>
+      <td>Allotted Time</td>
+    </tr>
+    </thead>
+    <tr>
+      <td><%= @quiz.quiz_title %></td>
+      <td><%= @submission.score %></td>
+      <td><%= @submission.score %> / <%= @quiz.points_possible %></td>
+      <td><% if @quiz.points_possible && @submission.score %>
+            <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
+            <%= percentage.round(2) %> %
+        <% end %></td>
+      <td><%= duration_in_minutes(@submission.duration) %></td>
+      <td><%= @quiz.time_limit %> minutes</td>
+    </tr>
+  </table>
+
 </div>

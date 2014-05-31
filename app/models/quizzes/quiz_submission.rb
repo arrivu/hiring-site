@@ -35,6 +35,7 @@ class Quizzes::QuizSubmission < ActiveRecord::Base
   before_validation :update_quiz_points_possible
   belongs_to :quiz, class_name: 'Quizzes::Quiz'
   belongs_to :user
+  belongs_to :candidate_report
   belongs_to :submission, :touch => true
   before_save :update_kept_score
   before_save :sanitize_responses
