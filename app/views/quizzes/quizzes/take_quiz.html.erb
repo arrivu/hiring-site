@@ -15,39 +15,39 @@
 //        if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; }
 //        else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; }
 //        document.oncontextmenu=new Function("alert(message);return false")
-        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-
-        if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
-
-        function mischandler(){
-            return false;
-        }
-
-        function mousehandler(e){
-            var myevent = (isNS) ? e : event;
-            var eventbutton = (isNS) ? myevent.which : myevent.button;
-            if((eventbutton==2)||(eventbutton==3)) return false;
-        }
-        document.oncontextmenu = mischandler;
-        document.onmousedown = mousehandler;
-        document.onmouseup = mousehandler;
-        var isCtrl = false;
-        document.onkeyup=function(e)
-        {
-            if(e.which == 17)
-                isCtrl=false;
-        }
-
-        document.onkeydown=function(e)
-        {
-            if(e.which == 17)
-                isCtrl=true;
-            if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
-            {
-// alert(‘Keyboard shortcuts are cool!’);
-                return false;
-            }
-        }//-------------------- initialise the webcam
+//        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+//
+//        if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
+//
+//        function mischandler(){
+//            return false;
+//        }
+//
+//        function mousehandler(e){
+//            var myevent = (isNS) ? e : event;
+//            var eventbutton = (isNS) ? myevent.which : myevent.button;
+//            if((eventbutton==2)||(eventbutton==3)) return false;
+//        }
+//        document.oncontextmenu = mischandler;
+//        document.onmousedown = mousehandler;
+//        document.onmouseup = mousehandler;
+//        var isCtrl = false;
+//        document.onkeyup=function(e)
+//        {
+//            if(e.which == 17)
+//                isCtrl=false;
+//        }
+//
+//        document.onkeydown=function(e)
+//        {
+//            if(e.which == 17)
+//                isCtrl=true;
+//            if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
+//            {
+//// alert(‘Keyboard shortcuts are cool!’);
+//                return false;
+//            }
+//        }//-------------------- initialise the webcam
     </script>
 <% end %>
 <% end %>
@@ -82,13 +82,31 @@
 </header>
 
 <% js_bundle :take_quiz %>
-<!--<a href="#" class="quiz-link" title="<%#= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">-->
-<!--<i class="icon-edit"></i>-->
-<!--</a>-->
+<div class="row" style="display: none;">
+  <div class="span4">
+    <h2>Input</h2>
+    <div id="webcam">
+    </div>
+  </div>
+
+  <div class="span4">
+    <h2>Output</h2>
+    <canvas id="canvas"  height="240" width="320"></canvas>
+  </div>
+  <div class="span4">
+    <h2>Face Detection</h2>
+    <canvas id="output"  height="426" width="515"></canvas>
+  </div>
+  <button class="btn btn-primary btn-large" id="takeSnapshot"></button>
+</div>
+
 <div style="position: absolute;z-index: -1;display:none;">
-<video id="video"></video>
-<button id="startbutton ">Take photo</button>
-<canvas id="canvas"></canvas>
+  <form action="imageproctoring/proctoring" method="post" multipart = "true">
+    <video id="video" value="" ></video>
+    <canvas id="canvas" name="image"></canvas>
+     <input id="startbutton " type="submit" />
+</form>
+
 <img src="http://placekitten.com/g/320/261" id="photo" alt="photo"></div>
 <%= form_tag @quiz_presenter.form_action(session, @current_user), :id => "submit_quiz_form", :class => @quiz_presenter.form_class, :method => "post" do %>
 

@@ -102,7 +102,7 @@ define [
       $.when(@getImage(), @preflightRequest()).then(@onPreflight)
 
     preflightRequest: ->
-      $.post('/files/pending', {
+      $.post('files/proctoring', {
         name: 'profile.jpg'
         format: 'text'
         no_redirect: true
