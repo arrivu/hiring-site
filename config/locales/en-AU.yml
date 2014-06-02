@@ -10275,6 +10275,7 @@ en-AU:
       creating_group_failed: "Create Group Failed, Please Try Again"
       field_is_required: "This field is required"
       loading_banks_failed: "Question Banks failed to load, please try again"
+      loading_tags_failed: "Question Tags failed to load, please try again"
       loading_more_questions_failed: "loading more questions failed"
       loading_question_failed: "Loading Question Failed..."
       loading_questions_failed: "Questions failed to load, please try again"
@@ -10318,8 +10319,11 @@ en-AU:
       options: 
         new_group: "[ New Group ]"
         no_group: "[ No Group ]"
-      select_a_question_bank: "Select a question bank from the list below to link it to the this assessment as a question group."
-      titles: 
+
+      select_a_bank_tag: "Select a bank first and select a tag to filter the questions."
+      select_a_question_tag: "Select a tag to filter the questions."
+      select_a_question_bank: "Select a question bank from the list below to link it to the this quiz as a question group."
+      titles:
         add_new_question_group: "Add a New Question Group"
     form_answer: 
       answer_in_range_accessible: "between *range start* and #range end#"

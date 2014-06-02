@@ -26,6 +26,7 @@ end
 #  exit 1
 #end
 gem 'bundler', '1.6.2'
+
 require File.expand_path("../config/canvas_rails3", __FILE__)
 
 # force a different lockfile for rails 3
@@ -328,3 +329,6 @@ end
 
 gem 'subdomain-fu', '0.5.4'
 gem 'rack-cors', :require => 'rack/cors'
+
+gem 'acts-as-taggable-on',:git => 'http://github.com/arrivu/acts-as-taggable-on.git', :branch => 'multitenant'
+

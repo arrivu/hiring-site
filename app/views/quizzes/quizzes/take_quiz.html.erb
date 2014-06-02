@@ -7,6 +7,7 @@
        @show_left_side = false %>
 <% js_block do %>
     <script>
+
 //        var message="Right Click Disabled!";
 //        function clickIE4(){ if (event.button==2){ alert(message); return false; } }
 //        function clickNS4(e){ if (document.layers||document.getElementById&&!document.all)
@@ -151,7 +152,16 @@
 </div>
 
 <% end %>
-
+<div id="navigate_away" title="Navigating Away" style="display:none;">
+  <div id="navigate_description"><%= @current_user.name %>,You had navigated away from the test window.
+  <br/>
+  </div>
+  <div id="navigate_count"></div>
+  <div class="navigate_permissible" style="display:none;">
+    <div><p>You have exceeded the permissible limit for navigating away from your assessment.Your assessment has finished and it is submitted automatically.</p></div>
+  </div>
+  <button type="submit" class="btn btn-primary submit_button click_continue" id="navigate_button">Continue...</button>
+</div>
 <form id="deauthorized_dialog"
   class="hide"
   title="<%= t :login_required, "Login Required" %>"
