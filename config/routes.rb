@@ -1539,4 +1539,12 @@ routes.draw do
   map.authenticate '/authenticate', :controller => 'subscription', :action => 'authenticate'
   # in rails 2 this was Jammit::Routes.draw(map)
   match '/assets/:package.:extension' => 'jammit#package', :as => :jammit if defined?(Jammit)
+
+  match '/context_tags' => 'tags#context_tags'
+  match '/get_tags' => 'tags#get_tags'
+  match '/get_tags_filter' => 'tags#get_tags_filter'
+  match '/get_tag_to_bank' => 'tags#get_tag_to_bank'
+  match '/bank_to_tag' => 'tags#bank_to_tag'
+  match '/tag_to_question' => 'tags#tag_to_question'
+  match '/questions' => 'question_banks#questions'
 end

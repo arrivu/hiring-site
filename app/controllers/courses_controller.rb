@@ -209,6 +209,7 @@ class CoursesController < ApplicationController
 
   include Api::V1::Course
   include Api::V1::Progress
+  include TagsHelper
 
   # @API List your courses
   # Returns the list of active courses for the current user.

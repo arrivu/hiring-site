@@ -36,7 +36,8 @@ class Quizzes::Quiz < ActiveRecord::Base
     :hide_results, :locked, :ip_filter, :require_lockdown_browser,
     :require_lockdown_browser_for_results, :context, :notify_of_update,
     :one_question_at_a_time, :cant_go_back, :show_correct_answers_at, :hide_correct_answers_at,
-    :require_lockdown_browser_monitor, :lockdown_browser_monitor_data
+    :require_lockdown_browser_monitor, :lockdown_browser_monitor_data, :online_proctoring, :image_proctoring,
+    :web_proctoring, :maximum_web_proctoring, :maximum_image_proctoring, :show_result, :percentage_of_marks, :show_remaining_counts
 
   attr_readonly :context_id, :context_type
   attr_accessor :notify_of_update
@@ -143,6 +144,8 @@ class Quizzes::Quiz < ActiveRecord::Base
     self.one_question_at_a_time = false if self.one_question_at_a_time == nil
     self.cant_go_back = false if self.cant_go_back == nil || self.one_question_at_a_time == false
     self.shuffle_answers = false if self.shuffle_answers == nil
+    self.image_proctoring = false if self.image_proctoring == nil || self.image_proctoring == false
+    self.web_proctoring = false if self.web_proctoring == nil || self.web_proctoring == false
     self.show_correct_answers = true if self.show_correct_answers == nil
     if !self.show_correct_answers
       self.show_correct_answers_at = nil
@@ -666,14 +669,19 @@ class Quizzes::Quiz < ActiveRecord::Base
           bank = ::AssessmentQuestionBank.find_by_id(q[:assessment_question_bank_id]) if q[:assessment_question_bank_id].present?
           if bank
             questions = bank.select_for_submission(q[:pick_count], exclude_ids, q[:shuffle_question_bank])
+            @qroup_name = q[:name]
             questions = questions.map { |aq| aq.data }
+            cnts = 0
             questions.each do |question|
+              cnts += 1
               if question[:answers]
                 question[:answers] = prepare_answers(question)
                 question[:matches] = question[:matches].sort_by { |m| m[:text] || ::SortFirst } if question[:matches]
               end
               question[:points_possible] = q[:question_points] unless question[:question_type] == "text_only_question"
               question[:published_at] = q[:published_at]
+              question[:group_name] = @qroup_name
+              question[:counter] = cnts
               user_questions << generate_submission_question(question)
             end
           end
@@ -1093,6 +1101,14 @@ class Quizzes::Quiz < ActiveRecord::Base
       time_limit
       shuffle_answers
       show_correct_answers
+      online_proctoring
+      image_proctoring
+      web_proctoring
+      maximum_web_proctoring
+      maximum_image_proctoring
+      show_result
+      percentage_of_marks
+      show_remaining_counts
       points_possible
       hide_results
       access_code

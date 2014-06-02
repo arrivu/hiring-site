@@ -9,7 +9,3 @@ require [
   #'compiled/bundles/image_proctoring'
 ]
 
-
-
-
-

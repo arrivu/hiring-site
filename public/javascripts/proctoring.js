@@ -180,31 +180,7 @@
                 console.log(dataURL);
                 var blob = dataURItoBlob(dataURL);
                 console.log(blob);
-//                    var fileName = "image.png";
-//                var image = 'data:image/png;base64,'+ dataURL;
-//                var saveData = (function () {
-//                    var a = document.createElement("a");
-//                    document.body.appendChild(a);
-//                    a.style = "display: none";
-//                    return function (image, fileName) {
-//                        var json = JSON.stringify(image),
-//                            blob = new Blob([json], {type: "octet/stream"}),
-//                            url = window.URL.createObjectURL(blob);
-//                        a.href = url;
-//                        a.download = fileName;
-//                        a.click();
-//                        window.URL.revokeObjectURL(url);
-//                    };
-//                }());
-//                saveData(image, fileName);
-//                var image = document.createElement('img');
-//                image.src = 'data:image/png;base64,'+ dataURL;
 
-                //document.body.appendChild(image);
-                //console.log(image.src);
-                //var fd = new FormData(document.forms[0]);
-//                fd.append("canvasImage", blob);
-                //alert(fd);
                 $.ajax({
                     type: "POST",
                     url: "imageproctoring/proctoring",
@@ -244,9 +220,12 @@
                 }
 
                 // write the ArrayBuffer to a blob, and you're done
-//                var bb = new window.BlobBuilder();
+//                var bb = new WebKitBlobBuilder();
 //                bb.append(ab);
 //                return bb.getBlob(mimeString);
+                var dataView = new DataView(ab);
+                blob = new Blob([dataView], { type: mimeString });
+                return blob;
 
             }
         },

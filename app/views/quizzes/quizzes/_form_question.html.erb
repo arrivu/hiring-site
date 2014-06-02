@@ -1,6 +1,7 @@
 <% question_bank_id ||= "" %>
-
-<form id="question_form_template" class="question_form" style="display: none;">
+<!-- arrivu changes -->
+<form id="question_form_template"   class="question_form" style="display: none;" data-type=<%= question_bank_id %>>
+<!--arrivu changes -->
 <div class="question">
   <div class="header" style="background-color: transparent;">
     <input type="text" style="width: 120px;" name="question_name" aria-label="<%= t "label.question.name", "Question name" %>"/>
@@ -24,6 +25,11 @@
       <span style="padding-left: 20px;"><%= before_label :points, 'pts' %></span>
       <input class="float_value" type="text" style="width: 25px; min-width: 0;" name="question_points" aria-label="<%= t "label.question.points", "Question point value" %>"/>
     </span>
+
+        <!--arrivu changes -->
+        <%= render :partial => 'shared/tagging'  %>
+        <!--arrivu changes -->
+
   </div>
   <div class="links">
   </div>
