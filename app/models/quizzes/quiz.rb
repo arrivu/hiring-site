@@ -37,7 +37,7 @@ class Quizzes::Quiz < ActiveRecord::Base
     :require_lockdown_browser_for_results, :context, :notify_of_update,
     :one_question_at_a_time, :cant_go_back, :show_correct_answers_at, :hide_correct_answers_at,
     :require_lockdown_browser_monitor, :lockdown_browser_monitor_data, :online_proctoring, :image_proctoring,
-    :web_proctoring, :maximum_web_proctoring, :show_remaining_counts
+    :web_proctoring, :maximum_web_proctoring, :maximum_image_proctoring, :show_result, :percentage_of_marks, :show_remaining_counts
 
   attr_readonly :context_id, :context_type
   attr_accessor :notify_of_update
@@ -668,7 +668,7 @@ class Quizzes::Quiz < ActiveRecord::Base
         if q[:assessment_question_bank_id]
           bank = ::AssessmentQuestionBank.find_by_id(q[:assessment_question_bank_id]) if q[:assessment_question_bank_id].present?
           if bank
-            questions = bank.select_for_submission(q[:pick_count], exclude_ids, q[:shuffle_question_bank])
+            questions = bank.select_for_submission(q[:pick_count], exclude_ids, q[:shuffle_question_bank], q[:tag_id])
             @qroup_name = q[:name]
             questions = questions.map { |aq| aq.data }
             cnts = 0
@@ -1105,6 +1105,9 @@ class Quizzes::Quiz < ActiveRecord::Base
       image_proctoring
       web_proctoring
       maximum_web_proctoring
+      maximum_image_proctoring
+      show_result
+      percentage_of_marks
       show_remaining_counts
       points_possible
       hide_results

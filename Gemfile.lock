@@ -1,4 +1,12 @@
 GIT
+  remote: http://github.com/arrivu/acts-as-taggable-on.git
+  revision: 05daba73e0a30674c8dd223381c64a0e0b48e1ce
+  branch: multitenant
+  specs:
+    acts-as-taggable-on (2.1.1)
+      rails
+
+GIT
   remote: https://github.com/kreynolds/cassandra-cql.git
   revision: d100be075b04153cf4116da7512892a1e8c0a7e4
   ref: d100be075b04153cf4116da7512892a1e8c0a7e4
@@ -376,6 +384,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers_rails_2.3 (= 0.9.0alpha1)
   activesupport-suspend_callbacks!
+  acts-as-taggable-on!
   addressable (= 2.3.5)
   adheres_to_policy!
   adobe_connect (= 1.0.0)

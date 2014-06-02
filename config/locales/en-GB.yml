@@ -10416,6 +10416,7 @@ en-GB:
       creating_group_failed: "Create group failed. Please Try Again"
       field_is_required: "This field is required"
       loading_banks_failed: "Question banks failed to load. Please try again"
+      loading_tags_failed: "Question Tags failed to load, please try again"
       loading_more_questions_failed: "loading more questions failed"
       loading_question_failed: "Loading question failed..."
       loading_questions_failed: "Questions failed to load. Please try again"
@@ -10459,6 +10460,8 @@ en-GB:
       options: 
         new_group: "[ New group ]"
         no_group: "[No group ]"
+      select_a_bank_tag: "Select a bank first and select a tag to filter the questions."
+      select_a_question_tag: "Select a tag to filter the questions."
       select_a_question_bank: "Select a question bank from the list below to link it to the this quiz as a question group."
       titles: 
         add_new_question_group: "Add a new question group"

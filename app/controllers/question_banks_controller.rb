@@ -32,7 +32,20 @@ class QuestionBanksController < ApplicationController
         @question_banks += @context.inherited_assessment_question_banks.active
       end
       @question_banks = @question_banks.select{|b| b.grants_right?(@current_user, nil, :manage) } if params[:managed] == '1'
+      # arrivu changes
+      if params[:question_link].present?
+        @question_banks.each do |bank_list|
+          bank_list.tag_id = nil
+        end
+      end
+      if params[:group_link].present?
+        @question_banks.each do |bank_list|
+          bank_list.tag_id = nil
+        end
+      end
+      # arrivu changes
       @question_banks = Canvas::ICU.collate_by(@question_banks.uniq) { |b| b.title || SortLast }
+
       respond_to do |format|
         format.html
         format.json { render :json => @question_banks.map{ |b| b.as_json(methods: [:cached_context_short_name, :assessment_question_count]) }}
@@ -41,11 +54,42 @@ class QuestionBanksController < ApplicationController
   end
   
   def questions
-    find_bank(params[:question_bank_id], params[:inherited] == '1') do
-      @questions = @bank.assessment_questions.active
-      url = polymorphic_url([@context, :question_bank_questions])
-      @questions = Api.paginate(@questions, self, url, default_per_page: 50)
-      render :json => {:pages => @questions.total_pages, :questions => @questions}
+    #arrivu changes
+    if params[:tag_id] != nil
+
+      find_bank(params[:question_bank_id], params[:inherited] == '1') do
+        @question_id = ActsAsTaggableOn::Tagging.find_all_by_tag_id_and_tagger_id(params[:tag_id],params[:question_bank_id])
+        if @question_id != []
+          @question_array = []
+            @question_id.each do |question|
+              @ques_find = question.taggable_id
+              @ques_type = question.taggable_type
+              if @ques_type == "AssessmentQuestion"
+                @assessment_question = AssessmentQuestion.find_by_id(@ques_find)
+                @question_array << @assessment_question
+              else
+                @quiz_question = Quizzes::QuizQuestion.find_by_id(@ques_find)
+                @find_id_assessment_question = @quiz_question.assessment_question_id
+                @assessment_question = AssessmentQuestion.find_by_id(@find_id_assessment_question)
+                @question_array << @assessment_question
+              end
+            end
+          @questions = @question_array
+          url = polymorphic_url([@context, :question_bank_questions])
+          @questions = Api.paginate(@questions, self, url, default_per_page: 50)
+          render :json => {:pages => @questions.total_pages, :questions => @questions}
+
+        end
+
+      end
+    else
+      #arrivu changes
+      find_bank(params[:question_bank_id], params[:inherited] == '1') do
+        @questions = @bank.assessment_questions.active
+        url = polymorphic_url([@context, :question_bank_questions])
+        @questions = Api.paginate(@questions, self, url, default_per_page: 50)
+        render :json => {:pages => @questions.total_pages, :questions => @questions}
+      end
     end
   end
   

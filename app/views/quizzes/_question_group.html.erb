@@ -1,7 +1,8 @@
 <%
    group = question_group || nil
-   if group && hash_get(group, :assessment_question_bank_id)
+   if group && hash_get(group, :assessment_question_bank_id,:tag_id)
      question_bank = @banks_hash[hash_get(group, :assessment_question_bank_id)]
+     question_tag = @tag_hash[hash_get(group, :tag_id)]
    end
 %>
 <div class="group_top <%= 'question_bank_top' if question_bank %>" style="<%= "display: none;" unless group %>" id="group_top_<%= hash_get(group, :id, 'template') %>">
@@ -11,6 +12,7 @@
   </div>
   <div style="float: left;">
     <input type="hidden" name="quiz_group[assessment_question_bank_id]" class="bank_id"/>
+
     <span class="group_display name" style="font-weight: bold; padding-right: 20px;"><%= hash_get(group, :name, t(:default_group_name, "Group")) %></span>
     <input name="quiz_group[name]" aria-label=<%= t('labels.group_name', "Group Name") %> type="text" value="Group Name" class="group_edit" value="<%= hash_get(group, :name, t(:default_group_name, "Group")) %>"/>
 
@@ -33,6 +35,8 @@
             }) %>
       <input type="hidden" name="quiz_group[shuffle_question_bank]" value="0"/>
       <input name='quiz_group[shuffle_question_bank]' aria-label='Shuffle Questions' type='checkbox' value='1' <%= 'checked' if hash_get(group, :shuffle_question_bank) != 'always' %> />Shuffle Questions<%= hash_get(group, :shuffle_question_bank) %>
+      <input type="hidden" name="quiz_group[tag_id]" class="selected_tag_id" />
+
     </span>
 
     <% if !group %>
@@ -66,12 +70,19 @@
   </div>
   <% end %>
 </div>
-<% if !group || question_bank %>
+<% if !group || question_bank || question_tag %>
   <div class="assessment_question_bank" style="<%= hidden unless question_bank %>"><%= before_label(:question_bank, "Questions will be pulled from the bank") %>
     <a href="/<%= question_bank.try(:context_type).try(:underscore).try(:pluralize) || '{{ context_type_string }}' %>/<%= question_bank.try(:context_id) || '{{ context_id }}' %>/question_banks/<%= question_bank.try(:id) || '{{ bank_id }}' %>" class="bank_name bank_name_link" style="font-weight: bold; <%= hidden unless question_bank %>"><%= question_bank.try(:title) %></a>
     <span class="bank_name" style="font-weight: bold; <%= hidden if question_bank %>"><%= question_bank.try(:title) %></span>
-  </div>
-<% end %>
+    <% if question_tag != nil %>
+        <%= before_label(:question_tag, "Filter with tag") %>
+        <span class="tag_name" style="font-weight: bold;"><%= question_tag.try(:name) %></span>
+    <% else %>
+        <%= before_label(:question_tag, "Filter with tag") %>
+        <span class="tag_name" style="font-weight: bold;">No tags selecetd</span>
+    <% end %>
+    </div>
+  <% end %>
 <% hash_get(group, :questions, []).each do |question| %>
   <%= render :partial => "quizzes/display_question", :object => question, :locals => {:in_group => true, :editing => true, :asset_string => "quiz_question_#{question['id']}"} %>
 <% end %>

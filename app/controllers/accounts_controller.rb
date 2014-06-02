@@ -424,6 +424,7 @@ class AccountsController < ApplicationController
             :enable_alerts,
             :enable_eportfolios,
             :enable_profiles,
+            :enable_candidate_login,
             :enable_scheduler,
             :show_scheduler,
             :global_includes,
