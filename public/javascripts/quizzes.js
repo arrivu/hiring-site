@@ -1629,7 +1629,7 @@ define([
         }
         else
         {
-            document.getElementById("percentage_of_marks").value= "";
+            $("#percentage_of_marks").val("");
             $("#percentage_option").hide();
         }
         $("#show_result_id").click(function() {
