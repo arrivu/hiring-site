@@ -1,4 +1,137 @@
 <% @body_classes << "gradebook2 full-width" %>
-<div>
-        hiii
+<% jammit_css :quizzes %>
+<% @headers = false
+   @show_left_side = false %>
+<style>
+    .table-view th, .table-view td{
+        border:none;
+        padding: 8px;
+        line-height: 20px;
+        text-align: left;
+    }
+</style>
+<div style="height:100%;width:100%;">
+   <header class="quiz-header">
+    <h2>
+      Assessment Report for <%= @candidate_detail.name %>
+    </h2>
+    <hr>
+    <h3>
+      <% if @quiz.quiz_title %>
+          <%= @quiz.quiz_title %>
+      <% end %>
+    </h3>
+  </header>
+  <h3>Personal Information</h3>
+  <%= @submission.manually_unlocked %>
+  <table class="table-view">
+    <tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td></tr>
+    <tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr>
+    <% if @candidate_detail[:gender] != "" %><tr><td style="font-weight: bold;">Gender</td><td><%= @candidate_detail[:gender] %></td></tr><% end %>
+    <% if @candidate_detail[:phone] != "" %><tr><td style="font-weight: bold;">Mobile Number</td><td><%= @candidate_detail[:phone] %></td></tr><% end %>
+    <% if @get_pseudonym[:unique_id] != "" %><tr><td style="font-weight: bold;">Email ID</td><td><%= @get_pseudonym[:unique_id] %></td></tr><% end %>
+    <% if @candidate_detail[:address] != "" %><tr><td style="font-weight: bold;">Address</td><td><%= @candidate_detail[:address] %></td></tr><% end %>
+    <% if @candidate_detail[:city] != "" %><tr><td></td><td><%= @candidate_detail[:city] %></td></tr><% end %>
+    <% if @candidate_detail[:state] != "" %><tr><td></td><td><%= @candidate_detail[:state] %></td></tr><% end %>
+    <% if @candidate_detail[:zip_code] != "" %><tr><td></td><td><%= @candidate_detail[:zip_code] %></td></tr><% end %>
+  </table>
+  <br/>
+  <br/>
+  <% if @user_data.length > 0 %>
+  <h3>Academic Qualifications</h3>
+  <table class="table table-bordered" cellpadding="10">
+    <thead>
+    <th>Degree</th>
+    <th>Discipline</th>
+    <th>School/ College</th>
+    <th>Year of Completion</th>
+    <th>%/ CGPA</th>
+    </thead>
+
+
+    <% @user_data.each do |link| %>
+        <tr>
+          <td><%= link.degree %></td>
+          <td><%= link.discipline %></td>
+          <td><%= link.college %></td>
+          <td><%= link.year_of_completion %></td>
+          <td><%= link.percentage %></td>
+        </tr>
+    <% end %>
+
+  </table>
+  <br/>
+  <br/>
+  <% end %>
+  <% if @user_experience.length > 0 %>
+  <h3>Employment Details</h3>
+  <table class="table table-bordered" cellpadding="10">
+    <thead>
+    <th>Organization</th>
+    <th>From(MM/YYYY)</th>
+    <th>To(MM/YYYY)</th>
+    <th>Designation</th>
+    <th>Permanent/ contract</th>
+    <th>Reason for leaving</th>
+
+    </thead>
+
+    <% @user_experience.each do |emp| %>
+        <tr>
+
+          <td><%= emp.organization %></td>
+          <td><%= emp.from_date %></td>
+          <td><%= emp.end_date %></td>
+          <td><%= emp.designation %></td>
+          <td><%= emp.permanent %></td>
+          <td><%= emp.reason_for_leaving %></td>
+
+        </tr>
+    <% end %>
+  </table>
+  <br/>
+  <br/>
+  <% end %>
+  <% if @submission %>
+  <h3>Assessment Details</h3>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <td>Assessment Name</td>
+      <td>No. of questions</td>
+      <% if @submission %>
+      <td>Marks Scored / Max Marks</td>
+      <td>Percentage Scored</td>
+      <% end %>
+      <td>Time Taken</td>
+      <td>Allotted Time</td>
+    </tr>
+    </thead>
+    <tr>
+      <td><%= @quiz.quiz_title %></td>
+      <td><%= @quiz.points_possible %></td>
+      <td><%= @submission.score %> / <%= @quiz.points_possible %></td>
+      <td><% if @quiz.points_possible && @submission.score %>
+            <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
+            <%= percentage.round(2) %> %
+        <% end %></td>
+      <td><%= duration_in_minutes(@submission.duration) %></td>
+
+      <td>
+        <% if @quiz.time_limit %>
+            <%= @quiz.time_limit %> minutes
+        <% end %>
+      </td>
+    </tr>
+  </table>
+
+  <% @submission_data = @submission.submission_data %>
+  <% if @submission_data %>
+  <div id="questions" class="assessment_results">
+    <% @submission[:quiz_data].each do |q| %>
+        <%= render :partial => "quizzes/quizzes/display_question", :object => q, :locals => {:user_answer => @submission_data.find{|a| a[:question_id] == q[:id]}, :assessment_results => true} %>
+    <% end %>
+  </div>
+  <% end %>
+  <% end %>
 </div>
