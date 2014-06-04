@@ -3,15 +3,9 @@ class ImageproctoringController < ApplicationController
   before_filter :require_user
 
   include Api::V1::Attachment
-  def self.save(upload)
-    name =  upload[:imageData]
-    directory = "public/uploads"
-    # create the file path
-    path = File.join(directory, name)
-    # write the file
-    File.open(path, "wb") { |f| f.write(upload[:imageData].read) }
-  end
+
   def image_proctoring
+    get_context
     #@proctoring_image = params[:imageData]
     #File.write("#{Rails.root}/public/uploads/#{image}.png", 'wb') do |f|
     #  f.write(Base64.decode64(image))
@@ -20,7 +14,7 @@ class ImageproctoringController < ApplicationController
     #  params[:imageData].original_filename << '.png'
     #end
     data = params[:imageData]
-    Imageproctoring.create!(imageData: data)
+    Imageproctoring.create!(imageData: data, user_id: @current_user.id, quiz_id: params[:quiz_id])
     #@folder ||= Folder.unfiled_folder(@proctoring_image)
     #params[:attachment][:uploaded_data] ||= params[:attachment_uploaded_data]
     #params[:attachment][:uploaded_data] ||= params[:file]
@@ -44,4 +38,9 @@ class ImageproctoringController < ApplicationController
     #end
 
   end
+
+  #def show_image
+  #  @image_proctoring = Imageproctoring.find_all_by_user_id(:id)
+  #  send_data @image_proctoring.image, :type => 'image/png',:disposition => 'inline'
+  #end
 end
