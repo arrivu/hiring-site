@@ -198,7 +198,67 @@ define([
         width: 400
       }).fixDialogButtons();
     });
+//      arrivu changes start
+    $(".moderate_student_pdf").live('click', function(event) {
+      event.preventDefault();
+        var $student = $(this).parents(".student");
+        var data = {
+            allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0'
 
+        };
+        //console.log(data);
+        var name = $student.find(".student_name").text();
+        $("#moderate_pdf_form").fillFormData(data);
+        $("#moderate_pdf_form").data('ids', [$student.attr('data-user-id')]);
+        $("#moderate_student_pdf_dialog").dialog({
+            title: 'Candidate Pdf Settings',
+            width: 400
+        }).fixDialogButtons();
+    });
+      $("#moderate_pdf_form").submit(function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          var ids = $(this).data('ids');
+          console.log(ids);
+          console.log("moderate_pdf_form");
+          if(ids.length == 0) { return; }
+          var $form = $(this);
+          $form.find("button").attr('disabled', true).filter(".save_button").text(I18n.t('buttons.saving', "Saving..."));
+          var finished = 0, errors = 0;
+          var formData = $(this).getFormData();
+          console.log(formData);
+          function checkIfFinished() {
+              if(finished >= ids.length) {
+                  if(errors > 0) {
+                      if(ids.length == 1) {
+                          $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed', "Save Failed, please try again"));
+                      } else {
+                          $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed_n_updates_lost', "Save Failed, %{n} Candidates were not updated", {'n': errors}));
+                      }
+                  } else {
+                      $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save', "Save"));
+                      $("#moderate_student_pdf_dialog").dialog('close');
+
+                  }
+              }
+          };
+          for(var idx in ids) {
+              var id = ids[idx];
+              var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
+              $.ajaxJSON(url, 'POST', formData, function(data) {
+                  finished++;
+                  console.log(data);
+                  //moderation.updateSubmission(data);
+                  checkIfFinished();
+              }, function(data) {
+                  finished++;
+                  errors++;
+                  checkIfFinished();
+              });
+          }
+      });
+
+//      arrivu changes end
     $(".moderate_student_link").live('click', function(event) {
       event.preventDefault();
       var $student = $(this).parents(".student");
@@ -304,8 +364,10 @@ define([
       for(var idx in ids) {
         var id = ids[idx];
         var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
-        $.ajaxJSON(url, 'POST', formData, function(data) {
+          console.log(url);
+          $.ajaxJSON(url, 'POST', formData, function(data) {
           finished++;
+          console.log(data);
           moderation.updateSubmission(data);
           checkIfFinished();
         }, function(data) {

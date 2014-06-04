@@ -71,7 +71,7 @@
           <span class="unlocked" title="<%= manually_unlocked_title %>" style="<%= hidden unless submission && submission.manually_unlocked %>"><i class="icon-unlock standalone-icon"><span class="screenreader-only"><%= manually_unlocked_title %></span></i></span>
           <span class="extra_attempts" style="display: none;"><%= submission && submission.extra_attempts %></span>
           <a href="#" class="moderate_student_link no-hover" title="<%= cue_title %>"><i class="icon-edit standalone-icon"><span class="screenreader-only"><%= cue_title %></span></i></a>
-          <a href="<%= course_quiz_candidateReport_path(candidate_id:student.id)%>"><i class="icon-download"></i></a>
+          <a href="<%= course_quiz_candidateReport_path(candidate_id:student.id)%>" class="moderate_student_pdf"><i class="icon-download"></i></a>
         </td>
       </tr>
     <% end %>
@@ -114,6 +114,52 @@
     <button type="button" class="btn btn-primary save_button"><%= t('buttons.extend_time', "Extend Time") %></button>
   </div>
 </div>
+<!--arrivu changes start-->
+<div id="moderate_student_pdf_dialog" style="display: none;">
+  <%= form_for :quiz, :url => "", :html => {:id => "moderate_pdf_form", :method => :post} do |f| %>
+  <table>
+    <tr>
+      <td style="white-space: nowrap; width: 10%;">
+        <input type="checkbox" name="allow_personal_detail"/>
+        <label for="extension_extra_time">Personal information</label>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap; width: 10%;">
+        <input type="checkbox" name="allow_academic_detail"/>
+        <label for="extension_extra_time">Academic qualifications</label>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap; width: 10%;">
+        <input type="checkbox" name="allow_employment_detail"/>
+        <label for="extension_extra_time">Employment information</label>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap; width: 10%;">
+        <input type="checkbox" name="allow_assessment_detail"/>
+        <label for="extension_extra_time">Assessment details</label>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap; width: 10%;">
+        <input type="checkbox" name="allow_image_proctoring"/>
+        <label for="extension_extra_time">Image proctoring</label>
+      </td>
+    </tr>
+  <% end %>
+    <tr>
+      <td colspan="2">
+        <div class="button-container">
+          <button type="button" class="btn dialog_closer cancel_button"><%= t('#buttons.cancel', "Cancel") %></button>
+          <button type="submit" class="btn btn-primary save_button">Generate Pdf</button>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<!--arrivu changes end -->
 <div id="moderate_student_dialog" style="display: none;">
   <h2><%= t('headers.student_extensions', "Candidate Extensions") %></h2>
   <%= form_for :quiz, :url => "", :html => {:id => "moderate_student_form", :method => :post} do |f| %>

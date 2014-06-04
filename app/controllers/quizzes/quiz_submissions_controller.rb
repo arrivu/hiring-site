@@ -139,6 +139,11 @@ class Quizzes::QuizSubmissionsController < ApplicationController
       @submission.extra_attempts = params[:extra_attempts].to_i if params[:extra_attempts]
       @submission.extra_time = params[:extra_time].to_i if params[:extra_time]
       @submission.manually_unlocked = params[:manually_unlocked] == '1' if params[:manually_unlocked]
+      if params[:allow_personal_detail] == "on"
+        @submission.allow_personal_detail = 1
+      else
+        @submission.allow_personal_detail = 0
+      end
       if @submission.extendable? && (params[:extend_from_now] || params[:extend_from_end_at]).to_i > 0
         if params[:extend_from_now].to_i > 0
           @submission.end_at = Time.now + params[:extend_from_now].to_i.minutes
