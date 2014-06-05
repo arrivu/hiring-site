@@ -1,21 +1,22 @@
 /*globals  $: true, getUserMedia: true, alert:true, ccv:true */
 
 /*! getUserMedia demo - v1.0
- * for use with https://github.com/addyosmani/getUserMedia.js
- * Copyright (c) 2012 addyosmani; Licensed MIT */
+* for use with https://github.com/addyosmani/getUserMedia.js
+* Copyright (c) 2012 addyosmani; Licensed MIT */
 
-(function () {
-    'use strict';
+ (function () {
+	'use strict';
 
+	var App = {
 
-    var App = {
+		init: function () {
 
-        init: function () {
-            // The shim requires options to be supplied for it's configuration,
-            // which can be found lower down in this file. Most of the below are
-            // demo specific and should be used for reference within this context
-            // only
-            if ( !!this.options ) {
+			// The shim requires options to be supplied for it's configuration,
+			// which can be found lower down in this file. Most of the below are
+			// demo specific and should be used for reference within this context
+			// only
+			if ( !!this.options ) {
+
                 this.pos = 0;
                 this.cam = null;
                 this.filter_on = false;
@@ -27,8 +28,8 @@
                 this.image = this.ctx.getImageData(0, 0, this.options.width, this.options.height);
                 this.snapshotBtn = document.getElementById('questions');
                 //this.detectBtn = document.getElementById('detectFaces');
-                // Initialize getUserMedia with options
-                getUserMedia(this.options, this.success, this.deviceError);
+				// Initialize getUserMedia with options
+				getUserMedia(this.options, this.success, this.deviceError);
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
@@ -60,106 +61,106 @@
             }
         },
 
-        // options contains the configuration information for the shim
-        // it allows us to specify the width and height of the video
-        // output we're working with, the location of the fallback swf,
-        // events that are triggered onCapture and onSave (for the fallback)
-        // and so on.
-        options: {
-            "audio": false, //OTHERWISE FF nightlxy throws an NOT IMPLEMENTED error
-            "video": true,
-            el: "webcam",
+		// options contains the configuration information for the shim
+		// it allows us to specify the width and height of the video
+		// output we're working with, the location of the fallback swf,
+		// events that are triggered onCapture and onSave (for the fallback)
+		// and so on.
+		options: {
+			"audio": false, //OTHERWISE FF nightlxy throws an NOT IMPLEMENTED error
+			"video": true,
+			el: "webcam",
 
-            extern: null,
-            append: true,
+			extern: null,
+			append: true,
 
-            // noFallback:true, use if you don't require a fallback
+			// noFallback:true, use if you don't require a fallback
 
-            width: 320,
-            height: 240,
+			width: 320,
+			height: 240,
 
-            // option for more flashvars.
-            //fallbackmode: "size",
+			// option for more flashvars.
+			//fallbackmode: "size",
 
-            mode: "callback",
-            // callback | save | stream
-            swffile: "dist/fallback/as3/webcam.swf",
-            quality: 85,
-            context: "",
+			mode: "callback",
+			// callback | save | stream
+			swffile: "../dist/fallback/as3/webcam.swf",
+			quality: 85,
+			context: "",
 
-            debug: function () {},
-            onCapture: function () {
-                window.webcam.save();
-            },
-            onTick: function () {},
-            onSave: function (data) {
-                alert(data);
-                var col = data.split(";"),
-                    img = App.image,
-                    tmp = null,
-                    w = this.width,
-                    h = this.height;
+			debug: function () {},
+			onCapture: function () {
+				window.webcam.save();
+			},
+			onTick: function () {},
+			onSave: function (data) {
 
-                for (var i = 0; i < w; i++) {
-                    tmp = parseInt(col[i], 10);
-                    img.data[App.pos + 0] = (tmp >> 16) & 0xff;
-                    img.data[App.pos + 1] = (tmp >> 8) & 0xff;
-                    img.data[App.pos + 2] = tmp & 0xff;
-                    img.data[App.pos + 3] = 0xff;
-                    App.pos += 4;
-                }
+				var col = data.split(";"),
+					img = App.image,
+					tmp = null,
+					w = this.width,
+					h = this.height;
 
-                if (App.pos >= 4 * w * h) {
-                    App.ctx.putImageData(img, 0, 0);
-                    App.pos = 0;
-                }
+				for (var i = 0; i < w; i++) {
+					tmp = parseInt(col[i], 10);
+					img.data[App.pos + 0] = (tmp >> 16) & 0xff;
+					img.data[App.pos + 1] = (tmp >> 8) & 0xff;
+					img.data[App.pos + 2] = tmp & 0xff;
+					img.data[App.pos + 3] = 0xff;
+					App.pos += 4;
+				}
 
-            },
-            onLoad: function () {}
-        },
+				if (App.pos >= 4 * w * h) {
+					App.ctx.putImageData(img, 0, 0);
+					App.pos = 0;
+				}
 
-        success: function (stream) {
+			},
+			onLoad: function () {}
+		},
 
-            if (App.options.context === 'webrtc') {
+		success: function (stream) {
 
-                var video = App.options.videoEl;
+			if (App.options.context === 'webrtc') {
 
-                if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
+				var video = App.options.videoEl;
 
-                    if (video.mozSrcObject !== undefined) { //FF18a
-                        video.mozSrcObject = stream;
-                    } else { //FF16a, 17a
-                        video.src = stream;
-                    }
+				if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 
-                    return video.play();
+					if (video.mozSrcObject !== undefined) { //FF18a
+						video.mozSrcObject = stream;
+					} else { //FF16a, 17a
+						video.src = stream;
+					}
 
-                } else {
-                    var vendorURL = window.URL || window.webkitURL;
-                    video.src = vendorURL ? vendorURL.createObjectURL(stream) : stream;
-                }
+					return video.play();
 
-                video.onerror = function () {
-                    stream.stop();
-                    streamError();
-                };
+				} else {
+					var vendorURL = window.URL || window.webkitURL;
+					video.src = vendorURL ? vendorURL.createObjectURL(stream) : stream;
+				}
 
-            } else{
-                // flash context
-            }
+				video.onerror = function () {
+					stream.stop();
+					streamError();
+				};
 
-        },
+			} else{
+				// flash context
+			}
 
-        deviceError: function (error) {
-            alert('No camera available.');
-            console.error('An error occurred: [CODE ' + error.code + ']');
-        },
+		},
 
-        changeFilter: function () {
-            if (this.filter_on) {
-                this.filter_id = (this.filter_id + 1) & 7;
-            }
-        },
+		deviceError: function (error) {
+			alert('No camera available.');
+			console.error('An error occurred: [CODE ' + error.code + ']');
+		},
+
+		changeFilter: function () {
+			if (this.filter_on) {
+				this.filter_id = (this.filter_id + 1) & 7;
+			}
+		},
 
         getSnapshot: function () {
             // If the current context is WebRTC/getUserMedia (something
@@ -199,12 +200,12 @@
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
 
-                window.webcam.capture();
-                App.changeFilter();
-            }
-            else{
-                alert('No context was supplied to getSnapshot()');
-            }
+				window.webcam.capture();
+				App.changeFilter();
+			}
+			else{
+				alert('No context was supplied to getSnapshot()');
+			}
             function dataURItoBlob(dataURL) {
                 // convert base64 to raw binary data held in a string
                 // doesn't handle URLEncoded DataURIs
@@ -228,81 +229,81 @@
                 return blob;
 
             }
-        },
+		},
 
 
-        drawToCanvas: function (effect) {
-            var source, glasses, canvas, ctx, pixels, i;
+		drawToCanvas: function (effect) {
+			var source, glasses, canvas, ctx, pixels, i;
 
-            source = document.querySelector('#canvas');
-            glasses = new Image();
-            glasses.src = "js/glasses/i/glasses.png";
-            canvas = document.querySelector("#output");
-            ctx = canvas.getContext("2d");
+			source = document.querySelector('#canvas');
+			glasses = new Image();
+			glasses.src = "js/glasses/i/glasses.png";
+			canvas = document.querySelector("#output");
+			ctx = canvas.getContext("2d");
 
-            ctx.drawImage(source, 0, 0, 520, 426);
+			ctx.drawImage(source, 0, 0, 520, 426);
 
-            pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+			pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+			// Hipstergram!
+			if (effect === 'hipster') {
+
+				for (i = 0; i < pixels.data.length; i = i + 4) {
+					pixels.data[i + 0] = pixels.data[i + 0] * 3;
+					pixels.data[i + 1] = pixels.data[i + 1] * 2;
+					pixels.data[i + 2] = pixels.data[i + 2] - 10;
+				}
+
+				ctx.putImageData(pixels, 0, 0);
+
+			}
+
+			// Green Screen
+			else if (effect === 'greenscreen') {
+
+				// Selectors
+				var rmin = $('#red input.min').val(),
+					gmin = $('#green input.min').val(),
+					bmin = $('#blue input.min').val(),
+					rmax = $('#red input.max').val(),
+					gmax = $('#green input.max').val(),
+					bmax = $('#blue input.max').val(),
+					green = 0, red = 0, blue = 0;
 
 
-            // Hipstergram!
-            if (effect === 'hipster') {
+				for (i = 0; i < pixels.data.length; i = i + 4) {
+					red = pixels.data[i + 0];
+					green = pixels.data[i + 1];
+					blue = pixels.data[i + 2];
+					alpha = pixels.data[i + 3];
 
-                for (i = 0; i < pixels.data.length; i = i + 4) {
-                    pixels.data[i + 0] = pixels.data[i + 0] * 3;
-                    pixels.data[i + 1] = pixels.data[i + 1] * 2;
-                    pixels.data[i + 2] = pixels.data[i + 2] - 10;
-                }
+					if (red >= rmin && green >= gmin && blue >= bmin && red <= rmax && green <= gmax && blue <= bmax) {
+						pixels.data[i + 3] = 0;
+					}
+				}
 
-                ctx.putImageData(pixels, 0, 0);
+				ctx.putImageData(pixels, 0, 0);
 
-            }
+			} else if (effect === 'glasses') {
 
-            // Green Screen
-            else if (effect === 'greenscreen') {
+				var comp = ccv.detect_objects({
+					"canvas": (canvas),
+					"cascade": cascade,
+					"interval": 5,
+					"min_neighbors": 1
+				});
 
-                // Selectors
-                var rmin = $('#red input.min').val(),
-                    gmin = $('#green input.min').val(),
-                    bmin = $('#blue input.min').val(),
-                    rmax = $('#red input.max').val(),
-                    gmax = $('#green input.max').val(),
-                    bmax = $('#blue input.max').val(),
-                    green = 0, red = 0, blue = 0;
+				// Draw glasses on everyone!
+				for (i = 0; i < comp.length; i++) {
+					ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
+				}
+			}
 
+		}
 
-                for (i = 0; i < pixels.data.length; i = i + 4) {
-                    red = pixels.data[i + 0];
-                    green = pixels.data[i + 1];
-                    blue = pixels.data[i + 2];
-                    alpha = pixels.data[i + 3];
+	};
 
-                    if (red >= rmin && green >= gmin && blue >= bmin && red <= rmax && green <= gmax && blue <= bmax) {
-                        pixels.data[i + 3] = 0;
-                    }
-                }
+	App.init();
 
-                ctx.putImageData(pixels, 0, 0);
-
-            } else if (effect === 'glasses') {
-
-                var comp = ccv.detect_objects({
-                    "canvas": (canvas),
-                    "cascade": cascade,
-                    "interval": 5,
-                    "min_neighbors": 1
-                });
-
-                // Draw glasses on everyone!
-                for (i = 0; i < comp.length; i++) {
-                    ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
-                }
-            }
-
-        }
-    };
-    App.init();
 })();
-
-
 
