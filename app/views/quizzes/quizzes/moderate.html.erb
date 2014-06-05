@@ -26,7 +26,10 @@
       <% submission = @submissions.detect{|s| s.user_id == student.id} %>
       <% student_name = (@quiz.survey? && @quiz.anonymous_submissions) ? t(:student_n, "Candidate %{n}", :n => count) : student.last_name_first %>
       <tr class="student <%= 'extendable' if submission && submission.extendable? %> <%= 'in_progress' if submission && submission.untaken? %> <%= 'manually_unlocked' if submission && submission.manually_unlocked %>
-      <%= 'allow_academic_detail' if submission && submission.allow_academic_detail %>"
+       <%= 'allow_personal_detail' if submission && submission.allow_personal_detail %>
+       <%= 'allow_academic_detail' if submission && submission.allow_academic_detail %> <%= 'allow_employment_detail' if submission && submission.allow_employment_detail %>
+       <%= 'allow_assessment_detail' if submission && submission.allow_assessment_detail %>
+       <%= 'allow_image_proctoring' if submission && submission.allow_image_proctoring %> "
           id="student_<%= student.id %>" data-started-at="<%= submission && submission.started_at && submission.started_at.iso8601 %>" data-end-at="<%= submission && submission.end_at && submission.end_at.iso8601 %>" data-user-id="<%= student.id %>">
         <td>
           <input type="checkbox" class="student_check" data-id="<%= student.id %>" title="<%= t('titles.select_user', "Select %{user}", :user => student_name) %>"/>
@@ -122,32 +125,38 @@
   <table>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_personal_detail" class="allow_personal_detail"/>
+        <input type="hidden" name="allow_personal_detail" value="0"/>
+        <input type="checkbox" name="allow_personal_detail" id="extension_allow_personal_detail" value="1"/>
         <label for="allow_personal_detail">Personal information</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_academic_detail" class="allow_academic_detail"/>
+        <input type="hidden" name="allow_academic_detail" value="0"/>
+        <input type="checkbox" name="allow_academic_detail" id="extension_allow_academic_detail" value="1"/>
         <label for="allow_academic_detail">Academic qualifications</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_employment_detail" class="allow_employment_detail"/>
+        <input type="hidden" name="allow_employment_detail" value="0"/>
+        <input type="checkbox" name="allow_employment_detail" id="extension_allow_employment_detail" value="1"/>
         <label for="extension_extra_time">Employment information</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_assessment_detail" class="allow_assessment_detail"/>
+        <input type="hidden" name="allow_assessment_detail" value="0"/>
+        <input type="checkbox" name="allow_assessment_detail" id="extension_allow_assessment_detail" value="1"/>
         <label for="extension_extra_time">Assessment details</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_image_proctoring" class="allow_image_proctoring"/>
+        <input type="hidden" name="allow_image_proctoring" value="0"/>
+        <input type="checkbox" name="allow_image_proctoring" id="extension_allow_image_proctoring" value="1"/>
         <label for="extension_extra_time">Image proctoring</label>
+        <input type="hidden" id="generate_pdf_url" value=""/>
       </td>
     </tr>
   <% end %>
