@@ -323,6 +323,7 @@ routes.draw do
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
       match 'files/pending' => 'files#create_pending', :as => :file_create_pending
       match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
+      match 'imageproctoring/:user_id/show_image' => 'imageproctoring#show_image'
       collection do
         get :fabulous_quizzes
       end
