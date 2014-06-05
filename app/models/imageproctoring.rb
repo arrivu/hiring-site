@@ -1,5 +1,5 @@
 class Imageproctoring < ActiveRecord::Base
-  cattr_accessor :image
+  belongs_to :user
   #attr_accessible :quiz_id,:user_id,:proctoring_image_attachment_id, :imageData
   #belongs_to :user
   #belongs_to :quiz
