@@ -2,7 +2,22 @@
 <% jammit_css :quizzes %>
 <% @headers = false
    @show_left_side = false %>
+<% content_for :page_title do %><%= "Assessment Report" %><% end %>
+
 <style>
+    @media print{
+        .print{display: none;}
+        /*#printhead {*/
+            /*display: none;*/
+        /*}*/
+        /*#printfoot {*/
+            /*display: none;*/
+        /*}*/
+
+
+    }
+
+
     .table-view th, .table-view td{
         border:none;
         padding: 8px;
@@ -10,8 +25,12 @@
         text-align: left;
     }
 </style>
+<div style="border: #b7b0b0 1px solid; width: 1000px; margin: 0px auto; padding: 5px;">
+  <a href="#"  class="print" onclick="printpage()" style="float: right;">PRINT</a>
+
 <div style="height:100%;width:100%;">
    <header class="quiz-header">
+
     <h2>
       Assessment Report for <%= @candidate_detail.name %>
     </h2>
@@ -23,19 +42,18 @@
     </h3>
   </header>
   <h3>Personal Information</h3>
-  <%= @submission.manually_unlocked %>
+  <%#= @submission.manually_unlocked %>
   <table class="table-view">
-    <tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td></tr>
-    <tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr>
-    <% if @candidate_detail[:gender] != "" %><tr><td style="font-weight: bold;">Gender</td><td><%= @candidate_detail[:gender] %></td></tr><% end %>
-    <% if @candidate_detail[:phone] != "" %><tr><td style="font-weight: bold;">Mobile Number</td><td><%= @candidate_detail[:phone] %></td></tr><% end %>
-    <% if @get_pseudonym[:unique_id] != "" %><tr><td style="font-weight: bold;">Email ID</td><td><%= @get_pseudonym[:unique_id] %></td></tr><% end %>
-    <% if @candidate_detail[:address] != "" %><tr><td style="font-weight: bold;">Address</td><td><%= @candidate_detail[:address] %></td></tr><% end %>
-    <% if @candidate_detail[:city] != "" %><tr><td></td><td><%= @candidate_detail[:city] %></td></tr><% end %>
-    <% if @candidate_detail[:state] != "" %><tr><td></td><td><%= @candidate_detail[:state] %></td></tr><% end %>
-    <% if @candidate_detail[:zip_code] != "" %><tr><td></td><td><%= @candidate_detail[:zip_code] %></td></tr><% end %>
+    <% if @candidate_detail[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td></tr><% end %>
+    <% if @candidate_detail[:birthdate] != nil %><tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr><% end %>
+    <% if @candidate_detail[:gender] != nil %><tr><td style="font-weight: bold;">Gender</td><td><%= @candidate_detail[:gender] %></td></tr><% end %>
+    <% if @candidate_detail[:phone] != nil %><tr><td style="font-weight: bold;">Mobile Number</td><td><%= @candidate_detail[:phone] %></td></tr><% end %>
+    <% if @get_pseudonym[:unique_id] != nil %><tr><td style="font-weight: bold;">Email ID</td><td><%= @get_pseudonym[:unique_id] %></td></tr><% end %>
+    <% if @candidate_detail[:address] != nil %><tr><td style="font-weight: bold;">Address</td><td><%= @candidate_detail[:address] %></td></tr><% end %>
+    <% if @candidate_detail[:city] != nil %><tr><td></td><td><%= @candidate_detail[:city] %></td></tr><% end %>
+    <% if @candidate_detail[:state] != nil %><tr><td></td><td><%= @candidate_detail[:state] %></td></tr><% end %>
+    <% if @candidate_detail[:zip_code] != nil %><tr><td></td><td><%= @candidate_detail[:zip_code] %></td></tr><% end %>
   </table>
-  <br/>
   <br/>
   <% if @user_data.length > 0 %>
   <h3>Academic Qualifications</h3>
@@ -135,3 +153,9 @@
   <% end %>
   <% end %>
 </div>
+</div>
+<script type="text/javascript" >function printpage()
+{
+    window.print()
+}
+</script>

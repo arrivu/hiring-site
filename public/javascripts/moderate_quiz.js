@@ -203,9 +203,59 @@ define([
       event.preventDefault();
         var $student = $(this).parents(".student");
         var data = {
-            allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0'
-
+            allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0',
+            allow_academic_detail: $student.hasClass('allow_academic_detail') ? '1' : '0',
+            allow_employment_detail: $student.hasClass('allow_employment_detail') ? '1' : '0',
+            allow_assessment_detail: $student.hasClass('allow_assessment_detail') ? '1' : '0',
+            allow_image_proctoring: $student.hasClass('allow_image_proctoring') ? '1' : '0'
         };
+
+       console.log(data);
+
+        if(data['allow_personal_detail'] == 1)
+        {
+            $('.allow_personal_detail').attr('checked', 'checked');
+        }
+        else
+        {
+            $('.allow_personal_detail').attr("checked", false);
+        }
+
+        if(data['allow_academic_detail'] == 1 ){
+
+            $('.allow_academic_detail').attr('checked', true);
+        }
+        else{
+            $('.allow_academic_detail').attr('checked', false);
+        }
+
+        if(data['allow_employment_detail'] == 1 ){
+
+            $('.allow_employment_detail').attr('checked', true);
+        }
+        else{
+            $('.allow_employment_detail').attr('checked', false);
+        }
+
+        if(data['allow_assessment_detail'] == 1 ){
+
+
+            $('.allow_assessment_detail').attr('checked', true);
+        }
+        else{
+
+            $('.allow_assessment_detail').attr('checked', false);
+        }
+
+        if(data['allow_image_proctoring'] == 1 ){
+
+            $('.allow_image_proctoring').attr('checked', true);
+        }
+        else{
+
+            $('.allow_image_proctoring').attr('checked', false);
+        }
+
         var name = $student.find(".student_name").text();
         $("#moderate_pdf_form").fillFormData(data);
         $("#moderate_pdf_form").data('ids', [$student.attr('data-user-id')]);
@@ -234,7 +284,9 @@ define([
                   } else {
                       $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save', "Save"));
                       $("#moderate_student_pdf_dialog").dialog('close');
-
+                      location.href = $(".moderate_student_pdf").attr('href');
+                      var a = $(".moderate_student_pdf").attr('href');
+                      console.log(a);
                   }
               }
           }

@@ -144,6 +144,27 @@ class Quizzes::QuizSubmissionsController < ApplicationController
       else
         @submission.allow_personal_detail = 0
       end
+      if params[:allow_academic_detail] == "on"
+        @submission.allow_academic_detail = 1
+      else
+        @submission.allow_academic_detail = 0
+      end
+      if params[:allow_employment_detail] == "on"
+        @submission.allow_employment_detail = 1
+      else
+        @submission.allow_employment_detail = 0
+      end
+      if params[:allow_assessment_detail] == "on"
+        @submission.allow_assessment_detail = 1
+      else
+        @submission.allow_assessment_detail = 0
+      end
+      if params[:allow_image_proctoring] == "on"
+        @submission.allow_image_proctoring = 1
+      else
+        @submission.allow_image_proctoring = 0
+      end
+
       if @submission.extendable? && (params[:extend_from_now] || params[:extend_from_end_at]).to_i > 0
         if params[:extend_from_now].to_i > 0
           @submission.end_at = Time.now + params[:extend_from_now].to_i.minutes
