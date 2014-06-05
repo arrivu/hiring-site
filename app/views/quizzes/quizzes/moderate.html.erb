@@ -25,7 +25,9 @@
       <% count += 1 %>
       <% submission = @submissions.detect{|s| s.user_id == student.id} %>
       <% student_name = (@quiz.survey? && @quiz.anonymous_submissions) ? t(:student_n, "Candidate %{n}", :n => count) : student.last_name_first %>
-      <tr class="student <%= 'extendable' if submission && submission.extendable? %> <%= 'in_progress' if submission && submission.untaken? %> <%= 'manually_unlocked' if submission && submission.manually_unlocked %>" id="student_<%= student.id %>" data-started-at="<%= submission && submission.started_at && submission.started_at.iso8601 %>" data-end-at="<%= submission && submission.end_at && submission.end_at.iso8601 %>" data-user-id="<%= student.id %>">
+      <tr class="student <%= 'extendable' if submission && submission.extendable? %> <%= 'in_progress' if submission && submission.untaken? %> <%= 'manually_unlocked' if submission && submission.manually_unlocked %>
+      <%= 'allow_academic_detail' if submission && submission.allow_academic_detail %>"
+          id="student_<%= student.id %>" data-started-at="<%= submission && submission.started_at && submission.started_at.iso8601 %>" data-end-at="<%= submission && submission.end_at && submission.end_at.iso8601 %>" data-user-id="<%= student.id %>">
         <td>
           <input type="checkbox" class="student_check" data-id="<%= student.id %>" title="<%= t('titles.select_user', "Select %{user}", :user => student_name) %>"/>
         </td>
@@ -120,31 +122,31 @@
   <table>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_personal_detail"/>
-        <label for="extension_extra_time">Personal information</label>
+        <input type="checkbox" name="allow_personal_detail" class="allow_personal_detail"/>
+        <label for="allow_personal_detail">Personal information</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_academic_detail"/>
-        <label for="extension_extra_time">Academic qualifications</label>
+        <input type="checkbox" name="allow_academic_detail" class="allow_academic_detail"/>
+        <label for="allow_academic_detail">Academic qualifications</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_employment_detail"/>
+        <input type="checkbox" name="allow_employment_detail" class="allow_employment_detail"/>
         <label for="extension_extra_time">Employment information</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_assessment_detail"/>
+        <input type="checkbox" name="allow_assessment_detail" class="allow_assessment_detail"/>
         <label for="extension_extra_time">Assessment details</label>
       </td>
     </tr>
     <tr>
       <td style="white-space: nowrap; width: 10%;">
-        <input type="checkbox" name="allow_image_proctoring"/>
+        <input type="checkbox" name="allow_image_proctoring" class="allow_image_proctoring"/>
         <label for="extension_extra_time">Image proctoring</label>
       </td>
     </tr>
