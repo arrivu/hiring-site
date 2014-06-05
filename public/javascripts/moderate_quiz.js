@@ -97,6 +97,11 @@ define([
         .toggleClass('extendable', submission['extendable?'])
         .toggleClass('in_progress', submission.workflow_state == 'untaken')
         .toggleClass('manually_unlocked', !!submission.manually_unlocked)
+        .toggleClass('allow_personal_detail', !!submission.allow_personal_detail)
+        .toggleClass('allow_academic_detail', !!submission.allow_academic_detail)
+        .toggleClass('allow_employment_detail', !!submission.allow_employment_detail)
+        .toggleClass('allow_assessment_detail', !!submission.allow_assessment_detail)
+        .toggleClass('allow_image_proctoring', !!submission.allow_image_proctoring)
         .attr('data-started-at', submission.started_at || '')
         .attr('data-end-at', submission.end_at || '')
         .data('timing', null)
@@ -179,10 +184,15 @@ define([
         student_ids.push($(this).attr('data-id'));
         var student_data = {
           manually_unlocked: $student.hasClass('manually_unlocked') ? '1' : '0',
+          allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0',
+          allow_academic_detail: $student.hasClass('allow_academic_detail') ? '1' : '0',
+          allow_employment_detail: $student.hasClass('allow_employment_detail') ? '1' : '0',
+          allow_assessment_detail: $student.hasClass('allow_assessment_detail') ? '1' : '0',
+          allow_image_proctoring: $student.hasClass('allow_image_proctoring') ? '1' : '0',
           extra_attempts: parseInt($student.find(".extra_attempts").text(), 10) || "",
           extra_time: parseInt($student.find(".extra_time").text(), 10) || ""
         };
-        $.each(['manually_unlocked', 'extra_attempts', 'extra_time'], function() {
+        $.each(['manually_unlocked', 'allow_personal_detail', 'allow_academic_detail', 'extra_attempts', 'extra_time'], function() {
           if(data[this] == null) {
             data[this] = student_data[this].toString();
           } else if(data[this] != student_data[this].toString()) {
@@ -209,36 +219,11 @@ define([
             allow_assessment_detail: $student.hasClass('allow_assessment_detail') ? '1' : '0',
             allow_image_proctoring: $student.hasClass('allow_image_proctoring') ? '1' : '0'
         };
-       console.log(data);
-        if(data['allow_personal_detail'] == 1)
-        {
-
-            $('.allow_personal_detail').attr('checked', 'checked');
-//            $('.allow_academic_detail').attr('checked', true);
-//            $('.allow_employment_detail').attr('checked', true);
-//            $('.allow_assessment_detail').attr('checked', true);
-//            $('.allow_image_proctoring').attr('checked', true);
-        }
-        else
-        {
-            $('.allow_personal_detail').attr("checked", false);
-//            $('.allow_academic_detail').attr('checked', false);
-//            $('.allow_employment_detail').attr('checked', false);
-//            $('.allow_assessment_detail').attr('checked', false);
-//            $('.allow_image_proctoring').attr('checked', false);
-        }
-
-        if(data['allow_academic_detail'] == 1 ){
-            console.log("ok");
-            $('.allow_academic_detail').attr('checked', true);
-        }
-        else{
-            $('.allow_academic_detail').attr('checked', false);
-        }
-
         var name = $student.find(".student_name").text();
         $("#moderate_pdf_form").fillFormData(data);
         $("#moderate_pdf_form").data('ids', [$student.attr('data-user-id')]);
+        var generate_url = $(this).attr('href');
+        $('#generate_pdf_url').val(generate_url);
         $("#moderate_student_pdf_dialog").dialog({
             title: 'Candidate Pdf Settings',
             width: 400
@@ -248,14 +233,12 @@ define([
           event.preventDefault();
           event.stopPropagation();
           var ids = $(this).data('ids');
-          console.log(ids);
-          console.log("moderate_pdf_form");
           if(ids.length == 0) { return; }
           var $form = $(this);
-          $form.find("button").attr('disabled', true).filter(".save_button").text(I18n.t('buttons.saving', "Saving..."));
+          $(".save_button").attr('disabled', true);
+          $(".save_button").text("Generating pdf.....");
           var finished = 0, errors = 0;
           var formData = $(this).getFormData();
-          console.log(formData);
           function checkIfFinished() {
               if(finished >= ids.length) {
                   if(errors > 0) {
@@ -265,19 +248,18 @@ define([
                           $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed_n_updates_lost', "Save Failed, %{n} Candidates were not updated", {'n': errors}));
                       }
                   } else {
-                      $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save', "Save"));
-                      $("#moderate_student_pdf_dialog").dialog('close');
-                      location.href = $(".moderate_student_pdf").attr('href');
+                      $form.find("button").attr('disabled', false).filter(".save_button").text("Generating pdf.....");
+                      var generate_pdf = $("#generate_pdf_url").val();
+                      location.href = generate_pdf;
                   }
               }
+//              window.print();
           };
           for(var idx in ids) {
               var id = ids[idx];
               var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
               $.ajaxJSON(url, 'POST', formData, function(data) {
                   finished++;
-                  console.log(data);
-                  //moderation.updateSubmission(data);
                   checkIfFinished();
               }, function(data) {
                   finished++;
@@ -393,10 +375,8 @@ define([
       for(var idx in ids) {
         var id = ids[idx];
         var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
-          console.log(url);
           $.ajaxJSON(url, 'POST', formData, function(data) {
           finished++;
-          console.log(data);
           moderation.updateSubmission(data);
           checkIfFinished();
         }, function(data) {

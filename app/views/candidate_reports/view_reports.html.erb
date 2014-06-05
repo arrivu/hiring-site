@@ -22,8 +22,8 @@
       <% end %>
     </h3>
   </header>
+  <% if @submission.allow_personal_detail %>
   <h3>Personal Information</h3>
-  <%#= @submission.manually_unlocked %>
   <table class="table-view">
     <tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td></tr>
     <tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr>
@@ -37,6 +37,8 @@
   </table>
   <br/>
   <br/>
+  <% end %>
+  <% if @submission.allow_academic_detail %>
   <% if @user_data.length > 0 %>
   <h3>Academic Qualifications</h3>
   <table class="table table-bordered" cellpadding="10">
@@ -63,6 +65,8 @@
   <br/>
   <br/>
   <% end %>
+  <% end %>
+  <% if @submission.allow_employment_detail %>
   <% if @user_experience.length > 0 %>
   <h3>Employment Details</h3>
   <table class="table table-bordered" cellpadding="10">
@@ -92,6 +96,8 @@
   <br/>
   <br/>
   <% end %>
+  <% end %>
+  <% if @submission.allow_assessment_detail %>
   <% if @submission %>
   <h3>Assessment Details</h3>
   <table class="table table-bordered">
@@ -132,6 +138,7 @@
         <%= render :partial => "quizzes/quizzes/display_question", :object => q, :locals => {:user_answer => @submission_data.find{|a| a[:question_id] == q[:id]}, :assessment_results => true} %>
     <% end %>
   </div>
+  <% end %>
   <% end %>
   <% end %>
 </div>
