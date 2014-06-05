@@ -272,9 +272,9 @@ class Quizzes::QuizQuestionsController < ApplicationController
       @quiz.did_edit if @quiz.created?
 
       # arrivu changes
-      @quiz_question = @question.assessment_question
+      #@quiz_question = @question.assessment_question
       @bank = AssessmentQuestionBank.find_by_context_id_and_context_type(params[:context_id], params[:context_type])
-      tag_list(params[:tag_tokens], @quiz_question, @bank)  unless params[:tag_tokens].nil?
+      tag_list(params[:tag_tokens], @question, @bank)  unless params[:tag_tokens].nil?
       # arrivu changes
 
       render json: question_json(@question, @current_user, session, [:assessment_question])
@@ -356,12 +356,12 @@ class Quizzes::QuizQuestionsController < ApplicationController
       @question.save
       # arrivu changes
       @quiz_bank = @question.assessment_question.assessment_question_bank
-      @quiz_question = @question.assessment_question
+      #@quiz_question = @question.assessment_question
       # arrivu changes
       @quiz.did_edit if @quiz.created?
 
       # arrivu changes
-      tag_list(params[:tag_tokens], @quiz_question, @quiz_bank)  unless params[:tag_tokens].nil?
+      tag_list(params[:tag_tokens], @question, @quiz_bank)  unless params[:tag_tokens].nil?
       # arrivu changes
       render json: question_json(@question, @current_user, session, [:assessment_question])
     end

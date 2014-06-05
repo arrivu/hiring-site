@@ -26,6 +26,7 @@ module Api::V1::QuizGroup
       name
       pick_count
       shuffle_question_bank
+      tag_id
       question_points
       assessment_question_bank_id
       position
@@ -37,6 +38,7 @@ module Api::V1::QuizGroup
       name
       pick_count
       shuffle_question_bank
+      tag_id
       question_points
       assessment_question_bank_id
       position

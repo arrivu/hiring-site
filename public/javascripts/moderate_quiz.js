@@ -206,7 +206,6 @@ define([
             allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0'
 
         };
-        //console.log(data);
         var name = $student.find(".student_name").text();
         $("#moderate_pdf_form").fillFormData(data);
         $("#moderate_pdf_form").data('ids', [$student.attr('data-user-id')]);
@@ -219,14 +218,11 @@ define([
           event.preventDefault();
           event.stopPropagation();
           var ids = $(this).data('ids');
-          console.log(ids);
-          console.log("moderate_pdf_form");
           if(ids.length == 0) { return; }
           var $form = $(this);
           $form.find("button").attr('disabled', true).filter(".save_button").text(I18n.t('buttons.saving', "Saving..."));
           var finished = 0, errors = 0;
           var formData = $(this).getFormData();
-          console.log(formData);
           function checkIfFinished() {
               if(finished >= ids.length) {
                   if(errors > 0) {
@@ -241,13 +237,12 @@ define([
 
                   }
               }
-          };
+          }
           for(var idx in ids) {
               var id = ids[idx];
               var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
               $.ajaxJSON(url, 'POST', formData, function(data) {
                   finished++;
-                  console.log(data);
                   //moderation.updateSubmission(data);
                   checkIfFinished();
               }, function(data) {
@@ -278,6 +273,7 @@ define([
       }).fixDialogButtons();
     });
     $(".reload_link").click(function(event) {
+        console.log(event);
       event.preventDefault();
       updateSubmissions();
     });
@@ -364,10 +360,8 @@ define([
       for(var idx in ids) {
         var id = ids[idx];
         var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
-          console.log(url);
           $.ajaxJSON(url, 'POST', formData, function(data) {
           finished++;
-          console.log(data);
           moderation.updateSubmission(data);
           checkIfFinished();
         }, function(data) {

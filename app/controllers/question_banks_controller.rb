@@ -54,7 +54,7 @@ class QuestionBanksController < ApplicationController
   end
   
   def questions
-    # arrivu changes
+    #arrivu changes
     if params[:tag_id] != nil
 
       find_bank(params[:question_bank_id], params[:inherited] == '1') do
@@ -62,21 +62,28 @@ class QuestionBanksController < ApplicationController
         if @question_id != []
           @question_array = []
             @question_id.each do |question|
-
               @ques_find = question.taggable_id
-              @assessment_question = AssessmentQuestion.find_by_id(@ques_find)
-              @question_array << @assessment_question
-              @questions = @question_array
-               url = polymorphic_url([@context, :question_bank_questions])
+              @ques_type = question.taggable_type
+              if @ques_type == "AssessmentQuestion"
+                @assessment_question = AssessmentQuestion.find_by_id(@ques_find)
+                @question_array << @assessment_question
+              else
+                @quiz_question = Quizzes::QuizQuestion.find_by_id(@ques_find)
+                @find_id_assessment_question = @quiz_question.assessment_question_id
+                @assessment_question = AssessmentQuestion.find_by_id(@find_id_assessment_question)
+                @question_array << @assessment_question
+              end
             end
-        else
-            @questions = []
-            url = polymorphic_url([@context, :question_bank_questions])
+          @questions = @question_array
+          url = polymorphic_url([@context, :question_bank_questions])
+          @questions = Api.paginate(@questions, self, url, default_per_page: 50)
+          render :json => {:pages => @questions.total_pages, :questions => @questions}
+
         end
-        render :json => {:questions => @questions}
+
       end
     else
-      # arrivu changes
+      #arrivu changes
       find_bank(params[:question_bank_id], params[:inherited] == '1') do
         @questions = @bank.assessment_questions.active
         url = polymorphic_url([@context, :question_bank_questions])

@@ -311,7 +311,8 @@ routes.draw do
 
     match 'quizzes/publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
     match 'quizzes/unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
-
+    match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+    match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
     resources :quizzes, :path => :assesments , controller: 'quizzes/quizzes' do
       match 'managed_quiz_data' => 'quizzes/quizzes#managed_quiz_data', :as => :managed_quiz_data
       match 'submission_versions' => 'quizzes/quizzes#submission_versions', :as => :submission_versions
@@ -322,8 +323,8 @@ routes.draw do
       match 'read_only' => 'quizzes/quizzes#read_only', :as => :read_only
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
-
-
+      match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+      match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
       collection do
         get :fabulous_quizzes
       end
@@ -346,6 +347,8 @@ routes.draw do
         end
       end
       match 'take' => 'quizzes/quizzes#show', :as => :take, :take => '1'
+      resources :files
+        match 'files/proctoring' => 'files#image_proctoring'
       match 'take/questions/:question_id' => 'quizzes/quizzes#show', :as => :question, :take => '1'
       match 'moderate' => 'quizzes/quizzes#moderate', :as => :moderate
       match 'lockdown_browser_required' => 'quizzes/quizzes#lockdown_browser_required', :as => :lockdown_browser_required
@@ -755,6 +758,7 @@ routes.draw do
   match 'files/:id/public_url' => 'files#public_url', :as => :public_url
   match 'files/preflight' => 'files#preflight', :as => :file_preflight
   match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+  match 'files/proctoring' => 'files#image_proctoring'
   resources :assignments, :only => [:index] do
     resources :files, :only => [] do
       match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'
@@ -1543,7 +1547,5 @@ routes.draw do
   match '/get_tags' => 'tags#get_tags'
   match '/get_tags_filter' => 'tags#get_tags_filter'
   match '/get_tag_to_bank' => 'tags#get_tag_to_bank'
-  match '/bank_to_tag' => 'tags#bank_to_tag'
   match '/tag_to_question' => 'tags#tag_to_question'
-  match '/questions' => 'question_banks#questions'
 end
