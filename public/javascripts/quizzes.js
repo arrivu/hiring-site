@@ -1629,7 +1629,7 @@ define([
         }
         else
         {
-            document.getElementById("percentage_of_marks").value= "";
+            $("#percentage_of_marks").val("");
             $("#percentage_option").hide();
         }
         $("#show_result_id").click(function() {
@@ -2739,6 +2739,7 @@ define([
                 }
             });
 //// arrivu changes
+            $('.token-input-token').removeClass('token-input-selected-token');
             $findQuestionDialog.find(".bank").removeClass('selected');
             $findQuestionDialog.find(".selected_side_tab").removeClass('selected_side_tab');
             $(this).addClass('selected_side_tab');
