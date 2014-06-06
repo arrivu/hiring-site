@@ -7,14 +7,6 @@
 <style>
     @media print{
         .print{display: none;}
-        /*#printhead {*/
-            /*display: none;*/
-        /*}*/
-        /*#printfoot {*/
-            /*display: none;*/
-        /*}*/
-
-
     }
 
 
@@ -42,7 +34,16 @@
     </h3>
   </header>
   <% if @submission.allow_personal_detail %>
-  <h3>Personal Information</h3>
+  <table>
+    <tbody>
+    <tr>
+      <td colspan="2">
+        <h3>Personal Information</h3>
+      </td>
+    </tr>
+    </tbody>
+
+    </table>
   <table class="table-view">
     <% if @candidate_detail[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td></tr><% end %>
     <% if @candidate_detail[:birthdate] != nil %><tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr><% end %>
