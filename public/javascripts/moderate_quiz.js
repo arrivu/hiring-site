@@ -219,6 +219,7 @@ define([
             allow_assessment_detail: $student.hasClass('allow_assessment_detail') ? '1' : '0',
             allow_image_proctoring: $student.hasClass('allow_image_proctoring') ? '1' : '0'
         };
+
         var name = $student.find(".student_name").text();
         $("#moderate_pdf_form").fillFormData(data);
         $("#moderate_pdf_form").data('ids', [$student.attr('data-user-id')]);
@@ -253,7 +254,6 @@ define([
                       location.href = generate_pdf;
                   }
               }
-//              window.print();
           };
           for(var idx in ids) {
               var id = ids[idx];
@@ -289,6 +289,7 @@ define([
       }).fixDialogButtons();
     });
     $(".reload_link").click(function(event) {
+        console.log(event);
       event.preventDefault();
       updateSubmissions();
     });

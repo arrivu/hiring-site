@@ -1,0 +1,2 @@
+module ImageproctoringHelper
+end

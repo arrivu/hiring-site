@@ -68,7 +68,7 @@
         <div class="image-block" style="float: right;" >
           <div class="image-block-image profile-avatar-wrapper">
             <% if @candidate_detail %>
-                <% if @user.avatar_image_url.nil? %>
+            <% if @user_data %>
                 <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
                   <%= square_avatar_image @user[:id], 200 %>
                   <i class="icon-edit"></i>

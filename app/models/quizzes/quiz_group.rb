@@ -19,7 +19,7 @@
 class Quizzes::QuizGroup < ActiveRecord::Base
   self.table_name = 'quiz_groups' unless CANVAS_RAILS2
 
-  attr_accessible :name, :pick_count, :question_points, :assessment_question_bank_id, :shuffle_question_bank
+  attr_accessible :name, :pick_count, :question_points, :assessment_question_bank_id, :shuffle_question_bank, :tag_id
   attr_readonly :quiz_id
 
   belongs_to :quiz, class_name: 'Quizzes::Quiz'
@@ -56,6 +56,7 @@ class Quizzes::QuizGroup < ActiveRecord::Base
       "name" => self.name,
       "pick_count" => self.pick_count,
       "shuffle_question_bank" => self.shuffle_question_bank,
+      "tag_id" => self.tag_id,
       "question_points" => self.question_points,
       "questions" => self.assessment_question_bank_id ? [] : self.quiz_questions.active.map { |q| q.data },
       "assessment_question_bank_id" => self.assessment_question_bank_id
