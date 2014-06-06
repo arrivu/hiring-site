@@ -82,23 +82,23 @@
 </header>
 
 <% js_bundle :take_quiz, :proctoring %>
-<!--<div class="row" style="display: none;">-->
-  <!--<div class="span4">-->
-    <!--<h2>Input</h2>-->
-    <!--<div id="webcam">-->
-    <!--</div>-->
-  <!--</div>-->
+<div class="row" style="display: none;">
+  <div class="span4">
+    <h2>Input</h2>
+    <div id="webcam">
+    </div>
+  </div>
 
-  <!--<div class="span4">-->
-    <!--<h2>Output</h2>-->
-    <!--<canvas id="canvas"  height="240" width="320"></canvas>-->
-  <!--</div>-->
-  <!--<div class="span4">-->
-    <!--<h2>Face Detection</h2>-->
-    <!--<canvas id="output"  height="426" width="515"></canvas>-->
-  <!--</div>-->
-  <!--<button class="btn btn-primary btn-large" id="takeSnapshot"></button>-->
-<!--</div>-->
+  <div class="span4">
+    <h2>Output</h2>
+    <canvas id="canvas"  height="240" width="320"></canvas>
+  </div>
+  <div class="span4">
+    <h2>Face Detection</h2>
+    <canvas id="output"  height="426" width="515"></canvas>
+  </div>
+  <button class="btn btn-primary btn-large" id="takeSnapshot"></button>
+</div>
 
 <div style="position: absolute;z-index: -1;display:none;">
   <form action="imageproctoring/proctoring" method="post" multipart = "true">
