@@ -5,7 +5,7 @@ class ImageproctoringController < ApplicationController
   include Api::V1::Attachment
 
   def image_proctoring
-    get_context
+    #get_context
     #@proctoring_image = params[:imageData]
     #File.write("#{Rails.root}/public/uploads/#{image}.png", 'wb') do |f|
     #  f.write(Base64.decode64(image))
