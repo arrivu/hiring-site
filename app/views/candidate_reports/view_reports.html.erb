@@ -34,17 +34,21 @@
     </h3>
   </header>
   <% if @submission.allow_personal_detail %>
-  <table>
-    <tbody>
-    <tr>
-      <td colspan="2">
-        <h3>Personal Information</h3>
-      </td>
-    </tr>
-    </tbody>
+      <table>
+        <tbody>
+        <tr>
+          <td class="span9">
+            <h3>Personal Information</h3>
+          </td>
+          <td colspan="2">
+            <img src="<%= @candidate_detail[:avatar_image_url] %>">
+          </td>
+        </tr>
+        </tbody>
 
-    </table>
-  <table class="table-view">
+      </table>
+
+      <table class="table-view">
     <% if @candidate_detail[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td></tr><% end %>
     <% if @candidate_detail[:birthdate] != nil %><tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr><% end %>
     <% if @candidate_detail[:gender] != nil %><tr><td style="font-weight: bold;">Gender</td><td><%= @candidate_detail[:gender] %></td></tr><% end %>
@@ -137,11 +141,12 @@
           <td><%= @quiz.quiz_title %></td>
           <td><%= @quiz.points_possible %></td>
           <td>
-            <% if @submission.score %><%= @submission.score %><% else %> 0 <% end %>/ <%= @quiz.points_possible %></td>
+          <% if @submission.score %><%= @submission.score %><% else %> 0 <% end %>/ <%= @quiz.points_possible %></td>
           <td><% if @quiz.points_possible && @submission.score %>
                 <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
                 <%= percentage.round(2) %> %
-            <% end %></td>
+            <% end %>
+          </td>
           <td><%= duration_in_minutes(@submission.duration) %></td>
 
           <td>
