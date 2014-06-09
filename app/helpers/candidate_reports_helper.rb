@@ -1,0 +1,2 @@
+module CandidateReportsHelper
+end

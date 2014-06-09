@@ -97,6 +97,11 @@ define([
         .toggleClass('extendable', submission['extendable?'])
         .toggleClass('in_progress', submission.workflow_state == 'untaken')
         .toggleClass('manually_unlocked', !!submission.manually_unlocked)
+        .toggleClass('allow_personal_detail', !!submission.allow_personal_detail)
+        .toggleClass('allow_academic_detail', !!submission.allow_academic_detail)
+        .toggleClass('allow_employment_detail', !!submission.allow_employment_detail)
+        .toggleClass('allow_assessment_detail', !!submission.allow_assessment_detail)
+        .toggleClass('allow_image_proctoring', !!submission.allow_image_proctoring)
         .attr('data-started-at', submission.started_at || '')
         .attr('data-end-at', submission.end_at || '')
         .data('timing', null)
@@ -179,10 +184,15 @@ define([
         student_ids.push($(this).attr('data-id'));
         var student_data = {
           manually_unlocked: $student.hasClass('manually_unlocked') ? '1' : '0',
+          allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0',
+          allow_academic_detail: $student.hasClass('allow_academic_detail') ? '1' : '0',
+          allow_employment_detail: $student.hasClass('allow_employment_detail') ? '1' : '0',
+          allow_assessment_detail: $student.hasClass('allow_assessment_detail') ? '1' : '0',
+          allow_image_proctoring: $student.hasClass('allow_image_proctoring') ? '1' : '0',
           extra_attempts: parseInt($student.find(".extra_attempts").text(), 10) || "",
           extra_time: parseInt($student.find(".extra_time").text(), 10) || ""
         };
-        $.each(['manually_unlocked', 'extra_attempts', 'extra_time'], function() {
+        $.each(['manually_unlocked', 'allow_personal_detail', 'allow_academic_detail', 'extra_attempts', 'extra_time'], function() {
           if(data[this] == null) {
             data[this] = student_data[this].toString();
           } else if(data[this] != student_data[this].toString()) {
@@ -198,7 +208,68 @@ define([
         width: 400
       }).fixDialogButtons();
     });
+//      arrivu changes start
+    $(".moderate_student_pdf").live('click', function(event) {
+      event.preventDefault();
+        var $student = $(this).parents(".student");
+        var data = {
+            allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0',
+            allow_academic_detail: $student.hasClass('allow_academic_detail') ? '1' : '0',
+            allow_employment_detail: $student.hasClass('allow_employment_detail') ? '1' : '0',
+            allow_assessment_detail: $student.hasClass('allow_assessment_detail') ? '1' : '0',
+            allow_image_proctoring: $student.hasClass('allow_image_proctoring') ? '1' : '0'
+        };
 
+        var name = $student.find(".student_name").text();
+        $("#moderate_pdf_form").fillFormData(data);
+        $("#moderate_pdf_form").data('ids', [$student.attr('data-user-id')]);
+        var generate_url = $(this).attr('href');
+        $('#generate_pdf_url').val(generate_url);
+        $("#moderate_student_pdf_dialog").dialog({
+            title: 'Candidate Pdf Settings',
+            width: 400
+        }).fixDialogButtons();
+    });
+      $("#moderate_pdf_form").submit(function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          var ids = $(this).data('ids');
+          if(ids.length == 0) { return; }
+          var $form = $(this);
+          $(".save_button").attr('disabled', true);
+          $(".save_button").text("Generating pdf.....");
+          var finished = 0, errors = 0;
+          var formData = $(this).getFormData();
+          function checkIfFinished() {
+              if(finished >= ids.length) {
+                  if(errors > 0) {
+                      if(ids.length == 1) {
+                          $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed', "Save Failed, please try again"));
+                      } else {
+                          $form.find("button").attr('disabled', false).filter(".save_button").text(I18n.t('buttons.save_failed_n_updates_lost', "Save Failed, %{n} Candidates were not updated", {'n': errors}));
+                      }
+                  } else {
+                      $form.find("button").attr('disabled', false).filter(".save_button").text("Generating pdf.....");
+                      var generate_pdf = $("#generate_pdf_url").val();
+                      location.href = generate_pdf;
+                  }
+              }
+          };
+          for(var idx in ids) {
+              var id = ids[idx];
+              var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
+              $.ajaxJSON(url, 'POST', formData, function(data) {
+                  finished++;
+                  checkIfFinished();
+              }, function(data) {
+                  finished++;
+                  errors++;
+                  checkIfFinished();
+              });
+          }
+      });
+
+//      arrivu changes end
     $(".moderate_student_link").live('click', function(event) {
       event.preventDefault();
       var $student = $(this).parents(".student");
@@ -218,6 +289,7 @@ define([
       }).fixDialogButtons();
     });
     $(".reload_link").click(function(event) {
+        console.log(event);
       event.preventDefault();
       updateSubmissions();
     });
@@ -304,7 +376,7 @@ define([
       for(var idx in ids) {
         var id = ids[idx];
         var url = $.replaceTags($(".extension_url").attr('href'), 'user_id', id);
-        $.ajaxJSON(url, 'POST', formData, function(data) {
+          $.ajaxJSON(url, 'POST', formData, function(data) {
           finished++;
           moderation.updateSubmission(data);
           checkIfFinished();

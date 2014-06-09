@@ -1,8 +1,9 @@
 require [
-  'proctoring'
-  'glasses/stackblur'
+  'excanvas'
+  'lib/getUserMedia'
   'glasses/ccv'
   'glasses/face'
-  'lib/getUserMedia'
+  'glasses/stackblur'
+  'proctoring'
   #'compiled/bundles/image_proctoring'
 ]
