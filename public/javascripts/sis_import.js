@@ -79,8 +79,8 @@ $(document).ready(function(event) {
     output = "<ul><li>" + I18n.t('headers.imported_items', "Imported Items") + "<ul>";
     output += "<li>" + I18n.t('import_counts.accounts', "Accounts: %{account_count}", {account_count: batch.data.counts.accounts}) + "</li>";
     output += "<li>" + I18n.t('import_counts.terms', "Terms: %{term_count}", {term_count: batch.data.counts.terms}) + "</li>";
-    output += "<li>" + I18n.t('import_counts.courses', "Courses: %{course_count}", {course_count: batch.data.counts.courses}) + "</li>";
-    output += "<li>" + I18n.t('import_counts.sections', "Sections: %{section_count}", {section_count: batch.data.counts.sections}) + "</li>";
+    output += "<li>" + I18n.t('import_counts.courses', "Projects: %{course_count}", {course_count: batch.data.counts.courses}) + "</li>";
+    output += "<li>" + I18n.t('import_counts.sections', "Batches: %{section_count}", {section_count: batch.data.counts.sections}) + "</li>";
     output += "<li>" + I18n.t('import_counts.users', "Users: %{user_count}", {user_count: batch.data.counts.users}) + "</li>";
     output += "<li>" + I18n.t('import_counts.enrollments', "Enrollments: %{enrollment_count}", {enrollment_count: batch.data.counts.enrollments}) + "</li>";
     output += "<li>" + I18n.t('import_counts.crosslists', "Crosslists: %{crosslist_count}", {crosslist_count: batch.data.counts.xlists}) + "</li>";
