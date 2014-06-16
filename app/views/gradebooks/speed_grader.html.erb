@@ -264,7 +264,7 @@
 <a style="display:none;" id="assignment_submission_resubmit_to_turnitin_url" href="<%= context_url(@context, :context_assignment_submission_resubmit_to_turnitin_url, @assignment.id, "{{ user_id }}") %>"></a>
 <form id="settings_form" style="display:none; width:400px;" title="<%= t('titles.speedgrader_options', "Speedgrader Options") %>">
   <p>
-    <label for="eg_sort_by"><%= t('labels.sort_by', "Sort student list") %></label>
+    <label for="eg_sort_by">Sort candidate list</label>
     <%= select_tag 'eg_sort_by', options_for_select([ 
       [t('sort_by.student_name', "by candidate name (alphabetically)"), "alphabetically"],
       [t('sort_by.submitted_at', "the date they submitted the assignment"), "submitted_at"],

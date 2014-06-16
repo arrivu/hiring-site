@@ -1,6 +1,9 @@
 class Imageproctoring < ActiveRecord::Base
   belongs_to :user
-  #attr_accessible :quiz_id,:user_id,:proctoring_image_attachment_id, :imageData
+  has_many :attachments, :as => :context, :dependent => :destroy, :extend => Attachment::FindInContextAssociation
+  has_many :active_images, :as => :context, :class_name => 'Attachment', :conditions => ["attachments.file_state != ? AND attachments.content_type LIKE 'image%'", 'deleted'], :order => 'attachments.display_name', :include => :thumbnail
+
+  attr_accessible :quiz_id,:user_id,:proctoring_image_attachment_id, :imageData, :time_elapsed
   #belongs_to :user
   #belongs_to :quiz
 

@@ -62,107 +62,120 @@
   <br/>
   <% end %>
   <% if @submission.allow_academic_detail %>
-  <% if @user_data.length > 0 %>
-  <h3>Academic Qualifications</h3>
-  <table class="table table-bordered" cellpadding="10">
-    <thead>
-    <th>Degree</th>
-    <th>Discipline</th>
-    <th>School/ College</th>
-    <th>Year of Completion</th>
-    <th>%/ CGPA</th>
-    </thead>
+      <% if @user_data.length > 0 %>
+      <h3>Academic Qualifications</h3>
+      <table class="table table-bordered" cellpadding="10">
+        <thead>
+        <th>Degree</th>
+        <th>Discipline</th>
+        <th>School/ College</th>
+        <th>Year of Completion</th>
+        <th>%/ CGPA</th>
+        </thead>
 
 
-    <% @user_data.each do |link| %>
-        <tr>
-          <td><%= link.degree %></td>
-          <td><%= link.discipline %></td>
-          <td><%= link.college %></td>
-          <td><%= link.year_of_completion %></td>
-          <td><%= link.percentage %></td>
-        </tr>
-    <% end %>
+        <% @user_data.each do |link| %>
+            <tr>
+              <td><%= link.degree %></td>
+              <td><%= link.discipline %></td>
+              <td><%= link.college %></td>
+              <td><%= link.year_of_completion %></td>
+              <td><%= link.percentage %></td>
+            </tr>
+        <% end %>
 
-  </table>
-  <br/>
-  <br/>
-  <% end %>
+      </table>
+      <br/>
+      <br/>
+      <% end %>
   <% end %>
   <% if @submission.allow_employment_detail %>
-  <% if @user_experience.length > 0 %>
-  <h3>Employment Details</h3>
-  <table class="table table-bordered" cellpadding="10">
-    <thead>
-    <th>Organization</th>
-    <th>From(MM/YYYY)</th>
-    <th>To(MM/YYYY)</th>
-    <th>Designation</th>
-    <th>Permanent/ contract</th>
-    <th>Reason for leaving</th>
+      <% if @user_experience.length > 0 %>
+      <h3>Employment Details</h3>
+      <table class="table table-bordered" cellpadding="10">
+        <thead>
+        <th>Organization</th>
+        <th>From(MM/YYYY)</th>
+        <th>To(MM/YYYY)</th>
+        <th>Designation</th>
+        <th>Permanent/ contract</th>
+        <th>Reason for leaving</th>
 
-    </thead>
+        </thead>
 
-    <% @user_experience.each do |emp| %>
-        <tr>
+        <% @user_experience.each do |emp| %>
+            <tr>
 
-          <td><%= emp.organization %></td>
-          <td><%= emp.from_date %></td>
-          <td><%= emp.end_date %></td>
-          <td><%= emp.designation %></td>
-          <td><%= emp.permanent %></td>
-          <td><%= emp.reason_for_leaving %></td>
+              <td><%= emp.organization %></td>
+              <td><%= emp.from_date %></td>
+              <td><%= emp.end_date %></td>
+              <td><%= emp.designation %></td>
+              <td><%= emp.permanent %></td>
+              <td><%= emp.reason_for_leaving %></td>
 
-        </tr>
-    <% end %>
-  </table>
-  <br/>
-  <br/>
-  <% end %>
+            </tr>
+        <% end %>
+      </table>
+      <br/>
+      <br/>
+      <% end %>
   <% end %>
   <% if @submission.allow_assessment_detail %>
-  <% if @submission %>
-  <h3>Assessment Details</h3>
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-      <td>Assessment Name</td>
-      <td>No. of questions</td>
       <% if @submission %>
-      <td>Marks Scored / Max Marks</td>
-      <td>Percentage Scored</td>
+      <h3>Assessment Details</h3>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <td>Assessment Name</td>
+          <td>No. of questions</td>
+          <% if @submission %>
+          <td>Marks Scored / Max Marks</td>
+          <td>Percentage Scored</td>
+          <% end %>
+          <td>Time Taken</td>
+          <td>Allotted Time</td>
+        </tr>
+        </thead>
+        <tr>
+          <td><%= @quiz.quiz_title %></td>
+          <td><%= @quiz.points_possible %></td>
+          <td><%= @submission.score %> / <%= @quiz.points_possible %></td>
+          <td><% if @quiz.points_possible && @submission.score %>
+                <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
+                <%= percentage.round(2) %> %
+            <% end %></td>
+          <td><%= duration_in_minutes(@submission.duration) %></td>
+
+          <td>
+            <% if @quiz.time_limit %>
+                <%= @quiz.time_limit %> minutes
+            <% end %>
+          </td>
+        </tr>
+      </table>
+
+      <% @submission_data = @submission.submission_data %>
+          <% if @submission.finished_at %>
+              <% if @submission_data %>
+              <div id="questions" class="assessment_results">
+                <% @submission[:quiz_data].each do |q| %>
+                    <%= render :partial => "quizzes/quizzes/display_question", :object => q, :locals => {:user_answer => @submission_data.find{|a| a[:question_id] == q[:id]}, :assessment_results => true} %>
+                <% end %>
+              </div>
+              <% end %>
+          <% end %>
       <% end %>
-      <td>Time Taken</td>
-      <td>Allotted Time</td>
-    </tr>
-    </thead>
-    <tr>
-      <td><%= @quiz.quiz_title %></td>
-      <td><%= @quiz.points_possible %></td>
-      <td><%= @submission.score %> / <%= @quiz.points_possible %></td>
-      <td><% if @quiz.points_possible && @submission.score %>
-            <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
-            <%= percentage.round(2) %> %
-        <% end %></td>
-      <td><%= duration_in_minutes(@submission.duration) %></td>
-
-      <td>
-        <% if @quiz.time_limit %>
-            <%= @quiz.time_limit %> minutes
-        <% end %>
-      </td>
-    </tr>
-  </table>
-
-  <% @submission_data = @submission.submission_data %>
-  <% if @submission_data %>
-  <div id="questions" class="assessment_results">
-    <% @submission[:quiz_data].each do |q| %>
-        <%= render :partial => "quizzes/quizzes/display_question", :object => q, :locals => {:user_answer => @submission_data.find{|a| a[:question_id] == q[:id]}, :assessment_results => true} %>
-    <% end %>
-  </div>
   <% end %>
-  <% end %>
+  <% if @submission.allow_image_proctoring %>
+      <h3>Proctoring Snapshots</h3>
+      <div style="width: 100%;margin-left:65px;">
+         <% @image_proctoring_find.each do |image| %>
+            <div style="width:200px;display: inline-block;border:1px solid black;margin:5px 7px 8px 5px;">
+              <img src="<%= image.imageData %>" width="100" height="50"/><br/>
+              Time elapsed : <%= image.time_elapsed %>
+            </div>
+          <% end %>
+      </div>
   <% end %>
 </div>
 </div>
