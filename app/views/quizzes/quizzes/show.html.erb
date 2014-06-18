@@ -511,16 +511,47 @@
           </div>
         <% elsif @submission && @submission.untaken? %>
           <div class="take_quiz_button">
-            <%= link_to_resume_poll('class' => "btn btn-primary") %>
+            <%= link_to_resume_poll('class' => "btn btn-primary" ,'onclick' => "start()") %>
           </div>
         <% elsif can_do(@quiz, @current_user, :submit) && !@lockdown_browser_authorized_to_view %>
           <div class="take_quiz_button">
-            <%= link_to_take_or_retake_poll('class' => "btn btn-primary", 'id' => "take_quiz_link") %>
+            <%= link_to_take_or_retake_poll('class' => "btn btn-primary", 'id' => "take_quiz_link")  %>
           </div>
         <% end %>
       <% end %>
     <% end %>
+    <video autoplay style="display: none;"></video>
 
+    <script>
+
+        function start() {
+            navigator.getUserMedia = ( navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia);
+
+            var errorCallback = function(e) {
+                e.preventDefault();
+                alert("No camera available");
+                //alert(e);
+                //return false;
+                //console.log('Reeeejected!', e);
+            };
+
+            // Not showing vendor prefixes.
+            navigator.getUserMedia({video: true, audio: true}, function(localMediaStream) {
+                var video = document.querySelector('video');
+                video.src = window.URL.createObjectURL(localMediaStream);
+                alert("sucess");
+                // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+                // See crbug.com/110938.
+                video.onloadedmetadata = function(e) {
+                    alert("fail");
+                    // Ready to go. Do some stuff.
+                };
+            }, errorCallback);
+        };
+    </script>
     <div id="quiz-submission-version-table"></div>
 
   </header>

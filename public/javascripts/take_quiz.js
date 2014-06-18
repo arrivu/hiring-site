@@ -201,19 +201,24 @@ define([
         $(".time_header").text(I18n.beforeLabel('time_elapsed', "Time Elapsed"));
         var now = new Date().getTime();
         var startedAt = Date.parse(quizSubmission.startedAtText).getTime();
-//        elapsedAt = $(".elapsed_time_at");
-//        elapsedAtText = elapsedAt.text();
-//        var elapsedAtText = Date.parse(quizSubmission.clockInterval).getTime();
-//        console.log(elapsedAtText);
-        //console.log(now);
         var timeElapsed = now - startedAt;
 
         quizSubmission.updateTimeString(timeElapsed);
+          var elapsed_date = new Date(Math.abs(timeElapsed));
+          var elapsed_hr = elapsed_date.getUTCHours();
+          var elapsed_min = elapsed_date.getUTCMinutes();
+          var elapsed_sec = elapsed_date.getUTCSeconds();
+          var elapsed_times = [];
+          if(true || elapsed_hr) { elapsed_times.push(("0"+elapsed_hr).slice(-2)); }
+          if(true || elapsed_min) { elapsed_times.push(("0"+elapsed_min).slice(-2)); }
+          if(true || elapsed_sec) { elapsed_times.push(("0"+elapsed_sec).slice(-2)); }
+          $(".photo_elapsed_time").text(elapsed_times.join(":"));
       },
 
       updateTime: function() {
         if(quizSubmission.hasTimeLimit) {
           var timeLeft = quizSubmission.timeLeft = quizSubmission.timeLeft - quizSubmission.clockInterval;
+          quizSubmission.updateCounter();
         } else {
           return quizSubmission.updateCounter();
         }
@@ -278,7 +283,6 @@ define([
             $.flashMessage(I18n.t('notices.twelve_hours_left', "Twelve Hours Left"));
           }
         }
-
         quizSubmission.updateTimeString(timeLeft);
       },
 
@@ -298,15 +302,7 @@ define([
         if(hr) { times.push(I18n.t('hours_count', "Hour", {'count': hr})); }
         if(true || min) { times.push(I18n.t('minutes_count', "Minute", {'count': min})); }
         if(true || sec) { times.push(I18n.t('seconds_count', "Second", {'count': sec})); }
-        var elapsed_date = new Date(Math.abs(0));
-        var elapsed_hr = elapsed_date.getUTCHours();
-        var elapsed_min = elapsed_date.getUTCMinutes();
-        var elapsed_sec = elapsed_date.getUTCSeconds();
-        var elapsed_times = [];
-        if(true || elapsed_hr) { elapsed_times.push(("0"+elapsed_hr).slice(-2)); }
-        if(true || elapsed_min) { elapsed_times.push(("0"+elapsed_min).slice(-2)); }
-        if(true || elapsed_sec) { elapsed_times.push(("0"+elapsed_sec).slice(-2)); }
-        $(".photo_elapsed_time").text(elapsed_times.join(":"));
+
 //        var elapsed_date = new Date(Math.abs(startAt));
 //        var elapsed_hr = elapsed_date.getUTCHours();
 //        var elapsed_min = elapsed_date.getUTCMinutes();

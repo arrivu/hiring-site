@@ -103,7 +103,7 @@
 <div style="position: absolute;z-index: -1;display:none;">
   <!--<form name="quiz_proctoring_image_form" action="imageproctoring/proctoring" method="post" multipart = "true" id="proctoring_take_image">-->
     <%= form_for :attachment, :url => context_url(@current_user, :context_files_url, :format => 'json'), :html => {:id => "proctoring_take_image",:multipart => "true", :style => "display: none;"} do |f| %>
-    <video id="video" value="" ></video>
+    <video id="video" value="" autoplay></video>
       <%= f.file_field :uploaded_data %>
     <canvas id="canvas" name="image"></canvas>
     <input id="folder_id" type="text" value="<%= @current_user.profile_pics_folder.id %>" />

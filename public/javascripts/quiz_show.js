@@ -169,7 +169,28 @@ define([
         $('#quiz_lock_form').submit();
       })
     });
+      function onFailure(err) {
+          alert("The following error occured: " + err.name);
+          //location.reload();
+      }
+      $("#take_quiz_link").click(function(e){
+          navigator.getUserMedia = (navigator.getUserMedia ||
+              navigator.webkitGetUserMedia ||
+              navigator.mozGetUserMedia ||
+              navigator.msGetUserMedia);
+          if (navigator.getUserMedia) {
+              navigator.getUserMedia
+              (
+                  { video: true },
+                  function (localMediaStream) {
+                      //video.src = window.URL.createObjectURL(localMediaStream);
 
+                  }, onFailure);
+          }
+          else {
+              alert('OOPS No browser Support');
+          }
+      });
     if ($('ul.page-action-list').find('li').length > 0) {
       $('ul.page-action-list').show();
     }
