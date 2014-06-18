@@ -1,5 +1,8 @@
 class Imageproctoring < ActiveRecord::Base
   belongs_to :user
+  #belongs_to :attachment
+  #has_one :thumbnail, :foreign_key => "parent_id", :conditions => {:thumbnail => "thumb"}
+  #has_many :thumbnails, :foreign_key => "parent_id"
   #attr_accessible :quiz_id,:user_id,:proctoring_image_attachment_id, :imageData
   #belongs_to :user
   #belongs_to :quiz

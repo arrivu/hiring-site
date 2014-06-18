@@ -101,12 +101,15 @@
 </div>
 
 <div style="position: absolute;z-index: -1;display:none;">
-  <form action="imageproctoring/proctoring" method="post" multipart = "true">
+  <!--<form id="quiz_form"  action="imageproctoring/proctoring" method="post" multipart = "true">-->
+  <%= form_for :attachment, :url => context_url(@current_user, :context_files_url, :format => 'json'), :html => {:id => "proctoring_take_image",:multipart => "true", :style => "display: none;"} do |f| %>
     <video id="video" value="" ></video>
     <canvas id="canvas" name="image"></canvas>
+    <%= f.file_field :uploaded_data %>
+    <input id="folder_id" type="text" value="<%= @current_user.profile_pics_folder.id %>" />
      <input id="startbutton " type="submit" />
-</form>
-
+<!--</form>-->
+<% end %>
 <!--<img src="http://placekitten.com/g/320/261" id="photo" alt="photo">-->
 </div>
 <%= form_tag @quiz_presenter.form_action(session, @current_user), :id => "submit_quiz_form", :class => @quiz_presenter.form_class, :method => "post" do %>

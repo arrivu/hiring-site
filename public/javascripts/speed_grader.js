@@ -187,7 +187,7 @@ define([
       if (tempArray.length) {
         jsonData.studentsWithSubmissions = tempArray;
       } else {
-        alert(I18n.t('alerts.no_students_in_section', "Could not find any students in that section, falling back to showing all sections."));
+        alert("Could not find any candidates in that batch, falling back to showing all batches.");
         userSettings.contextRemove('grading_show_only_section');
         window.location.reload();
       }

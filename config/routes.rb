@@ -317,6 +317,8 @@ routes.draw do
       match 'managed_quiz_data' => 'quizzes/quizzes#managed_quiz_data', :as => :managed_quiz_data
       match 'submission_versions' => 'quizzes/quizzes#submission_versions', :as => :submission_versions
       match 'history' => 'quizzes/quizzes#history', :as => :history
+      resources :candidate_reports
+        match 'candidateReport' => 'candidate_reports#view_reports', :as => :candidateReport
       match 'statistics' => 'quizzes/quizzes#statistics', :as => :statistics
       match 'read_only' => 'quizzes/quizzes#read_only', :as => :read_only
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
@@ -711,6 +713,7 @@ routes.draw do
   match 'project' => 'courses#candidate' , :as => :project, :via => :get
   match 'registerCandidate' => 'invitations#fill_registration_form', :as => :registerCandidate
   match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  #match 'candidateReport/candidate_id/project_id/assessment_id' => 'candidate_reports#view_reports', :as => :candidateReport
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url

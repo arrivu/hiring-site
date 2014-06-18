@@ -63,5 +63,8 @@ module Canvas::AccountReports
       StudentReports.new(account_report).last_user_access
     end
 
+    def self.candidate_quiz_csv(account_report)
+      StudentReports.new(account_report).candidate_quiz
+    end
   end
 end

@@ -1,6 +1,6 @@
 <%
    jammit_css :profile_show, :tinymce
-   js_bundle :fill_registration
+   js_bundle :fill_registration, :image_proctoring
    js_env PROFILE: @user
    js_env(folder_id: @user.profile_pics_folder.id) unless (@user ||= @current_user).nil?
    @body_classes << "gradebook2 full-width" %>
@@ -71,6 +71,7 @@
             <% if @user_data %>
                 <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
                   <%= square_avatar_image @user[:id], 200 %>
+
                   <i class="icon-edit"></i>
                 </a>
             <% else %>
@@ -81,19 +82,19 @@
             <% end %>
                 <%  end %>
 
-
-
-          </div>
+           </div>
           </div>
           <% end %>
-        </div>
+          <div id="webcam"></div>
+          <button id="startbutton">Take photo</button>
+          <canvas id="canvas"></canvas>
+         </div>
       </div>
       <% if @candidate_filter.academics == TRUE %>
           <div class="profile_links">
             <h2 class="h1 border border-b">Academic Qualifications</h2>
             <div class="show-if-editing">
               <table id="edit_links_table" cellpadding="10" >
-
                 <thead>
                 <th>Degree</th>
                 <th>Discipline</th>

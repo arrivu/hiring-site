@@ -16,11 +16,12 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+
 module SIS
   class AssessmentQuestionImporter < BaseImporter
-
-
+    require 'app/helpers/tags_helper'
     def process
+
       start = Time.now
       importer = Work.new(@batch_id, @root_account, @logger)
 
@@ -60,7 +61,7 @@ module SIS
           id = rand(10000)
       end
 
-      def add_assessment_question( question_bank_title,question_data,regrade_option,points_possible,
+      def add_assessment_question( question_bank_title,question_data,regrade_option,points_possible,question_tag,
                                    correct_comments,incorrect_comments,neutral_comments,question_type,name,question_name,
                                    question_text,status,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,ans2_id,ans2_comments,ans2_text,
                                    ans2_weight,ans3_id,ans3_comments,ans3_text,ans3_weight,ans4_id,ans4_comments,ans4_text,
@@ -68,7 +69,7 @@ module SIS
                                    assessment_question_id)
         raise ImportError, "No question_bank_title given for a question_bank" unless question_bank_title.present?
 
-        @logger.debug("Processing Group #{[question_bank_title,question_data,regrade_option,points_possible,
+        @logger.debug("Processing Group #{[question_bank_title,question_data,regrade_option,points_possible,question_tag,
                                            correct_comments,incorrect_comments,neutral_comments,question_type,name,
                                            question_name,question_text,status,answers,ans1_id,ans1_comments,ans1_text,ans1_weight,
                                            ans2_id,ans2_comments,ans2_text,ans2_weight,ans3_id,ans3_comments,ans3_text,ans3_weight,
@@ -423,6 +424,9 @@ module SIS
 
         if question.save
           @success_count += 1
+          if question_tag.present?
+            tag_list(question_tag, question, question.assessment_question_bank)  unless question_tag.nil?
+          end
         else
           raise ImportError, question
         end
