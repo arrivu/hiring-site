@@ -170,27 +170,93 @@ define([
       })
     });
       function onFailure(err) {
-          alert("The following error occured: " + err.name);
-          //location.reload();
+          alert("No camera available.");
+          location.reload();
       }
+
       $("#take_quiz_link").click(function(e){
+
+          if(ENV.CHECK_IMAGE_PROCTORING)
+          {
           navigator.getUserMedia = (navigator.getUserMedia ||
-              navigator.webkitGetUserMedia ||
               navigator.mozGetUserMedia ||
               navigator.msGetUserMedia);
+          var video = document.getElementsByTagName('video')[0];
+          if(navigator.getUserMedia) {
+              navigator.getUserMedia('video', successCallback, errorCallback);
+
+              function successCallback( stream ) {
+                  video.src = stream;
+              }
+
+              function errorCallback( error ) {
+                  e.stopImmediatePropagation();
+                  alert(error.code);
+                  window.location.reload();
+              }
+          }
+          else {
+              //show no support for getUserMedia
+              e.stopImmediatePropagation();
+              alert("Native web camera streaming is not supported in this browser");
+              window.location.reload();
+          }
+        }
+          /*
           if (navigator.getUserMedia) {
               navigator.getUserMedia
               (
                   { video: true },
                   function (localMediaStream) {
-                      //video.src = window.URL.createObjectURL(localMediaStream);
+                      alert("Streaming ");
 
                   }, onFailure);
           }
           else {
               alert('OOPS No browser Support');
+              location.reload();
+          }
+        */
+      });
+
+      /*
+      $("#take_quiz_link").click(function(e){
+          //myVid=document.getElementById("video");
+          //myVid.oncanplay=alert("Can start playing video");
+          webcamActive = false;
+          webcamActive = $("#video").attr('src');
+          alert(webcamActive);
+          navigator.getUserMedia = (navigator.getUserMedia ||
+              navigator.webkitGetUserMedia ||
+              navigator.mozGetUserMedia ||
+              navigator.msGetUserMedia);
+
+          if (navigator.getUserMedia) {
+
+              navigator.getUserMedia(
+                {
+                  video: true
+                },
+
+                  function(localMediaStream) {
+
+                      alert("Success");
+                  },
+
+                  function(err) {
+                     alert('The following error occurred when trying to use getUserMedia: ' + err);
+                     location.reload();
+                     console.log('The following error occurred when trying to use getUserMedia: ' + err);
+                  }
+              );
+
+          } else {
+              //alert('Sorry, your browser does not support getUserMedia');
+              alert("No camera available.");
+              location.reload();
           }
       });
+      */
     if ($('ul.page-action-list').find('li').length > 0) {
       $('ul.page-action-list').show();
     }

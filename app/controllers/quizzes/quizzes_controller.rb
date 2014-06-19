@@ -109,6 +109,7 @@ class Quizzes::QuizzesController < ApplicationController
       return if value_to_boolean(params[:force_user]) && !force_user
 
       @quiz = @quiz.overridden_for(@current_user)
+      js_env :CHECK_IMAGE_PROCTORING => @quiz.image_proctoring
       add_crumb(@quiz.title, named_context_url(@context, :context_quiz_url, @quiz))
 
       setup_headless

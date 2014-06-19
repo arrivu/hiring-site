@@ -20,8 +20,8 @@
     <div class="image-block-content row-fluid">
       <h1 class="h1">
         <span class="hide-if-editing">
-          <table><tr><td>First Name:</td><td><%= @user_data[:name] %></td></tr>
-            <tr><td>Last Name:</td><td><%= @user[:last_name] %></td></tr></table></span>
+          <table><tr style="padding: 5px;color:#555555;font-weight: bold;" class="h5 border-b"><td>First Name:</td><td><%= @user_data[:name] %></td></tr>
+            <tr style="padding: 5px;color:#555555;font-weight: bold;" class="h5 border-b"><td>Last Name:</td><td><%= @user[:last_name] %></td></tr></table></span>
       </h1>
       <% if @user_data[:can_edit] %>
         <label class="show-if-editing"><%= t('name', 'Name') %>: <br><input type="text" name="user[short_name]" value="<%= @user_data[:short_name] %>" required></label>
