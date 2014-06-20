@@ -512,16 +512,16 @@
           </div>
         <% elsif @submission && @submission.untaken? %>
           <div class="take_quiz_button">
-            <%= link_to_resume_poll('class' => "btn btn-primary",'id' => "take_quiz_link") %>
+            <%= link_to_resume_poll('class' => "btn btn-primary" , 'id' => "take_quiz_link") %>
           </div>
         <% elsif can_do(@quiz, @current_user, :submit) && !@lockdown_browser_authorized_to_view %>
           <div class="take_quiz_button">
-            <%= link_to_take_or_retake_poll('class' => "btn btn-primary", 'id' => "take_quiz_link") %>
+            <%= link_to_take_or_retake_poll('class' => "btn btn-primary", 'id' => "take_quiz_link")  %>
           </div>
         <% end %>
       <% end %>
     <% end %>
-
+    <video id="video" autoplay="true" style="display: none;"></video>
 
     <div id="quiz-submission-version-table"></div>
 

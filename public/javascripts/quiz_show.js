@@ -170,126 +170,40 @@ define([
       })
     });
 
-//      $('#take_quiz_link').click(function(event) {
 
-////          navigator.webkitGetUserMedia({audio: true, video: true}, function(stream) {
-////              alert("sucess");
-////              document.querySelector('video').src = webkitURL.createObjectURL(stream);
-////          }, function(e) {
-////              alert("No camera available");
-////              console.error(e);
-////              return false;
-////              e.preventDefault();
-////          });
-//          navigator.getUserMedia = ( navigator.getUserMedia ||
-//              navigator.webkitGetUserMedia ||
-//              navigator.mozGetUserMedia ||
-//              navigator.msGetUserMedia);
-//
-//          navigator.webkitGetUserMedia({audio: true, video: true}, function(stream) {
-//              alert("sucess");
-//
-//          },
-//
-////          navigator.getUserMedia(
-////              {   // we would like to use video but not audio
-////                  // This object is browser API specific! - some implementations require boolean properties, others require strings!
-////                  video: true,
-////                  audio: false
-////              },
-////              function(videoStream) {
-////                  alert("success");
-////                  // 'success' callback - user has given permission to use the camera
-////                  // my code to use the camera here ...
-////              },
-//              function(e) {
-//                  alert("No camera available");
-//                  location.reload();
-////                  e.preventDefault();
-//                  // 'no permission' call back
-//                  console.log("user did not give access to the camera");
-//              }
-//          );
-
-          function onFailure(err) {
-              alert("The following error occured: " + err.name);
-              alert("No camera avilable!");
-              location.reload();
-          }
-      // my chnage
-//          $("#take_quiz_link").click(function(e){
-//              navigator.getUserMedia = (navigator.getUserMedia ||
-//                  navigator.webkitGetUserMedia ||
-//                  navigator.mozGetUserMedia ||
-//                  navigator.msGetUserMedia);
-//              if (navigator.getUserMedia) {
-//                  navigator.getUserMedia
-//                  (
-//                      { video: true },
-//
-//                      function (localMediaStream) {
-//                          alert("Streaming ");
-//                          //video.src = window.URL.createObjectURL(localMediaStream);
-//                      }, onFailure);
-//
-//              }
-//              else {
-//                  alert('OOPS No browser Support');
-//              }
-//
-//          });
-
-
-//      });
-
- // resmi chnage
+      function onFailure(err) {
+          alert("No camera available.");
+          location.reload();
+      }
 
       $("#take_quiz_link").click(function(e){
 
           if(ENV.CHECK_IMAGE_PROCTORING)
           {
-              navigator.getUserMedia = (navigator.getUserMedia ||
-                  navigator.mozGetUserMedia ||
-                  navigator.msGetUserMedia);
-              var video = document.getElementsByTagName('video')[0];
-              if(navigator.getUserMedia) {
-                  navigator.getUserMedia('video', successCallback, errorCallback);
-
-                  function successCallback( stream ) {
-                      video.src = stream;
-                  }
-
-                  function errorCallback( error ) {
-                      e.stopImmediatePropagation();
-                      alert(error.code);
-                      window.location.reload();
-                  }
+          navigator.getUserMedia = (navigator.getUserMedia ||
+              navigator.mozGetUserMedia ||
+              navigator.msGetUserMedia);
+          var video = document.getElementsByTagName('video')[0];
+          if(navigator.getUserMedia) {
+              navigator.getUserMedia('video', successCallback, errorCallback);
+              function successCallback( stream ) {
+                  video.src = stream;
               }
-              else {
-                  //show no support for getUserMedia
+
+              function errorCallback( error ) {
                   e.stopImmediatePropagation();
-                  alert("Native web camera streaming is not supported in this browser");
+                  alert(error.code);
                   window.location.reload();
               }
           }
-          /*
-           if (navigator.getUserMedia) {
-           navigator.getUserMedia
-           (
-           { video: true },
-           function (localMediaStream) {
-           alert("Streaming ");
-
-           }, onFailure);
-           }
-           else {
-           alert('OOPS No browser Support');
-           location.reload();
-           }
-           */
+          else {
+              //show no support for getUserMedia
+              e.stopImmediatePropagation();
+              alert("No camera available so you can't take the assessment ");
+              window.location.reload();
+          }
+        }
       });
-
-
 
     if ($('ul.page-action-list').find('li').length > 0) {
       $('ul.page-action-list').show();

@@ -7,3 +7,4 @@ require [
   'proctoring'
   #'compiled/bundles/image_proctoring'
 ]
+

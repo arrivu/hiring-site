@@ -36,7 +36,36 @@ define([
                 window.webcam = this.options;
 
                 // Trigger a snapshot
-                this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),10000));
+                if(ENV.IMAGE_PROCTORING)
+                {
+                    var max_time_limit = 100000;
+                    if(ENV.QUIZ_TIME_LIMIT <= 10)
+                    {
+                        max_time_limit = 15000;
+                    }
+                    else if(ENV.QUIZ_TIME_LIMIT <= 30)
+                    {
+                        max_time_limit = 75000;
+                    }
+                    else if(ENV.QUIZ_TIME_LIMIT < 60)
+                    {
+                        max_time_limit = 200000;
+                    }
+                    else if(ENV.QUIZ_TIME_LIMIT >= 60)
+                    {
+                        max_time_limit = 300000;
+                    }
+                    else
+                    {
+                        max_time_limit = 150000;
+                    }
+                    var lowest_limit = 150000;
+                    //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
+                    //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
+                   // console.log(rand);
+
+                    this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
+                }
 
 //				// Trigger face detection (using the glasses option)
 //				this.addEvent('click', this.detectBtn, function () {
@@ -157,7 +186,7 @@ define([
         },
 
         changeFilter: function () {
-            console.log(ok);
+
             if (this.filter_on) {
                 this.filter_id = (this.filter_id + 1) & 7;
             }
@@ -243,7 +272,6 @@ define([
                 return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
             }
         },
-
 
         drawToCanvas: function (effect) {
             var source, glasses, canvas, ctx, pixels, i;

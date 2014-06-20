@@ -158,6 +158,7 @@ class ImageproctoringController < ApplicationController
       #end
 
   end
+
   private
 
   def render_attachment_json(attachment, deleted_attachments, folder = attachment.folder)
