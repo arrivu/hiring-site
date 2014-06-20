@@ -2546,7 +2546,52 @@ define([
                     height: 400
                 });
         });
+        $('#find_question_dialog').on('click', '.get_tag_find', function(){
+        //$(".get_tag_find").click(function(event){
+            $('.token-input-token').removeClass('token-input-selected-token');
+            $(this).addClass('token-input-selected-token');
+            //var $dialog = $findQuestionDialog;
+            //$dialog.data('banks', {});
+            var id = event.target.id.split('_');
+            event.preventDefault();
+            var $link = $(this);
+            if ($link.hasClass('loading')) { return; }
+            $link.addClass('loading');
+            $findQuestionDialog.find(".page_link").text(I18n.t('loading_more_questions', "loading more questions..."));
+            var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
+            var bank = $bank.data('bank_data');
+            var url = $findQuestionDialog.find(".question_bank_questions_url").attr('href');
+            url = $.replaceTags(url, 'question_bank_id', bank.id);
+            var page = ($findQuestionDialog.find(".page_link").data('page') || 0) + 1;
+            url += "&page=" + page;
+            $.ajaxJSON(url, 'GET', {tag_id: id[1]}, function(data) {
 
+                $link.removeClass('loading');
+                $findQuestionDialog.find(".page_link").data('page', page);
+                $findQuestionDialog.find(".page_link").text(I18n.t('more_questions', "more questions"));
+                var questions = data.questions;
+                var count = 0;
+                var banks = $findQuestionDialog.data('banks') || {};
+                var bank_data = banks[bank.id] || {};
+                bank_data.pages = data.pages;
+                bank_data.questions = (bank_data.questions || []).concat(data.questions);
+                bank_data.last_page = page;
+                banks[bank.id] = bank_data;
+                $findQuestionDialog.data('banks', banks);
+                $findQuestionDialog.find(".question_message").hide();
+                $findQuestionDialog.find(".question_list_holder").show();
+                if(count != 1) {
+                    $('.found_question').hide();
+                }
+                showQuestions(data);
+                count = 1;
+            }, function(data) {
+                $link.removeClass('loading');
+                $findQuestionDialog.find(".question_message").text(I18n.t('errors.loading_questions_failed', "Questions failed to load, please try again"));
+                $findQuestionDialog.find(".page_link").text(I18n.t('errors.loading_more_questions_failed', "loading more questions failed"));
+            });
+
+        });
         var updateFindQuestionDialogQuizGroups = function(id) {
             var groups = [];
             $findQuestionDialog.find(".quiz_group_select").find("option.group").remove();

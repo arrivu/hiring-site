@@ -13,6 +13,7 @@ end
 
 # enforce the version of bundler itself, to avoid any surprises
 
+
 required_bundler_version = '1.5.1'..'1.5.3'
 gem 'bundler', [">=#{required_bundler_version.first}", "<=#{required_bundler_version.last}"]
 unless required_bundler_version.include?(Bundler::VERSION)
