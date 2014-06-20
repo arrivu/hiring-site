@@ -24,7 +24,8 @@ class CandidateReportsController < ApplicationController
       @time_elapsed = image_shot.time_elapsed
       @image_attach_id = image_shot.attachment_id
       @find_image = Attachment.find_by_id(@image_attach_id)
-      @image_proctor = request.protocol + request.host_with_port + "/images/thumbnails/" + @find_image.id.to_s + "/" + @find_image.uuid
+      #@image_proctor = request.protocol + request.host_with_port + "/images/thumbnails/" + @find_image.id.to_s + "/" + @find_image.uuid
+      @image_proctor = file_download_url(@find_image, { :verifier => @find_image.uuid, :download => '1', :download_frd => '1' }) unless @find_image.nil?
       @image_snap <<  {:image_url => @image_proctor, :image_time => @time_elapsed}
     end
     @image_snap_proctoring << @image_snap
