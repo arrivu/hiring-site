@@ -292,7 +292,14 @@ define([
         if(hr) { times.push(I18n.t('hours_count', "Hour", {'count': hr})); }
         if(true || min) { times.push(I18n.t('minutes_count', "Minute", {'count': min})); }
         if(true || sec) { times.push(I18n.t('seconds_count', "Second", {'count': sec})); }
+//        var elapsed_date = new Date(Math.abs(startAt));
+//        console.log(JSON.stringify(elapsed_date));
+//        var elapsed_times = [];
+//        if(true || hr) { elapsed_times.push(("0"+hr).slice(-2)); }
+//        if(true || min) { elapsed_times.push(("0"+min).slice(-2)); }
+//        if(true || sec) { elapsed_times.push(("0"+sec).slice(-2)); }
         $timeRunningTimeRemaining.text(times.join(", "));
+//        $(".photo_elapsed_time").text(elapsed_times.join(":"));
       },
       updateFinalSubmitButtonState: function() {
         var allQuestionsAnswered = ($("#question_list li:not(.answered)").length == 0);

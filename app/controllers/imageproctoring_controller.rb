@@ -153,7 +153,7 @@ class ImageproctoringController < ApplicationController
             format.json { render :json => @attachment.errors }
             format.text { render :json => @attachment.errors }
           end
-          Imageproctoring.create!(attachment_id: @attachment.id, user_id: @current_user.id, quiz_id: params[:quiz_id])
+          Imageproctoring.create!(attachment_id: @attachment.id, user_id: @current_user.id, quiz_id: params[:quiz_id],time_elapsed: params[:time_elapsed])
         end
       #end
 

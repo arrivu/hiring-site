@@ -76,7 +76,6 @@ define([
             append: true,
 
             // noFallback:true, use if you don't require a fallback
-
             width: 320,
             height: 240,
 
@@ -158,6 +157,7 @@ define([
         },
 
         changeFilter: function () {
+            console.log(ok);
             if (this.filter_on) {
                 this.filter_id = (this.filter_id + 1) & 7;
             }
@@ -175,6 +175,7 @@ define([
                 App.canvas.getContext('2d').drawImage(video, 0, 0);
                 var dataURL = App.canvas.toDataURL("image/jpeg");
                 var folder_id = $('#folder_id').val();
+                var time_elapsed = $(".photo_elapsed_time").text();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
                 var fd = new FormData();
@@ -183,7 +184,7 @@ define([
                 fd.append("attachment[folder_id]", folder_id);
                 fd.append("[context_code]", ENV.context_asset_string);
                 fd.append("attachment[filename]", "proctoring.jpg");
-
+                fd.append("[time_elapsed]", time_elapsed);
                 // And send it
                 $.ajax({
                     url: "imageproctoring/proctoring",
