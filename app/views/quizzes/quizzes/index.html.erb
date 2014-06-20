@@ -3,6 +3,7 @@
     <% @headers = false
 
     @show_left_side = false %>
+
 <% end %>
 <% jammit_css :quizzes %>
 
@@ -65,6 +66,11 @@
 <% end %>
 <% content_for :stylesheets do %>
 <style>
+div.container-fluid
+{
+    padding-left: 217px;
+    padding-top: 50px;
+}
 ul.quiz_list {
   margin-top: 5px;
   padding-left: 10px;
@@ -118,7 +124,8 @@ ul.quiz_list li.quiz div.description {
     <div class="item-group-container" style="padding-bottom: 70px;">
       <div class="item-group-condensed">
     <% if @assignment_quizzes.empty? && @open_quizzes.empty? %>
-        <h2 class="ig-header"><i class="icon-mini-arrow-down"></i>
+        <h2 class="ig-header">
+          <!--<i class="icon-mini-arrow-down"></i>-->
 <%= t('headers.course_quizzes', "Project Assessments") %></h2>
           <ul class="ig-list">
             <li>
@@ -132,7 +139,9 @@ ul.quiz_list li.quiz div.description {
 
 <% end %>
 <% if !@assignment_quizzes.empty? %>
-            <h2 class="ig-header"><i class="icon-mini-arrow-down"></i><%= t('headers.assignment_quizzes', "Project Assessments") %></h2>
+            <h2 class="ig-header" style="text-align: center;">
+              <!--<i class="icon-mini-arrow-down"></i>-->
+              <%= t('headers.assignment_quizzes', "Project Assessments") %></h2>
     <ul class="ig-list">
 
     <%= render :partial => "quiz_summary", :collection => @assignment_quizzes %>
