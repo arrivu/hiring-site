@@ -169,40 +169,60 @@ define([
         $('#quiz_lock_form').submit();
       })
     });
-
-
       function onFailure(err) {
           alert("No camera available.");
           location.reload();
       }
-
-      $("#take_quiz_link").click(function(e){
+      function hasGetUserMedia() {
+          // Note: Opera builds are unprefixed.
+          return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+              navigator.mozGetUserMedia || navigator.msGetUserMedia);
+      }
+      var flag = false;
+      $("#take_quiz_link").click(function(event){
+          event.preventDefault();
+          var enable_getusermedia = hasGetUserMedia();
 
           if(ENV.CHECK_IMAGE_PROCTORING)
           {
-          navigator.getUserMedia = (navigator.getUserMedia ||
-              navigator.mozGetUserMedia ||
-              navigator.msGetUserMedia);
-          var video = document.getElementsByTagName('video')[0];
-          if(navigator.getUserMedia) {
-              navigator.getUserMedia('video', successCallback, errorCallback);
-              function successCallback( stream ) {
-                  video.src = stream;
+              navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                  navigator.mozGetUserMedia ||
+                  navigator.msGetUserMedia);
+              var video = document.getElementsByTagName('video')[0];
+              //alert(video);
+              if(enable_getusermedia) {
+                  navigator.getUserMedia(
+                      // Constraints
+                      {
+                          video: true
+                      },
+
+                      // Success Callback
+                      function(localMediaStream) {
+                          flag=true;
+                          alert('Now your camera is available.You click take the assessment.');
+
+                      },
+
+                      // Error Callback
+                      function(err) {
+                          event.stopImmediatePropagation();
+                          alert('No camera available.You have to enable the camera to take the assessment.');
+
+                      }
+                  );
+
+              } else {
+
+                  event.stopImmediatePropagation();
+                  alert('Sorry, your browser does not support camera');
+
               }
 
-              function errorCallback( error ) {
-                  e.stopImmediatePropagation();
-                  alert(error.code);
-                  window.location.reload();
-              }
+              return flag;
+
           }
-          else {
-              //show no support for getUserMedia
-              e.stopImmediatePropagation();
-              alert("No camera available so you can't take the assessment ");
-              window.location.reload();
-          }
-        }
+
       });
 
     if ($('ul.page-action-list').find('li').length > 0) {

@@ -110,6 +110,7 @@ class Quizzes::QuizzesController < ApplicationController
 
       @quiz = @quiz.overridden_for(@current_user)
       js_env :CHECK_IMAGE_PROCTORING => @quiz.image_proctoring
+      js_env :CHECK_URL => root_url
       add_crumb(@quiz.title, named_context_url(@context, :context_quiz_url, @quiz))
 
       setup_headless
