@@ -369,9 +369,9 @@
               <i class="icon-edit"><span class="screenreader-only"><%= admin_edit_title %></span></i> <%= admin_edit_title %>
             </a>
               <%else%>
-              <a href="<%= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>
-                Back to assessments
-              </a>
+              <!--<a href="<%#= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>-->
+                <!--Back to assessments-->
+              <!--</a>-->
           <% end %>
 
           <% if can_do(@quiz, @current_user, :update) || can_do(@quiz, @current_user, :grade) || can_do(@quiz, @current_user, :review_grades) %>

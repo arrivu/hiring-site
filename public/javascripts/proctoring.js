@@ -182,8 +182,11 @@ define([
         },
 
         deviceError: function (error) {
+            if(ENV.CHECK_IMAGE_PROCTORING)
+            {
             alert('No camera available.');
-            console.error('An error occurred: [CODE ' + error.code + ']');
+            }
+            //console.error('An error occurred: [CODE ' + error.code + ']');
         },
 
         changeFilter: function () {
