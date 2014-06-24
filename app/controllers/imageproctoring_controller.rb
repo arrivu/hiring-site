@@ -7,7 +7,7 @@ class ImageproctoringController < ApplicationController
   include Api::V1::Attachment
 
   def create_pending
-    @context = @current_user
+    @context = Context.find_by_asset_string(params[:context_code])
     @asset = Context.find_asset_by_asset_string(params[:attachment][:asset_string], @context) if params[:attachment][:asset_string]
     @attachment = @context.attachments.build
     @check_quota = true
@@ -107,9 +107,7 @@ class ImageproctoringController < ApplicationController
     #if authorized_action(@context, :context_files_url, :update_avatar)
     #  render :json => avatar_image_url_json_for_user(@context)
     #end
-    @context.avatar_image_url = "http://localhost:4000/images/thumbnails/#{@attachment.id}/#{@attachment.uuid}"
-    @context.avatar_image_source = "attachment"
-    @context.save!
+
 
 
     respond_to do |format|
@@ -145,7 +143,9 @@ class ImageproctoringController < ApplicationController
           @attachment.destroy rescue @attachment.delete
         end
       end
-
+      @context.avatar_image_url =  file_download_url(@attachment, { :verifier => @attachment.uuid, :download => '1', :download_frd => '1' }) unless @attachment.nil?
+      @context.avatar_image_source = "attachment"
+      @context.save!
 
       if success
         @attachment.move_to_bottom
