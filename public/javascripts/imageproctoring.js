@@ -202,7 +202,7 @@
 
                 var dataURL = App.canvas.toDataURL("image/png");
                 //dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-                console.log(dataURL);
+//                console.log(dataURL);
 //                var blob = dataURItoBlob(dataURL);
 //                console.log(blob);
                 var folder_id = $('#folder_id').val();
@@ -227,7 +227,7 @@
                     dataType: "json",
                     success: function(result){
                         var URL = result.attachment.thumbnail_url;
-                        console.log(URL);
+                        console.log(result);
                         $('#webcam').hide();
                         $('#startbutton').hide();
                         $('#myimg').attr('src', URL);
