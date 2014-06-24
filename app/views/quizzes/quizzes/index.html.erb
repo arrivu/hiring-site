@@ -3,6 +3,13 @@
     <% @headers = false
 
     @show_left_side = false %>
+    <% content_for :stylesheets do %>
+        <style>
+        #main{
+            margin: 25px 200px !important;
+        }
+        </style>
+    <% end %>
 
 <% end %>
 <% jammit_css :quizzes %>
