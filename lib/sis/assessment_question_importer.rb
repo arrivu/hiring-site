@@ -19,9 +19,7 @@
 
 module SIS
   class AssessmentQuestionImporter < BaseImporter
-    require 'app/helpers/tags_helper'
     def process
-
       start = Time.now
       importer = Work.new(@batch_id, @root_account, @logger)
 
@@ -44,6 +42,7 @@ module SIS
 
     private
     class Work
+      include TagsHelper
       attr_accessor :success_count, :question, :bank, :assessment_question, :id, :weight_count, :question_row
 
       def initialize(batch_id, root_account, logger)
@@ -425,10 +424,21 @@ module SIS
         if question.save
           @success_count += 1
           if question_tag.present?
-            tag_list(question_tag, question, question.assessment_question_bank)  unless question_tag.nil?
+            @question_tag = tag_tokens_new(question_tag)
+            tag_list(@question_tag, question, question.assessment_question_bank)  unless question_tag.nil?
           end
         else
           raise ImportError, question
+        end
+
+      end
+
+      def tag_tokens_new(query)
+        tags = ActsAsTaggableOn::Tag.named_like(query,@domain_root_account.id)
+        if tags.empty?
+          [{id: "<<<#{query}>>>", name: "New: \"#{query.strip.gsub(' ', '-')}\""}]
+        else
+          tags.map(&:attributes)
         end
       end
 
