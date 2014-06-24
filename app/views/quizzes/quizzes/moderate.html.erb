@@ -76,7 +76,11 @@
           <span class="unlocked" title="<%= manually_unlocked_title %>" style="<%= hidden unless submission && submission.manually_unlocked %>"><i class="icon-unlock standalone-icon"><span class="screenreader-only"><%= manually_unlocked_title %></span></i></span>
           <span class="extra_attempts" style="display: none;"><%= submission && submission.extra_attempts %></span>
           <a href="#" class="moderate_student_link no-hover" title="<%= cue_title %>"><i class="icon-edit standalone-icon"><span class="screenreader-only"><%= cue_title %></span></i></a>
-          <a href="<%= course_quiz_candidateReport_path(candidate_id:student.id)%>" class="moderate_student_pdf"><i class="icon-download"></i></a>
+          <% if submission != nil %>
+              <% if submission.attempt != nil %>
+                  <a href="<%= course_quiz_candidateReport_path(candidate_id:student.id)%>" class="moderate_student_pdf"><i class="icon-download"></i></a>
+              <% end %>
+          <% end %>
         </td>
       </tr>
     <% end %>
@@ -149,17 +153,17 @@
         <input type="hidden" name="allow_assessment_detail" value="0"/>
         <input type="checkbox" name="allow_assessment_detail" id="extension_allow_assessment_detail" value="1"/>
         <label for="extension_extra_time">Assessment details</label>
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap; width: 10%;">
+        <input type="hidden" name="allow_image_proctoring" value="0"/>
+        <input type="checkbox" name="allow_image_proctoring" id="extension_allow_image_proctoring" value="1"/>
+        <label for="extension_extra_time">Image proctoring</label>
         <input type="hidden" id="generate_pdf_url" value=""/>
       </td>
     </tr>
-    <!--<tr>-->
-      <!--<td style="white-space: nowrap; width: 10%;">-->
-        <!--<input type="hidden" name="allow_image_proctoring" value="0"/>-->
-        <!--<input type="checkbox" name="allow_image_proctoring" id="extension_allow_image_proctoring" value="1"/>-->
-        <!--<label for="extension_extra_time">Image proctoring</label>-->
-        <!---->
-      <!--</td>-->
-    <!--</tr>-->
   <% end %>
     <tr>
       <td colspan="2">

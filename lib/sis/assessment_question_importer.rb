@@ -18,8 +18,6 @@
 
 module SIS
   class AssessmentQuestionImporter < BaseImporter
-
-
     def process
       start = Time.now
       importer = Work.new(@batch_id, @root_account, @logger)
