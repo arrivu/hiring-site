@@ -27,6 +27,8 @@
                 this.ctx.clearRect(0, 0, this.options.width, this.options.height);
                 this.image = this.ctx.getImageData(0, 0, this.options.width, this.options.height);
                 this.snapshotBtn = document.getElementById('startbutton');
+                this.profilepic = document.getElementById('profile_pic_link')
+                this.button = document.getElementById('submitbutton')
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
                 getUserMedia(this.options, this.success, this.deviceError);
@@ -36,6 +38,16 @@
 
                 // Trigger a snapshot
                 this.addEvent('click', this.snapshotBtn, this.getSnapshot);
+//                (this.profilepic).onclick= function () {
+//                    $('#webcam').show();
+//                    $('#startbutton').show();
+//                };
+//                (this.snapshotBtn).onclick= function () {
+//                    $('#webcam').hide();
+//                    $('#startbutton').hide();
+//                };
+                this.addEvent('click', this.profilepic, this.takeprofilePic);
+//                this.addEvent('click', this.button, this.test);
 
 //				// Trigger face detection (using the glasses option)
 //				this.addEvent('click', this.detectBtn, function () {
@@ -76,8 +88,8 @@
 
             // noFallback:true, use if you don't require a fallback
 
-            width: 320,
-            height: 240,
+            width: 200,
+            height: 200,
 
             // option for more flashvars.
             //fallbackmode: "size",
@@ -161,12 +173,24 @@
                 this.filter_id = (this.filter_id + 1) & 7;
             }
         },
+        takeprofilePic: function (e) {
+            $('#webcam').show();
+            $('#startbutton').show();
+            $('#canvas_url').hide();
+            $('#Edit').hide();
+        },
+//        test: function (e) {
+//            alert('ok');
+//            document.getElementById("myForm").submit();
+//
+//        },
 
         getSnapshot: function (e) {
             // If the current context is WebRTC/getUserMedia (something
             // passed back from the shim to avoid doing further feature
             // detection), we handle getting video/images for our canvas
             // from our HTML5 <video> element.
+
             if (App.options.context === 'webrtc') {
                 var video = document.getElementsByTagName('video')[0];
                 App.canvas.width = video.videoWidth;
@@ -179,27 +203,48 @@
                 var dataURL = App.canvas.toDataURL("image/png");
                 //dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
                 console.log(dataURL);
-                var blob = dataURItoBlob(dataURL);
-                console.log(blob);
-                $('#webcam').hide();
+//                var blob = dataURItoBlob(dataURL);
+//                console.log(blob);
+                var folder_id = $('#folder_id').val();
+                var file= dataURLtoBlob(dataURL);
+                // Create new form data
+                var fd = new FormData();
+                // Append our Canvas image file to the form data
+                fd.append("attachment[uploaded_data]", file);
+                fd.append("attachment[folder_id]", folder_id);
+                fd.append("[duplicate_handling]", "overwrite");
+                fd.append("[intent]", "upload");
+                fd.append("[context_code]", ENV.context_asset_string);
+                fd.append("attachment[filename]", "profile.jpg");
+
+                // And send it
                 $.ajax({
+                    url: "imageproctoring/registration_image",
                     type: "POST",
-                    url: "files/pending",
-                    data: '{ "imageData" : "' + blob + '" }',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (msg) {
-                        alert("Done, Picture Uploaded.");
-                    },
-                    error: function (status) {
-                        console.log(status);
+                    data: fd ,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    success: function(result){
+                        var URL = result.attachment.thumbnail_url;
+                        console.log(URL);
+                        $('#webcam').hide();
+                        $('#startbutton').hide();
+                        $('#myimg').attr('src', URL);
+                        $('#canvas_url').show();
+                        $('#Edit').show();
                     }
                 });
-                // Otherwise, if the context is Flash, we ask the shim to
+
+
+//                var url = "http://localhost:4000/images/thumbnails/"+#{@attachment.id}+"/"+#{@attachment.uuid}+;
+//                $('#myimg').attr('src',url);
+
+
+               // Otherwise, if the context is Flash, we ask the shim to
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
-
                 window.webcam.capture();
                 App.changeFilter();
             }
@@ -225,7 +270,7 @@
 //                bb.append(ab);
 //                return bb.getBlob(mimeString);
                 var dataView = new DataView(ab);
-                blob = new Blob([dataView], { type: mimeString });
+                var blob = new Blob([dataView], { type: mimeString });
                 return blob;
 
             }
@@ -242,80 +287,8 @@
                 // Return our Blob object
                 return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
             }
-        },
-
-
-        drawToCanvas: function (effect) {
-            var source, glasses, canvas, ctx, pixels, i;
-
-            source = document.querySelector('#canvas');
-            glasses = new Image();
-            glasses.src = "js/glasses/i/glasses.png";
-            canvas = document.querySelector("#output");
-            ctx = canvas.getContext("2d");
-
-            ctx.drawImage(source, 0, 0, 520, 426);
-
-            pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-            // Hipstergram!
-            if (effect === 'hipster') {
-
-                for (i = 0; i < pixels.data.length; i = i + 4) {
-                    pixels.data[i + 0] = pixels.data[i + 0] * 3;
-                    pixels.data[i + 1] = pixels.data[i + 1] * 2;
-                    pixels.data[i + 2] = pixels.data[i + 2] - 10;
-                }
-
-                ctx.putImageData(pixels, 0, 0);
-
-            }
-
-            // Green Screen
-            else if (effect === 'greenscreen') {
-
-                // Selectors
-                var rmin = $('#red input.min').val(),
-                    gmin = $('#green input.min').val(),
-                    bmin = $('#blue input.min').val(),
-                    rmax = $('#red input.max').val(),
-                    gmax = $('#green input.max').val(),
-                    bmax = $('#blue input.max').val(),
-                    green = 0, red = 0, blue = 0;
-
-
-                for (i = 0; i < pixels.data.length; i = i + 4) {
-                    red = pixels.data[i + 0];
-                    green = pixels.data[i + 1];
-                    blue = pixels.data[i + 2];
-                    alpha = pixels.data[i + 3];
-
-                    if (red >= rmin && green >= gmin && blue >= bmin && red <= rmax && green <= gmax && blue <= bmax) {
-                        pixels.data[i + 3] = 0;
-                    }
-                }
-
-                ctx.putImageData(pixels, 0, 0);
-
-            } else if (effect === 'glasses') {
-
-                var comp = ccv.detect_objects({
-                    "canvas": (canvas),
-                    "cascade": cascade,
-                    "interval": 5,
-                    "min_neighbors": 1
-                });
-
-                // Draw glasses on everyone!
-                for (i = 0; i < comp.length; i++) {
-                    ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
-                }
-            }
-
         }
-
     };
-
     App.init();
 
 })();

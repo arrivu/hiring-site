@@ -1,7 +1,7 @@
 <%
    jammit_css :profile_show, :tinymce
    js_bundle :fill_registration, :image_proctoring
-   js_env PROFILE: @user
+   js_env PROFILE: @user_data
    js_env(folder_id: @user.profile_pics_folder.id) unless (@user ||= @current_user).nil?
    @body_classes << "gradebook2 full-width" %>
 <style>
@@ -10,10 +10,8 @@
     .table th, .table td{border:none;   }
     .alnright { text-align: right !important; }
 </style>
-
 <div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
   <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @course.id } do |f| %>
-
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div style="width: 100%;float: left;">
@@ -68,26 +66,27 @@
         <div class="image-block" style="float: right;" >
           <div class="image-block-image profile-avatar-wrapper">
             <% if @candidate_detail %>
-            <% if @user_data %>
-                <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
-                  <%= square_avatar_image @user[:id], 200 %>
+                       <div id="webcam" style="display:none;" ></div>
+                    <br><input type="file" style="display:none;" id="uploaded_data" />
+                       <input id="folder_id" type="hidden" value="<%= @user.profile_pics_folder.id %>" />
+                    <input type="button" id="startbutton" name="submit" value="take picture" style="display:none;"><br>
 
-                  <i class="icon-edit"></i>
-                </a>
-            <% else %>
-                    <a href="#" class="profile-pic-link " title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %> ">
-                <%= square_avatar_image @user[:id] , 200 %>
-                      <i class="icon-edit"></i>
-                    </a>
-            <% end %>
-                <%  end %>
+                    <canvas id="canvas" style="display:none;"></canvas>
+<div id="canvas_url" >
+            <a href="#" id="profile_pic_link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>" style="position: relative;">
+            <% if @user.avatar_image_url.nil? %>
+          <img src="images/default_profile_pic.jpg" width="200" height="135" id= "myimg" style="border-radius: 25px;">
+                  <% else %>
+                  <img src="<%= @user.avatar_image_url%>" width="200" height="135" id= "myimg" style="border-radius: 25px;">
+                   <% end %>           <i class="icon-edit" id="Edit"></i>
+          </a>
+          </div>
+    <%  end %>
 
            </div>
           </div>
           <% end %>
-          <div id="webcam"></div>
-          <button id="startbutton">Take photo</button>
-          <canvas id="canvas"></canvas>
+
          </div>
       </div>
       <% if @candidate_filter.academics == TRUE %>
@@ -162,7 +161,7 @@
       <% end %>
       <br/>
       <br/>
-      <div style="text-align: center;"><%= f.submit "SUBMIT", class: "btn btn-small btn-primary" %>
+      <div style="text-align: center;"><%= f.submit "SUBMIT", class: "btn btn-small btn-primary", :id => "submitbutton" %>
       </div>
   <% end %>
 </div>
