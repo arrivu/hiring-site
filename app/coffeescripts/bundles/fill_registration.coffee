@@ -20,11 +20,11 @@ require [
   'Backbone'
   'jquery'
   'str/htmlEscape'
-  'compiled/util/ProfilePicture'
+#  'compiled/util/ProfilePicture'
   'compiled/tinymce'
   'jquery.instructure_forms'
   'tinymce.editor_box'
-], ({View}, $, htmlEscape, AvatarWidget) ->
+], ({View}, $, htmlEscape) ->
 
   class FillRegistration extends View
 
@@ -38,7 +38,7 @@ require [
 
     initialize: ->
       super
-      new AvatarWidget('.profile-pic-link')
+#      new AvatarWidget('.profile-pic-link')
       @addQualField()
       @addWorkField()
 #      @initEditUser()

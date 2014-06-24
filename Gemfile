@@ -12,8 +12,6 @@ else
 end
 
 # enforce the version of bundler itself, to avoid any surprises
-
-
 required_bundler_version = '1.5.1'..'1.5.3'
 gem 'bundler', [">=#{required_bundler_version.first}", "<=#{required_bundler_version.last}"]
 unless required_bundler_version.include?(Bundler::VERSION)
@@ -27,7 +25,6 @@ unless required_bundler_version.include?(Bundler::VERSION)
   warn "Bundler version #{required_bundler_version.first} is required; you're currently running #{Bundler::VERSION}. Maybe try `#{bundle_command}`."
   exit 1
 end
-
 require File.expand_path("../config/canvas_rails3", __FILE__)
 
 # force a different lockfile for rails 3
