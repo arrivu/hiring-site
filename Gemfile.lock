@@ -1,5 +1,13 @@
 GIT
-  remote: git://github.com/kreynolds/cassandra-cql.git
+  remote: http://github.com/arrivu/acts-as-taggable-on.git
+  revision: 05daba73e0a30674c8dd223381c64a0e0b48e1ce
+  branch: multitenant
+  specs:
+    acts-as-taggable-on (2.1.1)
+      rails
+
+GIT
+  remote: https://github.com/kreynolds/cassandra-cql.git
   revision: d100be075b04153cf4116da7512892a1e8c0a7e4
   ref: d100be075b04153cf4116da7512892a1e8c0a7e4
   specs:
@@ -8,19 +16,11 @@ GIT
       thrift_client (>= 0.7.1, < 0.9)
 
 GIT
-  remote: git://github.com/rubyzip/rubyzip.git
+  remote: https://github.com/rubyzip/rubyzip.git
   revision: 2697c7ea4fba6dca66acd4793965501b06ea8df6
   ref: 2697c7ea4fba6dca66acd4793965501b06ea8df6
   specs:
     rubyzip (1.1.0)
-
-GIT
-  remote: http://github.com/arrivu/acts-as-taggable-on.git
-  revision: 05daba73e0a30674c8dd223381c64a0e0b48e1ce
-  branch: multitenant
-  specs:
-    acts-as-taggable-on (2.1.1)
-      rails
 
 PATH
   remote: gems/activesupport-suspend_callbacks
@@ -395,7 +395,7 @@ DEPENDENCIES
   bluecloth (= 2.0.10)
   builder (= 3.0.0)
   bullet (= 4.5.0)
-  bundler (= 1.6.2)
+  bundler (>= 1.5.1, <= 1.5.3)
   canvas_breach_mitigation!
   canvas_cassandra!
   canvas_color!
