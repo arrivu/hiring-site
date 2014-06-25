@@ -96,7 +96,7 @@
 
             mode: "callback",
             // callback | save | stream
-            swffile: "../dist/fallback/as3/webcam.swf",
+            swffile: "dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
@@ -213,7 +213,6 @@
                 fd.append("attachment[uploaded_data]", file);
                 fd.append("attachment[folder_id]", folder_id);
                 fd.append("[duplicate_handling]", "overwrite");
-                fd.append("[intent]", "upload");
                 fd.append("[context_code]", ENV.context_asset_string);
                 fd.append("attachment[filename]", "profile.jpg");
 
@@ -226,11 +225,11 @@
                     contentType: false,
                     dataType: "json",
                     success: function(result){
-                        var URL = result.attachment.thumbnail_url;
+//                        var URL = result.avatar.url;
                         console.log(result);
                         $('#webcam').hide();
                         $('#startbutton').hide();
-                        $('#myimg').attr('src', URL);
+                        $('#myimg').attr('src', "/files/"+result.attachment.id+"/download?download_frd=1&verifier="+result.attachment.uuid);
                         $('#canvas_url').show();
                         $('#Edit').show();
                     }
