@@ -3,25 +3,28 @@
     <% @headers = false
 
     @show_left_side = false %>
+    <% content_for :stylesheets do %>
+        <style>
+        #main{
+            margin: 25px 200px !important;
+        }
+        </style>
+    <% end %>
+
 <% end %>
+<% jammit_css :quizzes %>
 
 <% if @context.feature_enabled?(:draft_state) %>
-
-
-    <% if @context_enrollment == nil && @context_enrollment == nil %>
-        <% jammit_css :quizzes %>
-        <% js_bundle :quizzes_index %>
-    <%else%>
- <% if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
+ <%# if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
             <% jammit_css :quizzes %>
             <% js_bundle :quizzes_index %>
-            <% else %>
+            <%# else %>
 
-            <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">
-              <h1>Assesments are unavaiable, please contact your administrator.</h1>
-            </div>
-            <% end %>
- <% end %>
+            <!--<div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">-->
+              <!--<h1>Assesments are unavaiable, please contact your administrator.</h1>-->
+            <!--</div>-->
+            <%# end %>
+
 
 <%
   @body_classes << 'with_item_groups'
@@ -70,6 +73,11 @@
 <% end %>
 <% content_for :stylesheets do %>
 <style>
+div.container-fluid
+{
+    padding-left: 217px;
+    padding-top: 50px;
+}
 ul.quiz_list {
   margin-top: 5px;
   padding-left: 10px;
@@ -95,8 +103,11 @@ ul.quiz_list li.quiz div.description {
 </style>
 <% end %>
 <% if can_do(@context, @current_user, :manage_assignments) && @unpublished_quizzes && !@unpublished_quizzes.empty? %>
-  <h2><%= t('headers.unpublished_quizzes', "Unpublished Assessments") %></h2>
-  <ul class="quiz_list" id="unpublished_quizzes">
+        <div class="item-group-container" style="padding-bottom: 0px;">
+          <div class="item-group-condensed">
+
+            <h2 class="ig-header"><i class="icon-mini-arrow-down"></i><%= t('headers.unpublished_quizzes', "Unpublished Assessments") %></h2>
+  <ul class="ig-list" id="unpublished_quizzes">
     <%= render :partial => "quiz_summary", :collection => @unpublished_quizzes, :locals => {:unpublished => true} %>
   </ul>
   <div title="<%= t('headers.publish_multiple_quizzes', "Publish Multiple Assessments") %>" id="publish_multiple_quizzes_dialog" style="display: none;">
@@ -114,26 +125,44 @@ ul.quiz_list li.quiz div.description {
       </div>
     <% end %>
   </div>
+              </div>
+            </div>
 <% end %>
-<% if @assignment_quizzes.empty? && @open_quizzes.empty? %>
-  <h2><%= t('headers.course_quizzes', "Project Assessments") %></h2>
-  <%= t(:no_quizzes, "No assessments available") %>
+    <div class="item-group-container" style="padding-bottom: 70px;">
+      <div class="item-group-condensed">
+    <% if @assignment_quizzes.empty? && @open_quizzes.empty? %>
+        <h2 class="ig-header">
+          <!--<i class="icon-mini-arrow-down"></i>-->
+<%= t('headers.course_quizzes', "Project Assessments") %></h2>
+          <ul class="ig-list">
+            <li>
+              <div class="ig-row ig-row-empty">
+                <div class="ig-empty-msg">
+                  <%= t(:no_quizzes, "No assessments available") %>
+                </div>
+              </div>
+            </li>
+          </ul>
+
 <% end %>
 <% if !@assignment_quizzes.empty? %>
-  <h2><%= t('headers.assignment_quizzes', "Assignment Assessments") %></h2>
-  <ul class="quiz_list">
+            <h2 class="ig-header" style="text-align: center;">
+              <!--<i class="icon-mini-arrow-down"></i>-->
+              <%= t('headers.assignment_quizzes', "Project Assessments") %></h2>
+    <ul class="ig-list">
+
     <%= render :partial => "quiz_summary", :collection => @assignment_quizzes %>
   </ul>
 <% end %>
 <% if !@open_quizzes.empty? %>
-  <h2><%= t('headers.practice_quizzes', "Practice Assessments") %></h2>
-  <ul class="quiz_list">
+            <h2 class="ig-header"><i class="icon-mini-arrow-down"></i><%= t('headers.practice_quizzes', "Practice Assessments") %></h2>
+            <ul class="ig-list">
     <%= render :partial => "quiz_summary", :collection => @open_quizzes %>
   </ul>
 <% end %>
 <% if !@surveys.empty? %>
-  <h2><%= t('headers.surveys', "Surveys") %></h2>
-  <ul class="quiz_list">
+            <h2 class="ig-header"><i class="icon-mini-arrow-down"></i><%= t('headers.surveys', "Surveys") %></h2>
+            <ul class="ig-list">
     <%= render :partial => "quiz_summary", :collection => @surveys %>
   </ul>
 <% end %>
@@ -146,4 +175,6 @@ ul.quiz_list li.quiz div.description {
 <div id="send_invitations">
 
 </div>
+    </div>
+    </div>
 <% end %>

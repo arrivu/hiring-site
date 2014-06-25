@@ -62,7 +62,7 @@
   <% if can_do(@context, @current_user, :read) && !@domain_root_account.settings[:Sublime_course_export_disable] %>
     <% link_to context_url(@context, :course_content_exports_url), :class => 'btn button-sidebar-wide' do %>
       <i class="icon-upload"></i>
-      <%= t('links.export_content', 'Export Course Content') %>
+      <%= t('links.export_content', 'Export project Content') %>
     <% end %>
   <% end %>
 

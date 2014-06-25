@@ -20,7 +20,9 @@
 
 define ['jquery', 'compiled/util/ProximityLoader'], ($, ProximityLoader) ->
 
-  class AvatarWidget
+  class ImageProctoring
+
+    window.onload = ProximityLoader
 
     # Internal: Number of attempts to display widget before script has loaded.
     _attemptedLoads: 0

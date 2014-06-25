@@ -311,17 +311,21 @@ routes.draw do
 
     match 'quizzes/publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
     match 'quizzes/unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
-
+    match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+    match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
     resources :quizzes, :path => :assesments , controller: 'quizzes/quizzes' do
       match 'managed_quiz_data' => 'quizzes/quizzes#managed_quiz_data', :as => :managed_quiz_data
       match 'submission_versions' => 'quizzes/quizzes#submission_versions', :as => :submission_versions
       match 'history' => 'quizzes/quizzes#history', :as => :history
+      resources :candidate_reports
+        match 'candidateReport' => 'candidate_reports#view_reports', :as => :candidateReport
       match 'statistics' => 'quizzes/quizzes#statistics', :as => :statistics
       match 'read_only' => 'quizzes/quizzes#read_only', :as => :read_only
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
-
-
+      match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+      match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
+      match 'imageproctoring/:user_id/show_image' => 'imageproctoring#show_image'
       collection do
         get :fabulous_quizzes
       end
@@ -344,6 +348,8 @@ routes.draw do
         end
       end
       match 'take' => 'quizzes/quizzes#show', :as => :take, :take => '1'
+      resources :files
+        match 'files/proctoring' => 'files#image_proctoring'
       match 'take/questions/:question_id' => 'quizzes/quizzes#show', :as => :question, :take => '1'
       match 'moderate' => 'quizzes/quizzes#moderate', :as => :moderate
       match 'lockdown_browser_required' => 'quizzes/quizzes#lockdown_browser_required', :as => :lockdown_browser_required
@@ -707,6 +713,7 @@ routes.draw do
   match 'project' => 'courses#candidate' , :as => :project, :via => :get
   match 'registerCandidate' => 'invitations#fill_registration_form', :as => :registerCandidate
   match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  #match 'candidateReport/candidate_id/project_id/assessment_id' => 'candidate_reports#view_reports', :as => :candidateReport
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
   # backwards compatibility with the old /dashboard url
@@ -752,6 +759,7 @@ routes.draw do
   match 'files/:id/public_url' => 'files#public_url', :as => :public_url
   match 'files/preflight' => 'files#preflight', :as => :file_preflight
   match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+  match 'files/proctoring' => 'files#image_proctoring'
   resources :assignments, :only => [:index] do
     resources :files, :only => [] do
       match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'

@@ -15,39 +15,39 @@
 //        if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; }
 //        else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; }
 //        document.oncontextmenu=new Function("alert(message);return false")
-        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-
-        if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
-
-        function mischandler(){
-            return false;
-        }
-
-        function mousehandler(e){
-            var myevent = (isNS) ? e : event;
-            var eventbutton = (isNS) ? myevent.which : myevent.button;
-            if((eventbutton==2)||(eventbutton==3)) return false;
-        }
-        document.oncontextmenu = mischandler;
-        document.onmousedown = mousehandler;
-        document.onmouseup = mousehandler;
-        var isCtrl = false;
-        document.onkeyup=function(e)
-        {
-            if(e.which == 17)
-                isCtrl=false;
-        }
-
-        document.onkeydown=function(e)
-        {
-            if(e.which == 17)
-                isCtrl=true;
-            if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
-            {
-// alert(‘Keyboard shortcuts are cool!’);
-                return false;
-            }
-        }//-------------------- initialise the webcam
+//        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+//
+//        if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
+//
+//        function mischandler(){
+//            return false;
+//        }
+//
+//        function mousehandler(e){
+//            var myevent = (isNS) ? e : event;
+//            var eventbutton = (isNS) ? myevent.which : myevent.button;
+//            if((eventbutton==2)||(eventbutton==3)) return false;
+//        }
+//        document.oncontextmenu = mischandler;
+//        document.onmousedown = mousehandler;
+//        document.onmouseup = mousehandler;
+//        var isCtrl = false;
+//        document.onkeyup=function(e)
+//        {
+//            if(e.which == 17)
+//                isCtrl=false;
+//        }
+//
+//        document.onkeydown=function(e)
+//        {
+//            if(e.which == 17)
+//                isCtrl=true;
+//            if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
+//            {
+//// alert(‘Keyboard shortcuts are cool!’);
+//                return false;
+//            }
+//        }//-------------------- initialise the webcam
     </script>
 <% end %>
 <% end %>
@@ -81,7 +81,38 @@
   </div>
 </header>
 
-<% js_bundle :take_quiz%>
+<% js_bundle :take_quiz, :proctoring %>
+<div class="row" style="display: none;">
+  <div class="span4">
+    <h2>Input</h2>
+    <div id="webcam">
+    </div>
+  </div>
+
+  <div class="span4">
+    <h2>Output</h2>
+    <canvas id="canvas"  height="240" width="320"></canvas>
+  </div>
+  <div class="span4">
+    <h2>Face Detection</h2>
+    <canvas id="output"  height="426" width="515"></canvas>
+  </div>
+  <button class="btn btn-primary btn-large" id="takeSnapshot"></button>
+</div>
+
+<div style="position: absolute;z-index: -1;display:none;">
+  <!--<form name="quiz_proctoring_image_form" action="imageproctoring/proctoring" method="post" multipart = "true" id="proctoring_take_image">-->
+    <%= form_for :attachment, :url => context_url(@current_user, :context_files_url, :format => 'json'), :html => {:id => "proctoring_take_image",:multipart => "true", :style => "display: none;"} do |f| %>
+    <video id="video" value="" autoplay="true"></video>
+      <%= f.file_field :uploaded_data %>
+    <canvas id="canvas" name="image"></canvas>
+    <input id="folder_id" type="text" value="<%= @current_user.profile_pics_folder.id %>" />
+    <input id="startbutton " type="submit" />
+<!--</form>-->
+<% end %>
+<!--<img src="http://placekitten.com/g/320/261" id="photo" alt="photo">-->
+</div>
+
 <%= form_tag @quiz_presenter.form_action(session, @current_user), :id => "submit_quiz_form", :class => @quiz_presenter.form_class, :method => "post" do %>
 
 <div id="questions" class="assessing" ondragstart="return false" onselectstart="return false">
@@ -144,6 +175,7 @@
 </div>
 
 <% end %>
+<%  js_env :folder_id => @current_user.profile_pics_folder.id %>
 <div id="navigate_away" title="Navigating Away" style="display:none;">
   <div id="navigate_description"><%= @current_user.name %>,You had navigated away from the test window.
   <br/>

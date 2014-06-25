@@ -109,6 +109,8 @@ class Quizzes::QuizzesController < ApplicationController
       return if value_to_boolean(params[:force_user]) && !force_user
 
       @quiz = @quiz.overridden_for(@current_user)
+      js_env :CHECK_IMAGE_PROCTORING => @quiz.image_proctoring
+      js_env :CHECK_URL => root_url
       add_crumb(@quiz.title, named_context_url(@context, :context_quiz_url, @quiz))
 
       setup_headless
@@ -713,6 +715,8 @@ class Quizzes::QuizzesController < ApplicationController
   def take_quiz
     return unless quiz_submission_active?
     @show_embedded_chat = false
+    js_env :IMAGE_PROCTORING => @quiz.image_proctoring
+    js_env :QUIZ_TIME_LIMIT => @quiz.time_limit
     flash[:notice] = t('notices.less_than_allotted_time', "You started this assessment near when it was due, so you won't have the full amount of time to take the assessment.") if @submission.less_than_allotted_time?
     if params[:question_id] && !valid_question?(@submission, params[:question_id])
       redirect_to course_quiz_url(@context, @quiz) and return

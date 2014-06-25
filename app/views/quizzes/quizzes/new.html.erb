@@ -346,10 +346,24 @@
                   <div class="options" id="percentage_option" style="display:none;">
                     <label class="checkbox" for="percentage_of_marks" style="margin-left: -20px;">
                       Enter the percentage of marks
-                      <input type="text" name="quiz[percentage_of_marks]" id="percentage_of_marks" value="<%= @quiz.percentage_of_marks %>" style="width: 30px;"/>%
+                      <input type="text" name="quiz[percentage_of_marks]" id="percentage_of_marks" value="<%= @quiz.percentage_of_marks %>" style="width: 30px;"/> %
                     </label>
                   </div>
                 </div>
+
+                <!--<div class="option-group">-->
+                  <!--<label class="checkbox" for="allow_negative_marks">-->
+                    <!--<%#= hidden_field_tag "quiz[allow_negative_marks]", "0" %>-->
+                    <!--<input type="checkbox" name="quiz[allow_negative_marks]" <%#= "checked" if @quiz.allow_negative_marks %>  value="1" id="allow_negative_marks" />-->
+                    <!--Allow Negative Marks-->
+                  <!--</label>-->
+                  <!--<div class="options" id="percentage_option">-->
+                    <!--<label class="checkbox" for="negative_mark" style="margin-left: -20px;">-->
+                      <!--Enter negative marks for each questions-->
+                      <!--<input type="text" name="quiz[negative_mark]" id="negative_mark" value="<%#= @quiz.negative_mark %>" style="width: 30px;"/>-->
+                    <!--</label>-->
+                  <!--</div>-->
+                <!--</div>-->
                 <p class="option-caption"><strong><%= t('labels.restrict_quiz', "Assessment Restrictions") %></strong></p>
 
                 <!-- Quiz Restrictions -->
@@ -387,14 +401,17 @@
                         Image Proctoring
                       </label>
                     <div class="options" id="max_img_limits" style="display:none;">
-                      <div>
-                        <label class="checkbox" for="image_proctoring" style="margin-left: -20px;">
-                          Maximum image proctoring limit
-                          <input type="text" name="quiz[maximum_image_proctoring]" id="maximum_image_proctoring" value="<%= (@quiz.maximum_image_proctoring ? @quiz.maximum_image_proctoring : 5) %>"/>
-                        </label>
-                        </div>
+                      <input type="hidden" name="quiz[maximum_image_proctoring]" id="maximum_image_proctoring" value=""/>
+                      <!--<div>-->
+                        <!--<label class="checkbox" for="image_proctoring" style="margin-left: -20px;">-->
+                          <!--&lt;!&ndash;Maximum image proctoring limit&ndash;&gt;-->
+                          <!--<input type="hidden" name="quiz[maximum_image_proctoring]" id="maximum_image_proctoring" value=""/>-->
+                          <!--Maximum image proctoring limit-->
+                          <!---->
+                        <!--</label>-->
+                        <!--</div>-->
                       </div>
-                      <label class="checkbox" for="web_proctoring_option">
+                      <label class="checkbox" for="web_proctoring_option" style="margin-left: -20px;">
                         <%= hidden_field_tag "quiz[web_proctoring]", "0" %>
                         <input type="checkbox" name="quiz[web_proctoring]" <%= "checked" if @quiz.web_proctoring %> value="1" id="web_proctoring_option" />
                         Web Proctoring
@@ -496,10 +513,10 @@
   <div class="form-actions" id="quiz_edit_actions">
     <div class="row-fluid">
       <div class="span6 notify">
-        <label for="quiz_notify_of_update" class="checkbox">
-          <input type="checkbox" name="quiz[notify_of_update]" id="quiz_notify_of_update" value="1" />
-          <%= t('labels.quiz_notify', 'Notify users this assessment has changed') %>
-        </label>
+        <!--<label for="quiz_notify_of_update" class="checkbox">-->
+          <!--<input type="checkbox" name="quiz[notify_of_update]" id="quiz_notify_of_update" value="1" />-->
+          <!--<%#= t('labels.quiz_notify', 'Notify users this assessment has changed') %>-->
+        <!--</label>-->
       </div>
       <div class="span6">
         <%= link_to context_url(@context, :context_quiz_url, @quiz), :class => 'btn', :id => 'cancel_button' do %>
@@ -514,10 +531,10 @@
   <div class="form-actions">
     <div class="row-fluid">
       <div class="span6" style="text-align:left; line-height:28px;">
-        <label for="quiz_notify_of_update" class="checkbox">
-          <input type="checkbox" name="quiz[notify_of_update]" id="quiz_notify_of_update" value="1" />
-          <%= t('labels.quiz_notify', 'Notify users this assessment has changed') %>
-        </label>
+        <!--<label for="quiz_notify_of_update" class="checkbox">-->
+          <!--<input type="checkbox" name="quiz[notify_of_update]" id="quiz_notify_of_update" value="1" />-->
+          <!--<%#= t('labels.quiz_notify', 'Notify users this assessment has changed') %>-->
+        <!--</label>-->
       </div>
       <div class="span6">
         <%= link_to context_url(@context, :context_quiz_url, @quiz), :class => 'btn', :style => 'width:50px', :id => 'cancel_button' do %><%= t('links.cancel', "Cancel") %><% end %>

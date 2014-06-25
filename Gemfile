@@ -13,6 +13,8 @@ end
 
 # enforce the version of bundler itself, to avoid any surprises
 
+#gem 'bundler', '1.6.2'
+
 required_bundler_version = '1.5.1'..'1.5.3'
 gem 'bundler', [">=#{required_bundler_version.first}", "<=#{required_bundler_version.last}"]
 unless required_bundler_version.include?(Bundler::VERSION)
@@ -47,7 +49,7 @@ if CANVAS_RAILS3
   end
 end
 
-# patch bundler to do github over https
+#patch bundler to do github over https
 unless Bundler::Dsl.private_instance_methods.include?(:_old_normalize_options)
   class Bundler::Dsl
     alias_method :_old_normalize_options, :_normalize_options
@@ -57,6 +59,7 @@ unless Bundler::Dsl.private_instance_methods.include?(:_old_normalize_options)
     end
   end
 end
+
 
 platforms :ruby_20, :ruby_21 do
   gem 'syck', '1.0.1'

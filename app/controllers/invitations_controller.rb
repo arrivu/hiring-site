@@ -132,12 +132,12 @@ class InvitationsController < ApplicationController
         ['links', 'user_services']
     )
 
-    if UserProfile.find_by_user_id(@user) != nil
-      @bio_update = UserProfile.find_by_user_id(@user)
+    if UserProfile.find_by_user_id(@user.id) != nil
+      @bio_update = UserProfile.find_by_user_id(@user.id)
       @bio_update.update_attributes(:bio => params[:bio])
     else
       @bio_update = UserProfile.new(:bio => params[:bio])
-      @bio_update.user_id = @user
+      @bio_update.user_id = @user.id
       @bio_update.save!
     end
 
