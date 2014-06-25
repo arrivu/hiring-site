@@ -38,22 +38,7 @@
 
                 // Trigger a snapshot
                 this.addEvent('click', this.snapshotBtn, this.getSnapshot);
-//                (this.profilepic).onclick= function () {
-//                    $('#webcam').show();
-//                    $('#startbutton').show();
-//                };
-//                (this.snapshotBtn).onclick= function () {
-//                    $('#webcam').hide();
-//                    $('#startbutton').hide();
-//                };
                 this.addEvent('click', this.profilepic, this.takeprofilePic);
-//                this.addEvent('click', this.button, this.test);
-
-//				// Trigger face detection (using the glasses option)
-//				this.addEvent('click', this.detectBtn, function () {
-//					App.drawToCanvas('glasses');
-//				});
-
             } else {
                 alert('No options were supplied to the shim!');
             }
@@ -96,7 +81,7 @@
 
             mode: "callback",
             // callback | save | stream
-            swffile: "../dist/fallback/as3/webcam.swf",
+            swffile: "dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
@@ -179,12 +164,6 @@
             $('#canvas_url').hide();
             $('#Edit').hide();
         },
-//        test: function (e) {
-//            alert('ok');
-//            document.getElementById("myForm").submit();
-//
-//        },
-
         getSnapshot: function (e) {
             // If the current context is WebRTC/getUserMedia (something
             // passed back from the shim to avoid doing further feature

@@ -252,11 +252,11 @@ Either use `<a>` with icon desired icon class added or insert `<i>` inside `<but
 // add icon font
 @font-face {
   font-family: 'canvasregular';
-  src: url('/font/canvas/canvas-webfont.eot');
-  src: url('/font/canvas/canvas-webfont.eot?#iefix') format('embedded-opentype'),
-    url('/font/canvas/canvas-webfont.woff') format('woff'),
-    url('/font/canvas/canvas-webfont.ttf') format('truetype'),
-    url('/font/canvas/canvas-webfont.svg#canvasregular') format('svg');
+  src: url('/javascripts/font/canvas/canvas-webfont.eot');
+  src: url('/javascripts/font/canvas/canvas-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/javascripts/font/canvas/canvas-webfont.woff') format('woff'),
+    url('/javascripts/font/canvas/canvas-webfont.ttf') format('truetype'),
+    url('/javascripts/font/canvas/canvas-webfont.svg#canvasregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
