@@ -27,11 +27,10 @@
                 this.ctx.clearRect(0, 0, this.options.width, this.options.height);
                 this.image = this.ctx.getImageData(0, 0, this.options.width, this.options.height);
                 this.snapshotBtn = document.getElementById('startbutton');
-                this.profilepic = document.getElementById('profile_pic_link')
-                this.button = document.getElementById('submitbutton')
+                this.profilepic = document.getElementById('profile_pic_link');
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
-                getUserMedia(this.options, this.success, this.deviceError);
+                getUserMedia(this.options, this.success, this.success);
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
@@ -96,7 +95,7 @@
 
             mode: "callback",
             // callback | save | stream
-            swffile: "../dist/fallback/as3/webcam.swf",
+            swffile: "dist/fallback/jscam.swf",
             quality: 85,
             context: "",
 
@@ -196,15 +195,7 @@
                 App.canvas.width = video.videoWidth;
                 App.canvas.height = video.videoHeight;
                 App.canvas.getContext('2d').drawImage(video, 0, 0);
-                // var dataURL = App.canvas.toDataURL("image/PNG").replace(/^data:image\/(png|jpg);base64,/, "");
-                //var data = ConvertToBase64(dataURL);
-                //document.getElementById("img").src = "data:image/png;base64," + data;
-
                 var dataURL = App.canvas.toDataURL("image/png");
-                //dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-//                console.log(dataURL);
-//                var blob = dataURItoBlob(dataURL);
-//                console.log(blob);
                 var folder_id = $('#folder_id').val();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
@@ -234,13 +225,7 @@
                         $('#Edit').show();
                     }
                 });
-
-
-//                var url = "http://localhost:4000/images/thumbnails/"+#{@attachment.id}+"/"+#{@attachment.uuid}+;
-//                $('#myimg').attr('src',url);
-
-
-               // Otherwise, if the context is Flash, we ask the shim to
+                // Otherwise, if the context is Flash, we ask the shim to
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
