@@ -1,6 +1,6 @@
 require [
   'excanvas'
-  'lib/getUserMedia'
+  '/lib/getUserMedia'
   'glasses/ccv'
   'glasses/face'
   'glasses/stackblur'

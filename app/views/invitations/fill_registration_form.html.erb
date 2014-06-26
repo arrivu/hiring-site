@@ -89,19 +89,21 @@
 
          </div>
       </div>
-      <script src=""
+
       <% if @candidate_filter.academics == TRUE %>
           <div class="profile_links">
             <h2 class="h1 border border-b">Academic Qualifications</h2>
             <div class="show-if-editing">
               <table id="edit_links_table" cellpadding="10" >
                 <thead>
+                <tr>
                 <th>Degree</th>
                 <th>Discipline</th>
                 <th>School/ College</th>
                 <th>Year of Completion</th>
                 <th>%/ CGPA</th>
                 <th></th>
+                </tr>
                 </thead>
                 <tbody id="qual_fields">
                 <% @user_data.each do |link| %>
