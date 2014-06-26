@@ -2728,20 +2728,6 @@ define([
                 $(".found_question:visible").remove();
                 var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
                 var bank = $bank.data('bank_data');
-                var id = bank.id;
-                var $dialog = $findQuestionDialog;
-                var url = $findQuestionDialog.find(".question_bank_questions_url").attr('href');
-                url = $.replaceTags(url, 'question_bank_id',id);
-                $.ajaxJSON(url, 'GET', {}, function(data) {
-                    var id = $('.selected_side_tab a .id').text();
-                    $('.token-input-token').removeClass('token-input-selected-token');
-                    data.last_page = 1;
-                    showQuestions(data,true);
-                });
-            }
-            else {
-                var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
-                var bank = $bank.data('bank_data');
             $('.token-input-token').removeClass('token-input-selected-token');
             $(this).addClass('token-input-selected-token');
             $findQuestionDialog.find(".found_question:visible").remove();
