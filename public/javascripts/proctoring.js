@@ -30,11 +30,13 @@ define([
                 this.snapshotBtn = document.getElementById('questions');
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
+                //var video1 = App.options.videoEl;
+                //video1.autoplay = true ;
                 getUserMedia(this.options, this.success, this.deviceError);
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
-
+                //window.webcam.started = true;
                 // Trigger a snapshot
                 if(ENV.IMAGE_PROCTORING)
                 {
@@ -105,9 +107,10 @@ define([
             append: true,
 
             // noFallback:true, use if you don't require a fallback
-
             width: 320,
             height: 240,
+            //allowscriptaccess : "always",
+            //autoplay : "true",
 
             // option for more flashvars.
             //fallbackmode: "size",
@@ -154,7 +157,7 @@ define([
             if (App.options.context === 'webrtc') {
 
                 var video = App.options.videoEl;
-
+                //video.autoplay = true ;
                 if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 
                     if (video.mozSrcObject !== undefined) { //FF18a
@@ -190,6 +193,7 @@ define([
         },
 
         changeFilter: function () {
+
             if (this.filter_on) {
                 this.filter_id = (this.filter_id + 1) & 7;
             }
@@ -274,10 +278,7 @@ define([
                 // Return our Blob object
                 return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
             }
-
-
         },
-
 
         drawToCanvas: function (effect) {
             var source, glasses, canvas, ctx, pixels, i;

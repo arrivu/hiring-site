@@ -17,7 +17,7 @@ define [
 
     template: template
 
-    defaultSection: I18n.t('all_sections', 'All Sections')
+    defaultSection: I18n.t('all_sections', 'All Batches')
 
     constructor: (options) ->
       super

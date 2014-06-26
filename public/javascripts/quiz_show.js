@@ -180,23 +180,18 @@ define([
               navigator.mozGetUserMedia || navigator.msGetUserMedia);
       }
       var flag = false;
+      //var allow_count = true;
       $("#take_quiz_link").click(function(event){
           event.preventDefault();
           var enable_getusermedia = hasGetUserMedia();
-          //var href = $(this).attr('href');
-          //alert(href);
-          //console.log(ENV.CHECK_URL + href);
-          //var url = ENV.CHECK_URL + href;
-          //var split_url = url.split("?");
-          //console.log(split_url);
-          //var count = 0;
+
+
           if(ENV.CHECK_IMAGE_PROCTORING)
           {
               navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia ||
                   navigator.mozGetUserMedia ||
                   navigator.msGetUserMedia);
               var video = document.getElementsByTagName('video')[0];
-              //alert(video);
               if(enable_getusermedia) {
                   navigator.getUserMedia(
                       // Constraints
@@ -207,17 +202,22 @@ define([
                       // Success Callback
                       function(localMediaStream) {
                           flag=true;
-                          //alert(flag);
-                         //location.replace(split_url[0]);
+                          //localMediaStream.play();
+                          video.src = stream;
+                          video.play();
+
+//                          if(allow_count)
+//                          {
+//                          alert('Now your camera is available.You click take the assessment.');
+//                          }
+//                          allow_count = false;
                       },
 
                       // Error Callback
                       function(err) {
                           event.stopImmediatePropagation();
                           alert('No camera available.You have to enable the camera to take the assessment.');
-                          //return false;
-                          //window.location.reload();
-                          //console.log('The following error occurred when trying to use getUserMedia: ' + err);
+
                       }
                   );
 
@@ -227,86 +227,13 @@ define([
                   alert('Sorry, your browser does not support camera');
 
               }
-              //alert("End"+flag);
+
               return flag;
-              //return false;
-              /*
-               navigator.getUserMedia('video', successCallback, errorCallback);
 
-               function successCallback( stream ) {
-               alert("success");
-               video.src = stream;
-               }
-
-               function errorCallback( error ) {
-               e.stopImmediatePropagation();
-               alert(error.code);
-               window.location.reload();
-               }
-               }
-               else {
-               e.stopImmediatePropagation();
-               alert("Native web camera streaming is not supported in this browser");
-               window.location.reload();
-               }
-               */
           }
 
-          /*
-           if (navigator.getUserMedia) {
-           navigator.getUserMedia
-           (
-           { video: true },
-           function (localMediaStream) {
-           alert("Streaming ");
-
-           }, onFailure);
-           }
-           else {
-           alert('OOPS No browser Support');
-           location.reload();
-           }
-           */
       });
 
-      /*
-      $("#take_quiz_link").click(function(e){
-          //myVid=document.getElementById("video");
-          //myVid.oncanplay=alert("Can start playing video");
-          webcamActive = false;
-          webcamActive = $("#video").attr('src');
-          alert(webcamActive);
-          navigator.getUserMedia = (navigator.getUserMedia ||
-              navigator.webkitGetUserMedia ||
-              navigator.mozGetUserMedia ||
-              navigator.msGetUserMedia);
-
-          if (navigator.getUserMedia) {
-
-              navigator.getUserMedia(
-                {
-                  video: true
-                },
-
-                  function(localMediaStream) {
-
-                      alert("Success");
-                  },
-
-                  function(err) {
-                     alert('The following error occurred when trying to use getUserMedia: ' + err);
-                     location.reload();
-                     console.log('The following error occurred when trying to use getUserMedia: ' + err);
-                  }
-              );
-
-          } else {
-              //alert('Sorry, your browser does not support getUserMedia');
-              alert("No camera available.");
-              location.reload();
-          }
-      });
-      */
     if ($('ul.page-action-list').find('li').length > 0) {
       $('ul.page-action-list').show();
     }

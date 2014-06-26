@@ -5,5 +5,6 @@ require [
   'glasses/face'
   'glasses/stackblur'
   'proctoring'
-    #'compiled/bundles/image_proctoring'
+  #'compiled/bundles/image_proctoring'
 ]
+

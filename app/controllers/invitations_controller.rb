@@ -11,25 +11,57 @@ class InvitationsController < ApplicationController
   end
 
   def get_candidates
+    @students = []
      if authorized_action(@context, @current_user, :read)
       #backcompat limit param
       params[:per_page] ||= params.delete(:limit)
-
       search_params = params.slice(:search_term, :course_section_id, :enrollment_type)
       search_term = search_params[:search_term].presence
       @quiz = Quizzes::Quiz.find(params[:id])
       if search_term
-        students = UserSearch.for_user_in_context(search_term, @context, @current_user, session, search_params)
+        #students = UserSearch.for_user_in_context(search_term, @context, @current_user, session, search_params)
+        users = UserSearch.for_user_in_context(search_term, @context, @current_user, session, search_params)
       elsif params[:course_section_id]
-        students = CourseSection.find(params[:course_section_id]).students.active
+        #students = CourseSection.find(params[:course_section_id]).students.active
+        users = CourseSection.find(params[:course_section_id]).students.active
       else
-        students = @context.participating_students.order_by_sortable_name
+        #students = @context.participating_students.order_by_sortable_name
+        users = @context.participating_students.order_by_sortable_name
       end
-      students = Api.paginate(students, self, api_v1_course_invitations_url(@context,@quiz))
-
-      render :json => students.map { |u|
-        user_json(u, @current_user, session, [], @context)
-      }
+      already_email_sent = Invitation.find_all_by_quiz_id_and_workflow_status(@quiz.id,'active')
+      users.each do |user|
+        @invitation_check = Invitation.find_by_pseudonym_id_and_quiz_id_and_workflow_status(user.id,@quiz.id,'active')
+        if @invitation_check
+          @email_send = true
+        else
+          @email_send = false
+        end
+        params[:send] = @email_send
+        #already_email_sent.each do|check|
+        #  if user.id  == check.pseudonym_id
+        #    @email_send = true
+        #    #break
+        #  #else
+        #    #@email_send = false
+        #  end
+        #  params[:send] = @email_send
+        #  @email_send = ""
+        #end
+        @invitation_send_json = api_json(user, session, API_USER_JSON_OPTS).tap do |json|
+          json[:id] = user.id
+          json[:name] = user.name
+          json[:login_id] = user.pseudonym.unique_id
+          json[:email_send] = params[:send]
+        end
+        @students << @invitation_send_json
+      end
+      @students = Api.paginate(@students, self, api_v1_course_invitations_url(@context,@quiz))
+      respond_to do |format|
+        format.json  { render :json => @students }
+      end
+      #render :json => students.map { |u|
+      #  user_json(u, @current_user, session, [], @context)
+      #}
     end
   end
 
@@ -43,8 +75,9 @@ class InvitationsController < ApplicationController
         @invitation = Invitation.find_by_quiz_id_and_pseudonym_id_and_workflow_status(@quiz.id,candidate_pseudonym.id,'active')
         unless @invitation
           @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
-          send_invitation_email(@context,candidate_pseudonym,candidate_pseudonym.user,@quiz)
+
         end
+        send_invitation_email(@context,candidate_pseudonym,candidate_pseudonym.user,@quiz)
       end
       respond_to do |format|
         format.json  { render :json => @invitation }

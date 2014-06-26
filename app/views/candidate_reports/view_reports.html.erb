@@ -7,6 +7,22 @@
 <style>
     @media print{
         .print{display: none;}
+        /*@page*/
+        /*{*/
+            /*size: auto;   *//* auto is the current printer page size */
+            /*margin: 0mm;  *//* this affects the margin in the printer settings */
+        /*}*/
+
+        /*body*/
+        /*{*/
+            /*background-color:#FFFFFF;*/
+            /*border: solid 1px black ;*/
+            /*margin: 0px;  *//* the margin on the content before printing */
+        /*}*/
+        /*#header, #nav, .noprint*/
+        /*{*/
+            /*display: none;*/
+        /*}*/
     }
 
 
@@ -34,21 +50,19 @@
     </h3>
   </header>
   <% if @submission.allow_personal_detail %>
-  <table>
-    <tbody>
-    <tr>
-      <td class="span9">
-        <h3>Personal Information</h3>
-      </td>
-      <td colspan="2">
-       <img src="<%= @candidate_detail[:avatar_image_url] %>">
-      </td>
-    </tr>
-    </tbody>
+      <table>
+        <tbody>
+        <tr>
+          <td class="span9">
+            <h3>Personal Information</h3>
+          </td>
+        </tr>
+        </tbody>
 
-    </table>
-  <table class="table-view">
-    <% if @candidate_detail[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td></tr><% end %>
+      </table>
+
+      <table class="table-view">
+    <% if @candidate_detail[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td><td valign="top" rowspan="5"><img src="<%= @candidate_detail[:avatar_image_url] %>"></td></tr><% end %>
     <% if @candidate_detail[:birthdate] != nil %><tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr><% end %>
     <% if @candidate_detail[:gender] != nil %><tr><td style="font-weight: bold;">Gender</td><td><%= @candidate_detail[:gender] %></td></tr><% end %>
     <% if @candidate_detail[:phone] != nil %><tr><td style="font-weight: bold;">Mobile Number</td><td><%= @candidate_detail[:phone] %></td></tr><% end %>
@@ -139,11 +153,13 @@
         <tr>
           <td><%= @quiz.quiz_title %></td>
           <td><%= @quiz.points_possible %></td>
-          <td><%= @submission.score %> / <%= @quiz.points_possible %></td>
+          <td>
+          <% if @submission.score %><%= @submission.score %><% else %> 0 <% end %>/ <%= @quiz.points_possible %></td>
           <td><% if @quiz.points_possible && @submission.score %>
                 <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
                 <%= percentage.round(2) %> %
-            <% end %></td>
+            <% end %>
+          </td>
           <td><%= duration_in_minutes(@submission.duration) %></td>
 
           <td>
@@ -169,18 +185,21 @@
   <% if @submission.allow_image_proctoring %>
       <h3>Proctoring Snapshots</h3>
       <div style="width: 100%;margin-left:65px;">
-         <% @image_proctoring_find.each do |image| %>
-            <div style="width:200px;display: inline-block;border:1px solid black;margin:5px 7px 8px 5px;">
-              <img src="<%= image.imageData %>" width="100" height="50"/><br/>
-              Time elapsed : <%= image.time_elapsed %>
-            </div>
-          <% end %>
+  <% @image_proctoring.each do |image| %>
+      <% image.each do |image_snap| %>
+    <div style="width:200px;display: inline-block;border:1px solid black;margin:5px 7px 8px 5px;">
+      <img src="<%= image_snap[:image_url] %>"><br/>
+      Time elapsed : <%= image_snap[:image_time] %>
+    </div>
+  <% end %>
+  <% end %>
       </div>
   <% end %>
 </div>
 </div>
 <script type="text/javascript" >function printpage()
 {
-    window.print()
+    window.print();
+
 }
 </script>

@@ -2784,6 +2784,7 @@ define([
                 }
             });
 //// arrivu changes
+            $('.token-input-token').removeClass('token-input-selected-token');
             $findQuestionDialog.find(".bank").removeClass('selected');
             $findQuestionDialog.find(".selected_side_tab").removeClass('selected_side_tab');
             $(this).addClass('selected_side_tab');
