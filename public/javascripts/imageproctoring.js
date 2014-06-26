@@ -35,7 +35,7 @@
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
-
+                console.log(App.options.context);
                 // Trigger a snapshot
                 this.addEvent('click', this.snapshotBtn, this.getSnapshot);
 //                (this.profilepic).onclick= function () {
@@ -96,7 +96,7 @@
 
             mode: "callback",
             // callback | save | stream
-            swffile: "dist/fallback/jscam_canvas_only.swf",
+            swffile: "/javascripts/dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
