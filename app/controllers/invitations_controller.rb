@@ -28,7 +28,7 @@ class InvitationsController < ApplicationController
         #students = @context.participating_students.order_by_sortable_name
         users = @context.participating_students.order_by_sortable_name
       end
-      already_email_sent = Invitation.find_all_by_quiz_id_and_workflow_status(@quiz.id,'active')
+
       users.each do |user|
         @invitation_check = Invitation.find_by_pseudonym_id_and_quiz_id_and_workflow_status(user.id,@quiz.id,'active')
         if @invitation_check
@@ -37,16 +37,7 @@ class InvitationsController < ApplicationController
           @email_send = false
         end
         params[:send] = @email_send
-        #already_email_sent.each do|check|
-        #  if user.id  == check.pseudonym_id
-        #    @email_send = true
-        #    #break
-        #  #else
-        #    #@email_send = false
-        #  end
-        #  params[:send] = @email_send
-        #  @email_send = ""
-        #end
+
         @invitation_send_json = api_json(user, session, API_USER_JSON_OPTS).tap do |json|
           json[:id] = user.id
           json[:name] = user.name

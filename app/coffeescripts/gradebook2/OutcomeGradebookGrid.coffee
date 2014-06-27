@@ -156,7 +156,7 @@ define [
 
         _.extend({
           id: 'student',
-          name: I18n.t('learning_outcome', 'Learning Outcome')
+          name: 'Outcome'
           field: 'student'
           cssClass: 'outcome-student-cell'
           headerCssClass: 'outcome-student-header-cell'
@@ -215,7 +215,7 @@ define [
       # Returns nothing.
       saveOutcomes: (outcomes) ->
         [type, id] = ENV.context_asset_string.split('_')
-        url = "/#{type}s/#{id}/outcomes"
+        url = "/projects/#{id}/outcomes"
         Grid.outcomes = _.reduce(outcomes, (result, outcome) ->
           outcome.url = url
           result["outcome_#{outcome.id}"] = outcome
