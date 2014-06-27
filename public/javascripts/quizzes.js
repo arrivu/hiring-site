@@ -2413,8 +2413,9 @@ define([
                            for(idx in banks) {
                                if (banks[idx].assessment_question_bank.assessment_question_count) {
                                 $('.question_count_display').css('display','block');
-                                $('.question_count_display').text(banks[idx].assessment_question_bank.assessment_question_count +
-                                    " Questions Available in " + $('.selected .title').text() +  " with Tag " +  $('.token-input-selected-token').text());
+                                $("#ques_no").text(banks[idx].assessment_question_bank.assessment_question_count);
+                                $("#bank_name").text($('.selected .title').text());
+                                $("#tag_name").text($('.token-input-selected-token').text());
                                }
                                else {
                                 $('.question_count_display').css('display','none');
@@ -2422,7 +2423,7 @@ define([
                            }
                     })
                     });
-
+                   $('.question_count_display').css('display','none');
 
             $('#find_bank_dialog').on('click', '.token-input-selected-token', function(event){
                 $('.token-input-token').removeClass('token-input-selected-token');
