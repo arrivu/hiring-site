@@ -30,7 +30,7 @@
                 this.profilepic = document.getElementById('profile_pic_link');
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
-                getUserMedia(this.options, this.success, this.success);
+                getUserMedia(this.options, this.success, this.deviceError);
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
@@ -87,12 +87,15 @@
 
             // noFallback:true, use if you don't require a fallback
 
-            width: 200,
-            height: 200,
+            width: 320,
+            height: 240,
+
+            // option for more flashvars.
+            //fallbackmode: "size",
 
             mode: "callback",
             // callback | save | stream
-			swffile: "../dist/fallback/jscam_canvas_only.swf",
+			swffile: "dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
@@ -154,7 +157,7 @@
                 };
 
             } else{
-                // flash context
+                console.log(App.options.context);
             }
 
         },
@@ -226,6 +229,8 @@
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
+                alert('flash');
+                console.log(App.options.context);
                 window.webcam.capture();
                 App.changeFilter();
             }
