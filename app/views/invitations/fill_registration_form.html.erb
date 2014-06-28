@@ -15,7 +15,7 @@
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div style="width: 100%;float: left;">
-        <div class="" style="width: 80%;float: left;">
+        <div class="" style="width: 75%;float: left;">
           <table class="table">
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>

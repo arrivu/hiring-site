@@ -10,7 +10,7 @@
             // getUserMedia() feature detection
             navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if ( !! navigator.getUserMedia_) {
+            if (!! navigator.getUserMedia_) {
 
 
                 // constructing a getUserMedia config-object and 
@@ -133,16 +133,16 @@
             }
         }
     };
-	
+
 
 
 }(this, document));
 
 function makesource(mode, options) {
 	if(mode == 'size') {
-		return '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '&amp;width=' + options.width + '&amp;height=' + options.height + '" /><param name="allowScriptAccess" value="always" /></object>';	
+		return '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '&amp;width=' + options.width + '&amp;height=' + options.height + '" /><param name="allowScriptAccess" value="always" /></object>';
 	}
-	else { //standard 
+	else { //standard
 		return '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
 	}
 }
