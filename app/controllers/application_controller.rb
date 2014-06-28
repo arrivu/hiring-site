@@ -260,7 +260,7 @@ class ApplicationController < ActionController::Base
     if context.is_a?(Account)
       t "#application.notices.page_disabled_for_account", "That page has been disabled for this account"
     elsif context.is_a?(Course)
-      t "#application.notices.page_disabled_for_course", "That page has been disabled for this course"
+      t "#application.notices.page_disabled_for_course", "That page has been disabled for this Project"
     elsif context.is_a?(Group)
       t "#application.notices.page_disabled_for_group", "That page has been disabled for this group"
     else
@@ -327,10 +327,10 @@ class ApplicationController < ActionController::Base
         if @context.is_a?(Course) && @context_enrollment
           start_date = @context_enrollment.enrollment_dates.map(&:first).compact.min if @context_enrollment.state_based_on_date == :inactive
           if @context.claimed?
-            @unauthorized_message = t('#application.errors.unauthorized.unpublished', "This course has not been published by the instructor yet.")
+            @unauthorized_message = t('#application.errors.unauthorized.unpublished', "This Project has not been published by the instructor yet.")
             @unauthorized_reason = :unpublished
           elsif start_date && start_date > Time.now.utc
-            @unauthorized_message = t('#application.errors.unauthorized.not_started_yet', "The course you are trying to access has not started yet.  It will start %{date}.", :date => TextHelper.date_string(start_date))
+            @unauthorized_message = t('#application.errors.unauthorized.not_started_yet', "The Project you are trying to access has not started yet.  It will start %{date}.", :date => TextHelper.date_string(start_date))
             @unauthorized_reason = :unpublished
           end
         end

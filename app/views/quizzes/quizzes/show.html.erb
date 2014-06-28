@@ -6,6 +6,7 @@
 
 <% js_block do %>
     <script>
+
 //    var message="Right Click Disabled!";
 //    function clickIE4(){ if (event.button==2){ alert(message); return false; } }
 //    function clickNS4(e){ if (document.layers||document.getElementById&&!document.all)
@@ -369,9 +370,9 @@
               <i class="icon-edit"><span class="screenreader-only"><%= admin_edit_title %></span></i> <%= admin_edit_title %>
             </a>
               <%else%>
-              <a href="<%= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>
-                Back to assessments
-              </a>
+              <!--<a href="<%#= course_quizzes_path(@context) %>" class='btn edit_assignment_link quiz-edit-button'>-->
+                <!--Back to assessments-->
+              <!--</a>-->
           <% end %>
 
           <% if can_do(@quiz, @current_user, :update) || can_do(@quiz, @current_user, :grade) || can_do(@quiz, @current_user, :review_grades) %>
@@ -511,15 +512,16 @@
           </div>
         <% elsif @submission && @submission.untaken? %>
           <div class="take_quiz_button">
-            <%= link_to_resume_poll('class' => "btn btn-primary") %>
+            <%= link_to_resume_poll('class' => "btn btn-primary" , 'id' => "take_quiz_link") %>
           </div>
         <% elsif can_do(@quiz, @current_user, :submit) && !@lockdown_browser_authorized_to_view %>
           <div class="take_quiz_button">
-            <%= link_to_take_or_retake_poll('class' => "btn btn-primary", 'id' => "take_quiz_link") %>
+            <%= link_to_take_or_retake_poll('class' => "btn btn-primary", 'id' => "take_quiz_link")  %>
           </div>
         <% end %>
       <% end %>
     <% end %>
+    <video id="video" autoplay="true" style="display: none;"></video>
 
     <div id="quiz-submission-version-table"></div>
 

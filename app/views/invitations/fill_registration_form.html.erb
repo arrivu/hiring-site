@@ -15,7 +15,7 @@
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div style="width: 100%;float: left;">
-        <div class="" style="width: 80%;float: left;">
+        <div class="" style="width: 75%;float: left;">
           <table class="table">
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
@@ -71,7 +71,7 @@
                        <input id="folder_id" type="hidden" value="<%= @user.profile_pics_folder.id %>" />
                     <input type="button" id="startbutton" name="submit" value="take picture" style="display:none;"><br>
 
-                    <canvas id="canvas" style="display:none;"></canvas>
+                    <canvas id="canvas" ></canvas>
 <div id="canvas_url" >
             <a href="#" id="profile_pic_link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>" style="position: relative;">
             <% if @user.avatar_image_url.nil? %>
@@ -89,18 +89,21 @@
 
          </div>
       </div>
+
       <% if @candidate_filter.academics == TRUE %>
           <div class="profile_links">
             <h2 class="h1 border border-b">Academic Qualifications</h2>
             <div class="show-if-editing">
               <table id="edit_links_table" cellpadding="10" >
                 <thead>
+                <tr>
                 <th>Degree</th>
                 <th>Discipline</th>
                 <th>School/ College</th>
                 <th>Year of Completion</th>
                 <th>%/ CGPA</th>
                 <th></th>
+                </tr>
                 </thead>
                 <tbody id="qual_fields">
                 <% @user_data.each do |link| %>

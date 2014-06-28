@@ -151,9 +151,13 @@ class ContentMigrationsController < ApplicationController
       render :json => content_migration_json_hash
     else
       @plugins = ContentMigration.migration_plugins(true).sort_by {|p| [p.metadata(:sort_order) || SortLast, p.metadata(:select_text)]}
-
-      options = @plugins.map{|p| {:label => p.metadata(:select_text), :id => p.id}}
-
+      #options = @plugins.map{|p| {:label => p.metadata(:select_text), :id => p.id}}
+      #arrivu changes
+      filter_label = {}
+      filter_label['moodle_converter'] = true
+      filter_label['common_cartridge_importer'] = true
+      options = (@plugins.select {|p| !filter_label.has_key?(p.id) }).map {|p| {:label => p.metadata(:select_text), :id => p.id}}
+      #arrivu changes
       js_env :UPLOAD_LIMIT => @context.storage_quota
       js_env :SELECT_OPTIONS => options
       js_env :QUESTION_BANKS => @context.assessment_question_banks.except(:includes).select([:title, :id]).active

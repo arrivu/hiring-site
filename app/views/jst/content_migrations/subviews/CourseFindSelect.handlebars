@@ -1,8 +1,8 @@
-<label class="control-label" for="courseSearchField"><strong>{{#t "search_label"}}Search for a course{{/t}}</strong></label>
+<label class="control-label" for="courseSearchField"><strong>{{#t "search_label"}}Search for a project{{/t}}</strong></label>
 
 <div class="controls">
   <select id="courseSelect" class="span3">
-    <option value="default">{{#t "select_default"}}Select a course{{/t}}</option>
+    <option value="default">{{#t "select_default"}}Select a project{{/t}}</option>
      {{#eachProp terms}}
      <optgroup label="{{property}}">
          {{#each value}}
@@ -12,11 +12,11 @@
      {{/eachProp}}
   </select>
   {{#t "or"}}or{{/t}}
-  <input id="courseSearchField" type="text" placeholder="{{#t "course_name"}}Course name{{/t}}" name="courseSearchField" class='span3'/>
+  <input id="courseSearchField" type="text" placeholder="Project name" name="courseSearchField" class='span3'/>
   <br>
   <label class="checkbox">
     {{checkbox "include_completed_courses" checked=include_concluded}}
-    {{#t 'include_completed_courses'}}Include completed courses{{/t}}
+    {{#t 'include_completed_courses'}}Include completed projects{{/t}}
   </label>
 </div>
 

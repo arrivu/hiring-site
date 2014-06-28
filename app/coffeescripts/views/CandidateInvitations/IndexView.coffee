@@ -75,7 +75,7 @@ define [
 
         error: (response) ->
           $('.paginatedLoadingIndicator').hide()
-          $.flashMessage "There is some error while saving reward! " + response
+          $.flashMessage "There is some error while sending invitations! "
       return false
 
     onFail: (xhr) =>
