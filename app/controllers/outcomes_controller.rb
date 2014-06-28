@@ -47,7 +47,7 @@ def index
 
   def show
     if @context.respond_to?(:large_roster?) && @context.large_roster?
-      flash[:notice] = t "#application.notices.page_disabled_for_course", "That page has been disabled for this course"
+      flash[:notice] = t "#application.notices.page_disabled_for_course", "That page has been disabled for this Project"
       redirect_to named_context_url(@context, :context_outcomes_path)
       return
     end

@@ -179,9 +179,11 @@ define([
               navigator.mozGetUserMedia || navigator.msGetUserMedia);
       }
       var flag = false;
+      //var allow_count = true;
       $("#take_quiz_link").click(function(event){
           event.preventDefault();
           var enable_getusermedia = hasGetUserMedia();
+
 
           if(ENV.CHECK_IMAGE_PROCTORING)
           {
@@ -189,7 +191,6 @@ define([
                   navigator.mozGetUserMedia ||
                   navigator.msGetUserMedia);
               var video = document.getElementsByTagName('video')[0];
-              //alert(video);
               if(enable_getusermedia) {
                   navigator.getUserMedia(
                       // Constraints
@@ -200,8 +201,15 @@ define([
                       // Success Callback
                       function(localMediaStream) {
                           flag=true;
-                          alert('Now your camera is available.You click take the assessment.');
+                          //localMediaStream.play();
+                          video.src = stream;
+                          video.play();
 
+//                          if(allow_count)
+//                          {
+//                          alert('Now your camera is available.You click take the assessment.');
+//                          }
+//                          allow_count = false;
                       },
 
                       // Error Callback

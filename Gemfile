@@ -45,7 +45,7 @@ if CANVAS_RAILS3
   end
 end
 
-# patch bundler to do github over https
+#patch bundler to do github over https
 unless Bundler::Dsl.private_instance_methods.include?(:_old_normalize_options)
   class Bundler::Dsl
     alias_method :_old_normalize_options, :_normalize_options

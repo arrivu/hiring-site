@@ -69,9 +69,22 @@ require [
   $logo = $('#header-logo')
   if $logo.length > 0 and $logo.css('background-image').match(/\/canvas\/header_canvas_logo\.png/)
     $logo.addClass('original')
-
+#  alert("ok")
   ##
   # Backbone routes
+#  window.addEventListener "DOMContentLoaded", ->
+#
+#    # Grab elements, create settings, etc.
+#  canvas = document.getElementById("canvas")
+#  context = canvas.getContext("2d")
+#  video = document.getElementById("video")
+#  videoObj = video: true
+#  errBack = (error) ->
+#    console.log "Video capture error: ", error.code
+#    return
+#
+#  return
+
   $('body').on 'click', '[data-pushstate]', (event) ->
     event.preventDefault()
     Backbone.history.navigate $(this).attr('href'), yes

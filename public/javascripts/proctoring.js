@@ -30,14 +30,17 @@ define([
                 this.snapshotBtn = document.getElementById('questions');
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
+                //var video1 = App.options.videoEl;
+                //video1.autoplay = true ;
+                if(ENV.IMAGE_PROCTORING)
+                {
                 getUserMedia(this.options, this.success, this.deviceError);
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
-
+                //window.webcam.started = true;
                 // Trigger a snapshot
-                if(ENV.IMAGE_PROCTORING)
-                {
+
                     var max_time_limit = 100000;
                     if(ENV.QUIZ_TIME_LIMIT <= 10)
                     {
@@ -107,6 +110,8 @@ define([
             // noFallback:true, use if you don't require a fallback
             width: 320,
             height: 240,
+            //allowscriptaccess : "always",
+            //autoplay : "true",
 
             // option for more flashvars.
             //fallbackmode: "size",
@@ -153,7 +158,7 @@ define([
             if (App.options.context === 'webrtc') {
 
                 var video = App.options.videoEl;
-
+                //video.autoplay = true ;
                 if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 
                     if (video.mozSrcObject !== undefined) { //FF18a

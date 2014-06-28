@@ -35,6 +35,7 @@ class Quizzes::QuizzesController < ApplicationController
 
   def index
     if authorized_action(@context, @current_user, :read)
+      #js_env :IMG_PROCTORING => @quiz.image_proctoring
       if @context.root_account.enable_fabulous_quizzes?
         redirect_to fabulous_quizzes_course_quizzes_path
       end
