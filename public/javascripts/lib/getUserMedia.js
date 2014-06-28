@@ -10,7 +10,7 @@
             // getUserMedia() feature detection
             navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if (false) {
+            if (!! navigator.getUserMedia_) {
 
 
                 // constructing a getUserMedia config-object and 
@@ -77,24 +77,25 @@
 
                     // Fallback to flash
                     var source, el, cam;
-		    if(options.fallbackmode === undefined) {
-			//old fallback source; quality and callback parameter
-			source = makesource('standard', options);
-		    }
-		    else { source = makesource(options.fallbackmode, options); }
-                                        el = document.getElementById(options.el);
+
+                    source = '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
+                    el = document.getElementById(options.el);
                     el.innerHTML = source;
 
 
                     (function register(run) {
 
                         cam = document.getElementById('XwebcamXobjectX');
+
+
                         if (cam.capture !== undefined) {
 
                             // Simple callback methods are not allowed 
                             options.capture = function (x) {
+
                                 try {
                                     return cam.capture(x);
+
                                 } catch (e) {}
                             };
                             options.save = function (x) {
@@ -107,6 +108,7 @@
                             options.setCamera = function (x) {
                                 try {
                                     return cam.setCamera(x);
+
                                 } catch (e) {}
                             };
                             options.getCameraList = function () {
@@ -126,7 +128,7 @@
                             // Flash interface not ready yet 
                             window.setTimeout(register, 1000 * (4 - run), run - 1);
                         }
-                    }(3));
+                    }(20));
 
                 }
 
@@ -134,15 +136,4 @@
         }
     };
 
-
-
 }(this, document));
-
-function makesource(mode, options) {
-	if(mode == 'size') {
-		return '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '&amp;width=' + options.width + '&amp;height=' + options.height + '" /><param name="allowScriptAccess" value="always" /></object>';
-	}
-	else { //standard
-		return '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
-	}
-}

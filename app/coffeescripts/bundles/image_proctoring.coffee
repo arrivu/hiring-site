@@ -1,8 +1,8 @@
 require [
-  'excanvas'
-  'lib/getUserMedia'
-  'glasses/ccv'
-  'glasses/face'
-  'glasses/stackblur'
+  'javascripts/excanvas'
+  'javascripts/lib/getUserMedia'
+  'javascripts/glasses/ccv'
+  'javascripts/glasses/face'
+  'javascripts/glasses/stackblur'
   'imageproctoring'
 ]

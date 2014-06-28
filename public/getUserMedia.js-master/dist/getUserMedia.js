@@ -1,6 +1,6 @@
 /*! getUserMedia - v0.1.0 - 2012-08-19
- * https://github.com/addyosmani/getUserMedia.js
- * Copyright (c) 2012 addyosmani; Licensed MIT */
+* https://github.com/addyosmani/getUserMedia.js
+* Copyright (c) 2012 addyosmani; Licensed MIT */
 
 ;(function (window, document) {
     "use strict";
@@ -16,7 +16,7 @@
             if ( !! navigator.getUserMedia_) {
 
 
-                // constructing a getUserMedia config-object and
+                // constructing a getUserMedia config-object and 
                 // an string (we will try both)
                 var option_object = {};
                 var option_string = '';
@@ -92,7 +92,7 @@
 
                         if (cam.capture !== undefined) {
 
-                            // Simple callback methods are not allowed
+                            // Simple callback methods are not allowed 
                             options.capture = function (x) {
                                 try {
                                     return cam.capture(x);
@@ -124,7 +124,7 @@
                             // options.debug("error", "Flash movie not yet registered!");
                             errorCallback();
                         } else {
-                            // Flash interface not ready yet
+                            // Flash interface not ready yet 
                             window.setTimeout(register, 1000 * (4 - run), run - 1);
                         }
                     }(3));
