@@ -68,7 +68,7 @@ class JSCam {
 			}
 
 			camera.setQuality(0, 100);
-			camera.setMode(1280, 960, 24, false);
+			camera.setMode(Stage.width, Stage.height, 24, false);
 
 			ExternalInterface.addCallback("capture", null, capture);
 
@@ -90,8 +90,12 @@ class JSCam {
 	public static function capture(time:Number):Boolean {
 
 		if (null != camera) {
-            
-			buffer = new BitmapData(camera.width, camera.height);
+
+			if (null != buffer) {
+				return false;
+			}
+
+			buffer = new BitmapData(Stage.width, Stage.height);
 			ExternalInterface.call('webcam.debug', "notify", "Capturing started.");
 
 			if ("stream" == mode) {
@@ -169,20 +173,34 @@ class JSCam {
 					ExternalInterface.call("webcam.onSave", row);
 				}
 
-			} else if ("imagedata" == mode) {
-                var imagedata = new Array();
-                var rgba;
-				for (var row = 0; row < buffer.height; ++row) {
-					for (var col=0; col < buffer.width; ++col) {
-						rgba = buffer.getPixel32(col, row);
-                        imagedata.push(rgba);
-					}
-				}
-                ExternalInterface.call("webcam.onSave", imagedata);
 			} else if ("save" == mode) {
-                ExternalInterface.call("console.log", "save");
-                var e = new JPGEncoder(quality);
-                return e.encode(JSCam.buffer);
+
+				if (file) {
+
+					var e = new JPGEncoder(quality);
+
+					var sal = {};
+					sal.sendAndLoad = XML.prototype.sendAndLoad;
+					sal.contentType = "image/jpeg";
+					sal.toString = function() {
+						return e.encode(JSCam.buffer);
+					}
+
+					var doc = new XML();
+					doc.onLoad = function(success) {
+						ExternalInterface.call("webcam.onSave", "done");
+					}
+
+					sal.sendAndLoad(file, doc);
+/*
+					ExternalInterface.call('webcam.debug', "error", "No save mode compiled in.");
+					return false;
+*/
+				} else {
+					ExternalInterface.call('webcam.debug', "error", "No file name specified.");
+					return false;
+				}
+
 			} else {
 				ExternalInterface.call('webcam.debug', "error", "Unsupported storage mode.");
 			}

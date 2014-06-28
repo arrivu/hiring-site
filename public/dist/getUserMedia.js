@@ -1,4 +1,7 @@
-/*global navigator, document */
+/*! getUserMedia - v0.1.0 - 2012-08-19
+* https://github.com/addyosmani/getUserMedia.js
+* Copyright (c) 2012 addyosmani; Licensed MIT */
+
 ;(function (window, document) {
     "use strict";
 
@@ -10,7 +13,7 @@
             // getUserMedia() feature detection
             navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if (false) {
+            if ( !! navigator.getUserMedia_) {
 
 
                 // constructing a getUserMedia config-object and 
@@ -77,18 +80,16 @@
 
                     // Fallback to flash
                     var source, el, cam;
-		    if(options.fallbackmode === undefined) {
-			//old fallback source; quality and callback parameter
-			source = makesource('standard', options);
-		    }
-		    else { source = makesource(options.fallbackmode, options); }
-                                        el = document.getElementById(options.el);
+
+                    source = '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
+                    el = document.getElementById(options.el);
                     el.innerHTML = source;
 
 
                     (function register(run) {
 
                         cam = document.getElementById('XwebcamXobjectX');
+
                         if (cam.capture !== undefined) {
 
                             // Simple callback methods are not allowed 
@@ -134,15 +135,4 @@
         }
     };
 
-
-
 }(this, document));
-
-function makesource(mode, options) {
-	if(mode == 'size') {
-		return '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '&amp;width=' + options.width + '&amp;height=' + options.height + '" /><param name="allowScriptAccess" value="always" /></object>';
-	}
-	else { //standard
-		return '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
-	}
-}

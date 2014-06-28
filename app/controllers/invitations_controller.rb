@@ -88,7 +88,6 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers = false
     clear_crumbs
-
   end
 
   def fill_registration_form
