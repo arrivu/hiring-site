@@ -222,9 +222,41 @@
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
-                console.log(App.options.context);
                 window.webcam.capture();
                 App.changeFilter();
+                dataURL = App.canvas.toDataURL("image/png");
+                console.log(dataURL);
+                folder_id = $('#folder_id').val();
+                file= dataURLtoBlob(dataURL);
+                // Create new form data
+                fd = new FormData();
+                // Append our Canvas image file to the form data
+                fd.append("attachment[uploaded_data]", file);
+                fd.append("attachment[folder_id]", folder_id);
+                fd.append("[duplicate_handling]", "overwrite");
+                fd.append("[context_code]", ENV.context_asset_string);
+                fd.append("attachment[filename]", "profile.jpg");
+
+                // And send it
+                $.ajax({
+                    url: "imageproctoring/registration_image",
+                    type: "POST",
+                    data: fd ,
+                    processData: false,
+                    contentType: false,
+                    dataType: "json",
+                    success: function(result){
+//                        var URL = result.avatar.url;
+                        console.log(result);
+                        $('#webcam').hide();
+                        $('#startbutton').hide();
+                        $('#myimg').attr('src', "/files/"+result.attachment.id+"/download?download_frd=1&verifier="+result.attachment.uuid);
+                        $('#canvas_url').show();
+                        $('#Edit').show();
+                    }
+                });
+
+
             }
             else{
                 alert('No context was supplied to getSnapshot()');

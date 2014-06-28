@@ -332,9 +332,9 @@ class ImageproctoringController < ApplicationController
         ),
         :deleted_attachment_ids => deleted_attachments.map(&:id)
     }
-    if folder.name == 'profile pictures'
-      json[:avatar] = avatar_json(@current_user, attachment, { :type => 'attachment' })
-    end
+    #if folder.name == 'profile pictures'
+    #  json[:avatar] = avatar_json(@current_user, attachment, { :type => 'attachment' })
+    #end
 
     render :json => json, :as_text => true
   end
