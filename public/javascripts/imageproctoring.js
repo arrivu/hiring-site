@@ -96,7 +96,7 @@
 
             mode: "callback",
             // callback | save | stream
-			swffile: "dist/fallback/jscam_canvas_only.swf",
+			swffile: "../dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
@@ -158,7 +158,7 @@
                 };
 
             } else{
-                console.log(App.options.context);
+                // flash context
             }
 
         },
@@ -179,18 +179,11 @@
             $('#canvas_url').hide();
             $('#Edit').hide();
         },
-//        test: function (e) {
-//            alert('ok');
-//            document.getElementById("myForm").submit();
-//
-//        },
-
         getSnapshot: function (e) {
             // If the current context is WebRTC/getUserMedia (something
             // passed back from the shim to avoid doing further feature
             // detection), we handle getting video/images for our canvas
             // from our HTML5 <video> element.
-
             if (App.options.context === 'webrtc') {
                 var video = document.getElementsByTagName('video')[0];
                 App.canvas.width = video.videoWidth;
@@ -226,11 +219,10 @@
                         $('#Edit').show();
                     }
                 });
-                // Otherwise, if the context is Flash, we ask the shim to
+               // Otherwise, if the context is Flash, we ask the shim to
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
-                alert('flash');
                 console.log(App.options.context);
                 window.webcam.capture();
                 App.changeFilter();

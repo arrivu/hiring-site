@@ -71,7 +71,7 @@
                        <input id="folder_id" type="hidden" value="<%= @user.profile_pics_folder.id %>" />
                     <input type="button" id="startbutton" name="submit" value="take picture" style="display:none;"><br>
 
-                    <canvas id="canvas" style="display:none;"></canvas>
+                    <canvas id="canvas" ></canvas>
 <div id="canvas_url" >
             <a href="#" id="profile_pic_link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>" style="position: relative;">
             <% if @user.avatar_image_url.nil? %>
