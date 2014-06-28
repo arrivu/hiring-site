@@ -17,7 +17,8 @@
     <span class="quiz_id" style="display: none;"><%= (q && q.id) || nbsp %></span>
     <% if q && q.assignment_id && q.assignment.try(:points_possible) %>
           <div class="ig-details row-fluid" style="right: 184px !important;">
-            <div class="span2 ellipses">(<%= t(:assignment_points_possible, "pt", :count => q.assignment.points_possible) %>)</div>
+            <div class="span2 ellipses">
+              (<%= t(:assignment_points_possible, "pt", :count => q.assignment.points_possible) %>)</div>
           </div>
 <!--<span style="font-size: 0.8em; font-weight: normal;"></span>-->
     <% end %>
@@ -26,7 +27,7 @@
       <% if can_do(q, @current_user, :update) %>
       <div class="span2 ellipses " style="float: right;line-height: 40px;">
 
-      <a href="<%= course_quiz_invitations_path(@context,q) %>" class="send_invitation" style="color: #33802a;" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
+      <a href="<%= course_quiz_invitations_path(@context,q) %>" class="send_invitation" style="color: #33802a;text-decoration: none;" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
       <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
     </a>
         </div>
