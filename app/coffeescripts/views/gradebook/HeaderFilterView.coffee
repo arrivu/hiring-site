@@ -12,9 +12,9 @@ define [
     template: template
 
     labels:
-      average: I18n.t('course_average', 'Course average')
-      median: I18n.t('course_median', 'Course median')
-      mode: I18n.t('course_mode', 'Course mode')
+      average: 'Project average'
+      median: 'Project median'
+      mode: 'Project mode'
 
     events:
       'click li a': 'onClick'

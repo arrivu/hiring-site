@@ -8,16 +8,17 @@
 <li class="quiz <%= 'unpublished' if unpublished %>" id="summary_quiz_<%= q ? q.id : "blank" %>" style="position: relative">
     <div class="  ig-row ig-published ig-editable">
     <% if can_do(q, @current_user, :update)%>
-    <a href="<%= context_url(@context, :context_quiz_url, q) %>" class="ig-title ellipses" onclick="window.open('<%= context_url(@context, :context_quiz_url, q) %>', 'newwindow', 'width=1300, height=750'); return false;">
+    <!--<a href="<%#= context_url(@context, :context_quiz_url, q) %>" class="ig-title ellipses" onclick="window.open('<%#= context_url(@context, :context_quiz_url, q) %>', 'newwindow', 'width=1300, height=750'); return false;">-->
+    <a href="<%= context_url(@context, :context_quiz_url, q) %>" class="ig-title ellipses">
    <% else %>
         <a href="<%= context_url(@context, :context_quiz_url, q) %>?force_user=1&persist_headless=1" class="ig-title ellipses" onclick="window.open(this.href,'targetWindow','toolbar=no,status=no,menubar=no,scrollbars=yes,location=0,resizable=yes,width=SomeSize,height=SomeSize'); return false; ">
    <% end %>
       <i class="icon-quiz"></i> <%= q.quiz_title || q.readable_type %></a>
     <span class="quiz_id" style="display: none;"><%= (q && q.id) || nbsp %></span>
     <% if q && q.assignment_id && q.assignment.try(:points_possible) %>
-          <div class="ig-details row-fluid">
-
-            <div class="span2 ellipses">(<%= t(:assignment_points_possible, "pt", :count => q.assignment.points_possible) %>)</div>
+          <div class="ig-details row-fluid" style="right: 184px !important;">
+            <div class="span2 ellipses">
+              (<%= t(:assignment_points_possible, "pt", :count => q.assignment.points_possible) %>)</div>
           </div>
 <!--<span style="font-size: 0.8em; font-weight: normal;"></span>-->
     <% end %>
@@ -26,7 +27,7 @@
       <% if can_do(q, @current_user, :update) %>
       <div class="span2 ellipses " style="float: right;line-height: 40px;">
 
-      <a href="<%= course_quiz_invitations_path(@context,q) %>" class="send_invitation" style="color: #33802a;" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
+      <a href="<%= course_quiz_invitations_path(@context,q) %>" class="send_invitation" style="color: #33802a;text-decoration: none;" data-id="<%= q.id %>" data-course-id="<%= @context.id %>">
       <i class="icon-invitation"><span class="screenreader-only"><%= "Send Invitations" %></span></i> <%= "Send Invitations" %>
     </a>
         </div>
@@ -110,7 +111,7 @@
   <% if can_do(q, @current_user, :update) %>
   <div class="quiz_actions" style="position: absolute; top: 5px; right: 5px; font-weight: normal;">
     <div>
-      <a href="<%= context_url(@context, :edit_context_quiz_url, q) %>" title="<%= quiz_edit_text(q) %>" class="edit_quiz_link no-hover icon-edit standalone-icon">
+      <a href="<%= context_url(@context, :edit_context_quiz_url, q) %>" title="<%= quiz_edit_text(q) %>" class="edit_quiz_link no-hover icon-edit standalone-icon" style="text-decoration: none;">
         <span class="screenreader-only"><%= quiz_edit_text(q) %></span>
       </a>
       <a href="<%= context_url(@context, :context_quiz_url, q) %>" title="<%= quiz_delete_text(q) %>" class="delete_quiz_link no-hover icon-trash standalone-icon">

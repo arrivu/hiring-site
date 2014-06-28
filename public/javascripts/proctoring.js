@@ -30,13 +30,45 @@ define([
                 this.snapshotBtn = document.getElementById('questions');
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
+                //var video1 = App.options.videoEl;
+                //video1.autoplay = true ;
+                if(ENV.IMAGE_PROCTORING)
+                {
                 getUserMedia(this.options, this.success, this.deviceError);
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
-
+                //window.webcam.started = true;
                 // Trigger a snapshot
-                this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),10000));
+
+                    var max_time_limit = 100000;
+                    if(ENV.QUIZ_TIME_LIMIT <= 10)
+                    {
+                        max_time_limit = 15000;
+                    }
+                    else if(ENV.QUIZ_TIME_LIMIT <= 30)
+                    {
+                        max_time_limit = 75000;
+                    }
+                    else if(ENV.QUIZ_TIME_LIMIT < 60)
+                    {
+                        max_time_limit = 200000;
+                    }
+                    else if(ENV.QUIZ_TIME_LIMIT >= 60)
+                    {
+                        max_time_limit = 300000;
+                    }
+                    else
+                    {
+                        max_time_limit = 150000;
+                    }
+                    var lowest_limit = 150000;
+                    //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
+                    //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
+                   // console.log(rand);
+
+                    this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
+                }
 
 //				// Trigger face detection (using the glasses option)
 //				this.addEvent('click', this.detectBtn, function () {
@@ -76,9 +108,10 @@ define([
             append: true,
 
             // noFallback:true, use if you don't require a fallback
-
             width: 320,
             height: 240,
+            //allowscriptaccess : "always",
+            //autoplay : "true",
 
             // option for more flashvars.
             //fallbackmode: "size",
@@ -125,7 +158,7 @@ define([
             if (App.options.context === 'webrtc') {
 
                 var video = App.options.videoEl;
-
+                //video.autoplay = true ;
                 if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 
                     if (video.mozSrcObject !== undefined) { //FF18a
@@ -153,11 +186,15 @@ define([
         },
 
         deviceError: function (error) {
+            if(ENV.CHECK_IMAGE_PROCTORING)
+            {
             alert('No camera available.');
-            console.error('An error occurred: [CODE ' + error.code + ']');
+            }
+            //console.error('An error occurred: [CODE ' + error.code + ']');
         },
 
         changeFilter: function () {
+
             if (this.filter_on) {
                 this.filter_id = (this.filter_id + 1) & 7;
             }
@@ -175,6 +212,7 @@ define([
                 App.canvas.getContext('2d').drawImage(video, 0, 0);
                 var dataURL = App.canvas.toDataURL("image/jpeg");
                 var folder_id = $('#folder_id').val();
+                var time_elapsed = $(".photo_elapsed_time").text();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
                 var fd = new FormData();
@@ -183,7 +221,7 @@ define([
                 fd.append("attachment[folder_id]", folder_id);
                 fd.append("[context_code]", ENV.context_asset_string);
                 fd.append("attachment[filename]", "proctoring.jpg");
-
+                fd.append("[time_elapsed]", time_elapsed);
                 // And send it
                 $.ajax({
                     url: "imageproctoring/proctoring",
@@ -242,7 +280,6 @@ define([
                 return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
             }
         },
-
 
         drawToCanvas: function (effect) {
             var source, glasses, canvas, ctx, pixels, i;

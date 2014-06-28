@@ -204,11 +204,21 @@ define([
         var timeElapsed = now - startedAt;
 
         quizSubmission.updateTimeString(timeElapsed);
+          var elapsed_date = new Date(Math.abs(timeElapsed));
+          var elapsed_hr = elapsed_date.getUTCHours();
+          var elapsed_min = elapsed_date.getUTCMinutes();
+          var elapsed_sec = elapsed_date.getUTCSeconds();
+          var elapsed_times = [];
+          if(true || elapsed_hr) { elapsed_times.push(("0"+elapsed_hr).slice(-2)); }
+          if(true || elapsed_min) { elapsed_times.push(("0"+elapsed_min).slice(-2)); }
+          if(true || elapsed_sec) { elapsed_times.push(("0"+elapsed_sec).slice(-2)); }
+          $(".photo_elapsed_time").text(elapsed_times.join(":"));
       },
 
       updateTime: function() {
         if(quizSubmission.hasTimeLimit) {
           var timeLeft = quizSubmission.timeLeft = quizSubmission.timeLeft - quizSubmission.clockInterval;
+          quizSubmission.updateCounter();
         } else {
           return quizSubmission.updateCounter();
         }
@@ -273,7 +283,6 @@ define([
             $.flashMessage(I18n.t('notices.twelve_hours_left', "Twelve Hours Left"));
           }
         }
-
         quizSubmission.updateTimeString(timeLeft);
       },
 
@@ -285,6 +294,7 @@ define([
         var hr = date.getUTCHours();
         var min = date.getUTCMinutes();
         var sec = date.getUTCSeconds();
+        //console.log(yr);
         var times = [];
         if(yr) { times.push(I18n.t('years_count', "Year", {'count': yr})); }
         if(mon) { times.push(I18n.t('months_count', "Month", {'count': mon})); }
@@ -442,7 +452,6 @@ define([
   }).keydown(function() {
     lastAnswerSelected = null;
   });
-
   // fix screenreader focus for links to href="#target"
   $("a[href^='#']").not("a[href='#']").click(function() {
     $($(this).attr('href')).attr('tabindex', -1).focus()
