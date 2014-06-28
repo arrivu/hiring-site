@@ -19,9 +19,7 @@
 
 module SIS
   class AssessmentQuestionImporter < BaseImporter
-    require 'app/helpers/tags_helper'
     def process
-
       start = Time.now
       importer = Work.new(@batch_id, @root_account, @logger)
 
@@ -44,6 +42,8 @@ module SIS
 
     private
     class Work
+      include TagsHelper
+      include ApplicationHelper
       attr_accessor :success_count, :question, :bank, :assessment_question, :id, :weight_count, :question_row
 
       def initialize(batch_id, root_account, logger)
@@ -425,12 +425,54 @@ module SIS
         if question.save
           @success_count += 1
           if question_tag.present?
-            tag_list(question_tag, question, question.assessment_question_bank)  unless question_tag.nil?
+            @question_tag_split = question_tag.split(',')
+            @question_tag_split.each do  |splait_tag|
+            @question_tag = tag_tokens_new(splait_tag)
+            @question_tag.each do |tag|
+              @question_tag_id = tag[:id].to_s
+            end
+            #@question_tag_id = @question_tag[:id]
+            tag_list(@question_tag_id, question, question.assessment_question_bank)  unless @question_tag_id.nil?
+          end
           end
         else
           raise ImportError, question
         end
+
       end
+
+      #def tag_tokens_new(query)
+      #  tags = ActsAsTaggableOn::Tag.named_like(query,@root_account.id)
+      #  if tags.empty?
+      #    [{id: "<<<#{query}>>>", name: "New: \"#{query.strip.gsub(' ', '-')}\""}]
+      #  else
+      #    #tags.map(&:attributes)
+      #    tags.map{ |tag| {:id => tag.id}}
+      #  end
+      #end
+      #
+      #def tag_list(tag_tokens, taggable, tagger)
+      #  tags_list= tag_tokens.gsub!(/<<<(.+?)>>>/) { ActsAsTaggableOn::Tag.find_or_create_by_name_and_account_id(name: $1.strip.gsub(' ', '-'),
+      #                                    account_id: @root_account.id).id }
+      #  if tags_list.nil?
+      #    delete_tags(taggable,tag_tokens)
+      #    tag_tokens.split(",").map do |n|
+      #      ActsAsTaggableOn::Tagging.find_or_create_by_tag_id_and_taggable_id_and_taggable_type_and_context(tag_id: n.to_i,
+      #                                   taggable_id: taggable.id, taggable_type: taggable.class.name,
+      #                                   context: "tags",tagger_id: tagger.id,tagger_type: tagger.class.name)
+      #    end
+      #  else
+      #    tags_list.split(",").map do |n|
+      #      ActsAsTaggableOn::Tagging.find_or_create_by_tag_id_and_taggable_id_and_taggable_type_and_context(tag_id: n.to_i,
+      #                                taggable_id: taggable.id, taggable_type: taggable.class.name,
+      #                                 context: "tags",tagger_id: tagger.id,tagger_type: tagger.class.name)
+      #    end
+      #  end
+      #
+      #end
+      #
+
+
 
     end
 

@@ -169,7 +169,6 @@ define([
         $('#quiz_lock_form').submit();
       })
     });
-
       function onFailure(err) {
           alert("No camera available.");
           location.reload();

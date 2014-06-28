@@ -2408,6 +2408,19 @@ define([
                         event.preventDefault();
                         var id = event.target.id.split('_');
                           $('.selected_tag_id').val(id[1]);
+                        var select_bank_id = $('.selected .id').text()
+                    $.ajaxJSON('/get_tag_to_bank', 'GET', {tag_id: id[1], bank_id: select_bank_id }, function(banks) {
+                           for(idx in banks) {
+                               if (banks[idx].assessment_question_bank.assessment_question_count) {
+                                $('.question_count_display').css('display','block');
+                                $('.question_count_display').text(banks[idx].assessment_question_bank.assessment_question_count +
+                                    " Questions Available in " + $('.selected .title').text() +  " with Tag " +  $('.token-input-selected-token').text());
+                               }
+                               else {
+                                $('.question_count_display').css('display','none');
+                               }
+                           }
+                    })
                     });
 
 
@@ -2429,6 +2442,7 @@ define([
         $findBankDialog.delegate('.bank', 'click', function() {
             $findBankDialog.find(".bank.selected").removeClass('selected');
             $(this).addClass('selected');
+            $('.question_count_display').css('display','none');
 //arrivu changes
 // select the bank and filter the tags
             var $bank = $findBankDialog.find(".bank.selected:first");
@@ -2723,9 +2737,23 @@ define([
 
         $('#find_question_dialog').on('click', '.get_tag_find', function(event){
             event.preventDefault();
-            if ($('.token-input-token').hasClass('token-input-selected-token')) {
-                $('.token-input-token').removeClass('token-input-selected-token');
-                $(".found_question:visible").remove();
+//            if ($('.token-input-token').hasClass('token-input-selected-token')) {
+//                $('.token-input-token').removeClass('token-input-selected-token');
+//                $(".found_question:visible").remove();
+//                var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
+//                var bank = $bank.data('bank_data');
+//                var id = bank.id;
+//                var $dialog = $findQuestionDialog;
+//                var url = $findQuestionDialog.find(".question_bank_questions_url").attr('href');
+//                url = $.replaceTags(url, 'question_bank_id',id);
+//                $.ajaxJSON(url, 'GET', {}, function(data) {
+//                    var id = $('.selected_side_tab a .id').text();
+//                    $('.token-input-token').removeClass('token-input-selected-token');
+//                    data.last_page = 1;
+//                    showQuestions(data,true);
+//                });
+//            }
+//            else {
                 var $bank = $findQuestionDialog.find(".bank.selected_side_tab");
                 var bank = $bank.data('bank_data');
             $('.token-input-token').removeClass('token-input-selected-token');
@@ -2742,7 +2770,7 @@ define([
                 data.last_page = 1;
                 showQuestions(data,true);
             });
-            }
+//            }
         });
 
 // arrivu new chnages for tag click
