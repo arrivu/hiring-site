@@ -32,14 +32,15 @@ define([
                 // Initialize getUserMedia with options
                 //var video1 = App.options.videoEl;
                 //video1.autoplay = true ;
+                if(ENV.IMAGE_PROCTORING)
+                {
                 getUserMedia(this.options, this.success, this.deviceError);
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
                 //window.webcam.started = true;
                 // Trigger a snapshot
-                if(ENV.IMAGE_PROCTORING)
-                {
+
                     var max_time_limit = 100000;
                     if(ENV.QUIZ_TIME_LIMIT <= 10)
                     {
