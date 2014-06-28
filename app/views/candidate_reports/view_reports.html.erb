@@ -183,14 +183,18 @@
       <% end %>
   <% end %>
   <% if @submission.allow_image_proctoring %>
-      <h3>Proctoring Snapshots</h3>
+
       <div style="width: 100%;margin-left:65px;">
   <% @image_proctoring.each do |image| %>
+   <% if image != [] %>
+       <h3>Proctoring Snapshots</h3>
       <% image.each do |image_snap| %>
+
     <div style="width:200px;display: inline-block;border:1px solid black;margin:5px 7px 8px 5px;">
       <img src="<%= image_snap[:image_url] %>"><br/>
       Time elapsed : <%= image_snap[:image_time] %>
     </div>
+ <% end %>
   <% end %>
   <% end %>
       </div>
