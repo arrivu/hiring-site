@@ -71,13 +71,13 @@
                        <input id="folder_id" type="hidden" value="<%= @user.profile_pics_folder.id %>" />
                     <input type="button" id="startbutton" name="submit" value="take picture" style="display:none;"><br>
 
-                    <canvas id="canvas" ></canvas>
+                    <canvas id="canvas" style="display:none;"></canvas>
 <div id="canvas_url" >
             <a href="#" id="profile_pic_link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>" style="position: relative;">
             <% if @user.avatar_image_url.nil? %>
-          <img src="images/default_profile_pic.jpg" width="200" height="135" id= "myimg" style="border-radius: 25px;">
+          <img src="images/default_profile_pic.jpg" width="200" height="200" id= "myimg" style="border-radius: 25px;">
                   <% else %>
-                  <img src="<%= @user.avatar_image_url%>" width="200" height="135" id= "myimg" style="border-radius: 25px;">
+                  <img src="<%= @user.avatar_image_url%>" width="200" height="200" id= "myimg" style="border-radius: 25px;">
                    <% end %>           <i class="icon-edit" id="Edit"></i>
           </a>
           </div>
