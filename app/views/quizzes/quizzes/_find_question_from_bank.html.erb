@@ -112,6 +112,13 @@
       <button type="button" class="btn submit_button"><%= t('buttons.select_bank', "Select Bank") %></button>
       <button type="button" class="btn btn button-secondary cancel_button"><%= t('#buttons.cancel', "Cancel") %></button>
     </div>
+
+    <div class="question_count_display" style="display: none;">
+        <span id="ques_no" style="font-weight: bold;"></span> Questions Available in
+         <span id="bank_name" style="font-weight: bold;"></span> with Tag
+         <span id="tag_name" style="font-weight: bold;"></span>
+    </div>
+
   </div>
 </div>
 <div id="add_question_group_dialog" style="display: none;" title="<%= t('titles.add_new_question_group', "Add a New Question Group") %>">

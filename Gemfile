@@ -25,7 +25,7 @@ unless required_bundler_version.include?(Bundler::VERSION)
   warn "Bundler version #{required_bundler_version.first} is required; you're currently running #{Bundler::VERSION}. Maybe try `#{bundle_command}`."
   exit 1
 end
-#gem 'bundler', '1.6.2'
+
 
 require File.expand_path("../config/canvas_rails3", __FILE__)
 
