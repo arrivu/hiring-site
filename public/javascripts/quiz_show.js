@@ -207,6 +207,8 @@ define([
                           video.play();
 
                           window.location.href= $('#assement_id').data('url') + "/take";
+alert('ok');
+return false;
 //                          if(allow_count)
 //                          {
 //                          alert('Now your camera is available.You click take the assessment.');
