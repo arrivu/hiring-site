@@ -1,3 +1,6 @@
+/**
+ * Created by sysadmin on 30/6/14.
+ */
 /*global navigator, document */
 ;(function (window, document) {
     "use strict";
@@ -13,7 +16,7 @@
             if (!! navigator.getUserMedia_) {
 
 
-                // constructing a getUserMedia config-object and 
+                // constructing a getUserMedia config-object and
                 // an string (we will try both)
                 var option_object = {};
                 var option_string = '';
@@ -81,6 +84,7 @@
                     source = '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
                     el = document.getElementById(options.el);
                     el.innerHTML = source;
+                    $('#webcam').show();
                     (function register(run) {
 
                         cam = document.getElementById('XwebcamXobjectX');
@@ -88,7 +92,7 @@
 
                         if (cam.capture !== undefined) {
 
-                            // Simple callback methods are not allowed 
+                            // Simple callback methods are not allowed
                             options.capture = function (x) {
 
                                 try {
@@ -123,7 +127,7 @@
                             // options.debug("error", "Flash movie not yet registered!");
                             errorCallback();
                         } else {
-                            // Flash interface not ready yet 
+                            // Flash interface not ready yet
                             window.setTimeout(register, 1000 * (4 - run), run - 1);
                         }
                     }(20));

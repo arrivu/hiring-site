@@ -1,3 +1,4 @@
+<% js_bundle :proctoring %>
 <div class="rs-margin-lr rs-margin-top">
   <% if @submission && params[:preview] %>
     <% keep_editing_title = @quiz.survey? ? t('links.keep_editing_survey', "Keep Editing This Survey") : t('links.keep_editing_quiz', "Keep Editing This Assessment") %>
@@ -32,6 +33,21 @@
     <div class="clear"></div>
     <div class="time_running"  style="font-size:20px;"></div>
     <div class="photo_elapsed_time" style="display:none;"></div>
+
+    <div >
+      <!--<form name="quiz_proctoring_image_form" action="imageproctoring/proctoring" method="post" multipart = "true" id="proctoring_take_image">-->
+      <%= form_for :attachment, :url => context_url(@current_user, :context_files_url, :format => 'json'), :html => {:id => "proctoring_take_image",:multipart => "true"} do |f| %>
+          <div id="webcam"  style="display:none;"></div>
+          <br><input type="file" style="display:none;" id="uploaded_data" />
+          <input id="folder_id" type="hidden" value="<%= @current_user.profile_pics_folder.id %>" />
+          <input type="button" id="startbutton" name="submit" value="take picture" style="display:none;"><br>
+
+          <canvas id="canvas" style="display:none;"></canvas>
+
+          <!--</form>-->
+      <% end %>
+      <!--<img src="http://placekitten.com/g/320/261" id="photo" alt="photo">-->
+    </div>
   </div>
 </div>
 

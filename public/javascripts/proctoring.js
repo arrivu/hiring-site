@@ -118,7 +118,7 @@ define([
 
             mode: "callback",
             // callback | save | stream
-            swffile: "../dist/fallback/as3/webcam.swf",
+            swffile: "http://localhost:3000/dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
@@ -180,6 +180,7 @@ define([
                 };
 
             } else{
+                $('#webcam').show();
                 // flash context
             }
 
@@ -201,6 +202,7 @@ define([
         },
 
         getSnapshot: function (e) {
+
             // If the current context is WebRTC/getUserMedia (something
             // passed back from the shim to avoid doing further feature
             // detection), we handle getting video/images for our canvas
@@ -237,9 +239,30 @@ define([
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
-
+                $('#webcam').show();
                 window.webcam.capture();
                 App.changeFilter();
+                var dataURL = App.canvas.toDataURL("image/jpeg");
+                var folder_id = $('#folder_id').val();
+                var time_elapsed = $(".photo_elapsed_time").text();
+                var file= dataURLtoBlob(dataURL);
+                // Create new form data
+                var fd = new FormData();
+                // Append our Canvas image file to the form data
+                fd.append("attachment[uploaded_data]", file);
+                fd.append("attachment[folder_id]", folder_id);
+                fd.append("[context_code]", ENV.context_asset_string);
+                fd.append("attachment[filename]", "proctoring.jpg");
+                fd.append("[time_elapsed]", time_elapsed);
+                // And send it
+                $.ajax({
+                    url: "imageproctoring/proctoring",
+                    type: "POST",
+                    data: fd ,
+                    processData: false,
+                    contentType: false
+
+                });
             }
             else{
                 alert('No context was supplied to getSnapshot()');
