@@ -7,7 +7,6 @@ define([
     'compiled/util/BlobFactory'
 ], function (BlobFactory) {
     'use strict';
-
     var App = {
 
         init: function () {
