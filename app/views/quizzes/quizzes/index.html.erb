@@ -1,8 +1,7 @@
 <% content_for :page_title, t(:page_titles, "Assessments")%>
 <% if !can_do(@context.quizzes.new, @current_user, :create)%>
     <% @headers = false
-
-    @show_left_side = false %>
+       @show_left_side = false %>
     <% content_for :stylesheets do %>
         <style>
         #main{

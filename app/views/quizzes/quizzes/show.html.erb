@@ -500,6 +500,7 @@
     </div>
 
     <% if @quiz.available? %>
+  <div id="assement_id" style="display: none" data-url=<%= @quiz.id %>></div>
 
       <% if !@submission || !@submission.completed? || @quiz.unlimited_attempts? || (@submission.completed? && @submission.attempts_left > 0) %>
         <% if @locked && !can_do(@quiz, @current_user, :update) %>

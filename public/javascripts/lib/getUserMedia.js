@@ -10,7 +10,7 @@
             // getUserMedia() feature detection
             navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if (!! navigator.getUserMedia_) {
+            if (!!navigator.getUserMedia_) {
 
 
                 // constructing a getUserMedia config-object and 

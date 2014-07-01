@@ -1,4 +1,5 @@
 require [
+  'jquery'
   'excanvas'
   'lib/getUserMedia'
   'glasses/ccv'
