@@ -7,7 +7,8 @@ class ImageproctoringController < ApplicationController
   include Api::V1::Attachment
 
   def create_pending
-    @context = Context.find_by_asset_string(params[:context_code])
+    @context = @current_user
+    #@context = Context.find_by_asset_string(params[:context_code])
     @asset = Context.find_asset_by_asset_string(params[:attachment][:asset_string], @context) if params[:attachment][:asset_string]
     @attachment = @context.attachments.build
     @check_quota = true

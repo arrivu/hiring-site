@@ -10,7 +10,7 @@
     .table th, .table td{border:none;   }
     .alnright { text-align: right !important; }
 </style>
-<div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
+<div style="width: 97%;margin: 25px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
   <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @course.id } do |f| %>
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
@@ -64,23 +64,26 @@
         </div>
           <% if @candidate_filter.profile_picture == TRUE %>
         <div class="image-block" style="float: right;" >
-          <div class="image-block-image profile-avatar-wrapper">
+          <div class="image-block-image profile-avatar-wrapper" style="text-align: center;">
             <% if @candidate_detail %>
                        <div id="webcam" style="display:none;" ></div>
-                    <br><input type="file" style="display:none;" id="uploaded_data" />
+                    <input type="file" style="display:none;" id="uploaded_data" />
                        <input id="folder_id" type="hidden" value="<%= @user.profile_pics_folder.id %>" />
-                    <input type="button" id="startbutton" name="submit" value="take picture" style="display:none;"><br>
+                    <input type="button" id="startbutton" name="submit" class="btn btn-primary" value="take picture" style="display:none;"><br>
 
-                    <canvas id="canvas" style="display:none;"></canvas>
+                    <canvas id="canvas" style="display:none;width:320px;height: 240px;"></canvas>
 <div id="canvas_url" >
             <a href="#" id="profile_pic_link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>" style="position: relative;">
             <% if @user.avatar_image_url.nil? %>
-          <img src="images/default_profile_pic.jpg" width="200" height="200" id= "myimg" style="border-radius: 25px;">
+          <img src="images/default_profile_pic.jpg"  id= "myimg" style="border-radius: 5px;width:320px;height:240px;">
                   <% else %>
-                  <img src="<%= @user.avatar_image_url%>" width="200" height="200" id= "myimg" style="border-radius: 25px;">
-                   <% end %>           <i class="icon-edit" id="Edit"></i>
-          </a>
+                  <img src="<%= @user.avatar_image_url%>" id= "myimg" style="border-radius: 5px;width:320px;height:240px;">
+                   <% end %>
+              <i class="icon-edit" id="Edit"></i>
+          </a><br><br>
+  <%= link_to "Take your photo (webcam)", "#", :class => "btn btn-primary", :id => "take_pic_link" %>
           </div>
+
     <%  end %>
 
            </div>

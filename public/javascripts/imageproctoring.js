@@ -4,7 +4,15 @@
  * for use with https://github.com/addyosmani/getUserMedia.js
  * Copyright (c) 2012 addyosmani; Licensed MIT */
 
-(function () {
+require([
+    'jquery' /* $ */
+], function($) {
+    $("#take_pic_link").click(function(){
+        $('#webcam').show();
+
+        $('#canvas_url').hide();
+        $('#Edit').hide();
+
     'use strict';
 
     var App = {
@@ -28,9 +36,12 @@
                 this.image = this.ctx.getImageData(0, 0, this.options.width, this.options.height);
                 this.snapshotBtn = document.getElementById('startbutton');
                 this.profilepic = document.getElementById('profile_pic_link');
+
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
                 getUserMedia(this.options, this.success, this.deviceError);
+
+
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
@@ -95,7 +106,7 @@
 
             mode: "callback",
             // callback | save | stream
-			swffile: "../dist/fallback/jscam_canvas_only.swf",
+            swffile: "../dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
@@ -131,7 +142,7 @@
         },
 
         success: function (stream) {
-
+            $('#startbutton').show();
             if (App.options.context === 'webrtc') {
 
                 var video = App.options.videoEl;
@@ -213,17 +224,19 @@
                         console.log(result);
                         $('#webcam').hide();
                         $('#startbutton').hide();
+                        $('#take_pic_link').hide();
                         $('#myimg').attr('src', "/files/"+result.attachment.id+"/download?download_frd=1&verifier="+result.attachment.uuid);
                         $('#canvas_url').show();
                         $('#Edit').show();
                     }
                 });
-               // Otherwise, if the context is Flash, we ask the shim to
+                // Otherwise, if the context is Flash, we ask the shim to
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
                 window.webcam.capture();
                 App.changeFilter();
+//                var video = document.getElementById('webcam')[0];
                 dataURL = App.canvas.toDataURL("image/png");
                 console.log(dataURL);
                 folder_id = $('#folder_id').val();
@@ -301,5 +314,6 @@
     };
     App.init();
 
-})();
 
+});
+});

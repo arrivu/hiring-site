@@ -184,7 +184,6 @@ define([
           event.preventDefault();
           var enable_getusermedia = hasGetUserMedia();
 
-
           if(ENV.CHECK_IMAGE_PROCTORING)
           {
               navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia ||
@@ -192,7 +191,9 @@ define([
                   navigator.msGetUserMedia);
               var video = document.getElementsByTagName('video')[0];
               if(enable_getusermedia) {
+
                   navigator.getUserMedia(
+
                       // Constraints
                       {
                           video: true
@@ -202,9 +203,10 @@ define([
                       function(localMediaStream) {
                           flag=true;
                           //localMediaStream.play();
-                          video.src = stream;
+                          video.src = localMediaStream;
                           video.play();
 
+                          window.location.href= $('#assement_id').data('url') + "/take";
 //                          if(allow_count)
 //                          {
 //                          alert('Now your camera is available.You click take the assessment.');
