@@ -9,7 +9,7 @@ require([
 ], function($) {
     $("#take_pic_link").click(function(){
         $('#webcam').show();
-
+        $('#startbutton').show();
         $('#canvas_url').hide();
         $('#Edit').hide();
 
@@ -194,6 +194,7 @@ require([
             // passed back from the shim to avoid doing further feature
             // detection), we handle getting video/images for our canvas
             // from our HTML5 <video> element.
+
             if (App.options.context === 'webrtc') {
                 var video = document.getElementsByTagName('video')[0];
                 App.canvas.width = video.videoWidth;
@@ -263,6 +264,7 @@ require([
                         console.log(result);
                         $('#webcam').hide();
                         $('#startbutton').hide();
+                        $('#take_pic_link').hide();
                         $('#myimg').attr('src', "/files/"+result.attachment.id+"/download?download_frd=1&verifier="+result.attachment.uuid);
                         $('#canvas_url').show();
                         $('#Edit').show();
