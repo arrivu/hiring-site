@@ -71,8 +71,7 @@
                     }
                 }
             } else {
-
-                // Act as a plain getUserMedia shield if no fallback is required
+                                // Act as a plain getUserMedia shield if no fallback is required
                 if (options.noFallback === undefined || options.noFallback === false) {
 
                     // Fallback to flash
