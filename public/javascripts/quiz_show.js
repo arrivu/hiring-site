@@ -188,7 +188,7 @@ define([
               navigator.mozGetUserMedia || navigator.msGetUserMedia);
           var enable_getusermedia = hasGetUserMedia();
           var video = document.getElementsByTagName('video')[0];
-          if(!enable_getusermedia) {
+          if(enable_getusermedia) {
             navigator.getUserMedia(
               // Constraints
               {
@@ -286,7 +286,9 @@ define([
     });
 
     window.redirectToTakeAssessment = function () {
-      window.location.href= $("#take_quiz_link").attr('href');
+      location.href= $("#take_quiz_link").attr('href');
+        alert("redirect");
+        return false;
     };
 
     if ($('ul.page-action-list').find('li').length > 0) {
