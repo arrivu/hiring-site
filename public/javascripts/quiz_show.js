@@ -169,125 +169,127 @@ define([
         $('#quiz_lock_form').submit();
       })
     });
-      function onFailure(err) {
-          alert("No camera available.");
-          location.reload();
-      }
-      function hasGetUserMedia() {
-          // Note: Opera builds are unprefixed.
-          return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-              navigator.mozGetUserMedia || navigator.msGetUserMedia);
-      }
-      var flag = false;
-      //var allow_count = true;
-      $("#take_quiz_link").click(function(event){
-          event.preventDefault();
-          if(ENV.CHECK_IMAGE_PROCTORING)
-          {
-          navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia ||
-              navigator.mozGetUserMedia || navigator.msGetUserMedia);
-          var enable_getusermedia = hasGetUserMedia();
-          var video = document.getElementsByTagName('video')[0];
-          if(!enable_getusermedia) {
-            navigator.getUserMedia(
-              // Constraints
-              {
-                  video: true
-              },
-              // Success Callback
-              function(localMediaStream) {
-                  flag=true;
-                  //localMediaStream.play();
-                  video.src = localMediaStream;
-                  video.play();
-//                          alert( $('#assement_id').data('url'));
-                  window.redirectToTakeAssessment();
-                  return false;
-//                          if(allow_count)
-//                          {
-//                          alert('Now your camera is available.You click take the assessment.');
-//                          }
-//                          allow_count = false;
-              },
-              // Error Callback
-              function(err) {
-                  event.stopImmediatePropagation();
-                  alert('No camera available.You have to enable the camera to take the assessment.');
-              }
-          );
-          }else{
-            var source, el, cam;
-            $("#webcam").show();
-            window.webcam = ({
-               audio: false, //OTHERWISE FF nightlxy throws an NOT IMPLEMENTED error
-               video: true,
-               el: "webcam",
-               extern: null,
-               append: true,
-               // noFallback:true, use if you don't require a fallback
-               width: 320,
-               height: 240,
-               // option for more flashvars.
-               //fallbackmode: "size",
-               mode: "callback",
-               // callback | save | stream
-               swffile: "http://localhost:3000/dist/fallback/jscam_canvas_only.swf",
-               quality: 85,
-               context: "",
-               debug: function(type, string) {
-                 if (string === "Camera started") {
-                    window.webcam.started = true;
-                    if (window.webcam.onStarted) { window.webcam.onStarted(); }
-                 }else{
-                   $("#webcam").hide();
-                   alert('No camera available.You have to enable the camera to take the assessment.');
-                 }
-               },
-               onCapture: function () {
-               window.webcam.save();
-            },
-            onTick: function () {},
-            onSave: function (data) {
-
-                var col = data.split(";"),
-                    img = App.image,
-                    tmp = null,
-                    w = this.width,
-                    h = this.height;
-
-                for (var i = 0; i < w; i++) {
-                    tmp = parseInt(col[i], 10);
-                    img.data[App.pos + 0] = (tmp >> 16) & 0xff;
-                    img.data[App.pos + 1] = (tmp >> 8) & 0xff;
-                    img.data[App.pos + 2] = tmp & 0xff;
-                    img.data[App.pos + 3] = 0xff;
-                    App.pos += 4;
-                }
-
-                if (App.pos >= 4 * w * h) {
-                    App.ctx.putImageData(img, 0, 0);
-                    App.pos = 0;
-                }
-
-            },
-            onLoad: function () {}
-        });
-        window.webcam.onStarted = function () {
-         $("#webcam").hide();
-            window.redirectToTakeAssessment();
-        };
-
-       source = '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' +  window.webcam.swffile + '" width="' +  window.webcam.width + '" height="' +  window.webcam.height + '"><param name="movie" value="' +  window.webcam.swffile + '" /><param name="FlashVars" value="mode=' +  window.webcam.mode + '&amp;quality=' +  window.webcam.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
-       el = document.getElementById(window.webcam.el);
-       el.innerHTML = source;
-       }
-       return flag;
-      }
-    });
-
-    window.redirectToTakeAssessment = function () {
-      window.location.href= $("#take_quiz_link").attr('href');
-    };
+//      function onFailure(err) {
+//          alert("No camera available.");
+//          location.reload();
+//      }
+//      function hasGetUserMedia() {
+//          // Note: Opera builds are unprefixed.
+//          return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+//              navigator.mozGetUserMedia || navigator.msGetUserMedia);
+//      }
+//      var flag = false;
+//      //var allow_count = true;
+//      $("#take_quiz_link").click(function(event){
+//          event.preventDefault();
+//          if(ENV.CHECK_IMAGE_PROCTORING)
+//          {
+//          navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia ||
+//              navigator.mozGetUserMedia || navigator.msGetUserMedia);
+//          var enable_getusermedia = hasGetUserMedia();
+//          var video = document.getElementsByTagName('video')[0];
+//          if(!enable_getusermedia) {
+//            navigator.getUserMedia(
+//              // Constraints
+//              {
+//                  video: true
+//              },
+//              // Success Callback
+//              function(localMediaStream) {
+//                  flag=true;
+//                  //localMediaStream.play();
+//                  video.src = localMediaStream;
+//                  video.play();
+////                          alert( $('#assement_id').data('url'));
+//                  window.redirectToTakeAssessment();
+//
+////                          if(allow_count)
+////                          {
+////                          alert('Now your camera is available.You click take the assessment.');
+////                          }
+////                          allow_count = false;
+//              },
+//              // Error Callback
+//              function(err) {
+//                  event.stopImmediatePropagation();
+//                  alert('No camera available.You have to enable the camera to take the assessment.');
+//              }
+//          );
+//          }else{
+//            var source, el, cam;
+//            $("#webcam").show();
+//            window.webcam = ({
+//               audio: false, //OTHERWISE FF nightlxy throws an NOT IMPLEMENTED error
+//               video: true,
+//               el: "webcam",
+//               extern: null,
+//               append: true,
+//               // noFallback:true, use if you don't require a fallback
+//               width: 320,
+//               height: 240,
+//               // option for more flashvars.
+//               //fallbackmode: "size",
+//               mode: "callback",
+//               // callback | save | stream
+//               swffile: "http://localhost:3000/dist/fallback/jscam_canvas_only.swf",
+//               quality: 85,
+//               context: "",
+//               debug: function(type, string) {
+//                 if (string === "Camera started") {
+//                    window.webcam.started = true;
+//                    if (window.webcam.onStarted) { window.webcam.onStarted(); }
+//                 }else{
+//                   $("#webcam").hide();
+//                   alert('No camera available.You have to enable the camera to take the assessment.');
+//                 }
+//               },
+//               onCapture: function () {
+//               window.webcam.save();
+//            },
+//            onTick: function () {},
+//            onSave: function (data) {
+//
+//                var col = data.split(";"),
+//                    img = App.image,
+//                    tmp = null,
+//                    w = this.width,
+//                    h = this.height;
+//
+//                for (var i = 0; i < w; i++) {
+//                    tmp = parseInt(col[i], 10);
+//                    img.data[App.pos + 0] = (tmp >> 16) & 0xff;
+//                    img.data[App.pos + 1] = (tmp >> 8) & 0xff;
+//                    img.data[App.pos + 2] = tmp & 0xff;
+//                    img.data[App.pos + 3] = 0xff;
+//                    App.pos += 4;
+//                }
+//
+//                if (App.pos >= 4 * w * h) {
+//                    App.ctx.putImageData(img, 0, 0);
+//                    App.pos = 0;
+//                }
+//
+//            },
+//            onLoad: function () {}
+//        });
+//        window.webcam.onStarted = function () {
+//         $("#webcam").hide();
+//            window.redirectToTakeAssessment();
+//        };
+//
+//       source = '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' +  window.webcam.swffile + '" width="' +  window.webcam.width + '" height="' +  window.webcam.height + '"><param name="movie" value="' +  window.webcam.swffile + '" /><param name="FlashVars" value="mode=' +  window.webcam.mode + '&amp;quality=' +  window.webcam.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
+//       el = document.getElementById(window.webcam.el);
+//       el.innerHTML = source;
+//       }
+//       return flag;
+//      }
+//    });
+//
+//    window.redirectToTakeAssessment = function () {
+//      location.href= $("#take_quiz_link").attr('href');
+//        alert("redirect");
+//        return false;
+//    };
 
     if ($('ul.page-action-list').find('li').length > 0) {
       $('ul.page-action-list').show();

@@ -48,6 +48,30 @@
 //                return false;
 //            }
 //        }//-------------------- initialise the webcam
+
+//////////F12 disable code////////////////////////
+document.onkeypress = function (event) {
+    event = (event || window.event);
+    if (event.keyCode == 123) {
+        //alert('No F-12');
+        return false;
+    }
+}
+document.onmousedown = function (event) {
+    event = (event || window.event);
+    if (event.keyCode == 123) {
+        //alert('No F-keys');
+        return false;
+    }
+}
+document.onkeydown = function (event) {
+    event = (event || window.event);
+    if (event.keyCode == 123) {
+        //alert('No F-keys');
+        return false;
+    }
+}
+/////////////////////end///////////////////////
     </script>
 <% end %>
 <% end %>
@@ -84,9 +108,14 @@
 <% js_bundle :take_quiz, :proctoring %>
 
 
+<div
+<% unless can_do(@context.quizzes.new, @current_user, :create) && @quiz.image_proctoring %>
+style="display: none;"
+<%end%>
+id="quiz_image_proctoring">
 <%= form_tag @quiz_presenter.form_action(session, @current_user), :id => "submit_quiz_form", :class => @quiz_presenter.form_class, :method => "post" do %>
 
-<div id="questions" class="assessing" ondragstart="return false" onselectstart="return false">
+<div id="questions" class="assessing" ondragstart="return false" onselectstart="return false" >
   <input type="hidden" name="attempt" value="<%= @submission.attempt %>"/>
   <% if @submission.validation_token.present? %>
     <input type="hidden" name="validation_token" value="<%= @submission.validation_token %>"/>
@@ -146,6 +175,8 @@
 </div>
 
 <% end %>
+</div>
+
 <%  js_env :folder_id => @current_user.profile_pics_folder.id %>
 <div id="navigate_away" title="Navigating Away" style="display:none;">
   <div id="navigate_description"><%= @current_user.name %>,You had navigated away from the test window.

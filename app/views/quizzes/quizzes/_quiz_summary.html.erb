@@ -11,7 +11,7 @@
     <!--<a href="<%#= context_url(@context, :context_quiz_url, q) %>" class="ig-title ellipses" onclick="window.open('<%#= context_url(@context, :context_quiz_url, q) %>', 'newwindow', 'width=1300, height=750'); return false;">-->
     <a href="<%= context_url(@context, :context_quiz_url, q) %>" class="ig-title ellipses">
    <% else %>
-        <a href="<%= context_url(@context, :context_quiz_url, q) %>?force_user=1&persist_headless=1" class="ig-title ellipses" onclick="window.open(this.href,'targetWindow','toolbar=no,status=no,menubar=no,scrollbars=yes,location=0,resizable=yes,width=SomeSize,height=SomeSize'); return false; ">
+        <a href="<%= context_url(@context, :context_quiz_url, q) %>?force_user=1&persist_headless=1" class="ig-title ellipses" onclick="window.open(this.href,'targetWindow','toolbar=no,status=no,menubar=no,scrollbars=yes,location=no,directories=0,resizable=yes,width=SomeSize,height=SomeSize'); return false; ">
    <% end %>
       <i class="icon-quiz"></i> <%= q.quiz_title || q.readable_type %></a>
     <span class="quiz_id" style="display: none;"><%= (q && q.id) || nbsp %></span>

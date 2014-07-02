@@ -48,15 +48,15 @@ if CANVAS_RAILS3
 end
 
 #patch bundler to do github over https
-unless Bundler::Dsl.private_instance_methods.include?(:_old_normalize_options)
-  class Bundler::Dsl
-    alias_method :_old_normalize_options, :_normalize_options
-    def _normalize_options(name, version, opts)
-      _old_normalize_options(name, version, opts)
-      opts['git'].sub!('git://', 'https://') if opts['git'] && opts['git'] =~ %r{^git://github.com}
-    end
-  end
-end
+#unless Bundler::Dsl.private_instance_methods.include?(:_old_normalize_options)
+#  class Bundler::Dsl
+#    alias_method :_old_normalize_options, :_normalize_options
+#    def _normalize_options(name, version, opts)
+#      _old_normalize_options(name, version, opts)
+#      opts['git'].sub!('git://', 'https://') if opts['git'] && opts['git'] =~ %r{^git://github.com}
+#    end
+#  end
+#end
 
 
 platforms :ruby_20, :ruby_21 do
