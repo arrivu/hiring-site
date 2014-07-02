@@ -176,6 +176,26 @@ define([
       checkChange();
     });
 
+      $(".moderate_multiple_user").live('click', function(event) {
+          var student_ids = []
+          $(".student_check:checked").each(function() {
+              var $student = $(this).parents(".student");
+              student_ids.push($(this).attr('data-id'));
+          });
+          $.ajax({
+              url: "candidate_reports/generate_view",
+              type: "POST",
+              data: student_ids,
+              success: function(){
+                  alert("success");
+              },
+              error:function(){
+                  alert("failure");
+                  //location.href ="candidate_reports/generate_view";
+              }
+
+          });
+      });
     $(".moderate_multiple_button").live('click', function(event) {
       var student_ids = []
       var data = {};

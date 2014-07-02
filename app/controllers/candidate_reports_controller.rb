@@ -30,7 +30,9 @@ class CandidateReportsController < ApplicationController
     end
     @image_snap_proctoring << @image_snap
   end
-
+  def generate_view
+    params[:data]
+  end
 end
 
 

@@ -53,7 +53,7 @@ en-AU:
     tab_question_banks: "Question Banks"
     tab_rubrics: Rubrics
     tab_settings: Settings
-    tab_sis_import: "SIS Import"
+    tab_sis_import: "CSV Import"
     tab_statistics: Statistics
     tab_sub_accounts: Sub-Accounts
     tab_terms: Hiring Period
@@ -852,28 +852,28 @@ en-AU:
           parameters: 
             note: "*Hiring Periods settings only impact Projects, Batches, Enrollments, and X list CSV files."
     sis_import: 
-      add_sis_stickiness_instructions: "With this option selected, changes made through this SIS import will be processed as if they are UI changes, preventing subsequent non-overriding SIS imports from changing the fields changed here."
+      add_sis_stickiness_instructions: "With this option selected, changes made through this CSV import will be processed as if they are UI changes, preventing subsequent non-overriding CSV imports from changing the fields changed here."
       add_sis_stickiness_label: "Process as UI changes"
       batch_import_instructions: |-
           If selected, this will delete everything for this term, which includes all projects and enrollments that are not in the selected import file above.
           See the documentation for details.
       batch_mode_label: "This is a full batch update"
-      clear_sis_stickiness_instructions: "With this option selected, all fields in all records touched by this SIS import will be able to be changed in future non-overriding SIS imports."
+      clear_sis_stickiness_instructions: "With this option selected, all fields in all records touched by this CSV import will be able to be changed in future non-overriding CSV imports."
       clear_sis_stickiness_label: "Clear UI-changed state"
-      import_failed_message: "There was an error importing your SIS data. No records were imported."
-      import_failed_with_messages_message: "No SIS records were imported. The import failed with these messages:"
+      import_failed_message: "There was an error importing your CSV data. No records were imported."
+      import_failed_with_messages_message: "No CSV records were imported. The import failed with these messages:"
       import_log_title: "Import Progress Log"
       import_started_message: "The import process has started! This can take awhile if there is a lot to import. You can leave the page and come back."
       import_type_label: "Import type"
-      imported_message: "All SIS data was successfully imported."
+      imported_message: "All CSV data was successfully imported."
       imported_with_messages_message: "The SIS data was imported but with these messages:"
       last_batch_title: "Last Batch"
       override_sis_stickiness_instructions: |-
-          By default, UI changes have priority over SIS import changes; for a number of fields, the SIS import will not change that field's data if an admin has changed that field through the UI. If you select this option, this SIS import will override UI changes.  
+          By default, UI changes have priority over CSV import changes; for a number of fields, the CSV import will not change that field's data if an admin has changed that field through the UI. If you select this option, this CSV import will override UI changes.
           See the documentation for details.
       override_sis_stickiness_label: "Override UI changes"
-      page_header: "SIS Import"
-      page_title: "SIS Import"
+      page_header: "CSV Import"
+      page_title: "CSV Import"
       pending_batches_count: 
         one: "%{count} batch waiting to be processed."
         other: "%{count} batches waiting to be processed."
@@ -882,9 +882,9 @@ en-AU:
       select_file_instructions: |-
           Select the zip file that you want imported.  
           For a description of how to generate these zip files, [please see this documentation](%{uri}).
-      sis_import_crumb: "SIS Import"
+      sis_import_crumb: "CSV Import"
       started_at_message: "Started: %{started_at}"
-      title: "SIS Import"
+      title: "CSV Import"
       try_import_again_link: "Try import again"
     site_admin_statistics: 
       page_title: "Statistics for %{account}"

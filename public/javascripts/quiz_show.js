@@ -194,26 +194,17 @@ define([
               var video = document.getElementsByTagName('video')[0];
               if(enable_getusermedia) {
                   navigator.getUserMedia(
-                      // Constraints
                       {
                           video: true
                       },
 
-                      // Success Callback
                       function(localMediaStream) {
                           flag=true;
-                          //localMediaStream.play();
                           video.src = stream;
                           video.play();
 
-//                          if(allow_count)
-//                          {
-//                          alert('Now your camera is available.You click take the assessment.');
-//                          }
-//                          allow_count = false;
                       },
 
-                      // Error Callback
                       function(err) {
                           event.stopImmediatePropagation();
                           alert('No camera available.You have to enable the camera to take the assessment.');

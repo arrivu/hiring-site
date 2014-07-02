@@ -32,7 +32,10 @@ define([
                 // Initialize getUserMedia with options
                 //var video1 = App.options.videoEl;
                 //video1.autoplay = true ;
-                if(ENV.IMAGE_PROCTORING)
+                //alert($('#preview_quiz_button').attr('data'));
+                var check_preview = ENV.quiz_preview;
+
+                if(ENV.IMAGE_PROCTORING && !check_preview)
                 {
                 getUserMedia(this.options, this.success, this.deviceError);
 

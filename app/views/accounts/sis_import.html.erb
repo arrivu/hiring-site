@@ -1,13 +1,13 @@
-<% add_crumb t(:sis_import_crumb, "SIS Import") %>
+<% add_crumb t(:sis_import_crumb, "CSV Import") %>
 <% @active_tab = "sis-import" %>
-<% content_for :page_title do %><%= t(:page_title, "SIS Import") %><% end %>
+<% content_for :page_title do %><%= t(:page_title, "CSV Import") %><% end %>
 
 <% content_for :page_header do %>
-    <h1><%= t(:page_header, "SIS Import") %></h1>
+    <h1><%= t(:page_header, "CSV Import") %></h1>
 <% end %>
 
 <div>
-  <h2><%= t(:title, "SIS Import") %></h2>
+  <h2><%= t(:title, "CSV Import") %></h2>
 
   <div class="sis_messages" style="<%= hidden %>">
     <div class="ui-state-error sis_error_message" style="padding: 0.5em 1em"></div>
@@ -39,7 +39,7 @@
           </select>
           <p class='instruction'>
             <%= mt(:batch_import_instructions,
-            "If selected, this will delete everything for this term, which includes all courses and enrollments that are not in the selected import file above.  \nSee the documentation for details.") %>
+            "If selected, this will delete everything for this term, which includes all projects and enrollments that are not in the selected import file above.  \nSee the documentation for details.") %>
           </p>
         </div>
 
@@ -49,14 +49,14 @@
             <label for="override_sis_stickiness"><%= t(:override_sis_stickiness_label, "Override UI changes") %></label>
             <p class='instruction'>
               <%= mt(:override_sis_stickiness_instructions,
-              "By default, UI changes have priority over SIS import changes; for a number of fields, the SIS import will not change that field's data if an admin has changed that field through the UI. If you select this option, this SIS import will override UI changes.  \nSee the documentation for details.") %>
+              "By default, UI changes have priority over CSV import changes; for a number of fields, the CSV import will not change that field's data if an admin has changed that field through the UI. If you select this option, this CSV import will override UI changes.  \nSee the documentation for details.") %>
             </p>
             <div id="add_sis_stickiness_container" style="padding-left: 20px;">
               <input type="checkbox" name="add_sis_stickiness" value="1" id="add_sis_stickiness"/>
               <label for="add_sis_stickiness"><%= t(:add_sis_stickiness_label, "Process as UI changes") %></label>
               <p class='instruction'>
                 <%= mt(:add_sis_stickiness_instructions,
-                "With this option selected, changes made through this SIS import will be processed as if they are UI changes, preventing subsequent non-overriding SIS imports from changing the fields changed here.") %>
+                "With this option selected, changes made through this CSV import will be processed as if they are UI changes, preventing subsequent non-overriding CSV imports from changing the fields changed here.") %>
               </p>
             </div>
             <div id="clear_sis_stickiness_container" style="padding-left: 20px;">
@@ -101,16 +101,16 @@
       <h3><%= t(:last_batch_title, "Last Batch") %></h3>
       <p><%= t(:started_at_message, "Started: %{started_at}", :started_at => datetime_string(@last_batch.created_at)) %><br/>
         <% if @last_batch.workflow_state == 'imported' %>
-          <%= t(:imported_message, "All SIS data was successfully imported.") %>
+          <%= t(:imported_message, "All CSV data was successfully imported.") %>
           <%= print_counts @last_batch %>
         <% elsif @last_batch.workflow_state == 'imported_with_messages' %>
-          <%= t(:imported_with_messages_message, "The SIS data was imported but with these messages:") %>
+          <%= t(:imported_with_messages_message, "The CSV data was imported but with these messages:") %>
           <%= print_messages(@last_batch) %>
           <%= print_counts @last_batch %>
         <% elsif @last_batch.workflow_state == 'failed' %>
           <%= t(:import_failed_message, "There was an error importing your SIS data. No records were imported.") %>
         <% elsif @last_batch.workflow_state == 'failed_with_messages' %>
-          <%= t(:import_failed_with_messages_message, "No SIS records were imported. The import failed with these messages:") %>
+          <%= t(:import_failed_with_messages_message, "No CSV records were imported. The import failed with these messages:") %>
           <%= print_messages(@last_batch) %>
         <% end %>
       </p>
