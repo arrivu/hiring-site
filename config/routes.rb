@@ -716,7 +716,7 @@ routes.draw do
   match 'authenticateKey/:access_code' => 'invitations#accept_code'
   match 'project' => 'courses#candidate' , :as => :project, :via => :get
   match 'registerCandidate' => 'invitations#fill_registration_form', :as => :registerCandidate
-  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post,:path => :test
   #match 'candidateReport/candidate_id/project_id/assessment_id' => 'candidate_reports#view_reports', :as => :candidateReport
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get

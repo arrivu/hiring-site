@@ -67,7 +67,8 @@ define([
                     //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
                    // console.log(rand);
 
-                    this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
+                   this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
+
                 }
 
 //				// Trigger face detection (using the glasses option)
@@ -108,7 +109,7 @@ define([
             append: true,
 
             // noFallback:true, use if you don't require a fallback
-            width: 320,
+            width: 240,
             height: 240,
             //allowscriptaccess : "always",
             //autoplay : "true",
@@ -125,11 +126,10 @@ define([
             debug: function(type, string) {
                  if (string === "Camera started") {
                      $('#quiz_image_proctoring').show();
-                 }else{
+                 }else if ((string === "Camera stopped") ){
                    alert('No camera available.You have to enable the camera to take the assessment.');
                    $('#webcam').show();
                    $('#quiz_image_proctoring').hide();
-
                  }
                },
             onCapture: function () {
@@ -190,7 +190,7 @@ define([
 
             } else{
 
-                $('#webcam').show();
+//                $('#webcam').show();
                 // flash context
             }
 
@@ -211,7 +211,6 @@ define([
         },
 
         getSnapshot: function (e) {
-
             // If the current context is WebRTC/getUserMedia (something
             // passed back from the shim to avoid doing further feature
             // detection), we handle getting video/images for our canvas
@@ -235,7 +234,7 @@ define([
                 fd.append("[time_elapsed]", time_elapsed);
                 // And send it
                 $.ajax({
-                    url: "imageproctoring/proctoring",
+                    url: $('#proctoring_url').data('url'),
                     type: "POST",
                     data: fd ,
                     processData: false,
@@ -248,7 +247,6 @@ define([
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
-                $('#webcam').show();
                 window.webcam.capture();
                 App.changeFilter();
                 var dataURL = App.canvas.toDataURL("image/jpeg");
@@ -265,7 +263,7 @@ define([
                 fd.append("[time_elapsed]", time_elapsed);
                 // And send it
                 $.ajax({
-                    url: "imageproctoring/proctoring",
+                    url:  $('#proctoring_url').data('url'),
                     type: "POST",
                     data: fd ,
                     processData: false,

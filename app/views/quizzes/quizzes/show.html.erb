@@ -1,4 +1,7 @@
 <% content_for :page_title do %><%= join_title(@quiz.quiz_title || @quiz.readable_type, @context.name) %><% end %>
+<% content_for :head do %>
+    <base target="_parent" />
+<% end  %>
 <% if !can_do(@context.quizzes.new, @current_user, :create)%>
     <% @headers = false
 

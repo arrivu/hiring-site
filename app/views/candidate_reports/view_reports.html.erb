@@ -62,7 +62,7 @@
       </table>
 
       <table class="table-view">
-    <% if @candidate_detail[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td><td valign="top" rowspan="5"><img src="<%= @candidate_detail[:avatar_image_url] %>"></td></tr><% end %>
+    <% if @candidate_detail[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= @candidate_detail.name %></td><td valign="top" rowspan="5"><img src="<%= @candidate_detail[:avatar_image_url] %>" style="width: 200px;"></td></tr><% end %>
     <% if @candidate_detail[:birthdate] != nil %><tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(@candidate_detail.birthdate) %></td></tr><% end %>
     <% if @candidate_detail[:gender] != nil %><tr><td style="font-weight: bold;">Gender</td><td><%= @candidate_detail[:gender] %></td></tr><% end %>
     <% if @candidate_detail[:phone] != nil %><tr><td style="font-weight: bold;">Mobile Number</td><td><%= @candidate_detail[:phone] %></td></tr><% end %>
