@@ -4,8 +4,9 @@
  * for use with https://github.com/addyosmani/getUserMedia.js
  * Copyright (c) 2012 addyosmani; Licensed MIT */
 define([
+    'jquery',
     'compiled/util/BlobFactory'
-], function (BlobFactory) {
+], function ($, BlobFactory) {
     'use strict';
     var App = {
 
@@ -117,11 +118,20 @@ define([
 
             mode: "callback",
             // callback | save | stream
-            swffile: "http://localhost:3000/dist/fallback/jscam_canvas_only.swf",
+            swffile: "/dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
-            debug: function () {},
+            debug: function(type, string) {
+                 if (string === "Camera started") {
+                     $('#quiz_image_proctoring').show();
+                 }else{
+                   alert('No camera available.You have to enable the camera to take the assessment.');
+                   $('#webcam').show();
+                   $('#quiz_image_proctoring').hide();
+
+                 }
+               },
             onCapture: function () {
                 window.webcam.save();
             },
@@ -153,7 +163,7 @@ define([
         },
 
         success: function (stream) {
-
+            $('#quiz_image_proctoring').show();
             if (App.options.context === 'webrtc') {
 
                 var video = App.options.videoEl;
@@ -179,6 +189,7 @@ define([
                 };
 
             } else{
+
                 $('#webcam').show();
                 // flash context
             }
@@ -186,10 +197,9 @@ define([
         },
 
         deviceError: function (error) {
-            if(ENV.CHECK_IMAGE_PROCTORING)
-            {
-            alert('No camera available.');
-            }
+
+            alert('No camera available.You have to enable the camera to take the assessment.');
+
             //console.error('An error occurred: [CODE ' + error.code + ']');
         },
 
@@ -374,7 +384,13 @@ define([
 
     };
 
-    App.init();
+    $( document ).ready(function() {
+    if(ENV.CHECK_IMAGE_PROCTORING)
+    {
+     $('#quiz_image_proctoring').hide();
+     App.init();
+    }
+    });
 
 //})();
 });

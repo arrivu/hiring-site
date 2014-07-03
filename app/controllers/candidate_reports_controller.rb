@@ -2,7 +2,7 @@ class CandidateReportsController < ApplicationController
 
   before_filter :require_context
 
-  def view_reports()
+  def view_reports
 
     @candidate_detail = User.find_by_id(params[:candidate_id])
     @get_pseudonym = Pseudonym.find_by_user_id(params[:candidate_id])
