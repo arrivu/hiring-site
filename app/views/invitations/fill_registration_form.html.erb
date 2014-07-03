@@ -11,11 +11,12 @@
     .alnright { text-align: right !important; }
 </style>
 <div style="width: 97%;margin: 25px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
-  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @course.id } do |f| %>
+  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
+      <%= f.hidden_field :course_id ,:value => @course.id %>
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div style="width: 100%;float: left;">
-        <div class="" style="width: 75%;float: left;">
+        <div class="span11" style="">
           <table class="table">
             <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
               <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
@@ -63,7 +64,7 @@
           </table>
         </div>
           <% if @candidate_filter.profile_picture == TRUE %>
-        <div class="image-block" style="float: right;" >
+        <div class="image-block span4" style="" >
           <div class="image-block-image profile-avatar-wrapper" style="text-align: center;">
             <% if @candidate_detail %>
                        <div id="webcam" style="display:none;" ></div>

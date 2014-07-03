@@ -487,6 +487,7 @@ module QuizzesHelper
     opts['class'] = class_array.compact.join(" ")
     opts['aria-controls'] = 'js-sequential-warning-dialogue' if @quiz.cant_go_back?
     opts['data-method'] = 'post' unless @quiz.cant_go_back?
+    opts['target'] = "_self"
     link_to(link_body, take_quiz_url, opts)
   end
 

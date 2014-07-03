@@ -10,10 +10,8 @@
             // getUserMedia() feature detection
             navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if (!!navigator.getUserMedia_) {
-
-
-                // constructing a getUserMedia config-object and 
+            if (navigator.getUserMedia_) {
+                // constructing a getUserMedia config-object and
                 // an string (we will try both)
                 var option_object = {};
                 var option_string = '';
