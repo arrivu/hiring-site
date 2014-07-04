@@ -104,12 +104,11 @@ document.onkeydown = function (event) {
     <%= user_content(@quiz.description) %>
   </div>
 </header>
-
 <% js_bundle :take_quiz, :proctoring %>
-<div id="proctoring_url" style="display: none" data-url="<%= request.request_uri %>"></div>
+<div id="proctoring_url" style="display: none" data-url="<%= course_quiz_image_proctoring_url(@context) %>"></div>
 
 <div
-<% unless can_do(@context.quizzes.new, @current_user, :create) && @quiz.image_proctoring %>
+<% if !can_do(@context.quizzes.new, @current_user, :create) && @quiz.image_proctoring %>
 style="display: none;"
 <%end%>
 id="quiz_image_proctoring">

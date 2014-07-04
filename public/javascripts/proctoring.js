@@ -17,7 +17,6 @@ define([
             // demo specific and should be used for reference within this context
             // only
             if ( !!this.options ) {
-
                 this.pos = 0;
                 this.cam = null;
                 this.filter_on = false;
@@ -66,9 +65,12 @@ define([
                     //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
                     //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
                    // console.log(rand);
-
+                   if (ENV.QUIZ.one_question_at_a_time == "true") {
+                       alert("true");
+                      this.addEvent('mouseover', this.snapshotBtn, setTimeout((this.getSnapshot),100));
+                   }else{
                    this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
-
+                   }
                 }
 
 //				// Trigger face detection (using the glasses option)

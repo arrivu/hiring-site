@@ -89,12 +89,13 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers = false
     clear_crumbs
+    reset_session
   end
 
   def fill_registration_form
     @show_left_side = false
     @headers = false
-    reset_session
+
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -113,8 +114,8 @@ class InvitationsController < ApplicationController
           @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
                                                      :account => @domain_root_account)
           @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
-          @user.save!
-          @user_pseudonym.save!
+          #@user.save!
+          #@user_pseudonym.save!
           @enrollment = @course.enroll_user(@user, type='StudentEnrollment',:enrollment_state => 'active',:section => @course_section)
           @efill_registration_formnrollment.save!
         end

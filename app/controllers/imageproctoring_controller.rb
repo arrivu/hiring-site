@@ -1,7 +1,7 @@
 class ImageproctoringController < ApplicationController
 
   before_filter :require_user
-  before_filter :require_context, :except => :create_pending
+  #before_filter :require_context, :except => :create_pending
 
   include Api::V1::Avatar
   include Api::V1::Attachment
@@ -315,7 +315,7 @@ class ImageproctoringController < ApplicationController
             format.json { render :json => @attachment.errors }
             format.text { render :json => @attachment.errors }
           end
-          Imageproctoring.create!(attachment_id: @attachment.id, user_id: @current_user.id, quiz_id: params[:quiz_id],time_elapsed: params[:time_elapsed])
+           Imageproctoring.create!(attachment_id: @attachment.id, user_id: @current_user.id, quiz_id: params[:quiz_id],time_elapsed: params[:time_elapsed])
         end
       #end
 
