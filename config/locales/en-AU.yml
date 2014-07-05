@@ -240,7 +240,7 @@ en-AU:
     permission_denied_notice: "You cannot create announcements for that account"
   account_reports: 
     default: 
-      all_terms: "All Horong Periods"
+      all_terms: "All Hiring Periods"
       message: "%{type} report successfully generated with the following settings. Account: %{account}; %{options}"
     grades: 
       deleted: "Include Deleted Objects: true;"
@@ -457,7 +457,7 @@ en-AU:
         ross: 
           description: 
             header: Example
-            text: "This report shows the candidate final grade results for all candidates in a given term. The resulting csv file will have one row per enrollment, and will show the current and final grade that is displayed in the project gradebook."
+            text: "This report shows the candidate final grade results for all candidates in a given hiring period. The resulting csv file will have one row per enrollment, and will show the current and final grade that is displayed in the project gradebook."
 
     custom_grade_export_csv_parameters: 
       account_reports: 
@@ -816,7 +816,7 @@ en-AU:
       groups: Groups
       imported_items_title: "Imported Items"
       sections_label: Batchs
-      terms_label: Terms
+      terms_label: "Hiring Periods"
       users_label: Users
     sis_batch_messages: 
       sis_batch_errors_title: "Errors that prevent importing"
@@ -825,7 +825,7 @@ en-AU:
       account_reports: 
         sis_export: 
           description: 
-            text: "SIS Export report: This report will export all the needed files for Users, Accounts, Terms, Projects, Batchs, Enrollments, Groups, Group Memberships, and Cross Listings for an SIS import in their respective categories."
+            text: "CSV Export report: This report will export all the needed files for Users, Accounts, Hiring Periods, Projects, Batches and Enrollments for an CSV import in their respective categories."
     sis_export_csv_parameters: 
       account_reports: 
         default: 
@@ -12108,7 +12108,7 @@ en-AU:
       process_data: "Process Data"
     errors: 
       import_failed_code: "There was an error importing your SIS data. No records were imported.  Please notify your system administrator and give them the following code: \"%{code}\""
-      import_failed_messages: "No SIS records were imported. The import failed with these messages:"
+      import_failed_messages: "No CSV records were imported. The import failed with these messages:"
     headers: 
       import_errors: "Errors that prevent importing"
       import_warnings: Warnings
@@ -12121,11 +12121,11 @@ en-AU:
       group_enrollments: "Group Enrollments: %{group_enrollments_count}"
       groups: "Groups: %{group_count}"
       sections: "Batches: %{section_count}"
-      terms: "hiring Periods: %{term_count}"
+      terms: "Hiring Periods: %{term_count}"
       users: "Users: %{user_count}"
     messages: 
       import_complete_success: "The import is complete and all records were successfully imported."
-      import_complete_warnings: "The SIS data was imported but with these messages:"
+      import_complete_warnings: "The CSV data was imported but with these messages:"
     notices: 
       processing_takes_awhile: "this may take a bit..."
     status: 

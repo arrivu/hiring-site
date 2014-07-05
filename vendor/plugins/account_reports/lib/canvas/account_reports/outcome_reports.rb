@@ -119,12 +119,13 @@ module Canvas::AccountReports
       students = add_term_scope(students, 'c')
 
       host = root_account.domain
-      headers = ['student name', 'student id', 'student sis id',
+      # arrivu changes
+      headers = ['candidate name', 'candidate id', 'candidate sis id',
                  'assignment title', 'assignment id', 'submission date',
                  'submission score', 'learning outcome name',
                  'learning outcome id', 'attempt', 'outcome score',
-                 'course name', 'course id', 'course sis id', 'section name',
-                 'section id', 'section sis id', 'assignment url']
+                 'project name', 'project id', 'project sis id', 'batch name',
+                 'batch id', 'batch sis id', 'assignment url']
 
       # Generate the CSV report
       filename = Canvas::AccountReports.generate_file(@account_report)
@@ -222,13 +223,13 @@ module Canvas::AccountReports
       students = add_term_scope(students, 'c')
 
       students = students.order(outcome_order)
-
-      headers = ['student name', 'student id', 'student sis id',
+      # arrivu changes
+      headers = ['candidate name', 'candidate id', 'candidate sis id',
                  'assessment title', 'assessment id', 'assessment type',
                  'submission date', 'submission score', 'learning outcome name',
                  'learning outcome id', 'attempt', 'outcome score',
                  'assessment question', 'assessment question id',
-                 'course name', 'course id', 'course sis id']
+                 'project name', 'project id', 'project sis id']
 
       # Generate the CSV report
       filename = Canvas::AccountReports.generate_file(@account_report)

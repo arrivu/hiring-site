@@ -21,7 +21,7 @@ module SIS
     class EnrollmentImporter < CSVBaseImporter
 
       def self.is_enrollment_csv?(row)
-        (row.include?('batch_id') || row.include?('project_id')) && row.include?('user_id')
+        (row.include?('batch_id') || row.include?('project_id')) && row.include?('user_id') # arrivu changes
       end
 
       # expected columns
@@ -38,10 +38,12 @@ module SIS
               start_date = DateTime.parse(row['start_date']) unless row['start_date'].blank?
               end_date = DateTime.parse(row['end_date']) unless row['end_date'].blank?
             rescue
+              # arrivu changes
               messages << "Bad date format for user #{row['user_id']} in #{row['project_id'].blank? ? 'section' : 'course'} #{row['project_id'].blank? ? row['batch_id'] : row['project_id']}"
             end
 
             begin
+              # arrivu changes
               importer.add_enrollment(row['project_id'], row['batch_id'], row['user_id'], row['role'], row['status'], start_date, end_date, row['associated_user_id'])
             rescue ImportError => e
               messages << "#{e}"

@@ -67,8 +67,6 @@ define([
                     }
                     var lowest_limit = 150000;
                     //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
-                    //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
-                   // console.log(rand);
 
                     this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
                 }

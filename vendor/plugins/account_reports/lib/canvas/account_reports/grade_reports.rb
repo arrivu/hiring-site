@@ -89,9 +89,10 @@ module Canvas::AccountReports
 
       file = Canvas::AccountReports.generate_file(@account_report)
       CSV.open(file, "w") do |csv|
-        csv << ['student name', 'student id', 'student sis', 'course',
-                'course id', 'course sis', 'section', 'section id',
-                'section sis', 'term', 'term id', 'term sis', 'current score',
+        # arrivu changes
+        csv << ['candidate name', 'candidate id', 'candidate sis', 'project',
+                'project id', 'project sis', 'batch', 'batch id',
+                'batch sis', 'hiring period', 'hiring period id', 'hiring period sis', 'current score',
                 'final score', 'enrollment state']
         Shackles.activate(:slave) do
           students.find_each do |student|

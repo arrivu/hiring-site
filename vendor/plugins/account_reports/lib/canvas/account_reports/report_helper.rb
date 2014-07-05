@@ -135,15 +135,17 @@ module Canvas::AccountReports::ReportHelper
   end
 
   def term_name
+    # arrivu changes
     term ? term.name : I18n.t(
-      'account_reports.default.all_terms', "All Terms"
+      'account_reports.default.all_terms', "All Hiring Periods"
     )
   end
 
   def extra_text_term(account_report = @account_report)
+    # arrivu changes
     account_report.parameters ||= {}
     add_extra_text(I18n.t(
-      'account_reports.default.extra_text_term', "Term: %{term_name};",
+      'account_reports.default.extra_text_term', "Hiring Period: %{term_name};",
       :term_name => term_name
     ))
   end
@@ -153,8 +155,9 @@ module Canvas::AccountReports::ReportHelper
   end
 
   def report_extra_text
+    # arrivu changes
     if check_report_key(:enrollment_term_id)
-      add_extra_text(I18n.t('account_reports.default.term_text', "Term: %{term_name};",
+      add_extra_text(I18n.t('account_reports.default.extra_text_term', "Hiring Period: %{term_name};",
                        :term_name => term_name))
     end
 

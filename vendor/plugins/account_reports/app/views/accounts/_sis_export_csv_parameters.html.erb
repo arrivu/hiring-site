@@ -36,6 +36,7 @@
       <%= label_tag(:enrollments, t('account_reports.default.enrollments.check_box','Enrollments CSV'), "for" => 'parameters_enrollments') %>
     </td>
   </tr>
+  <!-- arrivu changes start -->
   <!--<tr>-->
     <!--<td>-->
       <!--<%#= check_box_tag "parameters[groups]"   %>-->
@@ -48,12 +49,13 @@
       <!--<%#= label_tag(:group_membership, t('account_reports.default.group_membership.login.check_box','Group Membership CSV'), "for" => 'parameters_group_membership') %>-->
     <!--</td>-->
   <!--</tr>-->
-  <tr>
-    <td>
-      <%= check_box_tag "parameters[xlist]"   %>
-      <%= label_tag(:xlist, t('account_reports.default.xlist.check_box','X list CSV'), "for" => 'parameters_xlist') %>
-    </td>
-  </tr>
+  <!--<tr>-->
+    <!--<td>-->
+      <!--<%#= check_box_tag "parameters[xlist]"   %>-->
+      <!--<%#= label_tag(:xlist, t('account_reports.default.xlist.check_box','X list CSV'), "for" => 'parameters_xlist') %>-->
+    <!--</td>-->
+  <!--</tr>-->
+  <!-- arrivu changes end -->
   <tr>
     <td>
       <%= check_box_tag "parameters[assessment_questions]"   %>
@@ -62,7 +64,8 @@
   </tr>
   <tr>
     <td>
-      <%= t('account_reports.sis_default.parameters.note', %{*Hiring Period settings only impact Projects, Batches, Enrollments, and X list CSV files.}) %>
+      <%#= t('account_reports.sis_default.parameters.note', %{*Hiring Period settings only impact Projects, Batches, Enrollments, and X list CSV files.}) %>
+      *Hiring Period settings only impact Projects, Batches and Enrollments CSV files.
     </td>
   </tr>
   <%=  render :partial => 'include_deleted_parameter' %>

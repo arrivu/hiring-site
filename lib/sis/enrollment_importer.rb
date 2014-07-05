@@ -85,7 +85,7 @@ module SIS
         @enrollment_batch = []
         @success_count = 0
       end
-
+      # arrivu changes course_id into project_id and section_id into batch_id
       def add_enrollment(project_id, batch_id, user_id, role, status, start_date, end_date, associated_user_id=nil)
         raise ImportError, "No project_id or batch_id given for an enrollment" if project_id.blank? && batch_id.blank?
         raise ImportError, "No user_id given for an enrollment" if user_id.blank?
@@ -167,6 +167,17 @@ module SIS
             type = if custom_role
               custom_role.base_role_type
             else
+              # arrivu changes start
+              if role =~ /\Ahiringmanager\z/i
+                role = "teacher"
+              elsif role =~ /\Acandidate/i
+                role = "student"
+              elsif role =~ /\Ainterviewer\z/i
+                role = "ta"
+              elsif role =~ /\Ahr\z/i
+                role = "observer"
+              end
+              # arrivu changes end
               if role =~ /\Ateacher\z/i
                 'TeacherEnrollment'
               elsif role =~ /\Astudent/i

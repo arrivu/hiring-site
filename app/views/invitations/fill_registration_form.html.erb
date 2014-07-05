@@ -48,7 +48,7 @@
                   <td><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></td>
                 <% end %>
                 <% if @candidate_filter.contact_number == TRUE %>
-                  <td class='alnright'><%= f.label :phone, "Contact number*"%></td><td><%= f.text_field :phone, :required => true%></td>
+                  <td class='alnright'><%= f.label :phone, "Contact number*"%></td><td><%= f.text_field :phone, :required => true, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only." %></td>
                 <% end %>
             </tr>
 
@@ -59,7 +59,7 @@
                 </tr>
                 <tr>
                   <td  class='alnright'><%= f.label :state, "State" %></td><td><%= f.text_field :state%></td>
-                  <td  class='alnright'><%= f.label :zip_code, "Zip code" %></td><td><%= f.text_field :zip_code%></td>
+                  <td  class='alnright'><%= f.label :zip_code, "Zip code" %></td><td><%= f.text_field :zip_code, :pattern => "[0-9]*", :title => "The zip code should consist of numbers only." %></td>
                 </tr>
             <% end %>
           </table>

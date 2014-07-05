@@ -579,8 +579,15 @@ class Quizzes::Quiz < ActiveRecord::Base
 
   def generate_submission_question(q)
     @idx ||= 1
-    q[:name] = t '#quizzes.quiz.question_name_counter', "Question %{question_number}", :question_number => @idx
+    # arrivu changes start
     if q[:question_type] == 'text_only_question'
+      q[:name] = ""
+    else
+      q[:name] = t '#quizzes.quiz.question_name_counter', "Question %{question_number}", :question_number => @idx
+    end
+    # arrivu changes end
+    if q[:question_type] == 'text_only_question'
+      # arrivu changes
       #q[:name] = t '#quizzes.quiz.default_text_only_question_name', "Spacer"
       @idx -= 1
     elsif q[:question_type] == 'fill_in_multiple_blanks_question'
