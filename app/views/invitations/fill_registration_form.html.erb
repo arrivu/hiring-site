@@ -159,8 +159,8 @@
                     <tr>
                       <input type="hidden" name="link_experience_ids[]" value="<%= link.id %>">
                       <td><input type="text" name="link_organizations[]" value="<%= link.organization %>"></td>
-                      <td><input type="text" name="link_from_dates[]" value="<%= link.from_date %>"></td>
-                      <td><input type="text" name="link_end_dates[]" value="<%= link.end_date %>"></td>
+                      <td><input type="text" name="link_from_dates[]" value="<%= date_string(link.from_date, :long) %>" class="from_entry" style="width:80%;"></td>
+                      <td><input type="text" name="link_end_dates[]" value="<%= date_string(link.end_date, :long) %>" class="to_entry" style="width:80%;"></td>
                       <td><input type="text" name="link_designations[]" value="<%= link.designation %>"></td>
                       <td><input type="text" name="link_permanents[]" value="<%= link.permanent %>"></td>
                       <td><input type="text" name="link_reason_for_leaving[]" value="<%= link.reason_for_leaving %>"></td>
