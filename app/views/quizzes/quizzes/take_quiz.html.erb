@@ -109,7 +109,7 @@ document.onkeydown = function (event) {
 <div id="proctoring_url" style="display: none" data-url="<%= request.request_uri %>"></div>
 
 <div
-<% unless can_do(@context.quizzes.new, @current_user, :create) && @quiz.image_proctoring %>
+<% if !can_do(@context.quizzes.new, @current_user, :create) && @quiz.image_proctoring %>
 style="display: none;"
 <%end%>
 id="quiz_image_proctoring">
