@@ -313,7 +313,7 @@ routes.draw do
     match 'quizzes/unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
     match 'files/pending' => 'files#create_pending', :as => :file_create_pending
     match 'files/registration_image' => 'files#registration_image'
-    match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
+    #match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring', :as => :image_proctoring
     match 'imageproctoring/registration_image' => 'imageproctoring#create_pending'
     resources :quizzes, :path => :assesments , controller: 'quizzes/quizzes' do
       match 'managed_quiz_data' => 'quizzes/quizzes#managed_quiz_data', :as => :managed_quiz_data
@@ -326,7 +326,8 @@ routes.draw do
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
       match 'files/pending' => 'files#create_pending', :as => :file_create_pending
-      match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
+      resources :imageproctoring
+      match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring', :as => :image_proctoring
       match 'files/registration_image' => 'files#registration_image'
       match 'imageproctoring/registration_image' => 'imageproctoring#create_pending'
       match 'imageproctoring/:user_id/show_image' => 'imageproctoring#show_image'

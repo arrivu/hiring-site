@@ -113,10 +113,10 @@ class InvitationsController < ApplicationController
           @user_pseudonym = @user.pseudonyms.create!(:unique_id => params[:invitation][:unique_id],
                                                      :account => @domain_root_account)
           @user.communication_channels.create!(:path => params[:invitation][:unique_id]) { |cc| cc.workflow_state = 'active' }
-          #@user.save!
-          #@user_pseudonym.save!
+         @user.save!
+         @user_pseudonym.save!
           @enrollment = @course.enroll_user(@user, type='StudentEnrollment',:enrollment_state => 'active',:section => @course_section)
-          @efill_registration_formnrollment.save!
+          @enrollment.save!
         end
         @context = @current_user
         @get_pseudonym = Pseudonym.custom_find_by_unique_id(params[:invitation][:unique_id])
