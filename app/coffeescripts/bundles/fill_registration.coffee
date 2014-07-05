@@ -21,6 +21,8 @@ require [
   'jquery'
   'str/htmlEscape'
 #  'compiled/util/ProfilePicture'
+  'jquery.instructure_date_and_time'
+  'jquery.instructure_forms'
   'compiled/tinymce'
   'jquery.instructure_forms'
   'tinymce.editor_box'
@@ -42,6 +44,7 @@ require [
       @addQualField()
       @addWorkField()
 #      @initEditUser()
+      $(".date_entry").date_field(alwaysShowTime: false)
 
     handleDeclarativeClick: (event) ->
       event.preventDefault()
