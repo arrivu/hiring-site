@@ -108,8 +108,9 @@ class ImageproctoringController < ApplicationController
     #if authorized_action(@context, :context_files_url, :update_avatar)
     #  render :json => avatar_image_url_json_for_user(@context)
     #end
-
-
+    @context.avatar_image_url =file_download_url(@attachment, { :verifier => @attachment.uuid, :download => '1', :download_frd => '1' }) unless @attachment.nil? 
+    @context.avatar_image_source = "attachment"
+    @context.save!
 
     respond_to do |format|
       @attachment.folder_id ||= @folder.id
@@ -333,9 +334,9 @@ class ImageproctoringController < ApplicationController
         ),
         :deleted_attachment_ids => deleted_attachments.map(&:id)
     }
-    #if folder.name == 'profile pictures'
-    #  json[:avatar] = avatar_json(@current_user, attachment, { :type => 'attachment' })
-    #end
+#    if folder.name == 'profile pictures'
+ #     json[:avatar] = avatar_json(@current_user, attachment, { :type => 'attachment' })
+  #  end
 
     render :json => json, :as_text => true
   end

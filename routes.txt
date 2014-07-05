@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
                                                   submission_comment DELETE        /submission_comments/:id(.:format)                                                                                  {:action=>"destroy", :controller=>"submission_comments"}
                                            registration_confirmation               /register/:nonce(.:format)                                                                                          {:controller=>"communication_channels", :action=>"confirm"}
                                 registration_confirmation_deprecated               /pseudonyms/:id/register/:nonce(.:format)                                                                           {:controller=>"communication_channels", :action=>"confirm"}
@@ -2017,3 +2019,4 @@ api_v1_collection_item_discussion_topic_discussion_entry_mark_unread DELETE     
                                                                                    /get_tags_filter(.:format)                                                                                          {:controller=>"tags", :action=>"get_tags_filter"}
                                                                                    /get_tag_to_bank(.:format)                                                                                          {:controller=>"tags", :action=>"get_tag_to_bank"}
                                                                                    /tag_to_question(.:format)                                                                                          {:controller=>"tags", :action=>"tag_to_question"}
+>>>>>>> e4315f435569fc8664cf484652c777e6e570901b

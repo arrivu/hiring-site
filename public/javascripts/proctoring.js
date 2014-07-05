@@ -232,7 +232,7 @@ define([
                 fd.append("[time_elapsed]", time_elapsed);
                 // And send it
                 $.ajax({
-                    url: $('#proctoring_url').data('url'),
+                    url:"imageproctoring/proctoring", 
                     type: "POST",
                     data: fd ,
                     processData: false,
@@ -258,7 +258,7 @@ define([
                 fd.append("[time_elapsed]", time_elapsed);
                 // And send it
                 $.ajax({
-                    url:  $('#proctoring_url').data('url'),
+                    url:  "imageproctoring.proctoring",
                     type: "POST",
                     data: fd ,
                     processData: false,

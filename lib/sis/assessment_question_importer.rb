@@ -16,7 +16,6 @@
 # with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-
 module SIS
   class AssessmentQuestionImporter < BaseImporter
     def process
@@ -424,6 +423,7 @@ module SIS
 
         if question.save
           @success_count += 1
+
           if question_tag.present?
             @question_tag_split = question_tag.split(',')
             @question_tag_split.each do  |splait_tag|

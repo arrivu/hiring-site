@@ -45,7 +45,7 @@ require([
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
-
+                console.log(App.options.context);
                 // Trigger a snapshot
                 this.addEvent('click', this.snapshotBtn, this.getSnapshot);
 //                (this.profilepic).onclick= function () {
@@ -57,6 +57,7 @@ require([
 //                    $('#startbutton').hide();
 //                };
                 this.addEvent('click', this.profilepic, this.takeprofilePic);
+
 //                this.addEvent('click', this.button, this.test);
 
 //				// Trigger face detection (using the glasses option)
