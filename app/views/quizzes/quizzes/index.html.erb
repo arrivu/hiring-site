@@ -1,8 +1,7 @@
 <% content_for :page_title, t(:page_titles, "Assessments")%>
 <% if !can_do(@context.quizzes.new, @current_user, :create)%>
     <% @headers = false
-
-    @show_left_side = false %>
+       @show_left_side = false %>
     <% content_for :stylesheets do %>
         <style>
         #main{
@@ -15,6 +14,7 @@
 <% jammit_css :quizzes %>
 
 <% if @context.feature_enabled?(:draft_state) %>
+
  <%# if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
             <% jammit_css :quizzes %>
             <% js_bundle :quizzes_index %>

@@ -1,4 +1,7 @@
 <% content_for :page_title do %><%= join_title(@quiz.quiz_title || @quiz.readable_type, @context.name) %><% end %>
+<% content_for :head do %>
+    <base target="_parent" />
+<% end  %>
 <% if !can_do(@context.quizzes.new, @current_user, :create)%>
     <% @headers = false
 
@@ -14,39 +17,39 @@
 //    if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; }
 //    else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; }
 //    document.oncontextmenu=new Function("alert(message);return false")
-    var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-
-    if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
-
-    function mischandler(){
-        return false;
-    }
-
-    function mousehandler(e){
-        var myevent = (isNS) ? e : event;
-        var eventbutton = (isNS) ? myevent.which : myevent.button;
-        if((eventbutton==2)||(eventbutton==3)) return false;
-    }
-    document.oncontextmenu = mischandler;
-    document.onmousedown = mousehandler;
-    document.onmouseup = mousehandler;
-    var isCtrl = false;
-    document.onkeyup=function(e)
-    {
-        if(e.which == 17)
-            isCtrl=false;
-    }
-
-    document.onkeydown=function(e)
-    {
-        if(e.which == 17)
-            isCtrl=true;
-        if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
-        {
-// alert(‘Keyboard shortcuts are cool!’);
-            return false;
-        }
-    }
+//    var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+//
+//    if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
+//
+//    function mischandler(){
+//        return false;
+//    }
+//
+//    function mousehandler(e){
+//        var myevent = (isNS) ? e : event;
+//        var eventbutton = (isNS) ? myevent.which : myevent.button;
+//        if((eventbutton==2)||(eventbutton==3)) return false;
+//    }
+//    document.oncontextmenu = mischandler;
+//    document.onmousedown = mousehandler;
+//    document.onmouseup = mousehandler;
+//    var isCtrl = false;
+//    document.onkeyup=function(e)
+//    {
+//        if(e.which == 17)
+//            isCtrl=false;
+//    }
+//
+//    document.onkeydown=function(e)
+//    {
+//        if(e.which == 17)
+//            isCtrl=true;
+//        if(((e.which == 85) || (e.which == 117) || (e.which == 65) || (e.which == 97) || (e.which == 67) || (e.which == 99)) && isCtrl == true)
+//        {
+//// alert(‘Keyboard shortcuts are cool!’);
+//            return false;
+//        }
+//    }
     </script>
 <% end %>
     <% end %>
@@ -500,6 +503,8 @@
     </div>
 
     <% if @quiz.available? %>
+      <div id="webcam" style="position: absolute;margin: 0px 39%;"></div>
+  <div id="assement_id" style="display: none" data-url=<%= @quiz.id %>></div>
 
       <% if !@submission || !@submission.completed? || @quiz.unlimited_attempts? || (@submission.completed? && @submission.attempts_left > 0) %>
         <% if @locked && !can_do(@quiz, @current_user, :update) %>

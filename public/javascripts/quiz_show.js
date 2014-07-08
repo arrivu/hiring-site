@@ -170,61 +170,6 @@ define([
       })
     });
 
-      function onFailure(err) {
-          alert("No camera available.");
-          location.reload();
-      }
-      function hasGetUserMedia() {
-          // Note: Opera builds are unprefixed.
-          return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-              navigator.mozGetUserMedia || navigator.msGetUserMedia);
-      }
-      var flag = false;
-      //var allow_count = true;
-      $("#take_quiz_link").click(function(event){
-          event.preventDefault();
-          var enable_getusermedia = hasGetUserMedia();
-
-
-          if(ENV.CHECK_IMAGE_PROCTORING)
-          {
-              navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia ||
-                  navigator.mozGetUserMedia ||
-                  navigator.msGetUserMedia);
-              var video = document.getElementsByTagName('video')[0];
-              if(enable_getusermedia) {
-                  navigator.getUserMedia(
-                      {
-                          video: true
-                      },
-
-                      function(localMediaStream) {
-                          flag=true;
-                          video.src = stream;
-                          video.play();
-
-                      },
-
-                      function(err) {
-                          event.stopImmediatePropagation();
-                          alert('No camera available.You have to enable the camera to take the assessment.');
-
-                      }
-                  );
-
-              } else {
-
-                  event.stopImmediatePropagation();
-                  alert('Sorry, your browser does not support camera');
-
-              }
-
-              return flag;
-
-          }
-
-      });
-
     if ($('ul.page-action-list').find('li').length > 0) {
       $('ul.page-action-list').show();
     }
@@ -252,3 +197,4 @@ define([
   });
 
 });
+

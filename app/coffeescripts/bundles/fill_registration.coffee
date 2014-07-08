@@ -20,11 +20,13 @@ require [
   'Backbone'
   'jquery'
   'str/htmlEscape'
-  'compiled/util/ProfilePicture'
+#  'compiled/util/ProfilePicture'
+  'jquery.instructure_date_and_time'
+  'jquery.instructure_forms'
   'compiled/tinymce'
   'jquery.instructure_forms'
   'tinymce.editor_box'
-], ({View}, $, htmlEscape, AvatarWidget) ->
+], ({View}, $, htmlEscape) ->
 
   class FillRegistration extends View
 
@@ -38,10 +40,14 @@ require [
 
     initialize: ->
       super
-      new AvatarWidget('.profile-pic-link')
+#      new AvatarWidget('.profile-pic-link')
       @addQualField()
       @addWorkField()
 #      @initEditUser()
+      $(".date_entry").date_field(alwaysShowTime: false)
+      $(".from_date").date_field(alwaysShowTime: false)
+      $(".to_date").date_field(alwaysShowTime: false)
+
 
     handleDeclarativeClick: (event) ->
       event.preventDefault()
@@ -120,19 +126,22 @@ require [
         $row.find('input:first').focus()
 
     addWorkField: (event, $el, organization = '', from_date = '', end_date = '', designation = '', permanent = '', reason_for_leaving = '') ->
+      $(".from_date").date_field(alwaysShowTime: false)
+      $(".to_date").date_field(alwaysShowTime: false)
       @$linkFields2 ?= @$ '#work_fields'
       $row = $ """
 
          <tr>
          <td><input type="text" name="link_organizations[]" value="#{htmlEscape organization}"></td>
-         <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}"></td>
-         <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}"></td>
+         <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}" class="from_date" style="width:80%;"></td>
+         <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}" class="to_date" style="width:80%;"></td>
          <td><input type="text" name="link_designations[]" value="#{htmlEscape designation}"></td>
          <td><input type="text" name="link_permanents[]" value="#{htmlEscape permanent}"></td>
          <td><input type="text" name="link_reason_for_leaving[]" value="#{htmlEscape reason_for_leaving}"></td>
          <td><a href="#" data-event="removeLinkRow"><i class="icon-end"></i></a></td>
          </tr>
          """
+
       @$linkFields2.append $row
 
       if event?

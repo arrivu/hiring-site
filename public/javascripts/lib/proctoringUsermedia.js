@@ -1,7 +1,7 @@
-/*! getUserMedia - v0.1.0 - 2012-08-19
- * https://github.com/addyosmani/getUserMedia.js
- * Copyright (c) 2012 addyosmani; Licensed MIT */
-
+/**
+ * Created by sysadmin on 30/6/14.
+ */
+/*global navigator, document */
 ;(function (window, document) {
     "use strict";
 
@@ -13,7 +13,7 @@
             // getUserMedia() feature detection
             navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if ( !! navigator.getUserMedia_) {
+            if (!!navigator.getUserMedia_) {
 
 
                 // constructing a getUserMedia config-object and
@@ -85,17 +85,20 @@
                     el = document.getElementById(options.el);
                     el.innerHTML = source;
 
-
+                    $('#webcam').show();
                     (function register(run) {
 
                         cam = document.getElementById('XwebcamXobjectX');
+
 
                         if (cam.capture !== undefined) {
 
                             // Simple callback methods are not allowed
                             options.capture = function (x) {
+
                                 try {
                                     return cam.capture(x);
+
                                 } catch (e) {}
                             };
                             options.save = function (x) {
@@ -108,6 +111,7 @@
                             options.setCamera = function (x) {
                                 try {
                                     return cam.setCamera(x);
+
                                 } catch (e) {}
                             };
                             options.getCameraList = function () {
@@ -127,7 +131,7 @@
                             // Flash interface not ready yet
                             window.setTimeout(register, 1000 * (4 - run), run - 1);
                         }
-                    }(3));
+                    }(20));
 
                 }
 

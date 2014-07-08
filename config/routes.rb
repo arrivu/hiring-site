@@ -312,7 +312,9 @@ routes.draw do
     match 'quizzes/publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
     match 'quizzes/unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
     match 'files/pending' => 'files#create_pending', :as => :file_create_pending
-    match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
+    match 'files/registration_image' => 'files#registration_image'
+    #match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring', :as => :image_proctoring
+    match 'imageproctoring/registration_image' => 'imageproctoring#create_pending'
     resources :quizzes, :path => :assesments , controller: 'quizzes/quizzes' do
       match 'managed_quiz_data' => 'quizzes/quizzes#managed_quiz_data', :as => :managed_quiz_data
       match 'submission_versions' => 'quizzes/quizzes#submission_versions', :as => :submission_versions
@@ -325,8 +327,11 @@ routes.draw do
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
       match 'files/pending' => 'files#create_pending', :as => :file_create_pending
-      match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring'
       match 'imageproctoring/time_slot' => 'imageproctoring#time_slot_image'
+      resources :imageproctoring
+      match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring', :as => :image_proctoring
+      match 'files/registration_image' => 'files#registration_image'
+      match 'imageproctoring/registration_image' => 'imageproctoring#create_pending'
       match 'imageproctoring/:user_id/show_image' => 'imageproctoring#show_image'
       collection do
         get :fabulous_quizzes
@@ -714,7 +719,7 @@ routes.draw do
   match 'authenticateKey/:access_code' => 'invitations#accept_code'
   match 'project' => 'courses#candidate' , :as => :project, :via => :get
   match 'registerCandidate' => 'invitations#fill_registration_form', :as => :registerCandidate
-  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post
+  match 'new_register' => 'invitations#optional_register', :as => :enter_details, :via => :post,:path => :test
   #match 'candidateReport/candidate_id/project_id/assessment_id' => 'candidate_reports#view_reports', :as => :candidateReport
   match 'old_styleguide' => 'info#old_styleguide', :as => :old_styleguide, :via => :get
   root :to => 'users#user_dashboard', :as => :root, :via => :get
@@ -761,7 +766,9 @@ routes.draw do
   match 'files/:id/public_url' => 'files#public_url', :as => :public_url
   match 'files/preflight' => 'files#preflight', :as => :file_preflight
   match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+  match 'files/registration_image' => 'files#registration_image'
   match 'files/proctoring' => 'files#image_proctoring'
+  match 'imageproctoring/registration_image' => 'imageproctoring#create_pending'
   resources :assignments, :only => [:index] do
     resources :files, :only => [] do
       match 'inline_view' => 'files#show', :as => :inline_view, :via => :post, :inline => '1'

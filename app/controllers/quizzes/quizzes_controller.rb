@@ -719,7 +719,7 @@ class Quizzes::QuizzesController < ApplicationController
     js_env :IMAGE_PROCTORING => @quiz.image_proctoring
     js_env :TOTAL_IMAGE_COUNT => @quiz.maximum_image_proctoring
     js_env :QUIZ_TIME_LIMIT => @quiz.time_limit
-    @image_proctoring = Imageproctoring.find_all_by_quiz_id_and_user_id_and_submission_id_and_quiz_version_id(@submission[:quiz_id],@submission[:user_id],@submission[:submission_id],@submission[:quiz_version_id])
+    @image_proctoring = Imageproctoring.find_all_by_quiz_id_and_user_id_and_submission_id_and_attempt(@submission[:quiz_id],@submission[:user_id],@submission[:submission_id],@submission[:quiz_version_id])
     js_env :SNAPSHOT_TAKEN => @image_proctoring.length
     flash[:notice] = t('notices.less_than_allotted_time', "You started this assessment near when it was due, so you won't have the full amount of time to take the assessment.") if @submission.less_than_allotted_time?
     if params[:question_id] && !valid_question?(@submission, params[:question_id])

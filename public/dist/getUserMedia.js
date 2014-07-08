@@ -1,4 +1,7 @@
-/*global navigator, document */
+/*! getUserMedia - v0.1.0 - 2012-08-19
+ * https://github.com/addyosmani/getUserMedia.js
+ * Copyright (c) 2012 addyosmani; Licensed MIT */
+
 ;(function (window, document) {
     "use strict";
 
@@ -10,7 +13,9 @@
             // getUserMedia() feature detection
             navigator.getUserMedia_ = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if (navigator.getUserMedia_) {
+            if ( !! navigator.getUserMedia_) {
+
+
                 // constructing a getUserMedia config-object and
                 // an string (we will try both)
                 var option_object = {};
@@ -69,7 +74,8 @@
                     }
                 }
             } else {
-                                // Act as a plain getUserMedia shield if no fallback is required
+
+                // Act as a plain getUserMedia shield if no fallback is required
                 if (options.noFallback === undefined || options.noFallback === false) {
 
                     // Fallback to flash
@@ -78,19 +84,18 @@
                     source = '<object id="XwebcamXobjectX" type="application/x-shockwave-flash" data="' + options.swffile + '" width="' + options.width + '" height="' + options.height + '"><param name="movie" value="' + options.swffile + '" /><param name="FlashVars" value="mode=' + options.mode + '&amp;quality=' + options.quality + '" /><param name="allowScriptAccess" value="always" /></object>';
                     el = document.getElementById(options.el);
                     el.innerHTML = source;
+
+
                     (function register(run) {
 
                         cam = document.getElementById('XwebcamXobjectX');
 
-
                         if (cam.capture !== undefined) {
 
-                            // Simple callback methods are not allowed 
+                            // Simple callback methods are not allowed
                             options.capture = function (x) {
-
                                 try {
                                     return cam.capture(x);
-
                                 } catch (e) {}
                             };
                             options.save = function (x) {
@@ -103,7 +108,6 @@
                             options.setCamera = function (x) {
                                 try {
                                     return cam.setCamera(x);
-
                                 } catch (e) {}
                             };
                             options.getCameraList = function () {
@@ -120,10 +124,10 @@
                             // options.debug("error", "Flash movie not yet registered!");
                             errorCallback();
                         } else {
-                            // Flash interface not ready yet 
+                            // Flash interface not ready yet
                             window.setTimeout(register, 1000 * (4 - run), run - 1);
                         }
-                    }(20));
+                    }(3));
 
                 }
 

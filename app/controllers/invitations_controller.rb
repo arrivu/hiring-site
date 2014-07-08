@@ -1,7 +1,8 @@
 class InvitationsController < ApplicationController
 
   before_filter :require_user ,:except => [:accept_code, :new, :fill_registration_form]
-  before_filter :require_context ,:except => [:accept_code, :new, :optional_register, :fill_registration_form]
+  before_filter :require_context ,:except => [:accept_code, :new, :optional_register, :fill_registration_form, :intermediate_assesment_iframe]
+  skip_before_filter :verify_authenticity_token, :only => [:fill_registration_form]
   def index
     return unless authorized_action(@context, @current_user, [:create_courses, :manage_courses, :read])
     js_env(:COURSE_ID => @context.id)
@@ -88,13 +89,12 @@ class InvitationsController < ApplicationController
     @show_left_side = false
     @headers = false
     clear_crumbs
-
+    reset_session
   end
 
   def fill_registration_form
     @show_left_side = false
     @headers = false
-    #reset_session
     if params[:invitation ][:access_code].present?   and   params[:invitation][:unique_id].present?
       unique_code_association = CourseUniqueCodeAssociation.find_by_unique_access_code(params[:invitation][:access_code])
       unless unique_code_association.nil?
@@ -227,10 +227,11 @@ class InvitationsController < ApplicationController
     end
 
     @candidate_detail = User.find_by_id(@current_pseudonym[:user_id])
+    @course_id = params[:candidate_detail][:course_id]
+    params[:candidate_detail].delete :course_id
     if @candidate_detail.update_attributes(params[:candidate_detail])
       flash[:success] ="Successfully Updated Settings."
-      @course = Course.find(params[:course_id])
-      redirect_to course_quizzes_path(@course)
+
     end
 
   end

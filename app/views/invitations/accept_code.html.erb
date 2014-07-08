@@ -9,11 +9,11 @@
 <% if @domain_root_account.id == 3 %>
 <%= image_tag "/stylesheets/customization/images/pro.png" %> <br><br><br>
 <% else %>
-    <%= image_tag "arrivu_logo.png" %> <br><br><br>
+    <%= image_tag "arrivu_logo.png" , :style => "width:35%;"%> <br><br><br>
 <% end %>
 
 <div style="width: 35%;margin: 0px auto;">
-  <% form_for :invitation, :url => { :controller => "invitations", :action => "fill_registration_form" } do |f| %>
+  <% form_for :invitation, :url => { :controller => "invitations", :action => "fill_registration_form"} do |f| %>
       <table class="table">
         <tr><td>
         <tr><td>  <%= f.label :email, "Enter Email"%></td><td> <input id="unique_id" name="invitation[unique_id]" type="email" required="true" /></td></tr>

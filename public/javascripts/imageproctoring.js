@@ -3,12 +3,18 @@
 /*! getUserMedia demo - v1.0
  * for use with https://github.com/addyosmani/getUserMedia.js
  * Copyright (c) 2012 addyosmani; Licensed MIT */
-define([
-    'jquery',
-    'compiled/util/BlobFactory'
-], function ($, BlobFactory) {
+
+require([
+    'jquery' /* $ */
+], function($) {
+    $("#take_pic_link").click(function(){
+        $('#webcam').show();
+        $('#startbutton').show();
+        $('#canvas_url').hide();
+        $('#Edit').hide();
 
     'use strict';
+
     var App = {
 
         init: function () {
@@ -18,6 +24,7 @@ define([
             // demo specific and should be used for reference within this context
             // only
             if ( !!this.options ) {
+
                 this.pos = 0;
                 this.cam = null;
                 this.filter_on = false;
@@ -27,85 +34,31 @@ define([
                 this.img = new Image();
                 this.ctx.clearRect(0, 0, this.options.width, this.options.height);
                 this.image = this.ctx.getImageData(0, 0, this.options.width, this.options.height);
-                this.snapshotBtn = document.getElementById('questions');
+                this.snapshotBtn = document.getElementById('startbutton');
+                this.profilepic = document.getElementById('profile_pic_link');
+
                 //this.detectBtn = document.getElementById('detectFaces');
                 // Initialize getUserMedia with options
-                //var video1 = App.options.videoEl;
-                //video1.autoplay = true ;
-                //alert($('#preview_quiz_button').attr('data'));
-                var check_preview = ENV.quiz_preview;
-                //alert(check_preview);
-                var total_image_count = ENV.TOTAL_IMAGE_COUNT;
-                var snapshot_taken_count = ENV.SNAPSHOT_TAKEN;
-
-                //alert(snapshot_taken_count);
-                /*
-                var form_data = new FormData();
-                form_data.append("[minimum_image]", "5");
-                $.ajax ({
-                    contentType: "application/json; charset=utf-8",
-                    data:{ minimum_image: student_ids },
-                    type: "POST",
-                    url: "imageproctoring/time_slot",
-                    success: function (html) {
-                        alert('successful : ' + html);
-                        //$("#result").html("Successful");
-                    },
-                    error: function(data, errorThrown)
-                    {
-                        alert('request failed :'+errorThrown);
-                    }
-
-                });
-                */
-
-                /*
-                $.ajax({
-                    type: "POST",
-                    url: "imageproctoring/time_slot",
-                    data: form_data,
-                    processData: false,
-                    contentType: false
-                });
-                */
-                if(ENV.IMAGE_PROCTORING && !check_preview)
-                {
                 getUserMedia(this.options, this.success, this.deviceError);
+
+
 
                 // Initialize webcam options for fallback
                 window.webcam = this.options;
-                //window.webcam.started = true;
+                console.log(App.options.context);
                 // Trigger a snapshot
+                this.addEvent('click', this.snapshotBtn, this.getSnapshot);
+//                (this.profilepic).onclick= function () {
+//                    $('#webcam').show();
+//                    $('#startbutton').show();
+//                };
+//                (this.snapshotBtn).onclick= function () {
+//                    $('#webcam').hide();
+//                    $('#startbutton').hide();
+//                };
+                this.addEvent('click', this.profilepic, this.takeprofilePic);
 
-                    var max_time_limit = 100000;
-                    if(ENV.QUIZ_TIME_LIMIT <= 10)
-                    {
-                        max_time_limit = 15000;
-                    }
-                    else if(ENV.QUIZ_TIME_LIMIT <= 30)
-                    {
-                        max_time_limit = 75000;
-                    }
-                    else if(ENV.QUIZ_TIME_LIMIT < 60)
-                    {
-                        max_time_limit = 200000;
-                    }
-                    else if(ENV.QUIZ_TIME_LIMIT >= 60)
-                    {
-                        max_time_limit = 300000;
-                    }
-                    else
-                    {
-                        max_time_limit = 150000;
-                    }
-                    var lowest_limit = 20000;
-                    //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
-
-                    //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
-                   // console.log(rand);
-                   this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
-
-                }
+//                this.addEvent('click', this.button, this.test);
 
 //				// Trigger face detection (using the glasses option)
 //				this.addEvent('click', this.detectBtn, function () {
@@ -145,29 +98,20 @@ define([
             append: true,
 
             // noFallback:true, use if you don't require a fallback
-            width: 240,
+
+            width: 320,
             height: 240,
-            //allowscriptaccess : "always",
-            //autoplay : "true",
 
             // option for more flashvars.
             //fallbackmode: "size",
 
             mode: "callback",
             // callback | save | stream
-            swffile: "/dist/fallback/jscam_canvas_only.swf",
+            swffile: "../dist/fallback/jscam_canvas_only.swf",
             quality: 85,
             context: "",
 
-            debug: function(type, string) {
-                 if (string === "Camera started") {
-                     $('#quiz_image_proctoring').show();
-                 }else if ((string === "Camera stopped") ){
-                   alert('No camera available.You have to enable the camera to take the assessment.');
-                   $('#webcam').show();
-                   $('#quiz_image_proctoring').hide();
-                 }
-               },
+            debug: function () {},
             onCapture: function () {
                 window.webcam.save();
             },
@@ -199,11 +143,11 @@ define([
         },
 
         success: function (stream) {
-            $('#quiz_image_proctoring').show();
+            $('#startbutton').show();
             if (App.options.context === 'webrtc') {
 
                 var video = App.options.videoEl;
-                //video.autoplay = true ;
+
                 if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 
                     if (video.mozSrcObject !== undefined) { //FF18a
@@ -225,92 +169,110 @@ define([
                 };
 
             } else{
-
-//                $('#webcam').show();
                 // flash context
             }
 
         },
 
         deviceError: function (error) {
-
-            alert('No camera available.You have to enable the camera to take the assessment.');
-
-            //console.error('An error occurred: [CODE ' + error.code + ']');
+            alert('No camera available.');
+            console.error('An error occurred: [CODE ' + error.code + ']');
         },
 
         changeFilter: function () {
-
             if (this.filter_on) {
                 this.filter_id = (this.filter_id + 1) & 7;
             }
         },
-
+        takeprofilePic: function (e) {
+            $('#webcam').show();
+            $('#startbutton').show();
+            $('#canvas_url').hide();
+            $('#Edit').hide();
+        },
         getSnapshot: function (e) {
             // If the current context is WebRTC/getUserMedia (something
             // passed back from the shim to avoid doing further feature
             // detection), we handle getting video/images for our canvas
             // from our HTML5 <video> element.
+
             if (App.options.context === 'webrtc') {
                 var video = document.getElementsByTagName('video')[0];
                 App.canvas.width = video.videoWidth;
                 App.canvas.height = video.videoHeight;
                 App.canvas.getContext('2d').drawImage(video, 0, 0);
-                var dataURL = App.canvas.toDataURL("image/jpeg");
+                var dataURL = App.canvas.toDataURL("image/png");
                 var folder_id = $('#folder_id').val();
-                var submission_id = $('#submission_id').val();
-                var quiz_version_id = $('#quiz_version_id').val();
-                var time_elapsed = $(".photo_elapsed_time").text();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
                 var fd = new FormData();
                 // Append our Canvas image file to the form data
                 fd.append("attachment[uploaded_data]", file);
                 fd.append("attachment[folder_id]", folder_id);
+                fd.append("[duplicate_handling]", "overwrite");
                 fd.append("[context_code]", ENV.context_asset_string);
-                fd.append("attachment[filename]", "proctoring.jpg");
-                fd.append("[time_elapsed]", time_elapsed);
-                fd.append("[submission_id]", submission_id);
-                fd.append("[quiz_version_id]", quiz_version_id);
+                fd.append("attachment[filename]", "profile.jpg");
+
                 // And send it
                 $.ajax({
-                    url:"imageproctoring/proctoring", 
+                    url: "imageproctoring/registration_image",
                     type: "POST",
                     data: fd ,
                     processData: false,
-                    contentType: false
+                    contentType: false,
+                    dataType: "json",
+                    success: function(result){
+//                        var URL = result.avatar.url;
+                        console.log(result);
+                        $('#webcam').hide();
+                        $('#startbutton').hide();
+                        $('#take_pic_link').hide();
+                        $('#myimg').attr('src', "/files/"+result.attachment.id+"/download?download_frd=1&verifier="+result.attachment.uuid);
+                        $('#canvas_url').show();
+                        $('#Edit').show();
+                    }
                 });
-
                 // Otherwise, if the context is Flash, we ask the shim to
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
             } else if(App.options.context === 'flash'){
                 window.webcam.capture();
                 App.changeFilter();
-                var dataURL = App.canvas.toDataURL("image/jpeg");
-                var folder_id = $('#folder_id').val();
-                var submission_id = $('#submission_id').val();
-                var no_of_attempt = $('#no_of_attempt').val();
-                var time_elapsed = $(".photo_elapsed_time").text();
-                var file= dataURLtoBlob(dataURL);
+//                var video = document.getElementById('webcam')[0];
+                dataURL = App.canvas.toDataURL("image/png");
+                console.log(dataURL);
+                folder_id = $('#folder_id').val();
+                file= dataURLtoBlob(dataURL);
                 // Create new form data
-                var fd = new FormData();
+                fd = new FormData();
                 // Append our Canvas image file to the form data
                 fd.append("attachment[uploaded_data]", file);
                 fd.append("attachment[folder_id]", folder_id);
+                fd.append("[duplicate_handling]", "overwrite");
                 fd.append("[context_code]", ENV.context_asset_string);
-                fd.append("attachment[filename]", "proctoring.jpg");
-                fd.append("[time_elapsed]", time_elapsed);
-                fd.append("[submission_id]", submission_id);
-                fd.append("[attempt]", no_of_attempt);
+                fd.append("attachment[filename]", "profile.jpg");
+
                 // And send it
                 $.ajax({
-                    url:  "imageproctoring/proctoring",
+                    url: "imageproctoring/registration_image",
                     type: "POST",
                     data: fd ,
                     processData: false,
-                    contentType: false
+                    contentType: false,
+                    dataType: "json",
+                    success: function(result){
+//                        var URL = result.avatar.url;
+                        console.log(result);
+                        $('#webcam').hide();
+                        $('#startbutton').hide();
+                        $('#take_pic_link').hide();
+                        $('#myimg').attr('src', "/files/"+result.attachment.id+"/download?download_frd=1&verifier="+result.attachment.uuid);
+                        $('#canvas_url').show();
+                        $('#Edit').show();
+                    }
                 });
+
+
             }
             else{
                 alert('No context was supplied to getSnapshot()');
@@ -338,6 +300,7 @@ define([
                 return blob;
 
             }
+
             // Convert dataURL to Blob object
             function dataURLtoBlob(dataURL) {
                 // Decode the dataURL
@@ -350,86 +313,10 @@ define([
                 // Return our Blob object
                 return new Blob([new Uint8Array(array)], {type: 'image/jpeg'});
             }
-        },
-
-        drawToCanvas: function (effect) {
-            var source, glasses, canvas, ctx, pixels, i;
-
-            source = document.querySelector('#canvas');
-            glasses = new Image();
-            glasses.src = "js/glasses/i/glasses.png";
-            canvas = document.querySelector("#output");
-            ctx = canvas.getContext("2d");
-
-            ctx.drawImage(source, 0, 0, 520, 426);
-
-            pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-            // Hipstergram!
-            if (effect === 'hipster') {
-
-                for (i = 0; i < pixels.data.length; i = i + 4) {
-                    pixels.data[i + 0] = pixels.data[i + 0] * 3;
-                    pixels.data[i + 1] = pixels.data[i + 1] * 2;
-                    pixels.data[i + 2] = pixels.data[i + 2] - 10;
-                }
-
-                ctx.putImageData(pixels, 0, 0);
-
-            }
-
-            // Green Screen
-            else if (effect === 'greenscreen') {
-
-                // Selectors
-                var rmin = $('#red input.min').val(),
-                    gmin = $('#green input.min').val(),
-                    bmin = $('#blue input.min').val(),
-                    rmax = $('#red input.max').val(),
-                    gmax = $('#green input.max').val(),
-                    bmax = $('#blue input.max').val(),
-                    green = 0, red = 0, blue = 0;
-
-
-                for (i = 0; i < pixels.data.length; i = i + 4) {
-                    red = pixels.data[i + 0];
-                    green = pixels.data[i + 1];
-                    blue = pixels.data[i + 2];
-                    alpha = pixels.data[i + 3];
-
-                    if (red >= rmin && green >= gmin && blue >= bmin && red <= rmax && green <= gmax && blue <= bmax) {
-                        pixels.data[i + 3] = 0;
-                    }
-                }
-
-                ctx.putImageData(pixels, 0, 0);
-
-            } else if (effect === 'glasses') {
-
-                var comp = ccv.detect_objects({
-                    "canvas": (canvas),
-                    "cascade": cascade,
-                    "interval": 5,
-                    "min_neighbors": 1
-                });
-
-                // Draw glasses on everyone!
-                for (i = 0; i < comp.length; i++) {
-                    ctx.drawImage(glasses, comp[i].x, comp[i].y, comp[i].width, comp[i].height);
-                }
-            }
-
         }
-
     };
+    App.init();
 
-    $( document ).ready(function() {
-    if(ENV.CHECK_IMAGE_PROCTORING)
-    {
-     $('#quiz_image_proctoring').hide();
-     App.init();
-    }
-    });
 
-//})();
+});
 });

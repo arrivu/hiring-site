@@ -1,110 +1,132 @@
 <%
    jammit_css :profile_show, :tinymce
-   js_bundle :fill_registration
-   js_env PROFILE: @user
+   js_bundle :fill_registration, :image_proctoring
+   js_env PROFILE: @user_data
    js_env(folder_id: @user.profile_pics_folder.id) unless (@user ||= @current_user).nil?
    @body_classes << "gradebook2 full-width" %>
 <style>
-    select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:10px;}
-    label{margin-top:15px;}
-    .table th, .table td{border:none;   }
-    .alnright { text-align: right !important; }
+    select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{margin-top:0px;}
+    label{margin-top:5px;}
+    .table th, .table td{border:none; text-align: left;  }
+    #edit_links_table{
+        text-align: left !important;
+    }
+    .alnright { text-align: left !important; }
+        .registration{list-style: none;}
+        .registration li {display: inline-block; width:30%;vertical-align: top;margin: 5px 0px;}
+        .datetime_suggest{display: none;}
 </style>
-
-<div style="width: 95%;margin: 0px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
-  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register", :course_id => @course.id } do |f| %>
-
+<div style="width: 97%;margin: 25px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
+  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
+      <%= f.hidden_field :course_id ,:value => @course.id %>
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div style="width: 100%;float: left;">
-        <div class="" style="width: 80%;float: left;">
-          <table class="table">
-            <tr><% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><td class='alnright'><%= f.label :name, "Name*"%></td><td><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></td><% end %>
-              <% if @candidate_filter.middle_name %><td class='alnright'><%= f.label :middle_name, "Middle Name*"%></td><td><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></td><% end %>
-              <% if @candidate_filter.last_name == TRUE %><td class='alnright'><%= f.label :last_name, "Last Name*"%></td><td><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></td><% end %>
+        <div  style="width: 75%;float: left;">
+          <ul class="registration">
+            <% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><li class='alnright'><%= f.label :name, "Name*"%><br><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></li><% end %>
+              <% if @candidate_filter.middle_name %><li class='alnright'><%= f.label :middle_name, "Middle Name*"%><br><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></li><% end %>
+              <% if @candidate_filter.last_name == TRUE %><li class='alnright'><%= f.label :last_name, "Last Name*"%><br><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></li><% end %>
 
-            </tr>
-            <tr>
-              <td class='alnright'><%= f.label :gender, "Gender"%></td>
-              <td style="padding-top: 17px;"><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</td>
+
+
+              <% if @candidate_filter.email_id == TRUE %>
+                  <li class='alnright'><%= f.label :unique_id, "E-mail Id*" %><br><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></li>
+              <% end %>
+              <li class='alnright'><%= f.label :gender, "Gender"%><br><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</li>
               <% if @candidate_filter.dob == TRUE %>
-                <td class='alnright'><%= f.label :birthdate, "Date Of Birth*"%></td><td><%= f.text_field :birthdate, :required => true, :placeholder => "DD-MM-YYYY"%></td>
+                <li class='alnright'><%= f.label :birthdate, "Date Of Birth*"%><br>
+                    <%= f.text_field :birthdate, :required => true, :class => "date_entry", :value => date_string(@candidate_detail.birthdate, :long) %>
+                  </li>
+
               <% end %>
 
-                <% if @candidate_filter.bio == TRUE %>
-                   <% if @bio == nil %>
-                      <td class='alnright'><%= f.label :bio, "Bio*"%></td><td>
-                      <textarea  name="bio"></textarea>
-                    <% else %>
-                      <td class='alnright'><%= f.label :bio, "Bio*"%></td><td>
-                      <textarea  name="bio"><%= @bio_text %></textarea>
-                    </td>
-                  <% end %>
-                <% end %>
-            </tr>
-            <tr>
-                <% if @candidate_filter.email_id == TRUE %>
-                  <td class='alnright'><%= f.label :unique_id, "E-mail Id*" %></td>
-                  <td><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></td>
-                <% end %>
+
+
+
+
                 <% if @candidate_filter.contact_number == TRUE %>
-                  <td class='alnright'><%= f.label :phone, "Contact number*"%></td><td><%= f.text_field :phone, :required => true, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only." %></td>
+
+                  <li class='alnright'><%= f.label :phone, "Contact number*"%><br><%= f.text_field :phone, :required => true, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only."%></li>
+
                 <% end %>
-            </tr>
+
 
             <% if @candidate_filter.address == TRUE %>
-                <tr><td  class='alnright'><%= f.label :address, "Address*" %></td>
-                  <td><%= f.text_field :address, :required => true %></td>
-                  <td  class='alnright'><%= f.label :city, "City" %></td><td><%= f.text_field :city%></td>
-                </tr>
-                <tr>
-                  <td  class='alnright'><%= f.label :state, "State" %></td><td><%= f.text_field :state%></td>
-                  <td  class='alnright'><%= f.label :zip_code, "Zip code" %></td><td><%= f.text_field :zip_code, :pattern => "[0-9]*", :title => "The zip code should consist of numbers only." %></td>
-                </tr>
+
+                <li  class='alnright'><%= f.label :address, "Address*" %><br><%= f.text_field :address, :required => true %></li>
+                  <li  class='alnright'><%= f.label :city, "City" %><br><%= f.text_field :city%></li>
+
+
+                  <li  class='alnright'><%= f.label :state, "State" %><br><%= f.text_field :state%></li>
+                  <li  class='alnright'><%= f.label :zip_code, "Zip code" %><br><%= f.text_field :zip_code, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only."%></li>
+
+
             <% end %>
-          </table>
+
+              <% if @candidate_filter.bio == TRUE %>
+                  <% if @bio == nil %>
+                      <li class='alnright'><%= f.label :bio, "Bio*"%><br>
+              <textarea  name="bio" style="width: 100%;min-height: 110px;"></textarea>
+                  <% else %>
+                      <li class='alnright'><%= f.label :bio, "Bio*"%><br>
+              <textarea  name="bio" style="width: 100%;min-height: 110px;"><%= @bio_text %></textarea>
+            </li>
+                  <% end %>
+              <% end %>
+
+          </ul>
         </div>
           <% if @candidate_filter.profile_picture == TRUE %>
-        <div class="image-block" style="float: right;" >
-          <div class="image-block-image profile-avatar-wrapper">
+        <div class="image-block" style="width: 22%;float: left;" >
+          <div class="image-block-image profile-avatar-wrapper" style="text-align: center;">
             <% if @candidate_detail %>
-            <% if @user_data %>
-                <a href="#" class="profile-pic-link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>">
-                  <%= square_avatar_image @user[:id], 200 %>
-                  <i class="icon-edit"></i>
-                </a>
-            <% else %>
-                    <a href="#" class="profile-pic-link " title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %> ">
-                <%= square_avatar_image @user[:id] , 200 %>
-                      <i class="icon-edit"></i>
-                    </a>
-            <% end %>
-                <%  end %>
+                       <div id="webcam" style="display:none;" ></div>
+                    <input type="file" style="display:none;" id="uploaded_data" />
+                       <input id="folder_id" type="hidden" value="<%= @user.profile_pics_folder.id %>" />
+                    <input type="button" id="startbutton" name="submit" class="btn btn-primary" value="take picture" style="display:none;"><br>
 
-
-
+                    <canvas id="canvas" style="display:none;width:320px;height: 240px;"></canvas>
+<div id="canvas_url" >
+            <a href="#" id="profile_pic_link" title="<%= t('titles.click_to_change_profile_pic', "Click to change profile pic") %>" style="position: relative;">
+            <% if @user.avatar_image_url.nil? %>
+          <img src="images/default_profile_pic.jpg"  id= "myimg" style="border-radius: 5px;width:320px;height:240px;">
+                  <% else %>
+                  <img src="<%= @user.avatar_image_url%>" id= "myimg" style="border-radius: 5px;width:320px;height:240px;">
+                   <% end %>
+              <i class="icon-edit" id="Edit"></i>
+          </a><br><br>
+  <%= link_to "Take your photo (webcam)", "#", :class => "btn btn-primary", :id => "take_pic_link" %>
           </div>
+
+    <%  end %>
+
+
+           </div>
           </div>
           <% end %>
-        </div>
+
+         </div>
       </div>
+
       <% if @candidate_filter.academics == TRUE %>
           <div class="profile_links">
             <h2 class="h1 border border-b">Academic Qualifications</h2>
             <div class="show-if-editing">
               <table id="edit_links_table" cellpadding="10" >
-
                 <thead>
+                <tr>
                 <th>Degree</th>
                 <th>Discipline</th>
                 <th>School/ College</th>
                 <th>Year of Completion</th>
                 <th>%/ CGPA</th>
                 <th></th>
+                </tr>
                 </thead>
                 <tbody id="qual_fields">
                 <% @user_data.each do |link| %>
-                    <tr>
+
                       <input type="hidden" name="link_ids[]" value=<%= link.id.to_i %>>
                       <td><input type="text" name="link_degrees[]" value="<%= link.degree %>"></td>
                       <td><input type="text" name="link_disciplines[]" value="<%= link.discipline %>"></td>
@@ -141,8 +163,8 @@
                     <tr>
                       <input type="hidden" name="link_experience_ids[]" value="<%= link.id %>">
                       <td><input type="text" name="link_organizations[]" value="<%= link.organization %>"></td>
-                      <td><input type="text" name="link_from_dates[]" value="<%= link.from_date %>"></td>
-                      <td><input type="text" name="link_end_dates[]" value="<%= link.end_date %>"></td>
+                      <td><input type="text" name="link_from_dates[]" value="<%= date_string(link.from_date, :long) %>" class="from_entry" style="width:80%;"></td>
+                      <td><input type="text" name="link_end_dates[]" value="<%= date_string(link.end_date, :long) %>" class="to_entry" style="width:80%;"></td>
                       <td><input type="text" name="link_designations[]" value="<%= link.designation %>"></td>
                       <td><input type="text" name="link_permanents[]" value="<%= link.permanent %>"></td>
                       <td><input type="text" name="link_reason_for_leaving[]" value="<%= link.reason_for_leaving %>"></td>
@@ -161,7 +183,7 @@
       <% end %>
       <br/>
       <br/>
-      <div style="text-align: center;"><%= f.submit "SUBMIT", class: "btn btn-small btn-primary" %>
+      <div style="text-align: center;"><%= f.submit "SUBMIT", class: "btn btn-small btn-primary", :id => "submitbutton" %>
       </div>
   <% end %>
 </div>
