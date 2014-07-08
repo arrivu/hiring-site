@@ -50,6 +50,7 @@ class Quizzes::Quiz < ActiveRecord::Base
   has_many :quiz_statistics, :class_name => 'Quizzes::QuizStatistics', :order => 'created_at'
   has_many :attachments, :as => :context, :dependent => :destroy
   has_many :quiz_regrades, class_name: 'Quizzes::QuizRegrade'
+  has_many :imageproctorings
   belongs_to :context, :polymorphic => true
   belongs_to :assignment
   belongs_to :assignment_group

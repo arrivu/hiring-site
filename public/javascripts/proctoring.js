@@ -4,8 +4,8 @@
  * for use with https://github.com/addyosmani/getUserMedia.js
  * Copyright (c) 2012 addyosmani; Licensed MIT */
 define([
-    'compiled/util/BlobFactory'
-], function (BlobFactory) {
+    'jquery'
+], function ($) {
     'use strict';
 
     var App = {
@@ -34,7 +34,40 @@ define([
                 //video1.autoplay = true ;
                 //alert($('#preview_quiz_button').attr('data'));
                 var check_preview = ENV.quiz_preview;
+                //alert(check_preview);
+                var total_image_count = ENV.TOTAL_IMAGE_COUNT;
+                var snapshot_taken_count = ENV.SNAPSHOT_TAKEN;
 
+                //alert(snapshot_taken_count);
+                /*
+                var form_data = new FormData();
+                form_data.append("[minimum_image]", "5");
+                $.ajax ({
+                    contentType: "application/json; charset=utf-8",
+                    data:{ minimum_image: student_ids },
+                    type: "POST",
+                    url: "imageproctoring/time_slot",
+                    success: function (html) {
+                        alert('successful : ' + html);
+                        //$("#result").html("Successful");
+                    },
+                    error: function(data, errorThrown)
+                    {
+                        alert('request failed :'+errorThrown);
+                    }
+
+                });
+                */
+
+                /*
+                $.ajax({
+                    type: "POST",
+                    url: "imageproctoring/time_slot",
+                    data: form_data,
+                    processData: false,
+                    contentType: false
+                });
+                */
                 if(ENV.IMAGE_PROCTORING && !check_preview)
                 {
                 getUserMedia(this.options, this.success, this.deviceError);
@@ -65,7 +98,7 @@ define([
                     {
                         max_time_limit = 150000;
                     }
-                    var lowest_limit = 150000;
+                    var lowest_limit = 20000;
                     //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
 
                     this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
@@ -213,6 +246,8 @@ define([
                 App.canvas.getContext('2d').drawImage(video, 0, 0);
                 var dataURL = App.canvas.toDataURL("image/jpeg");
                 var folder_id = $('#folder_id').val();
+                var submission_id = $('#submission_id').val();
+                var quiz_version_id = $('#quiz_version_id').val();
                 var time_elapsed = $(".photo_elapsed_time").text();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
@@ -223,6 +258,8 @@ define([
                 fd.append("[context_code]", ENV.context_asset_string);
                 fd.append("attachment[filename]", "proctoring.jpg");
                 fd.append("[time_elapsed]", time_elapsed);
+                fd.append("[submission_id]", submission_id);
+                fd.append("[quiz_version_id]", quiz_version_id);
                 // And send it
                 $.ajax({
                     url: "imageproctoring/proctoring",
@@ -232,7 +269,6 @@ define([
                     contentType: false
 
                 });
-
 
                 // Otherwise, if the context is Flash, we ask the shim to
                 // directly call window.webcam, where our shim is located

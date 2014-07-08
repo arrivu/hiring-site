@@ -82,6 +82,8 @@
   <div id="quiz-instructions" class="user_content">
     <%= user_content(@quiz.description) %>
   </div>
+  <input id="submission_id" type="text" value="<%= @submission[:id] %>" />
+  <input id="quiz_version_id" type="text" value="<%= @submission[:quiz_version] %>" />
 </header>
 
 <% js_bundle :take_quiz, :proctoring %>

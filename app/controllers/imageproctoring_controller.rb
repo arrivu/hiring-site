@@ -153,7 +153,7 @@ class ImageproctoringController < ApplicationController
             format.json { render :json => @attachment.errors }
             format.text { render :json => @attachment.errors }
           end
-          Imageproctoring.create!(attachment_id: @attachment.id, user_id: @current_user.id, quiz_id: params[:quiz_id],time_elapsed: params[:time_elapsed])
+          Imageproctoring.create!(attachment_id: @attachment.id, user_id: @current_user.id, quiz_id: params[:quiz_id],time_elapsed: params[:time_elapsed],submission_id: params[:submission_id],quiz_version_id: params[:quiz_version_id])
         end
       #end
 
@@ -176,6 +176,13 @@ class ImageproctoringController < ApplicationController
     end
 
     render :json => json, :as_text => true
+  end
+
+  def time_slot_image
+    @time_slots = "success"
+    respond_to do |format|
+      format.json  { render :json => @time_slots }
+    end
   end
 
 end
