@@ -1,0 +1,231 @@
+
+
+<% @body_classes << "gradebook2 full-width" %>
+<% jammit_css :quizzes %>
+<% @headers = false
+   @show_left_side = false %>
+<% content_for :page_title do %><%= "Assessment Report" %><% end %>
+
+<style>
+    @media print{
+        .print{display: none;}
+        /*@page*/
+        /*{*/
+        /*size: auto;   *//* auto is the current printer page size */
+        /*margin: 0mm;  *//* this affects the margin in the printer settings */
+        /*}*/
+
+        /*body*/
+        /*{*/
+        /*background-color:#FFFFFF;*/
+        /*border: solid 1px black ;*/
+        /*margin: 0px;  *//* the margin on the content before printing */
+        /*}*/
+        /*#header, #nav, .noprint*/
+        /*{*/
+        /*display: none;*/
+        /*}*/
+    }
+
+
+    .table-view th, .table-view td{
+        border:none;
+        padding: 8px;
+        line-height: 20px;
+        text-align: left;
+    }
+</style>
+<div style="border: #b7b0b0 1px solid; width: 1000px; margin: 0px auto; padding: 5px;">
+  <a href="#"  class="print" onclick="printpage()" style="float: right;">PRINT</a>
+
+  <div style="height:100%;width:100%;">
+    <header class="quiz-header">
+
+
+      <% @user_candidate_detail.each do |user| %>
+
+
+
+          <h2>
+            Assessment Report for <%= user.name %>
+          </h2>
+          <hr>
+          <h3>
+            <% @user_quiz.each do |quiz| %>
+                <% if quiz.quiz_title %>
+                    <%= quiz.quiz_title %>
+                <% end %>
+                </h3>
+                </header>
+                <%# if @submission.allow_personal_detail %>
+                <table>
+                  <tbody>
+                  <tr>
+                    <td class="span9">
+                      <h3>Personal Information</h3>
+                    </td>
+                  </tr>
+                  </tbody>
+
+                </table>
+
+                <% @user_get_pseudonym.each do |get_pseudonym|  %>
+
+                    <table class="table-view">
+                      <% if user[:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= user.name %></td><td valign="top" rowspan="5"><img src="<%= user[:avatar_image_url] %>"></td></tr><% end %>
+                      <% if user[:birthdate] != nil %><tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(user.birthdate) %></td></tr><% end %>
+                      <% if user[:gender] != nil %><tr><td style="font-weight: bold;">Gender</td><td><%= user[:gender] %></td></tr><% end %>
+                      <% if user[:phone] != nil %><tr><td style="font-weight: bold;">Mobile Number</td><td><%= user[:phone] %></td></tr><% end %>
+                      <% if user[:unique_id] != nil %><tr><td style="font-weight: bold;">Email ID</td><td><%= get_pseudonym[:unique_id] %></td></tr><% end %>
+                      <% if user[:address] != nil %><tr><td style="font-weight: bold;">Address</td><td><%= user[:address] %></td></tr><% end %>
+                      <% if user[:city] != nil %><tr><td></td><td><%= user[:city] %></td></tr><% end %>
+                      <% if user[:state] != nil %><tr><td></td><td><%= user[:state] %></td></tr><% end %>
+                      <% if user[:zip_code] != nil %><tr><td></td><td><%= user[:zip_code] %></td></tr><% end %>
+                    </table>
+                    <br/>
+                    <br/>
+                    <%# end %>
+                    <%# if submission.allow_academic_detail %>
+                    <% @user_user_data.each do |user_data| %>
+                        <% if user_data.length > 0 %>
+                            <h3>Academic Qualifications</h3>
+                            <table class="table table-bordered" cellpadding="10">
+                              <thead>
+                              <th>Degree</th>
+                              <th>Discipline</th>
+                              <th>School/ College</th>
+                              <th>Year of Completion</th>
+                              <th>%/ CGPA</th>
+                              </thead>
+
+
+                              <% user_data.each do |link| %>
+                                  <tr>
+                                    <td><%= link.degree %></td>
+                                    <td><%= link.discipline %></td>
+                                    <td><%= link.college %></td>
+                                    <td><%= link.year_of_completion %></td>
+                                    <td><%= link.percentage %></td>
+                                  </tr>
+                              <% end %>
+
+                            </table>
+                            <br/>
+                            <br/>
+                        <% end %>
+                        <%# end %>
+                        <%# if submission.allow_employment_detail %>
+                        <% @user_user_experience.each do |user_experience| %>
+                            <% if user_experience.length > 0 %>
+                                <h3>Employment Details</h3>
+                                <table class="table table-bordered" cellpadding="10">
+                                  <thead>
+                                  <th>Organization</th>
+                                  <th>From(MM/YYYY)</th>
+                                  <th>To(MM/YYYY)</th>
+                                  <th>Designation</th>
+                                  <th>Permanent/ contract</th>
+                                  <th>Reason for leaving</th>
+
+                                  </thead>
+
+                                  <% user_experience.each do |emp| %>
+                                      <tr>
+
+                                        <td><%= emp.organization %></td>
+                                        <td><%= emp.from_date %></td>
+                                        <td><%= emp.end_date %></td>
+                                        <td><%= emp.designation %></td>
+                                        <td><%= emp.permanent %></td>
+                                        <td><%= emp.reason_for_leaving %></td>
+
+                                      </tr>
+                                  <% end %>
+                                </table>
+                                <br/>
+                                <br/>
+                            <% end %>
+                            <%# end %>
+                            <%# if submission.allow_assessment_detail %>
+                            <% @user_submission.each do |submission| %>
+                                <% if submission %>
+                                    <h3>Assessment Details</h3>
+                                    <table class="table table-bordered">
+                                      <thead>
+                                      <tr>
+                                        <td>Assessment Name</td>
+                                        <td>No. of questions</td>
+                                        <% if submission %>
+                                            <td>Marks Scored / Max Marks</td>
+                                            <td>Percentage Scored</td>
+                                        <% end %>
+                                        <td>Time Taken</td>
+                                        <td>Allotted Time</td>
+                                      </tr>
+                                      </thead>
+                                      <tr>
+                                        <td><%= quiz.quiz_title %></td>
+                                        <td><%= quiz.points_possible %></td>
+                                        <td>
+                                          <% if submission.score %><%= submission.score %><% else %> 0 <% end %>/ <%= quiz.points_possible %></td>
+                                        <td><% if quiz.points_possible && submission.score %>
+                                              <% percentage = (submission.score / quiz.points_possible) * 100 %>
+                                              <%= percentage.round(2) %> %
+                                          <% end %>
+                                        </td>
+                                        <td><%= duration_in_minutes(submission.duration) %></td>
+
+                                        <td>
+                                          <% if quiz.time_limit %>
+                                              <%= quiz.time_limit %> minutes
+                                          <% end %>
+                                        </td>
+                                      </tr>
+                                    </table>
+
+                                    <% submission_data = submission.submission_data %>
+                                    <% if submission.finished_at %>
+                                        <% if submission_data %>
+                                            <div id="questions" class="assessment_results">
+                                              <% submission[:quiz_data].each do |q| %>
+                                                  <%#= render :partial => "quizzes/quizzes/display_question", :object => q, :locals => {:user_answer => submission_data.find{|a| a[:question_id] == q[:id]}, :assessment_results => true} %>
+                                              <% end %>
+                                            </div>
+                                        <% end %>
+                                    <% end %>
+                                <% end %>
+                                <%# end %>
+                                <%# if submission.allow_image_proctoring %>
+                                <% @user_image_proctoring.each do |image_proctoring| %>
+                                    <div style="width: 100%;margin-left:65px;">
+                                      <% image_proctoring.each do |image| %>
+                                          <% if image != [] %>
+                                              <h3>Proctoring Snapshots</h3>
+                                              <% image.each do |image_snap| %>
+
+                                                  <div style="width:200px;display: inline-block;border:1px solid black;margin:5px 7px 8px 5px;">
+                                                    <img src="<%= image_snap[:image_url] %>"><br/>
+                                                    Time elapsed : <%= image_snap[:image_time] %>
+                                                  </div>
+                                              <% end %>
+                                          <% else %>
+                                          <% end %>
+                                      <% end %>
+                                    </div>
+                                    <%# end %>
+                                    <%# end %>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+      <% end %>
+      </div>
+</div>
+<script type="text/javascript" >function printpage()
+{
+    window.print();
+
+}
+</script>

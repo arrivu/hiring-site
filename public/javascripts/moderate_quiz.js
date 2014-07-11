@@ -164,6 +164,7 @@ define([
       var cnt = $(".student_check:checked").length;
       $("#checked_count").text(cnt);
       $(".moderate_multiple_button").showIf(cnt);
+      $(".moderate_generate_pdf_button").showIf(cnt);
     }
     $("#check_all").change(function() {
       $(".student_check").attr('checked', $(this).attr('checked'));
@@ -176,7 +177,23 @@ define([
       checkChange();
     });
 
-    $(".moderate_multiple_button").live('click', function(event) {
+    $(".moderate_generate_pdf_button").live('click', function(event) {
+        event.preventDefault();
+        var student_ids = [];
+        var data = {};
+        $(".student_check:checked").each(function() {
+            var $student = $(this).parents(".student");
+            student_ids.push($(this).attr('data-id'));
+        });
+        $.ajaxJSON('candidate_reports/generate_csv_in_background' , 'POST',  { student_ids: student_ids }, function(data) {
+            alert("succeess");
+        },function(data) {
+           console.log(data);
+        });
+
+    });
+
+     $(".moderate_multiple_button").live('click', function(event) {
       var student_ids = []
       var data = {};
       $(".student_check:checked").each(function() {

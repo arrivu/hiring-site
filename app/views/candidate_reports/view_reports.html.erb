@@ -156,8 +156,8 @@
           <td>
           <% if @submission.score %><%= @submission.score %><% else %> 0 <% end %>/ <%= @quiz.points_possible %></td>
           <td><% if @quiz.points_possible && @submission.score %>
-                <% percentage = (@submission.score / @quiz.points_possible) * 100 %>
-                <%= percentage.round(2) %> %
+                <%# percentage = (@submission.score / @quiz.points_possible) * 100 %>
+                <%#= percentage.round(2) %> %
             <% end %>
           </td>
           <td><%= duration_in_minutes(@submission.duration) %></td>

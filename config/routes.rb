@@ -319,6 +319,9 @@ routes.draw do
       match 'history' => 'quizzes/quizzes#history', :as => :history
       resources :candidate_reports
         match 'candidateReport' => 'candidate_reports#view_reports', :as => :candidateReport
+      match 'candidate_reports/generate_view' => 'candidate_reports#generate_view'
+      match 'candidate_reports/generate_csv_in_background' => 'candidate_reports#generate_csv_in_background'
+      #match 'candidate_reports/generate_pdf' => 'candidate_reports#generate_pdf'
       match 'statistics' => 'quizzes/quizzes#statistics', :as => :statistics
       match 'read_only' => 'quizzes/quizzes#read_only', :as => :read_only
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish

@@ -947,4 +947,8 @@ module ApplicationHelper
     end
   end
 
+  #def pdf_image_tag(img, options={})
+  #  image_tag "#{img}", options
+  #end
+
 end
