@@ -115,7 +115,10 @@ define([
         })
       );
     });
-
+      $(".take_quiz_button").click(function(event) {
+          //localStorage.setItem('clicks',0);
+          //localStorage.removeItem('clicks');
+      });
     $(".message_students_link").click(function(event) {
       event.preventDefault();
       ensureStudentsLoaded(function(){

@@ -28,8 +28,6 @@
               <% if @candidate_filter.middle_name %><li class='alnright'><%= f.label :middle_name, "Middle Name*"%><br><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></li><% end %>
               <% if @candidate_filter.last_name == TRUE %><li class='alnright'><%= f.label :last_name, "Last Name*"%><br><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></li><% end %>
 
-
-
               <% if @candidate_filter.email_id == TRUE %>
                   <li class='alnright'><%= f.label :unique_id, "E-mail Id*" %><br><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></li>
               <% end %>
@@ -66,10 +64,10 @@
 
               <% if @candidate_filter.bio == TRUE %>
                   <% if @bio == nil %>
-                      <li class='alnright'><%= f.label :bio, "Bio*"%><br>
+                      <li class='alnright'><%= f.label :bio, "Bio"%><br>
               <textarea  name="bio" style="width: 100%;min-height: 110px;"></textarea>
                   <% else %>
-                      <li class='alnright'><%= f.label :bio, "Bio*"%><br>
+                      <li class='alnright'><%= f.label :bio, "Bio"%><br>
               <textarea  name="bio" style="width: 100%;min-height: 110px;"><%= @bio_text %></textarea>
             </li>
                   <% end %>
@@ -151,8 +149,8 @@
               <table id="edit_links_table" cellpadding="10">
                 <thead>
                 <th>Organization</th>
-                <th>From(MM/YYYY)</th>
-                <th>To(MM/YYYY)</th>
+                <th>From</th>
+                <th>To</th>
                 <th>Designation</th>
                 <th>Permanent/ contract</th>
                 <th>Reason for leaving</th>

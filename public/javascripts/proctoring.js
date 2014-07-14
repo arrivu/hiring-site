@@ -34,83 +34,71 @@ define([
                 //video1.autoplay = true ;
                 //alert($('#preview_quiz_button').attr('data'));
                 var check_preview = ENV.quiz_preview;
-                //alert(check_preview);
-                var total_image_count = ENV.TOTAL_IMAGE_COUNT;
-                var snapshot_taken_count = ENV.SNAPSHOT_TAKEN;
+                if(ENV.IMAGE_PROCTORING && !check_preview) {
+                    getUserMedia(this.options, this.success, this.deviceError);
+                    //alert(this.success);
 
-                //alert(snapshot_taken_count);
-                /*
-                var form_data = new FormData();
-                form_data.append("[minimum_image]", "5");
-                $.ajax ({
-                    contentType: "application/json; charset=utf-8",
-                    data:{ minimum_image: student_ids },
-                    type: "POST",
-                    url: "imageproctoring/time_slot",
-                    success: function (html) {
-                        alert('successful : ' + html);
-                        //$("#result").html("Successful");
-                    },
-                    error: function(data, errorThrown)
-                    {
-                        alert('request failed :'+errorThrown);
+                    // Initialize webcam options for fallback
+                    window.webcam = this.options;
+                    //window.webcam.started = true;
+                    // Trigger a snapshot
+//                    var cnt = 0;
+//                    if( ENV.SNAPSHOT_TAKEN == 0 && cnt == 0){
+//                        App.getSnapshot();
+//                        cnt = 1;
+//                    }
+                    var total_snapshot = ENV.TOTAL_IMAGE_COUNT;
+                    //var quiz_time = ENV.QUIZ_TIME_LIMIT;
+                    var snapshot_taken_count = ENV.SNAPSHOT_TAKEN;
+                    var quiz_time = Math.round(ENV.QUIZ_TIME_LEFT * 0.012)+1;
+                    var remaining_snapshot = total_snapshot-snapshot_taken_count;
+                    var snap_slot = quiz_time/remaining_snapshot;
+                    var timer_count = quiz_time/snap_slot;
+//                    if(snap_slot == 0) {
+//                        timer_count = remaining_snapshot;
+//                    }
+                    var random_snap_slot;
+                    if(snap_slot < 0.5) {
+                        random_snap_slot = (Math.random() * snap_slot) + 0.3;
+                    } else {
+                        random_snap_slot = (Math.random() * snap_slot) + 1;
                     }
+                    var timer_value = random_snap_slot*60*1000;
+//                    if(snap_slot == 0) {
+//                        timer_value = 15000;
+//                    }
+                    console.log("quiz_time="+quiz_time);
+                    console.log("remaining_snapshot="+remaining_snapshot);
+                    console.log("snap_slot="+snap_slot);
+                    console.log("timer_count="+timer_count);
+                    console.log("random_snap_slot_time="+random_snap_slot);
+                    console.log("timer_value="+timer_value);
 
-                });
-                */
+                    for (var i = 0; timer_count > 0;i++) {
+//                        var set_timer;
+//                        if(i == 0) {
+//                            if(snap_slot < 0.5) {
+//                                set_timer = 50000;
+//                            } else {
+//                                set_timer = 70000;
+//                            }
+//                        } else {
+//                            set_timer = timer_value*i;
+//                        }
 
-                /*
-                $.ajax({
-                    type: "POST",
-                    url: "imageproctoring/time_slot",
-                    data: form_data,
-                    processData: false,
-                    contentType: false
-                });
-                */
-                if(ENV.IMAGE_PROCTORING && !check_preview)
-                {
-                getUserMedia(this.options, this.success, this.deviceError);
+                        if(i>0) {
+                           setTimeout(function() {
+                              App.getSnapshot();
+                           }, timer_value*i);
 
-                // Initialize webcam options for fallback
-                window.webcam = this.options;
-                //window.webcam.started = true;
-                // Trigger a snapshot
+                        }
+                        timer_count -= i;
+                        //alert(timer_value*i);
 
-                    var max_time_limit = 100000;
-                    if(ENV.QUIZ_TIME_LIMIT <= 10)
-                    {
-                        max_time_limit = 15000;
                     }
-                    else if(ENV.QUIZ_TIME_LIMIT <= 30)
-                    {
-                        max_time_limit = 75000;
-                    }
-                    else if(ENV.QUIZ_TIME_LIMIT < 60)
-                    {
-                        max_time_limit = 200000;
-                    }
-                    else if(ENV.QUIZ_TIME_LIMIT >= 60)
-                    {
-                        max_time_limit = 300000;
-                    }
-                    else
-                    {
-                        max_time_limit = 150000;
-                    }
-                    var lowest_limit = 20000;
-                    //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
-
-                    //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
-                   // console.log(rand);
-                   this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
 
                 }
 
-//				// Trigger face detection (using the glasses option)
-//				this.addEvent('click', this.detectBtn, function () {
-//					App.drawToCanvas('glasses');
-//				});
 
             } else {
                 alert('No options were supplied to the shim!');
@@ -200,10 +188,15 @@ define([
 
         success: function (stream) {
             $('#quiz_image_proctoring').show();
+            if( ENV.SNAPSHOT_TAKEN == 0 ){
+                setTimeout(function() {
+                    App.getSnapshot();
+                }, 5000);
+            }
             if (App.options.context === 'webrtc') {
-
                 var video = App.options.videoEl;
                 //video.autoplay = true ;
+
                 if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 
                     if (video.mozSrcObject !== undefined) { //FF18a
@@ -229,7 +222,6 @@ define([
 //                $('#webcam').show();
                 // flash context
             }
-
         },
 
         deviceError: function (error) {
@@ -259,7 +251,7 @@ define([
                 var dataURL = App.canvas.toDataURL("image/jpeg");
                 var folder_id = $('#folder_id').val();
                 var submission_id = $('#submission_id').val();
-                var quiz_version_id = $('#quiz_version_id').val();
+                var no_of_attempt = $('#no_of_attempt').val();
                 var time_elapsed = $(".photo_elapsed_time").text();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
@@ -271,10 +263,11 @@ define([
                 fd.append("attachment[filename]", "proctoring.jpg");
                 fd.append("[time_elapsed]", time_elapsed);
                 fd.append("[submission_id]", submission_id);
-                fd.append("[quiz_version_id]", quiz_version_id);
+                fd.append("[attempt]", no_of_attempt);
                 // And send it
+                console.log(folder_id);
                 $.ajax({
-                    url:"imageproctoring/proctoring", 
+                    url: $('#proctoring_url').data('url'),
                     type: "POST",
                     data: fd ,
                     processData: false,
@@ -305,7 +298,7 @@ define([
                 fd.append("[attempt]", no_of_attempt);
                 // And send it
                 $.ajax({
-                    url:  "imageproctoring/proctoring",
+                    url:  $('#proctoring_url').data('url'),
                     type: "POST",
                     data: fd ,
                     processData: false,
