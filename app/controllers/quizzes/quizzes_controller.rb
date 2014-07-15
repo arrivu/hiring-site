@@ -563,6 +563,12 @@ class Quizzes::QuizzesController < ApplicationController
       @students = @all_students
       @students = @students.order(:uuid) if @quiz.survey? && @quiz.anonymous_submissions
       last_updated_at = Time.parse(params[:last_updated_at]) rescue nil
+       #arrivu changes
+      @candidate_all_user_report = CandidateReport.find_all_by_quiz_id_and_user_id(@quiz.id,@current_user.id).last
+      @attachment_id = @candidate_all_user_report.attachment_id unless @candidate_all_user_report.nil?
+      @download_attchment = Attachment.find_by_id(@attachment_id) unless @attachment_id.nil?
+      @file_download = file_download_url(@download_attchment, { :verifier => @download_attchment.uuid, :download => '1', :download_frd => '1' }) unless @download_attchment.nil?
+      #arrivu changes
       respond_to do |format|
         format.html do
           @students = @students.paginate(page: params[:page], per_page: 50)

@@ -35,7 +35,7 @@
                 </h3>
 
                 </header>
-    <%# if @submission.allow_personal_detail %>
+    <% if @check_pdf_options[:allow_personal_detail]  == "true" %>
     <table>
       <tbody>
       <tr>
@@ -62,8 +62,8 @@
         </table>
         <br/>
         <br/>
-        <%# end %>
-          <%# if submission.allow_academic_detail %>
+        <% end %>
+          <% if @check_pdf_options[:allow_academic_detail]  == "true" %>
           <%# @user_user_data.each do |user_data| %>
               <% if get_user[:user_data].length > 0 %>
                   <h3>Academic Qualifications</h3>
@@ -91,8 +91,8 @@
                   <br/>
                   <br/>
               <% end %>
-              <%# end %>
-              <%# if submission.allow_employment_detail %>
+              <% end %>
+              <% if @check_pdf_options[:allow_employment_detail] == "true" %>
               <%# get_user[:user_experience].each do |user_experience| %>
                   <% if get_user[:user_experience].length > 0 %>
                       <h3>Employment Details</h3>
@@ -123,8 +123,8 @@
                       <br/>
                       <br/>
                   <% end %>
-                  <%# end %>
-                  <%# if submission.allow_assessment_detail %>
+                  <% end %>
+                  <% if @check_pdf_options[:allow_assessment_detail] == "true" %>
                   <%# @user_submission.each do |submission| %>
                       <% if get_user[:submission] %>
                           <h3>Assessment Details</h3>
@@ -147,8 +147,8 @@
                               <td>
                                 <% if get_user[:submission].score %><%= get_user[:submission].score %><% else %> 0 <% end %>/ <%= get_user[:quiz].points_possible %></td>
                               <td><% if get_user[:quiz].points_possible && get_user[:submission].score %>
-                                    <%# percentage = (get_user[:submission].score / get_user[:quiz].points_possible) * 100 %>
-                                    <%#= percentage.round(2) %> %
+                                    <% percentage = (get_user[:submission].score / get_user[:quiz].points_possible) * 100 %>
+                                    <%= percentage.round(2) %> %
                                 <% end %>
                               </td>
                               <td><%= duration_in_minutes(get_user[:submission].duration) %></td>
@@ -172,8 +172,8 @@
                               <% end %>
                           <% end %>
                       <% end %>
-                      <%# end %>
-                                <%# if submission.allow_image_proctoring %>
+                      <% end %>
+                                <% if @check_pdf_options[:allow_image_proctoring]  == "true"  %>
                                 <%# @user_image_proctoring.each do |image_proctoring| %>
                     <div style="width: 100%;margin-left:65px;">
                       <% get_user[:image_proctoring].each do |image| %>
@@ -188,6 +188,6 @@
                           <% end %>
                       <% end %>
                     </div>
-
+                 <% end %>
                 <% end %>
     </div>

@@ -97,7 +97,8 @@
     <td colspan="5">
       <div class="button-container">
         <!--<button class="btn moderate_generate_pdf_button" style="display: none;"><%#= image_tag "edit.png" %>Generate Assessment Report</button>-->
-        <button class="btn moderate_generate_pdf_button" style="display: none;">Generate Assessment Report</button>
+        <button class="btn moderate_generate_pdf_button " style="display: none;"><%= t('', "Generate  Report for %{n} Selected Candidates", :n => raw('<span id="pdf_count">X</span>')) %></button>
+      </div>
     </td>
   </tr>
   </tbody>
@@ -185,6 +186,64 @@
   </table>
 </div>
 <!--arrivu changes end -->
+
+
+<!--report all user arrivu changes start-->
+<div id="moderate_all_student_pdf_dialog" style="display: none;">
+  <%= form_for :quiz, :url => "", :html => {:id => "moderate_all_student_pdf_form", :method => :post} do |f| %>
+      <table>
+        <tr>
+          <td style="white-space: nowrap; width: 10%;">
+            <!--<input type="hidden" name="allow_personal_detail" value="0"/>-->
+            <input type="checkbox" name="allow_personal_detail" id="all_user_extension_allow_personal_detail" checked="checked"/>
+            <label for="allow_personal_detail">Personal information</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap; width: 10%;">
+            <!--<input type="hidden" name="allow_academic_detail" value="0"/>-->
+            <input type="checkbox" name="allow_academic_detail" id="all_user_extension_allow_academic_detail" checked="checked"/>
+            <label for="allow_academic_detail">Academic qualifications</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap; width: 10%;">
+            <!--<input type="hidden" name="allow_employment_detail" value="0"/>-->
+            <input type="checkbox" name="allow_employment_detail" id="all_user_extension_allow_employment_detail" checked="checked"/>
+            <label for="extension_extra_time">Employment information</label>
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap; width: 10%;">
+            <!--<input type="hidden" name="allow_assessment_detail" value="0"/>-->
+            <input type="checkbox" name="allow_assessment_detail" id="all_user_extension_allow_assessment_detail" checked="checked"/>
+            <label for="extension_extra_time">Assessment details</label>
+
+          </td>
+        </tr>
+        <tr>
+          <td style="white-space: nowrap; width: 10%;">
+            <!--<input type="hidden" name="allow_image_proctoring" value="0"/>-->
+            <input type="checkbox" name="allow_image_proctoring" id="all_user_extension_allow_image_proctoring" checked="checked"/>
+            <label for="extension_extra_time">Image proctoring</label>
+
+          </td>
+        </tr>
+  <% end %>
+  <tr>
+    <td colspan="2">
+      <div class="button-container">
+        <button type="button" class="btn dialog_closer cancel_button"><%= t('#buttons.cancel', "Cancel") %></button>
+        <button type="submit" class="btn btn-primary save_button">Generate Pdf</button>
+      </div>
+    </td>
+  </tr>
+  </table>
+</div>
+<!--report all user arrivu changes end -->
+
+
+
 <div id="moderate_student_dialog" style="display: none;">
   <h2><%= t('headers.student_extensions', "Candidate Extensions") %></h2>
   <%= form_for :quiz, :url => "", :html => {:id => "moderate_student_form", :method => :post} do |f| %>
@@ -234,5 +293,11 @@
   <a href="<%= context_url(@context, :context_quiz_extensions_url, @quiz.id, "{{ user_id }}") %>" class="extension_url">&nbsp;</a>
 </div>
 
+<div class = "report_downlaod">
+  <% if @download_attchment != nil %>
+     Last Run Selected Candidate Report: Generated <%= @download_attchment.created_at.strftime('%b %d, at %I:%M%p') %>
+      <a href="<%= @file_download %>" class="moderate_all_student_report"><i class="icon-download"></i></a>
+  <% end %>
+</div>
 <% js_bundle :moderate_quiz %>
 <% jammit_css :moderate_quiz %>

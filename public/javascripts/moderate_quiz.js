@@ -163,6 +163,7 @@ define([
     function checkChange() {
       var cnt = $(".student_check:checked").length;
       $("#checked_count").text(cnt);
+      $("#pdf_count").text(cnt);
       $(".moderate_multiple_button").showIf(cnt);
       $(".moderate_generate_pdf_button").showIf(cnt);
     }
@@ -177,21 +178,70 @@ define([
       checkChange();
     });
 
-    $(".moderate_generate_pdf_button").live('click', function(event) {
-        event.preventDefault();
-        var student_ids = [];
-        var data = {};
-        $(".student_check:checked").each(function() {
-            var $student = $(this).parents(".student");
-            student_ids.push($(this).attr('data-id'));
-        });
-        $.ajaxJSON('candidate_reports/generate_csv_in_background' , 'POST',  { student_ids: student_ids }, function(data) {
-            alert("succeess");
-        },function(data) {
-           console.log(data);
-        });
+      $(".moderate_generate_pdf_button").live('click', function(event) {
+          event.preventDefault();
+          var $student = $(this).parents(".student");
+          var data = {
+              allow_personal_detail: $student.hasClass('allow_personal_detail') ? '1' : '0',
+              allow_academic_detail: $student.hasClass('allow_academic_detail') ? '1' : '0',
+              allow_employment_detail: $student.hasClass('allow_employment_detail') ? '1' : '0',
+              allow_assessment_detail: $student.hasClass('allow_assessment_detail') ? '1' : '0',
+              allow_image_proctoring: $student.hasClass('allow_image_proctoring') ? '1' : '0'
+          };
 
-    });
+          var name = $student.find(".student_name").text();
+          $("#moderate_all_student_pdf_form").fillFormData(data);
+          $("#moderate_all_student_pdf_form").data('ids', [$student.attr('data-user-id')]);
+          var generate_url = $(this).attr('href');
+          $('#generate_pdf_url').val(generate_url);
+          $("#moderate_all_student_pdf_dialog").dialog({
+              title: 'Candidate Pdf Settings',
+              width: 400
+          }).fixDialogButtons();
+          $('#all_user_extension_allow_personal_detail').attr('checked','checked');
+          $('#all_user_extension_allow_academic_detail').attr('checked','checked');
+          $('#all_user_extension_allow_employment_detail').attr('checked','checked');
+          $('#all_user_extension_allow_assessment_detail').attr('checked','checked');;
+          $('#all_user_extension_allow_image_proctoring').attr('checked','checked');
+      });
+
+      $("#moderate_all_student_pdf_form").submit(function(event) {
+          event.preventDefault();
+          event.stopPropagation();
+          var ids = $(this).data('ids');
+          if(ids.length == 0) { return; }
+          var $form = $(this);
+          $(".save_button").attr('disabled', true);
+          $(".save_button").text("Generating pdf.....");
+          var finished = 0, errors = 0;
+          var formData = $(this).getFormData();
+          var student_ids = [];
+          var data = {};
+          $(".student_check:checked").each(function() {
+              var $student = $(this).parents(".student");
+              student_ids.push($(this).attr('data-id'));
+          });
+          var allow_personal_detail = $('#all_user_extension_allow_personal_detail').is(':checked');
+          var allow_academic_detail = $('#all_user_extension_allow_academic_detail').is(':checked');
+          var allow_employment_detail = $('#all_user_extension_allow_employment_detail').is(':checked');
+          var allow_assessment_detail = $('#all_user_extension_allow_assessment_detail').is(':checked');
+          var allow_image_proctoring = $('#all_user_extension_allow_image_proctoring').is(':checked');
+          var data = {
+
+              allow_personal_detail: allow_personal_detail,
+              allow_academic_detail: allow_academic_detail,
+              allow_employment_detail: allow_employment_detail,
+              allow_assessment_detail: allow_assessment_detail,
+              allow_image_proctoring: allow_image_proctoring
+          };
+
+          $.ajaxJSON('candidate_reports/generate_pdf_in_background' , 'POST',  {data: data, student_ids: student_ids }, function(data) {
+//              alert("succeess");
+              location.reload();
+          },function(data) {
+              console.log(data);
+          });
+      });
 
      $(".moderate_multiple_button").live('click', function(event) {
       var student_ids = []

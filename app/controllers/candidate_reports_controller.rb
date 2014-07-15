@@ -1,3 +1,5 @@
+require 'action_controller_test_process'
+
 class CandidateReportsController < ApplicationController
 
   before_filter :require_context
@@ -33,6 +35,9 @@ class CandidateReportsController < ApplicationController
 
   def generate_view
     @user_select_id = params[:student_ids]
+    @check_pdf_options = {:allow_personal_detail => params[:data][:allow_personal_detail], :allow_academic_detail => params[:data][:allow_academic_detail],
+                          :allow_employment_detail => params[:data][:allow_employment_detail], :allow_assessment_detail => params[:data][:allow_assessment_detail],
+                          :allow_image_proctoring => params[:data][:allow_image_proctoring]}
     @users = []
     @users_full_array = []
     @user_select_id.each do |user_id|
@@ -57,12 +62,14 @@ class CandidateReportsController < ApplicationController
       begin
           pdf_html = render_to_string(:template => "candidate_reports/generate_view.html.erb", :layout => "nil")
           logger.info("Success")
+          pdf_file_name = "#{Time.now}_candidate_report.pdf"
+          #pdf_file_name = "#{@user_select_id}_candidate_report.pdf"
           doc_pdf = WickedPdf.new.pdf_from_string(pdf_html)
-          pdf_path = Rails.root.join('tmp', "backgroud_test.pdf")
+          pdf_path = Rails.root.join('tmp', "#{pdf_file_name}")
           File.open(pdf_path, 'wb') do |file|
             file << doc_pdf
+            report_attach(pdf_file_name,pdf_path)
           end
-
       rescue
           format.json {render :json => { :success => false }}
         end
@@ -73,7 +80,27 @@ class CandidateReportsController < ApplicationController
     #end
 
 
-  def generate_csv_in_background
+  def report_attach(pdf_file_name,pdf_path)
+    filename = pdf_file_name
+    filetype = 'application/pdf'
+      @attachment = Attachment.new
+      @attachment.uploaded_data = Rack::Test::UploadedFile.new(pdf_path.to_s, filetype, true)
+      @attachment.display_name = filename
+      @attachment.user = @current_user
+      @attachment.context = @context
+      @attachment.file_state = 'available'
+      @attachment.save!
+      @attachment
+      @candidate_report = CandidateReport.new
+      @candidate_report.quiz_id = @quiz.id
+      @candidate_report.user_id = @current_user.id
+      @candidate_report.attachment_id = @attachment.id
+      @candidate_report.save!
+      pdf_path.unlink
+  end
+
+
+  def generate_pdf_in_background
     send_later_enqueue_args(:generate_view, { :priority => Delayed::LOW_PRIORITY, :max_attempts => 1 })
   end
 
