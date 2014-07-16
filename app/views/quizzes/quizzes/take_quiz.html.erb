@@ -90,12 +90,15 @@ document.onkeydown = function (event) {
 <header class="quiz-header">
   <h2><%= @quiz.quiz_title || @quiz.readable_type %></h2>
   <% if @submission.preview? %>
+      <%  js_env :quiz_preview => true %>
     <% draft_preview_title = t('headers.draft_preview',
             "This is a preview of the draft version of the assessment") %>
     <h3>
-      <i class="icon-warning"><span class="screenreader-only"><%= draft_preview_title %></span></i>
+      <i class="icon-warning" data-preview="preview"><span class="screenreader-only"><%= draft_preview_title %></span></i>
       <%= draft_preview_title %>
     </h3>
+  <% else %>
+      <%  js_env :quiz_preview => false %>
   <% end %>
   <%= before_label(:started, "Started") %>
   <%= datetime_string(@submission.started_at) %>
@@ -103,6 +106,8 @@ document.onkeydown = function (event) {
   <div id="quiz-instructions" class="user_content">
     <%= user_content(@quiz.description) %>
   </div>
+  <input id="submission_id" type="hidden" value="<%= @submission[:id] %>" />
+  <input id="no_of_attempt" type="hidden" value="<%= @submission[:attempt] %>" />
 </header>
 <% js_bundle :take_quiz, :proctoring %>
 <div id="proctoring_url" style="display: none" data-url="<%= course_quiz_image_proctoring_url(@context) %>"></div>
@@ -130,7 +135,7 @@ id="quiz_image_proctoring">
     <span class="time_limit"><%= @quiz.time_limit || nbsp %></span>
     <span class="time_left"><%= @submission.time_left %></span>
   </div>
-
+  <%  js_env :QUIZ_TIME_LEFT => @submission.time_left %>
   <%= render :partial => "display_question", :collection => @quiz_presenter.current_questions, :locals => {:assessing => true } %>
 
   <div class="button-container clearfix">

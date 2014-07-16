@@ -123,7 +123,7 @@ Rails.configuration.to_prepare do
       }
     },
     'sis_export_csv'=> {
-      :title => 'SIS Export',
+      :title => 'CSV Export',
       :parameters_partial => true,
       :description_partial => true,
       :parameters => {

@@ -22,7 +22,7 @@ module SIS
 
       def self.is_section_csv?(row)
         #This matcher works because an enrollment doesn't have name
-        row.include?('section_id') && row.include?('name')
+        row.include?('batch_id') && row.include?('name')
       end
 
       # expected columns
@@ -38,11 +38,11 @@ module SIS
               start_date = DateTime.parse(row['start_date']) unless row['start_date'].blank?
               end_date = DateTime.parse(row['end_date']) unless row['end_date'].blank?
             rescue
-              add_warning(csv, "Bad date format for section #{row['section_id']}")
+              add_warning(csv, "Bad date format for batch #{row['batch_id']}")
             end
 
             begin
-              importer.add_section(row['section_id'], row['course_id'], row['name'], row['status'], start_date, end_date, row['integration_id'])
+              importer.add_section(row['batch_id'], row['project_id'], row['name'], row['status'], start_date, end_date, row['integration_id'])
             rescue ImportError => e
               add_warning(csv, "#{e}")
             end

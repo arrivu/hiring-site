@@ -95,7 +95,7 @@ class Feature
       display_name: -> { I18n.t('features.google_docs_domain_restriction', 'Google Docs Domain Restriction') },
       description: -> { I18n.t('google_docs_domain_restriction_description', <<END) },
 Google Docs Domain Restriction allows Google Docs submissions and collaborations
-to be restricted to a single domain. Students attempting to submit assignments or
+to be restricted to a single domain. Candidates attempting to submit assignments or
 join collaborations on an unapproved domain will receive an error message notifying them
 that they will need to update their Google Docs integration.
 END
@@ -107,9 +107,9 @@ END
     {
       display_name: -> { I18n.t('features.outcome_gradebook', 'Outcome Gradebook') },
       description:  -> { I18n.t('outcome_gradebook_description', <<-END) },
-Outcome Gradebook provides a way for teachers to quickly view student and course
-progress on course learning outcomes. Outcomes are presented in a Gradebook-like
-format and student progress is displayed both as a numerical score and as mastered/near
+Outcome Gradebook provides a way for teachers to quickly view candidate and project
+progress on project learning outcomes. Outcomes are presented in a Gradebook-like
+format and candidate progress is displayed both as a numerical score and as mastered/near
 mastery/remedial.
 END
       applies_to: 'Course',
@@ -119,10 +119,10 @@ END
     },
     'student_outcome_gradebook' =>
     {
-      display_name: -> { I18n.t('features.student_outcome_gradebook', 'Student Outcome Gradebook') },
+      display_name: -> { I18n.t('features.student_outcome_gradebook', 'Candidate Outcome Gradebook') },
       description:  -> { I18n.t('student_outcome_gradebook_description', <<-END) },
-Student Outcome Gradebook provides a way for students to quickly view progress
-on course learning outcomes. Outcomes are presented in a Gradebook-like
+Candidate Outcome Gradebook provides a way for Candidates to quickly view progress
+on project learning outcomes. Outcomes are presented in a Gradebook-like
 format and progress is displayed both as a numerical score and as mastered/near
 mastery/remedial.
 END
@@ -147,7 +147,7 @@ END
       display_name: -> { I18n.t('features.differentiated_assignments', 'Differentiated Assignments') },
       description:  -> { I18n.t('differentiated_assignments_description', <<-END) },
 Differentiated Assignments is a *beta* feature that enables choosing which section(s) an assignment applies to.
-Sections that are not given an assignment will not see it in their course content and their final grade will be
+Sections that are not given an assignment will not see it in their project content and their final grade will be
 calculated without those points.
 END
       applies_to: 'Course',

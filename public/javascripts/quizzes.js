@@ -1554,12 +1554,11 @@ define([
             {
                 image_proctoring_option = "1";
                 $("#max_img_limits").show();
-            }
-            else
-            {
+                $("#maximum_image_proctoring").val("5");
+            } else {
                 image_proctoring_option = "0";
                 $("#max_img_limits").hide();
-                document.getElementById("maximum_image_proctoring").value= "";
+                $("#maximum_image_proctoring").val("");
             }
             $("#image_proctoring_option").val(image_proctoring_option);
         });
@@ -1587,7 +1586,8 @@ define([
             {
                 $("#img_proctoring").hide();
                 $("#max_limits").hide();
-                document.getElementById("maximum_web_proctoring").value= "";
+                $("#maximum_web_proctoring").val("");
+                $("#maximum_image_proctoring").val("");
                 $("#show_remaining_counts").val("0");
                 $("#image_proctoring_option").val("0");
                 $("#web_proctoring_option").val("0");
@@ -1603,11 +1603,12 @@ define([
             if(x)
             {
                 $("#max_limits").show();
+                $("#maximum_web_proctoring").val("5");
             }
             else
             {
+                $("#maximum_web_proctoring").val("");
                 $("#max_limits").hide();
-                document.getElementById("maximum_web_proctoring").value= "";
                 $("#show_remaining_counts").attr("checked", false);
                 if($('#show_remaining_counts:checked').val() == "on" )
                 {
@@ -1855,6 +1856,21 @@ define([
                 $(this).trigger('xhrError', data);
                 $(this).formErrors(data);
                 $quiz_edit_wrapper.find(".btn.save_quiz_button").attr('disabled', false);
+            }
+        });
+
+        $(".save_quiz_button").click(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var check_img_proctoring = $("#image_proctoring_option").is(":checked");
+            var quiz_time_limit = $("#quiz_time_limit").val();
+            if(check_img_proctoring) {
+
+                if (quiz_time_limit.length == 0) {
+                    var offset_quiz_time_limit = $("#quiz_time_limit").errorBox("This field is required").offset(20);
+                    $('html,body').scrollTo({top: offset_quiz_time_limit.top, left:0});
+                    return false;
+                }
             }
         });
 

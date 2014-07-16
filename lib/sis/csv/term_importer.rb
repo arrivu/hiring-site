@@ -22,7 +22,7 @@ module SIS
     
       def self.is_term_csv?(row)
         #This matcher works because a course has long_name/short_name
-        row.include?('term_id') && row.include?('name')
+        row.include?('hiring_period_id') && row.include?('name')
       end
     
       # expected columns
@@ -38,11 +38,11 @@ module SIS
               start_date = DateTime.parse(row['start_date']) unless row['start_date'].blank?
               end_date = DateTime.parse(row['end_date']) unless row['end_date'].blank?
             rescue
-              add_warning(csv, "Bad date format for term #{row['term_id']}")
+              add_warning(csv, "Bad date format for term #{row['hiring_period_id']}")
             end
 
             begin
-              importer.add_term(row['term_id'], row['name'], row['status'], start_date, end_date, row['integration_id'])
+              importer.add_term(row['hiring_period_id'], row['name'], row['status'], start_date, end_date, row['integration_id'])
             rescue ImportError => e
               add_warning(csv, "#{e}")
             end

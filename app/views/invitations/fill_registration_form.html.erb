@@ -44,11 +44,14 @@
 
 
                 <% if @candidate_filter.contact_number == TRUE %>
+
                   <li class='alnright'><%= f.label :phone, "Contact number*"%><br><%= f.text_field :phone, :required => true, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only."%></li>
+
                 <% end %>
 
 
             <% if @candidate_filter.address == TRUE %>
+
                 <li  class='alnright'><%= f.label :address, "Address*" %><br><%= f.text_field :address, :required => true %></li>
                   <li  class='alnright'><%= f.label :city, "City" %><br><%= f.text_field :city%></li>
 
@@ -56,14 +59,15 @@
                   <li  class='alnright'><%= f.label :state, "State" %><br><%= f.text_field :state%></li>
                   <li  class='alnright'><%= f.label :zip_code, "Zip code" %><br><%= f.text_field :zip_code, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only."%></li>
 
+
             <% end %>
 
               <% if @candidate_filter.bio == TRUE %>
                   <% if @bio == nil %>
-                      <li class='alnright'><%= f.label :bio, "Bio*"%><br>
+                      <li class='alnright'><%= f.label :bio, "Bio"%><br>
               <textarea  name="bio" style="width: 100%;min-height: 110px;"></textarea>
                   <% else %>
-                      <li class='alnright'><%= f.label :bio, "Bio*"%><br>
+                      <li class='alnright'><%= f.label :bio, "Bio"%><br>
               <textarea  name="bio" style="width: 100%;min-height: 110px;"><%= @bio_text %></textarea>
             </li>
                   <% end %>

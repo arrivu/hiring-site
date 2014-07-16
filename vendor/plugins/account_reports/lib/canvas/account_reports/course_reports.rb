@@ -130,8 +130,8 @@ module Canvas::AccountReports
 
         courses = add_term_scope(courses)
         courses = add_course_sub_account_scope(courses)
-
-        csv << ['course id','course sis id','short name','long name','status',
+        # arrivu changes
+        csv << ['project id','project sis id','short name','long name','status',
                 'created at']
 
         Shackles.activate(:slave) do

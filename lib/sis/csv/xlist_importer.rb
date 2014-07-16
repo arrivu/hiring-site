@@ -21,7 +21,7 @@ module SIS
     class XlistImporter < CSVBaseImporter
     
       def self.is_xlist_csv?(row)
-        row.include?('xlist_course_id') && row.include?('section_id')
+        row.include?('xlist_project_id') && row.include?('batch_id')
       end
     
       # possible columns:
@@ -32,7 +32,7 @@ module SIS
             update_progress
 
             begin
-              importer.add_crosslist(row['xlist_course_id'], row['section_id'], row['status'])
+              importer.add_crosslist(row['xlist_project_id'], row['batch_id'], row['status'])
             rescue ImportError => e
               add_warning(csv, "#{e}")
             end

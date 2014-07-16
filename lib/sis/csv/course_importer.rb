@@ -21,7 +21,7 @@ module SIS
     class CourseImporter < CSVBaseImporter
 
       def self.is_course_csv?(row)
-        row.include?('course_id') && row.include?('short_name')
+        row.include?('project_id') && row.include?('short_name')
       end
 
       # expected columns
@@ -39,11 +39,11 @@ module SIS
               start_date = DateTime.parse(row['start_date']) unless row['start_date'].blank?
               end_date = DateTime.parse(row['end_date']) unless row['end_date'].blank?
             rescue
-              messages << "Bad date format for course #{row['course_id']}"
+              messages << "Bad date format for course #{row['project_id']}"
             end
 
             begin
-              importer.add_course(row['course_id'], row['term_id'], row['account_id'], row['fallback_account_id'], row['status'], start_date, end_date, row['abstract_course_id'], row['short_name'], row['long_name'], row['integration_id'])
+              importer.add_course(row['project_id'], row['hiring_period_id'], row['account_id'], row['fallback_account_id'], row['status'], start_date, end_date, row['abstract_course_id'], row['short_name'], row['long_name'], row['integration_id'])
             rescue ImportError => e
               messages << "#{e}"
             end
