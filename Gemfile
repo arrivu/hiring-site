@@ -335,3 +335,5 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'acts-as-taggable-on',:git => 'http://github.com/arrivu/acts-as-taggable-on.git', :branch => 'multitenant'
 
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
