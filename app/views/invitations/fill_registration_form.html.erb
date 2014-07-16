@@ -35,8 +35,7 @@
               <% end %>
               <li class='alnright'><%= f.label :gender, "Gender"%><br><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</li>
               <% if @candidate_filter.dob == TRUE %>
-                <li class='alnright'><%= f.label :birthdate, "Date Of Birth*"%><br>
-                    <%= f.text_field :birthdate, :required => true, :class => "date_entry", :value => date_string(@candidate_detail.birthdate, :long) %>
+                <li class='alnright'><%= f.label :birthdate, "Date Of Birth*"%><br><%= f.text_field :birthdate, :required => true, :placeholder => "DD-MM-YYYY"%>
                   </li>
 
               <% end %>
