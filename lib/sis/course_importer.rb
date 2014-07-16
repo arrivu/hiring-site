@@ -162,7 +162,7 @@ module SIS
               templated_course.save_without_broadcasting!
             else
               msg = "A (templated) course did not pass validation "
-              msg += "(" + "course: #{course_id} / #{short_name}, error: " + 
+              msg += "(" + "course: #{course_id} / #{short_name}, error: " +
               msg += templated_course.errors.full_messages.join(",") + ")"
               raise ImportError, msg
             end
@@ -172,7 +172,7 @@ module SIS
             course.save_without_broadcasting!
           else
             msg = "A course did not pass validation "
-            msg += "(" + "course: #{course_id} / #{short_name}, error: " + 
+            msg += "(" + "course: #{course_id} / #{short_name}, error: " +
             msg += course.errors.full_messages.join(",") + ")"
             raise ImportError, msg
           end
