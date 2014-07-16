@@ -42,58 +42,49 @@ define([
                     window.webcam = this.options;
                     //window.webcam.started = true;
                     // Trigger a snapshot
-//                    var cnt = 0;
-//                    if( ENV.SNAPSHOT_TAKEN == 0 && cnt == 0){
-//                        App.getSnapshot();
-//                        cnt = 1;
-//                    }
                     var total_snapshot = ENV.TOTAL_IMAGE_COUNT;
-                    //var quiz_time = ENV.QUIZ_TIME_LIMIT;
                     var snapshot_taken_count = ENV.SNAPSHOT_TAKEN;
-                    var quiz_time = Math.round(ENV.QUIZ_TIME_LEFT * 0.012)+1;
+                    var quiz_time;
+                    if(ENV.SHOW_ONE_QUESTION_IN_QUIZ) {
+                        quiz_time = Math.round(ENV.QUIZ_TIME_LEFT * 0.012);
+                    } else {
+                        quiz_time = ENV.QUIZ_TIME_LIMIT;
+                    }
                     var remaining_snapshot = total_snapshot-snapshot_taken_count;
                     var snap_slot = quiz_time/remaining_snapshot;
                     var timer_count = quiz_time/snap_slot;
-//                    if(snap_slot == 0) {
-//                        timer_count = remaining_snapshot;
-//                    }
                     var random_snap_slot;
-                    if(snap_slot < 0.5) {
+                    if(snap_slot <= 0.5) {
                         random_snap_slot = (Math.random() * snap_slot) + 0.3;
                     } else {
                         random_snap_slot = (Math.random() * snap_slot) + 1;
                     }
                     var timer_value = random_snap_slot*60*1000;
-//                    if(snap_slot == 0) {
-//                        timer_value = 15000;
-//                    }
                     console.log("quiz_time="+quiz_time);
                     console.log("remaining_snapshot="+remaining_snapshot);
                     console.log("snap_slot="+snap_slot);
                     console.log("timer_count="+timer_count);
                     console.log("random_snap_slot_time="+random_snap_slot);
                     console.log("timer_value="+timer_value);
-
+                    var increment = 1;
                     for (var i = 0; timer_count > 0;i++) {
-//                        var set_timer;
-//                        if(i == 0) {
-//                            if(snap_slot < 0.5) {
-//                                set_timer = 50000;
-//                            } else {
-//                                set_timer = 70000;
-//                            }
-//                        } else {
-//                            set_timer = timer_value*i;
-//                        }
+                        var set_timer;
 
-                        if(i>0) {
-                           setTimeout(function() {
-                              App.getSnapshot();
-                           }, timer_value*i);
-
+                        if(i == 0) {
+                            if(snap_slot < 0.5) {
+                                set_timer = 50000;
+                            } else {
+                                set_timer = 70000;
+                            }
+                        } else {
+                            set_timer = timer_value*increment;
                         }
+
+                       setTimeout(function() {
+                          App.getSnapshot();
+                       }, set_timer);
                         timer_count -= i;
-                        //alert(timer_value*i);
+                        increment++;
 
                     }
 

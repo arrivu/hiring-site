@@ -228,11 +228,13 @@ namespace :db do
 
         a = Account.default.reload
         a.name = name
+        a.account_domain_mapping.update_attributes(domain_name: a.name)
         a.save!
       end
     else
       a = Account.default.reload
       a.name = ENV['CANVAS_LMS_ACCOUNT_NAME']
+      a.account_domain_mapping.update_attributes(domain_name: a.name)
       a.save!
     end
   end

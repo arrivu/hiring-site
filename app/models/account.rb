@@ -28,6 +28,7 @@ class Account < ActiveRecord::Base
   belongs_to :parent_account, :class_name => 'Account'
   belongs_to :root_account, :class_name => 'Account'
   authenticates_many :pseudonym_sessions
+  has_one :account_domain_mapping
   has_many :courses
   has_many :all_courses, :class_name => 'Course', :foreign_key => 'root_account_id'
   has_many :group_categories, :as => :context, :conditions => ['deleted_at IS NULL']
@@ -920,6 +921,10 @@ class Account < ActiveRecord::Base
         t '#account.default_site_administrator_account_name', 'Site Admin'
         t '#account.default_account_name', 'Default Account'
         account = @special_accounts[special_account_type] = Account.new(:name => default_account_name)
+        #create default account mapping
+        if default_account_name == 'Default Account'
+          account_to_domain_mapping = account.build_account_domain_mapping(domain_name: account.name,workflow_state: 'active')
+        end
         account.save!
         Setting.set("#{special_account_type}_account_id", account.id)
         @special_account_ids[special_account_type] = account.id
