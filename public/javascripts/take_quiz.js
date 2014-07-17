@@ -440,7 +440,7 @@ define([
                             var chance = "chances";
                         }
                         var generateHere = document.getElementById("navigate_count");
-                        generateHere.innerHTML = '<div><p>hiiii'+navigate_away_count +' You will get a maximum of '+ total_max_limit +' ' + chance + ' to take the assessment.</p></div>';
+                        generateHere.innerHTML = '<div><p>You will get a maximum of '+ total_max_limit +' ' + chance + ' to take the assessment.</p></div>';
                     }
                 }
 
