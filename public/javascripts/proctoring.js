@@ -60,12 +60,6 @@ define([
                         random_snap_slot = (Math.random() * snap_slot) + 1;
                     }
                     var timer_value = random_snap_slot*60*1000;
-                    console.log("quiz_time="+quiz_time);
-                    console.log("remaining_snapshot="+remaining_snapshot);
-                    console.log("snap_slot="+snap_slot);
-                    console.log("timer_count="+timer_count);
-                    console.log("random_snap_slot_time="+random_snap_slot);
-                    console.log("timer_value="+timer_value);
                     var increment = 1;
                     for (var i = 0; timer_count > 0;i++) {
                         var set_timer;
@@ -256,7 +250,6 @@ define([
                 fd.append("[submission_id]", submission_id);
                 fd.append("[attempt]", no_of_attempt);
                 // And send it
-                console.log(folder_id);
                 $.ajax({
                     url: $('#proctoring_url').data('url'),
                     type: "POST",

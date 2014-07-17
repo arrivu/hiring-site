@@ -20,7 +20,7 @@ class Quizzes::QuizSubmission < ActiveRecord::Base
   self.table_name = 'quiz_submissions' unless CANVAS_RAILS2
 
   include Workflow
-  attr_accessible :quiz, :user, :temporary_user_code, :submission_data, :score_before_regrade
+  attr_accessible :quiz, :user, :temporary_user_code, :submission_data, :score_before_regrade, :navigate_count
   attr_readonly :quiz_id, :user_id
   validates_presence_of :quiz_id
   validates_numericality_of :extra_time, greater_than_or_equal_to: 0,
@@ -324,10 +324,11 @@ class Quizzes::QuizSubmission < ActiveRecord::Base
       new_params = self.submission_data.deep_merge(params) rescue params
     end
     new_params[:attempt] = self.attempt
+    navigate_count = new_params[:navigate_count]
     new_params[:cnt] ||= 0
     new_params[:cnt] = (new_params[:cnt].to_i + 1) % 5
     snapshot!(params) if new_params[:cnt] == 1
-    conn.execute("UPDATE quiz_submissions SET user_id=#{self.user_id || 'NULL'}, submission_data=#{conn.quote(new_params.to_yaml)} WHERE workflow_state NOT IN ('complete', 'pending_review') AND id=#{self.id}")
+    conn.execute("UPDATE quiz_submissions SET user_id=#{self.user_id || 'NULL'}, navigate_count=#{navigate_count}, submission_data=#{conn.quote(new_params.to_yaml)} WHERE workflow_state NOT IN ('complete', 'pending_review') AND id=#{self.id}")
     new_params
   end
 

@@ -121,6 +121,7 @@ id="quiz_image_proctoring">
 
 <div id="questions" class="assessing" ondragstart="return false" onselectstart="return false" >
   <input type="hidden" name="attempt" value="<%= @submission.attempt %>"/>
+  <input type="text" name="navigate_count" id="navigate_click" value="<%= (@submission.navigate_count ? @submission.navigate_count : 0) %>"/>
   <% if @submission.validation_token.present? %>
     <input type="hidden" name="validation_token" value="<%= @submission.validation_token %>"/>
   <% end %>
@@ -134,6 +135,7 @@ id="quiz_image_proctoring">
     <span class="end_at"><%= @submission.end_at && @submission.end_at.iso8601 %></span>
     <span class="time_limit"><%= @quiz.time_limit || nbsp %></span>
     <span class="time_left"><%= @submission.time_left %></span>
+    <span class="navigate_away_count"></span>
   </div>
   <%  js_env :QUIZ_TIME_LEFT => @submission.time_left %>
   <%= render :partial => "display_question", :collection => @quiz_presenter.current_questions, :locals => {:assessing => true } %>
