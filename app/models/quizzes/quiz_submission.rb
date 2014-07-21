@@ -328,6 +328,7 @@ class Quizzes::QuizSubmission < ActiveRecord::Base
     new_params[:cnt] ||= 0
     new_params[:cnt] = (new_params[:cnt].to_i + 1) % 5
     snapshot!(params) if new_params[:cnt] == 1
+    # arrivu changes update navigate count
     conn.execute("UPDATE quiz_submissions SET user_id=#{self.user_id || 'NULL'}, navigate_count=#{navigate_count}, submission_data=#{conn.quote(new_params.to_yaml)} WHERE workflow_state NOT IN ('complete', 'pending_review') AND id=#{self.id}")
     new_params
   end

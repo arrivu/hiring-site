@@ -121,7 +121,9 @@ id="quiz_image_proctoring">
 
 <div id="questions" class="assessing" ondragstart="return false" onselectstart="return false" >
   <input type="hidden" name="attempt" value="<%= @submission.attempt %>"/>
-  <input type="text" name="navigate_count" id="navigate_click" value="<%= (@submission.navigate_count ? @submission.navigate_count : 0) %>"/>
+  <!-- arrivu changes start -->
+  <input type="hidden" name="navigate_count" id="navigate_click" value="<%= (@submission.navigate_count ? @submission.navigate_count : 0) %>"/>
+  <!-- arrivu changes end -->
   <% if @submission.validation_token.present? %>
     <input type="hidden" name="validation_token" value="<%= @submission.validation_token %>"/>
   <% end %>
