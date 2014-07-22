@@ -17,166 +17,166 @@
  */
 
 define([
-  'i18n!quizzes.moderate',
-  'jquery' /* $ */,
-  'quiz_timing',
-  'jquery.ajaxJSON' /* ajaxJSON */,
-  'jquery.instructure_date_and_time' /* datetimeString */,
-  'jquery.instructure_forms' /* fillFormData, getFormData */,
-  'jqueryui/dialog',
-  'compiled/jquery/fixDialogButtons' /* fix dialog formatting */,
-  'jquery.instructure_misc_helpers' /* replaceTags */,
-  'jquery.instructure_misc_plugins' /* showIf */,
-  'compiled/jquery.rails_flash_notifications',
-  'jquery.templateData' /* fillTemplateData */,
-  'vendor/date' /* Date.parse */
+    'i18n!quizzes.moderate',
+    'jquery' /* $ */,
+    'quiz_timing',
+    'jquery.ajaxJSON' /* ajaxJSON */,
+    'jquery.instructure_date_and_time' /* datetimeString */,
+    'jquery.instructure_forms' /* fillFormData, getFormData */,
+    'jqueryui/dialog',
+    'compiled/jquery/fixDialogButtons' /* fix dialog formatting */,
+    'jquery.instructure_misc_helpers' /* replaceTags */,
+    'jquery.instructure_misc_plugins' /* showIf */,
+    'compiled/jquery.rails_flash_notifications',
+    'jquery.templateData' /* fillTemplateData */,
+    'vendor/date' /* Date.parse */
 ], function(I18n, $, timing) {
 
-  window.moderation = {
-    updateTimes: function() {
-      var now = new Date();
-      moderation.studentsCurrentlyTakingQuiz = !!$("#students .student.in_progress");
-      $("#students .student.in_progress").each(function() {
-        var $row = $(this);
-        var row = $row.data('timing') || {};
-        var started_at = $row.attr('data-started-at');
-        var end_at = $row.attr('data-end-at');
-        if(!row.referenceDate) {
-          $.extend(row, timing.setReferenceDate(started_at, end_at, now));
-        }
-        if(!row.referenceDate) { return; }
-        $row.data('timing', row);
-        var diff = row.referenceDate.getTime() - now.getTime() - row.clientServerDiff;
-        if(row.isDeadline && diff < 0) {
-          $row.find(".time").text(I18n.t('time_up', "Time Up!"));
-          return;
-        }
-        $row.data('minutes_left', diff / 60000);
-        var date = new Date(Math.abs(diff));
-        var yr = date.getUTCFullYear() - 1970;
-        var mon = date.getUTCMonth();
-        mon = mon + (12 * yr);
-        var day = date.getUTCDate() - 1;
-        var hr = date.getUTCHours();
-        var min = date.getUTCMinutes();
-        var sec = date.getUTCSeconds();
-        var times = [];
-        if(mon) { times.push(mon < 10 ? '0' + mon : mon); }
-        if(day) { times.push(day < 10 ? '0' + day : day); }
-        if(hr) { times.push(hr < 10 ? '0' + hr : hr); }
-        if(true || min) { times.push(min < 10 ? '0' + min : min); }
-        if(true || sec) { times.push(sec < 10 ? '0' + sec : sec); }
-        $row.find(".time").text(times.join(":"));
-      });
-    },
-    updateSubmission: function(submission, updateLastUpdatedAt) {
-      var $student = $("#student_" + submission.user_id);
-      if(updateLastUpdatedAt) {
-        moderation.lastUpdatedAt = new Date(Math.max(Date.parse(submission.updated_at), moderation.lastUpdatedAt));
-      }
-      var state_text = "";
-      if(submission.workflow_state == 'complete' || submission.workflow_state == 'pending_review') {
-        state_text = I18n.t('finished_in_duration', "finished in %{duration}", {'duration': submission.finished_in_words});
-      }
-      var data = {
-        attempt: submission.attempt || '--',
-        extra_time: submission.extra_time,
-        extra_attempts: submission.extra_attempts,
-        score: submission.kept_score
-      };
-      if(submission.attempts_left == -1) {
-        data.attempts_left = '--';
-      } else if(submission.attempts_left) {
-        data.attempts_left = submission.attempts_left;
-      }
-      if(submission.workflow_state != 'untaken') {
-        data.time = state_text;
-      }
-      $student
-        .fillTemplateData({data: data})
-        .toggleClass('extendable', submission['extendable?'])
-        .toggleClass('in_progress', submission.workflow_state == 'untaken')
-        .toggleClass('manually_unlocked', !!submission.manually_unlocked)
-        .toggleClass('allow_personal_detail', !!submission.allow_personal_detail)
-        .toggleClass('allow_academic_detail', !!submission.allow_academic_detail)
-        .toggleClass('allow_employment_detail', !!submission.allow_employment_detail)
-        .toggleClass('allow_assessment_detail', !!submission.allow_assessment_detail)
-        .toggleClass('allow_image_proctoring', !!submission.allow_image_proctoring)
-        .attr('data-started-at', submission.started_at || '')
-        .attr('data-end-at', submission.end_at || '')
-        .data('timing', null)
-        .find(".extra_time_allowed").showIf(submission.extra_time).end()
-        .find(".unlocked").showIf(submission.manually_unlocked);
-    },
-    lastUpdatedAt: "",
-    studentsCurrentlyTakingQuiz: false
-  };
-
-  $(document).ready(function(event) {
-    timing.initTimes();
-    setInterval(moderation.updateTimes, 500)
-    var updateErrors = 0;
-    var moderate_url = $(".update_url").attr('href');
-    moderation.lastUpdatedAt = Date.parse($(".last_updated_at").text());
-    var currently_updating = false;
-    var $updating_img = $(".reload_link img");
-    function updating(bool) {
-      currently_updating = bool;
-      if(bool) {
-        $updating_img.attr('src', $updating_img.attr('src').replace("ajax-reload.gif", "ajax-reload-animated.gif"));
-      } else {
-        $updating_img.attr('src', $updating_img.attr('src').replace("ajax-reload-animated.gif", "ajax-reload.gif"));
-      }
-    }
-    function updateSubmissions(repeat) {
-      if(currently_updating) { return; }
-      updating(true);
-      var last_updated_at = moderation.lastUpdatedAt && moderation.lastUpdatedAt.toISOString();
-
-      $.ajaxJSON($.replaceTags(moderate_url, 'update', last_updated_at), 'GET', {}, function(data) {
-        updating(false);
-        if(repeat) {
-          if(data.length || moderation.studentsCurrentlyTakingQuiz) {
-            setTimeout(function() { updateSubmissions(true); }, 60000);
-          } else {
-            setTimeout(function() { updateSubmissions(true); }, 180000);
-          }
-        }
-        for(var idx in data) {
-          moderation.updateSubmission(data[idx], true);
-        }
-      }, function(data) {
-        updating(false);
-        updateErrors++;
-        if(updateErrors > 5) {
-          $.flashMessage(I18n.t('errors.server_communication_failed', "There was a problem communicating with the server.  The system will try again in five minutes, or you can reload the page"));
-          updateErrors = 0;
-          if(repeat) {
-            setTimeout(function() { updateSubmissions(true); }, 300000);
-          }
-        } else if(repeat) {
-          setTimeout(function() { updateSubmissions(true); }, 120000);
-        }
-      });
+    window.moderation = {
+        updateTimes: function() {
+            var now = new Date();
+            moderation.studentsCurrentlyTakingQuiz = !!$("#students .student.in_progress");
+            $("#students .student.in_progress").each(function() {
+                var $row = $(this);
+                var row = $row.data('timing') || {};
+                var started_at = $row.attr('data-started-at');
+                var end_at = $row.attr('data-end-at');
+                if(!row.referenceDate) {
+                    $.extend(row, timing.setReferenceDate(started_at, end_at, now));
+                }
+                if(!row.referenceDate) { return; }
+                $row.data('timing', row);
+                var diff = row.referenceDate.getTime() - now.getTime() - row.clientServerDiff;
+                if(row.isDeadline && diff < 0) {
+                    $row.find(".time").text(I18n.t('time_up', "Time Up!"));
+                    return;
+                }
+                $row.data('minutes_left', diff / 60000);
+                var date = new Date(Math.abs(diff));
+                var yr = date.getUTCFullYear() - 1970;
+                var mon = date.getUTCMonth();
+                mon = mon + (12 * yr);
+                var day = date.getUTCDate() - 1;
+                var hr = date.getUTCHours();
+                var min = date.getUTCMinutes();
+                var sec = date.getUTCSeconds();
+                var times = [];
+                if(mon) { times.push(mon < 10 ? '0' + mon : mon); }
+                if(day) { times.push(day < 10 ? '0' + day : day); }
+                if(hr) { times.push(hr < 10 ? '0' + hr : hr); }
+                if(true || min) { times.push(min < 10 ? '0' + min : min); }
+                if(true || sec) { times.push(sec < 10 ? '0' + sec : sec); }
+                $row.find(".time").text(times.join(":"));
+            });
+        },
+        updateSubmission: function(submission, updateLastUpdatedAt) {
+            var $student = $("#student_" + submission.user_id);
+            if(updateLastUpdatedAt) {
+                moderation.lastUpdatedAt = new Date(Math.max(Date.parse(submission.updated_at), moderation.lastUpdatedAt));
+            }
+            var state_text = "";
+            if(submission.workflow_state == 'complete' || submission.workflow_state == 'pending_review') {
+                state_text = I18n.t('finished_in_duration', "finished in %{duration}", {'duration': submission.finished_in_words});
+            }
+            var data = {
+                attempt: submission.attempt || '--',
+                extra_time: submission.extra_time,
+                extra_attempts: submission.extra_attempts,
+                score: submission.kept_score
+            };
+            if(submission.attempts_left == -1) {
+                data.attempts_left = '--';
+            } else if(submission.attempts_left) {
+                data.attempts_left = submission.attempts_left;
+            }
+            if(submission.workflow_state != 'untaken') {
+                data.time = state_text;
+            }
+            $student
+                .fillTemplateData({data: data})
+                .toggleClass('extendable', submission['extendable?'])
+                .toggleClass('in_progress', submission.workflow_state == 'untaken')
+                .toggleClass('manually_unlocked', !!submission.manually_unlocked)
+                .toggleClass('allow_personal_detail', !!submission.allow_personal_detail)
+                .toggleClass('allow_academic_detail', !!submission.allow_academic_detail)
+                .toggleClass('allow_employment_detail', !!submission.allow_employment_detail)
+                .toggleClass('allow_assessment_detail', !!submission.allow_assessment_detail)
+                .toggleClass('allow_image_proctoring', !!submission.allow_image_proctoring)
+                .attr('data-started-at', submission.started_at || '')
+                .attr('data-end-at', submission.end_at || '')
+                .data('timing', null)
+                .find(".extra_time_allowed").showIf(submission.extra_time).end()
+                .find(".unlocked").showIf(submission.manually_unlocked);
+        },
+        lastUpdatedAt: "",
+        studentsCurrentlyTakingQuiz: false
     };
-    setTimeout(function() { updateSubmissions(true); }, 1000);
-    function checkChange() {
-      var cnt = $(".student_check:checked").length;
-      $("#checked_count").text(cnt);
+
+    $(document).ready(function(event) {
+        timing.initTimes();
+        setInterval(moderation.updateTimes, 500)
+        var updateErrors = 0;
+        var moderate_url = $(".update_url").attr('href');
+        moderation.lastUpdatedAt = Date.parse($(".last_updated_at").text());
+        var currently_updating = false;
+        var $updating_img = $(".reload_link img");
+        function updating(bool) {
+            currently_updating = bool;
+            if(bool) {
+                $updating_img.attr('src', $updating_img.attr('src').replace("ajax-reload.gif", "ajax-reload-animated.gif"));
+            } else {
+                $updating_img.attr('src', $updating_img.attr('src').replace("ajax-reload-animated.gif", "ajax-reload.gif"));
+            }
+        }
+        function updateSubmissions(repeat) {
+            if(currently_updating) { return; }
+            updating(true);
+            var last_updated_at = moderation.lastUpdatedAt && moderation.lastUpdatedAt.toISOString();
+
+            $.ajaxJSON($.replaceTags(moderate_url, 'update', last_updated_at), 'GET', {}, function(data) {
+                updating(false);
+                if(repeat) {
+                    if(data.length || moderation.studentsCurrentlyTakingQuiz) {
+                        setTimeout(function() { updateSubmissions(true); }, 60000);
+                    } else {
+                        setTimeout(function() { updateSubmissions(true); }, 180000);
+                    }
+                }
+                for(var idx in data) {
+                    moderation.updateSubmission(data[idx], true);
+                }
+            }, function(data) {
+                updating(false);
+                updateErrors++;
+                if(updateErrors > 5) {
+                    $.flashMessage(I18n.t('errors.server_communication_failed', "There was a problem communicating with the server.  The system will try again in five minutes, or you can reload the page"));
+                    updateErrors = 0;
+                    if(repeat) {
+                        setTimeout(function() { updateSubmissions(true); }, 300000);
+                    }
+                } else if(repeat) {
+                    setTimeout(function() { updateSubmissions(true); }, 120000);
+                }
+            });
+        };
+        setTimeout(function() { updateSubmissions(true); }, 1000);
+        function checkChange() {
+            var cnt = $(".student_check:checked").length;
+            $("#checked_count").text(cnt);
       $("#pdf_count").text(cnt);
       $(".moderate_multiple_button").showIf(cnt);
       $(".moderate_generate_pdf_button").showIf(cnt);
-    }
-    $("#check_all").change(function() {
-      $(".student_check").attr('checked', $(this).attr('checked'));
-      checkChange();
-    });
-    $(".student_check").change(function() {
-      if(!$(this).attr('checked')) {
-        $("#check_all").attr('checked', false);
-      }
-      checkChange();
-    });
+        }
+        $("#check_all").change(function() {
+            $(".student_check").attr('checked', $(this).attr('checked'));
+            checkChange();
+        });
+        $(".student_check").change(function() {
+            if(!$(this).attr('checked')) {
+                $("#check_all").attr('checked', false);
+            }
+            checkChange();
+        });
 
       $(".moderate_generate_pdf_button").live('click', function(event) {
           event.preventDefault();

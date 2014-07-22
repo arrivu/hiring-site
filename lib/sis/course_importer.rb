@@ -37,7 +37,7 @@ module SIS
       courses_to_update_sis_batch_id.in_groups_of(1000, false) do |batch|
         Course.where(:id => batch).update_all(:sis_batch_id => @batch_id)
       end if @batch_id
-      @logger.debug("Courses took #{Time.now - start} seconds")
+      @logger.debug("Projects took #{Time.now - start} seconds")
       return importer.success_count
     end
 
@@ -56,16 +56,16 @@ module SIS
         @success_count = 0
       end
 
-      def add_course(course_id, term_id, account_id, fallback_account_id, status, start_date, end_date, abstract_course_id, short_name, long_name, integration_id)
+      def add_course(project_id, term_id, account_id, fallback_account_id, status, start_date, end_date, abstract_course_id, short_name, long_name, integration_id)
 
-        @logger.debug("Processing Course #{[course_id, term_id, account_id, fallback_account_id, status, start_date, end_date, abstract_course_id, short_name, long_name].inspect}")
+        @logger.debug("Processing Project #{[project_id, term_id, account_id, fallback_account_id, status, start_date, end_date, abstract_course_id, short_name, long_name].inspect}")
 
-        raise ImportError, "No course_id given for a course" if course_id.blank?
-        raise ImportError, "No short_name given for course #{course_id}" if short_name.blank? && abstract_course_id.blank?
-        raise ImportError, "No long_name given for course #{course_id}" if long_name.blank? && abstract_course_id.blank?
-        raise ImportError, "Improper status \"#{status}\" for course #{course_id}" unless status =~ /\A(active|deleted|completed)/i
+        raise ImportError, "No project_id given for a project" if project_id.blank?
+        raise ImportError, "No short_name given for project #{project_id}" if short_name.blank? && abstract_course_id.blank?
+        raise ImportError, "No long_name given for project #{project_id}" if long_name.blank? && abstract_course_id.blank?
+        raise ImportError, "Improper status \"#{status}\" for project #{project_id}" unless status =~ /\A(active|deleted|completed)/i
 
-        course = Course.find_by_root_account_id_and_sis_source_id(@root_account.id, course_id)
+        course = Course.find_by_root_account_id_and_sis_source_id(@root_account.id, project_id)
         course ||= Course.new
         course_enrollment_term_id_stuck = course.stuck_sis_fields.include?(:enrollment_term_id)
         if !course_enrollment_term_id_stuck && term_id
@@ -83,7 +83,7 @@ module SIS
         update_account_associations = course.account_id_changed? || course.root_account_id_changed?
 
         course.integration_id = integration_id
-        course.sis_source_id = course_id
+        course.sis_source_id = project_id
         if !course.stuck_sis_fields.include?(:workflow_state)
           if status =~ /active/i
             if course.workflow_state == 'completed'
@@ -108,7 +108,7 @@ module SIS
         abstract_course = nil
         if abstract_course_id.present?
           abstract_course = AbstractCourse.find_by_root_account_id_and_sis_source_id(@root_account.id, abstract_course_id)
-          @messages << "unknown abstract course id #{abstract_course_id}, ignoring abstract course reference" unless abstract_course
+          @messages << "unknown abstract project id #{abstract_course_id}, ignoring abstract project reference" unless abstract_course
         end
 
         if abstract_course
@@ -161,8 +161,8 @@ module SIS
             if templated_course.valid?
               templated_course.save_without_broadcasting!
             else
-              msg = "A (templated) course did not pass validation "
-              msg += "(" + "course: #{course_id} / #{short_name}, error: " +
+              msg = "A (templated) project did not pass validation "
+              msg += "(" + "project: #{project_id} / #{short_name}, error: " +
               msg += templated_course.errors.full_messages.join(",") + ")"
               raise ImportError, msg
             end
@@ -171,8 +171,8 @@ module SIS
           if course.valid?
             course.save_without_broadcasting!
           else
-            msg = "A course did not pass validation "
-            msg += "(" + "course: #{course_id} / #{short_name}, error: " +
+            msg = "A project did not pass validation "
+            msg += "(" + "project: #{project_id} / #{short_name}, error: " +
             msg += course.errors.full_messages.join(",") + ")"
             raise ImportError, msg
           end

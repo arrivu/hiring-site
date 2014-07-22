@@ -85,13 +85,13 @@ module SIS
         @enrollment_batch = []
         @success_count = 0
       end
-
-      def add_enrollment(course_id, section_id, user_id, role, status, start_date, end_date, associated_user_id=nil)
-        raise ImportError, "No course_id or section_id given for an enrollment" if course_id.blank? && section_id.blank?
+      # arrivu changes course_id into project_id and section_id into batch_id
+      def add_enrollment(project_id, batch_id, user_id, role, status, start_date, end_date, associated_user_id=nil)
+        raise ImportError, "No project_id or batch_id given for an enrollment" if project_id.blank? && batch_id.blank?
         raise ImportError, "No user_id given for an enrollment" if user_id.blank?
         raise ImportError, "Improper status \"#{status}\" for an enrollment" unless status =~ /\Aactive|\Adeleted|\Acompleted|\Ainactive/i
 
-        @enrollment_batch << [course_id.to_s, section_id.to_s, user_id.to_s, role, status, start_date, end_date, associated_user_id]
+        @enrollment_batch << [project_id.to_s, batch_id.to_s, user_id.to_s, role, status, start_date, end_date, associated_user_id]
         process_batch if @enrollment_batch.size >= @updates_every
       end
 
@@ -109,24 +109,24 @@ module SIS
           while !@enrollment_batch.empty? && tx_end_time > Time.now
             enrollment = @enrollment_batch.shift
             @logger.debug("Processing Enrollment #{enrollment.inspect}")
-            course_id, section_id, user_id, role, status, start_date, end_date, associated_user_id = enrollment
+            project_id, batch_id, user_id, role, status, start_date, end_date, associated_user_id = enrollment
 
             last_section = @section
             # reset the cached course/section if they don't match this row
-            if @course && course_id.present? && @course.sis_source_id != course_id
+            if @course && project_id.present? && @course.sis_source_id != project_id
               @course = nil
               @section = nil
             end
-            if @section && section_id.present? && @section.sis_source_id != section_id
+            if @section && batch_id.present? && @section.sis_source_id != batch_id
               @section = nil
             end
 
             pseudo = Pseudonym.find_by_account_id_and_sis_user_id(@root_account.id, user_id)
             user = pseudo.user rescue nil
-            @course ||= Course.find_by_root_account_id_and_sis_source_id(@root_account.id, course_id) unless course_id.blank?
-            @section ||= CourseSection.find_by_root_account_id_and_sis_source_id(@root_account.id, section_id) unless section_id.blank?
+            @course ||= Course.find_by_root_account_id_and_sis_source_id(@root_account.id, project_id) unless project_id.blank?
+            @section ||= CourseSection.find_by_root_account_id_and_sis_source_id(@root_account.id, batch_id) unless batch_id.blank?
             unless (@course || @section)
-              @messages << "Neither course #{course_id} nor section #{section_id} existed for user enrollment"
+              @messages << "Neither project #{project_id} nor batch #{batch_id} existed for user enrollment"
               next
             end
             unless user
@@ -134,22 +134,22 @@ module SIS
               next
             end
 
-            if section_id.present? && !@section
-              @messages << "An enrollment referenced a non-existent section #{section_id}"
+            if batch_id.present? && !@section
+              @messages << "An enrollment referenced a non-existent batch #{batch_id}"
               next
             end
-            if course_id.present? && !@course
-              @messages << "An enrollment referenced a non-existent course #{course_id}"
+            if project_id.present? && !@course
+              @messages << "An enrollment referenced a non-existent project #{project_id}"
               next
             end
 
             # reset cached/inferred course and section if they don't match with the opposite piece that was
             # explicitly provided
-            @section = @course.default_section(:include_xlists => true) if @section.nil? || section_id.blank? && !@section.default_section
-            @course = @section.course if @course.nil? || (course_id.blank? && @course.id != @section.course_id) || (@course.id != @section.course_id && @section.nonxlist_course_id == @course.id)
+            @section = @course.default_section(:include_xlists => true) if @section.nil? || batch_id.blank? && !@section.default_section
+            @course = @section.course if @course.nil? || (project_id.blank? && @course.id != @section.course_id) || (@course.id != @section.course_id && @section.nonxlist_course_id == @course.id)
 
             if @course.id != @section.course_id
-              @messages << "An enrollment listed a section and a course that are unrelated"
+              @messages << "An enrollment listed a batch and a project that are unrelated"
               next
             end
 
@@ -167,6 +167,17 @@ module SIS
             type = if custom_role
               custom_role.base_role_type
             else
+              # arrivu changes start
+              if role =~ /\Ahiringmanager\z/i
+                role = "teacher"
+              elsif role =~ /\Acandidate/i
+                role = "student"
+              elsif role =~ /\Ainterviewer\z/i
+                role = "ta"
+              elsif role =~ /\Ahr\z/i
+                role = "observer"
+              end
+              # arrivu changes end
               if role =~ /\Ateacher\z/i
                 'TeacherEnrollment'
               elsif role =~ /\Astudent/i
@@ -199,7 +210,7 @@ module SIS
               enrollment.root_account = @root_account
             end
             enrollment.user = user
-            enrollment.sis_source_id = [course_id, user_id, role, @section.name].compact.join(":")[0..254]
+            enrollment.sis_source_id = [project_id, user_id, role, @section.name].compact.join(":")[0..254]
             enrollment.type = type
             enrollment.associated_user_id = associated_enrollment.try(:user_id)
             enrollment.role_name = custom_role.try(:name)
@@ -211,7 +222,7 @@ module SIS
                 enrollment.workflow_state = 'active'
               else
                 enrollment.workflow_state = 'deleted'
-                @messages << "Attempted enrolling of deleted user #{user_id} in course #{course_id}"
+                @messages << "Attempted enrolling of deleted user #{user_id} in project #{project_id}"
               end
             elsif status =~ /\Adeleted/i
               enrollment.workflow_state = 'deleted'
@@ -242,7 +253,7 @@ module SIS
                 enrollment.save_without_broadcasting!
               rescue ActiveRecord::RecordInvalid
                 msg = "An enrollment did not pass validation "
-                msg += "(" + "course: #{course_id}, section: #{section_id}, "
+                msg += "(" + "project: #{project_id}, batch: #{batch_id}, "
                 msg += "user: #{user_id}, role: #{role}, error: " + 
                 msg += enrollment.errors.full_messages.join(",") + ")"
                 @messages << msg

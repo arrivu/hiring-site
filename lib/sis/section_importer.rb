@@ -48,19 +48,19 @@ module SIS
         @course_ids_to_update_associations = [].to_set
       end
 
-      def add_section(section_id, course_id, name, status, start_date=nil, end_date=nil, integration_id=nil)
-        @logger.debug("Processing Section #{[section_id, course_id, name, status, start_date, end_date].inspect}")
+      def add_section(batch_id, project_id, name, status, start_date=nil, end_date=nil, integration_id=nil)
+        @logger.debug("Processing Section #{[batch_id, project_id, name, status, start_date, end_date].inspect}")
 
-        raise ImportError, "No section_id given for a section in course #{course_id}" if section_id.blank?
-        raise ImportError, "No course_id given for a section #{section_id}" if course_id.blank?
-        raise ImportError, "No name given for section #{section_id} in course #{course_id}" if name.blank?
-        raise ImportError, "Improper status \"#{status}\" for section #{section_id} in course #{course_id}" unless status =~ /\Aactive|\Adeleted/i
+        raise ImportError, "No batch_id given for a batch in project #{project_id}" if batch_id.blank?
+        raise ImportError, "No project_id given for a batch #{batch_id}" if project_id.blank?
+        raise ImportError, "No name given for section #{batch_id} in course #{project_id}" if name.blank?
+        raise ImportError, "Improper status \"#{status}\" for section #{batch_id} in course #{project_id}" unless status =~ /\Aactive|\Adeleted/i
 
-        course = Course.find_by_root_account_id_and_sis_source_id(@root_account.id, course_id)
-        raise ImportError, "Section #{section_id} references course #{course_id} which doesn't exist" unless course
+        course = Course.find_by_root_account_id_and_sis_source_id(@root_account.id, project_id)
+        raise ImportError, "Section #{batch_id} references course #{project_id} which doesn't exist" unless course
 
-        section = CourseSection.find_by_root_account_id_and_sis_source_id(@root_account.id, section_id)
-        section ||= course.course_sections.find_by_sis_source_id(section_id)
+        section = CourseSection.find_by_root_account_id_and_sis_source_id(@root_account.id, batch_id)
+        section ||= course.course_sections.find_by_sis_source_id(batch_id)
         section ||= course.course_sections.new
         section.root_account = @root_account
         # this is an easy way to load up the cache with data we already have
@@ -91,7 +91,7 @@ module SIS
         end
 
         section.integration_id = integration_id
-        section.sis_source_id = section_id
+        section.sis_source_id = batch_id
         if status =~ /active/i
           section.workflow_state = 'active'
         elsif status =~ /deleted/i
@@ -109,8 +109,8 @@ module SIS
           if section.valid?
             section.save
           else
-            msg = "A section did not pass validation "
-            msg += "(" + "section: #{section_id} / #{name}, course: #{course_id}, error: "
+            msg = "A batch did not pass validation "
+            msg += "(" + "batch: #{batch_id} / #{name}, project: #{project_id}, error: "
             msg += section.errors.full_messages.join(", ") + ")"
             raise ImportError, msg
           end

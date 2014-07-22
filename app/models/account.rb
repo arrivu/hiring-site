@@ -28,6 +28,7 @@ class Account < ActiveRecord::Base
   belongs_to :parent_account, :class_name => 'Account'
   belongs_to :root_account, :class_name => 'Account'
   authenticates_many :pseudonym_sessions
+  has_one :account_domain_mapping
   has_many :courses
   has_many :all_courses, :class_name => 'Course', :foreign_key => 'root_account_id'
   has_many :group_categories, :as => :context, :conditions => ['deleted_at IS NULL']
@@ -920,6 +921,10 @@ class Account < ActiveRecord::Base
         t '#account.default_site_administrator_account_name', 'Site Admin'
         t '#account.default_account_name', 'Default Account'
         account = @special_accounts[special_account_type] = Account.new(:name => default_account_name)
+        #create default account mapping
+        if default_account_name == 'Default Account'
+          account_to_domain_mapping = account.build_account_domain_mapping(domain_name: account.name,workflow_state: 'active')
+        end
         account.save!
         Setting.set("#{special_account_type}_account_id", account.id)
         @special_account_ids[special_account_type] = account.id
@@ -1102,7 +1107,7 @@ class Account < ActiveRecord::Base
       tabs << { :id => TAB_FACULTY_JOURNAL, :label => t('#account.tab_faculty_journal', "Faculty Journal"), :css_class => 'faculty_journal', :href => :account_user_notes_path} if self.enable_user_notes && user && self.grants_right?(user, nil, :manage_user_notes)
       tabs << { :id => TAB_TERMS, :label => t('#account.tab_terms', "Hiring Period"), :css_class => 'terms', :href => :account_terms_path } if self.root_account? && manage_settings
       #tabs << { :id => TAB_AUTHENTICATION, :label => t('#account.tab_authentication', "Authentication"), :css_class => 'authentication', :href => :account_account_authorization_configs_path } if self.root_account? && manage_settings
-      tabs << { :id => TAB_SIS_IMPORT, :label => t('#account.tab_sis_import', "SIS Import"), :css_class => 'sis_import', :href => :account_sis_import_path } if self.root_account? && self.allow_sis_import && user && self.grants_right?(user, nil, :manage_sis)
+      tabs << { :id => TAB_SIS_IMPORT, :label => t('#account.tab_sis_import', "CSV Import"), :css_class => 'sis_import', :href => :account_sis_import_path } if self.root_account? && self.allow_sis_import && user && self.grants_right?(user, nil, :manage_sis)
     end
     tabs += external_tool_tabs(opts)
    # tabs << { :id => TAB_ADMIN_TOOLS, :label => t('#account.tab_admin_tools', "Admin Tools"), :css_class => 'admin_tools', :href => :account_admin_tools_path } if can_see_admin_tools_tab?(user)

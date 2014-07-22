@@ -7,6 +7,7 @@ define([
     'jquery',
     'compiled/util/BlobFactory'
 ], function ($, BlobFactory) {
+
     'use strict';
     var App = {
 
@@ -31,48 +32,64 @@ define([
                 // Initialize getUserMedia with options
                 //var video1 = App.options.videoEl;
                 //video1.autoplay = true ;
-                if(ENV.IMAGE_PROCTORING)
-                {
-                getUserMedia(this.options, this.success, this.deviceError);
+                //alert($('#preview_quiz_button').attr('data'));
+                var check_preview = ENV.quiz_preview;
+                if(ENV.IMAGE_PROCTORING && !check_preview) {
+                    getUserMedia(this.options, this.success, this.deviceError);
+                    //alert(this.success);
 
-                // Initialize webcam options for fallback
-                window.webcam = this.options;
-                //window.webcam.started = true;
-                // Trigger a snapshot
+                    // Initialize webcam options for fallback
+                    window.webcam = this.options;
+                    //window.webcam.started = true;
+                    // Trigger a snapshot
+                    var total_snapshot = ENV.TOTAL_IMAGE_COUNT;
+                    var snapshot_taken_count = ENV.SNAPSHOT_TAKEN;
+                    var quiz_time;
+                    if(ENV.SHOW_ONE_QUESTION_IN_QUIZ) {
+                        quiz_time = Math.round(ENV.QUIZ_TIME_LEFT * 0.012);
+                    } else {
+                        quiz_time = ENV.QUIZ_TIME_LIMIT;
+                    }
+                    var remaining_snapshot = total_snapshot-snapshot_taken_count;
+                    var snap_slot = quiz_time/remaining_snapshot;
+                    var timer_count = quiz_time/snap_slot;
+                    var random_snap_slot;
+                    if(snap_slot <= 0.5) {
+                        random_snap_slot = (Math.random() * snap_slot) + 0.3;
+                    } else {
+                        random_snap_slot = (Math.random() * snap_slot) + 1;
+                    }
+                    var timer_value = random_snap_slot*60*1000;
+                    console.log("quiz_time="+quiz_time);
+                    console.log("remaining_snapshot="+remaining_snapshot);
+                    console.log("snap_slot="+snap_slot);
+                    console.log("timer_count="+timer_count);
+                    console.log("random_snap_slot_time="+random_snap_slot);
+                    console.log("timer_value="+timer_value);
+                    var increment = 1;
+                    for (var i = 0; timer_count > 0;i++) {
+                        var set_timer;
 
-                    var max_time_limit = 100000;
-                    if(ENV.QUIZ_TIME_LIMIT <= 10)
-                    {
-                        max_time_limit = 15000;
+                        if(i == 0) {
+                            if(snap_slot < 0.5) {
+                                set_timer = 50000;
+                            } else {
+                                set_timer = 70000;
+                            }
+                        } else {
+                            set_timer = timer_value*increment;
+                        }
+
+                       setTimeout(function() {
+                          App.getSnapshot();
+                       }, set_timer);
+                        timer_count -= i;
+                        increment++;
+
                     }
-                    else if(ENV.QUIZ_TIME_LIMIT <= 30)
-                    {
-                        max_time_limit = 75000;
-                    }
-                    else if(ENV.QUIZ_TIME_LIMIT < 60)
-                    {
-                        max_time_limit = 200000;
-                    }
-                    else if(ENV.QUIZ_TIME_LIMIT >= 60)
-                    {
-                        max_time_limit = 300000;
-                    }
-                    else
-                    {
-                        max_time_limit = 150000;
-                    }
-                    var lowest_limit = 150000;
-                    //var rand = Math.round(Math.random() * (max_time_limit - lowest_limit)) + 500;
-                    //var randomnumber = Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1)));
-                   // console.log(rand);
-                   this.addEvent('mouseover', this.snapshotBtn, setInterval((this.getSnapshot),Math.round(lowest_limit + (Math.random() * (max_time_limit - lowest_limit + 1000)))));
 
                 }
 
-//				// Trigger face detection (using the glasses option)
-//				this.addEvent('click', this.detectBtn, function () {
-//					App.drawToCanvas('glasses');
-//				});
 
             } else {
                 alert('No options were supplied to the shim!');
@@ -162,10 +179,15 @@ define([
 
         success: function (stream) {
             $('#quiz_image_proctoring').show();
+            if( ENV.SNAPSHOT_TAKEN == 0 ){
+                setTimeout(function() {
+                    App.getSnapshot();
+                }, 5000);
+            }
             if (App.options.context === 'webrtc') {
-
                 var video = App.options.videoEl;
                 //video.autoplay = true ;
+
                 if ((typeof MediaStream !== "undefined" && MediaStream !== null) && stream instanceof MediaStream) {
 
                     if (video.mozSrcObject !== undefined) { //FF18a
@@ -191,7 +213,6 @@ define([
 //                $('#webcam').show();
                 // flash context
             }
-
         },
 
         deviceError: function (error) {
@@ -220,6 +241,8 @@ define([
                 App.canvas.getContext('2d').drawImage(video, 0, 0);
                 var dataURL = App.canvas.toDataURL("image/jpeg");
                 var folder_id = $('#folder_id').val();
+                var submission_id = $('#submission_id').val();
+                var no_of_attempt = $('#no_of_attempt').val();
                 var time_elapsed = $(".photo_elapsed_time").text();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
@@ -230,7 +253,10 @@ define([
                 fd.append("[context_code]", ENV.context_asset_string);
                 fd.append("attachment[filename]", "proctoring.jpg");
                 fd.append("[time_elapsed]", time_elapsed);
+                fd.append("[submission_id]", submission_id);
+                fd.append("[attempt]", no_of_attempt);
                 // And send it
+                console.log(folder_id);
                 $.ajax({
                     url: $('#proctoring_url').data('url'),
                     type: "POST",
@@ -238,6 +264,7 @@ define([
                     processData: false,
                     contentType: false
                 });
+
                 // Otherwise, if the context is Flash, we ask the shim to
                 // directly call window.webcam, where our shim is located
                 // and ask it to capture for us.
@@ -246,6 +273,8 @@ define([
                 App.changeFilter();
                 var dataURL = App.canvas.toDataURL("image/jpeg");
                 var folder_id = $('#folder_id').val();
+                var submission_id = $('#submission_id').val();
+                var no_of_attempt = $('#no_of_attempt').val();
                 var time_elapsed = $(".photo_elapsed_time").text();
                 var file= dataURLtoBlob(dataURL);
                 // Create new form data
@@ -256,6 +285,8 @@ define([
                 fd.append("[context_code]", ENV.context_asset_string);
                 fd.append("attachment[filename]", "proctoring.jpg");
                 fd.append("[time_elapsed]", time_elapsed);
+                fd.append("[submission_id]", submission_id);
+                fd.append("[attempt]", no_of_attempt);
                 // And send it
                 $.ajax({
                     url:  $('#proctoring_url').data('url'),

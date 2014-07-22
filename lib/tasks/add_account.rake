@@ -51,8 +51,8 @@ namespace :db do
           private_course_flag = false
         end
 
-        @account = Account.find_by_name(name)
-        unless @account
+        @account_domain_mapping = AccountDomainMapping.find_by_domain_name(name)
+        unless @account_domain_mapping
           @account = Account.new
           @account.name = name
           @account.settings[:Sublime_kaltura_disable]= kultura_flag
@@ -63,6 +63,7 @@ namespace :db do
           @account.settings[:Sublime_course_export_disable]= course_export_flag
           @account.settings[:private_license_enable]= course_export_flag
           puts "Creating Account #{name}... "
+          @account.build_account_domain_mapping(domain_name: @account.name,workflow_state: 'active')
           @account.save!
 
           #now add the siteAdmin account admin to this account admin
@@ -146,7 +147,8 @@ namespace :db do
     puts "This task will remove the account user from the root account"
     puts "------------------------------------------------------------"
     name = ask("Enter  Account name to remove > ") { |q| q.echo = true }
-    @account = Account.find_by_name(name)
+    account_domain_mapping = AccountDomainMapping.find_by_domain_name(name)
+    @account = account_domain_mapping.account
     if @account == nil
       puts "The entered account is invalid"
     else
@@ -165,7 +167,8 @@ namespace :db do
     puts "This task will merge the account user from the root account"
     puts "------------------------------------------------------------"
     name = ask("Enter  Account name to merge > ") { |q| q.echo = true }
-    @account = Account.find_by_name(name)
+    account_domain_mapping = AccountDomainMapping.find_by_domain_name(name)
+    @account = account_domain_mapping.account
     if @account == nil
       puts "The entered account is invalid"
     else
@@ -178,3 +181,4 @@ namespace :db do
 
   end
 end
+

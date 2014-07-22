@@ -40,14 +40,14 @@ module SIS
         @success_count = 0
       end
 
-      def add_term(term_id, name, status, start_date=nil, end_date=nil, integration_id=nil)
-        @logger.debug("Processing Term #{[term_id, name, status, start_date, end_date].inspect}")
+      def add_term(hiring_period_id, name, status, start_date=nil, end_date=nil, integration_id=nil)
+        @logger.debug("Processing Term #{[hiring_period_id, name, status, start_date, end_date].inspect}")
 
-        raise ImportError, "No term_id given for a term" if term_id.blank?
-        raise ImportError, "No name given for term #{term_id}" if name.blank?
-        raise ImportError, "Improper status \"#{status}\" for term #{term_id}" unless status =~ /\Aactive|\Adeleted/i
+        raise ImportError, "No hiring_period_id given for a term" if hiring_period_id.blank?
+        raise ImportError, "No name given for hiring period #{hiring_period_id}" if name.blank?
+        raise ImportError, "Improper status \"#{status}\" for term #{hiring_period_id}" unless status =~ /\Aactive|\Adeleted/i
 
-        term = @root_account.enrollment_terms.find_by_sis_source_id(term_id)
+        term = @root_account.enrollment_terms.find_by_sis_source_id(hiring_period_id)
         term ||= @root_account.enrollment_terms.new
 
         # only update the name on new records, and ones that haven't been
@@ -57,7 +57,7 @@ module SIS
         end
 
         term.integration_id = integration_id
-        term.sis_source_id = term_id
+        term.sis_source_id = hiring_period_id
         term.sis_batch_id = @batch_id if @batch_id
         if status =~ /active/i
           term.workflow_state = 'active'
@@ -74,7 +74,7 @@ module SIS
           @success_count += 1
         else
           msg = "A term did not pass validation "
-          msg += "(" + "term: #{term_id} / #{name}, error: "
+          msg += "(" + "term: #{hiring_period_id} / #{name}, error: "
           msg += term.errors.full_messages.join(", ") + ")"
           raise ImportError, msg
         end

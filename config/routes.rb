@@ -320,14 +320,15 @@ routes.draw do
       match 'submission_versions' => 'quizzes/quizzes#submission_versions', :as => :submission_versions
       match 'history' => 'quizzes/quizzes#history', :as => :history
       resources :candidate_reports
-        match 'candidateReport' => 'candidate_reports#view_reports', :as => :candidateReport
+      match 'candidateReport' => 'candidate_reports#view_reports', :as => :candidateReport
       match 'candidate_reports/generate_view' => 'candidate_reports#generate_view'
-      match 'candidate_reports/generate_pdf_in_background' => 'candidate_reports#generate_pdf_in_background', :as => :candidateReport
+      match 'candidate_reports/generate_pdf_in_background' => 'candidate_reports#generate_pdf_in_background'
       match 'statistics' => 'quizzes/quizzes#statistics', :as => :statistics
       match 'read_only' => 'quizzes/quizzes#read_only', :as => :read_only
       match 'publish'   => 'quizzes/quizzes#publish',   :as => :quizzes_publish
       match 'unpublish' => 'quizzes/quizzes#unpublish', :as => :quizzes_unpublish
       match 'files/pending' => 'files#create_pending', :as => :file_create_pending
+      match 'imageproctoring/time_slot' => 'imageproctoring#time_slot_image'
       resources :imageproctoring
       match 'imageproctoring/proctoring' => 'imageproctoring#image_proctoring', :as => :image_proctoring
       match 'files/registration_image' => 'files#registration_image'

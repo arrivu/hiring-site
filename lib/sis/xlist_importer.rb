@@ -50,18 +50,18 @@ module SIS
         @course_ids_to_update_associations = [].to_set
       end
 
-      def add_crosslist(xlist_course_id, section_id, status)
-        @logger.debug("Processing CrossListing #{[xlist_course_id, section_id, status].inspect}")
+      def add_crosslist(xlist_project_id, batch_id, status)
+        @logger.debug("Processing CrossListing #{[xlist_project_id, batch_id, status].inspect}")
 
-        raise ImportError, "No xlist_course_id given for a cross-listing" if xlist_course_id.blank?
-        raise ImportError, "No section_id given for a cross-listing" if section_id.blank?
+        raise ImportError, "No xlist_project_id given for a cross-listing" if xlist_project_id.blank?
+        raise ImportError, "No batch_id given for a cross-listing" if batch_id.blank?
         raise ImportError, "Improper status \"#{status}\" for a cross-listing" unless status =~ /\A(active|deleted)\z/i
 
-        section = CourseSection.find_by_root_account_id_and_sis_source_id(@root_account.id, section_id)
-        raise ImportError, "A cross-listing referenced a non-existent section #{section_id}" unless section
+        section = CourseSection.find_by_root_account_id_and_sis_source_id(@root_account.id, batch_id)
+        raise ImportError, "A cross-listing referenced a non-existent section #{batch_id}" unless section
 
-        unless @course && @course.sis_source_id == xlist_course_id
-          @course = Course.find_by_root_account_id_and_sis_source_id(@root_account.id, xlist_course_id)
+        unless @course && @course.sis_source_id == xlist_project_id
+          @course = Course.find_by_root_account_id_and_sis_source_id(@root_account.id, xlist_project_id)
           if !@course && status =~ /\Aactive\z/i
             # no course with this crosslist id found, make a new course,
             # using the section's current course as a template
@@ -74,7 +74,7 @@ module SIS
             @course.start_at = section.course.start_at
             @course.conclude_at = section.course.conclude_at
             @course.restrict_enrollments_to_course_dates = section.course.restrict_enrollments_to_course_dates
-            @course.sis_source_id = xlist_course_id
+            @course.sis_source_id = xlist_project_id
             @course.sis_batch_id = @batch_id if @batch_id
             @course.workflow_state = 'claimed'
             @course.template_course = section.course

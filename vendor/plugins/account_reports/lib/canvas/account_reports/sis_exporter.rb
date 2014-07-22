@@ -41,6 +41,17 @@ module Canvas::AccountReports
     def csv
       files = ""
       @reports.each do |report_name|
+        # arrivu changes start
+        if report_name == "courses"
+          report_name = "projects"
+        elsif report_name == "terms"
+          report_name = "hiring periods"
+        elsif report_name == "sections"
+          report_name = "batches"
+        else
+          report_name = report_name
+        end
+        # arrivu changes end
         files << "#{report_name} "
       end
       @account_report.parameters["extra_text"] << I18n.t(
@@ -164,8 +175,9 @@ module Canvas::AccountReports
     def terms
       filename = Canvas::AccountReports.generate_file(@account_report)
       CSV.open(filename, "w") do |csv|
-        headers = ['term_id', 'name', 'status', 'start_date', 'end_date']
-        headers.unshift 'canvas_term_id' unless @sis_format
+        # arrivu changes
+        headers = ['hiring_period_id', 'name', 'status', 'start_date', 'end_date']
+        headers.unshift 'canvas_hiring_period_id' unless @sis_format
         csv << headers
         terms = root_account.enrollment_terms
 
@@ -199,11 +211,11 @@ module Canvas::AccountReports
       filename = Canvas::AccountReports.generate_file(@account_report)
       CSV.open(filename, "w") do |csv|
         if @sis_format
-          headers = ['course_id', 'short_name', 'long_name', 'account_id', 'term_id', 'status',
-                     'start_date', 'end_date']
+          headers = ['project_id', 'short_name', 'long_name', 'account_id', 'hiring_period_id', 'status',
+                     'start_date', 'end_date'] # arrivu changes
         else
-          headers = ['canvas_course_id', 'course_id', 'short_name', 'long_name', 'canvas_account_id',
-                     'account_id', 'canvas_term_id', 'term_id', 'status', 'start_date', 'end_date']
+          headers = ['canvas_project_id', 'project_id', 'short_name', 'long_name', 'canvas_account_id',
+                     'account_id', 'canvas_hiring_period_id', 'hiring_period_id', 'status', 'start_date', 'end_date']
         end
 
         csv << headers
@@ -264,9 +276,9 @@ module Canvas::AccountReports
       filename = Canvas::AccountReports.generate_file(@account_report)
       CSV.open(filename, "w") do |csv|
         if @sis_format
-          headers = ['section_id', 'course_id', 'name', 'status', 'start_date', 'end_date']
+          headers = ['batch_id', 'project_id', 'name', 'status', 'start_date', 'end_date'] # arrivu changes
         else
-          headers = ['canvas_section_id', 'section_id', 'canvas_course_id', 'course_id', 'name',
+          headers = ['canvas_batch_id', 'batch_id', 'canvas_project_id', 'project_id', 'name',
                      'status', 'start_date', 'end_date', 'canvas_account_id', 'account_id']
         end
         csv << headers
@@ -342,10 +354,10 @@ module Canvas::AccountReports
       filename = Canvas::AccountReports.generate_file(@account_report)
       CSV.open(filename, "w") do |csv|
         if @sis_format
-          headers = ['course_id', 'user_id', 'role', 'section_id', 'status', 'associated_user_id']
+          headers = ['project_id', 'user_id', 'role', 'batch_id', 'status', 'associated_user_id'] # arrivu changes
         else
-          headers = ['canvas_course_id', 'course_id', 'canvas_user_id', 'user_id', 'role',
-                     'canvas_section_id', 'section_id', 'status', 'canvas_associated_user_id',
+          headers = ['canvas_project_id', 'project_id', 'canvas_user_id', 'user_id', 'role',
+                     'canvas_section_id', 'batch_id', 'status', 'canvas_associated_user_id',
                      'associated_user_id']
         end
         csv << headers
@@ -404,7 +416,20 @@ module Canvas::AccountReports
             end
             row << e.user_id unless @sis_format
             row << e.pseudonym_sis_id
-            row << e.sis_role
+            # arrivu changes
+            if e.sis_role == "teacher"
+              sis_role = "hiringmanager"
+            elsif e.sis_role == "student"
+              sis_role = "candidate"
+            elsif e.sis_role == "ta"
+              sis_role = "interviewer"
+            elsif e.sis_role == "observer"
+              sis_role = "hr"
+            else
+              sis_role = e.sis_role
+            end
+            # arrivu changes
+            row << sis_role
             row << e.course_section_id unless @sis_format
             row << e.course_section_sis_id
             row << e.enroll_state
@@ -570,6 +595,12 @@ module Canvas::AccountReports
       filename = Canvas::AccountReports.generate_file(@account_report)
       CSV.open(filename, "w") do |csv|
         if @sis_format
+          headers = ['question_bank_title', 'regrade_option', 'points_possible', 'correct_comments', 'incorrect_comments',
+                     'neutral_comments', 'question_type', 'name', 'question_name', 'question_text','status', 'ans1_comments',
+                     'ans1_text', 'ans1_weight', 'ans2_comments', 'ans2_text', 'ans2_weight', 'ans3_comments',  'ans3_text',
+                     'ans3_weight', 'ans4_comments', 'ans4_text', 'ans4_weight', 'ans5_comments', 'ans5_text', 'ans5_weight']
+        else
+          # arrivu changes
           headers = ['question_bank_title', 'regrade_option', 'points_possible', 'correct_comments', 'incorrect_comments',
                      'neutral_comments', 'question_type', 'name', 'question_name', 'question_text','status', 'ans1_comments',
                      'ans1_text', 'ans1_weight', 'ans2_comments', 'ans2_text', 'ans2_weight', 'ans3_comments',  'ans3_text',
