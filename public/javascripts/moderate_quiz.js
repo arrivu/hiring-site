@@ -206,8 +206,9 @@ define([
       });
 
       $("#moderate_all_student_pdf_form").submit(function(event) {
+          console.log(event);
           event.preventDefault();
-          event.stopPropagation();
+
           var ids = $(this).data('ids');
           if(ids.length == 0) { return; }
           var $form = $(this);
@@ -236,7 +237,8 @@ define([
           };
 
           $.ajaxJSON('candidate_reports/generate_pdf_in_background' , 'POST',  {data: data, student_ids: student_ids }, function(data) {
-//              alert("succeess");
+              $("#moderate_all_student_pdf_dialog").dialog('close');
+              alert("Report is generated successfully");
               location.reload();
           },function(data) {
               console.log(data);
