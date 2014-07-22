@@ -49,7 +49,7 @@ Delayed::Worker.lifecycle.around(:perform) do |worker, job, &block|
   end
 end
 
-if Rails.env == "development"
+if Rails.env.development?
   Rails.logger.info "Delayed::Job is executed synchronously in #{Rails.env} mode."
   Delayed::Job.class_eval do
     def self.enqueue(obj,xyz)

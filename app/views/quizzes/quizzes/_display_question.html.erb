@@ -24,6 +24,14 @@
     right_answers = (hash_get(question, :matches) || hash_get(question, :answers).sort_by{|a| rand }) if question_type.entry_type == "matching" rescue {}
   end
 %>
+<div style="display: none;">
+<% if @context == nil %>
+<% if context != nil && quiz != nil %>
+    <%= @context = context %>
+    <%= @quiz = quiz %>
+<% end %>
+<% end %>
+</div>
 
 <div class="question_holder <%= "group" if in_group %>" id="<%= "question_template" unless question %>" style="<%= hidden unless question %>">
 <% if hash_get(question, :counter) == 1 %>
@@ -94,7 +102,11 @@
       <% if question_bank_id %>
         <a href="<%= context_url(@context, :context_question_bank_assessment_question_url, question_bank_id, hash_get(question, :id, "{{ id }}")) %>" class="update_question_url">&nbsp;</a>
       <% else %>
+          <!--arrivu changes-->
+          <% if type == nil %>
         <a href="<%= context_url(@context, :context_quiz_quiz_question_url, @quiz.id, hash_get(question, :id, "{{ id }}")) %>" class="update_question_url">&nbsp;</a>
+          <% end %>
+          <!--arrivu changes-->
       <% end %>
       <span class="assessment_question_id"><%= hash_get(question, :assessment_question_id, nbsp) %></span>
     </div>
@@ -142,7 +154,11 @@
           %>
           <%= multiple_dropdowns_question :question => question, :answers => @stored_params, :answer_list => answer_list %>
         <% else %>
-          <%= user_content(hash_get(question, :question_text)) %>
+            <!--arrivu changes-->
+            <% if type == nil %>
+                 <%= user_content(hash_get(question, :question_text)) %>
+            <% end %>
+            <!--arrivu changes-->
         <% end %>
       </div>
       <% if question_type && question_type.unsupported %>
