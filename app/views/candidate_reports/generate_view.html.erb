@@ -44,7 +44,7 @@
     <%# @user_get_pseudonym.each do |get_pseudonym|  %>
 
         <table class="table-view">
-          <% if get_user[:candidate_detail][:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= get_user[:candidate_detail].name %></td><td valign="top" rowspan="5"><img src="<%= get_user[:profile_pic] %>" ></td></tr><% end %>
+          <% if get_user[:candidate_detail][:name] != nil %><tr><td style="font-weight: bold;">Name</td><td><%= get_user[:candidate_detail].name %></td><td valign="top" rowspan="5"><img width="200px;" height="200px;" src="<%= get_user[:profile_pic] %>" ></td></tr><% end %>
           <% if get_user[:candidate_detail][:birthdate] != nil %><tr><td style="font-weight: bold;">Date of Birth</td><td><%= date_string(get_user[:candidate_detail].birthdate) %></td></tr><% end %>
           <% if get_user[:candidate_detail][:gender] != nil %><tr><td style="font-weight: bold;">Gender</td><td><%= get_user[:candidate_detail][:gender] %></td></tr><% end %>
           <% if get_user[:candidate_detail][:phone] != nil %><tr><td style="font-weight: bold;">Mobile Number</td><td><%= get_user[:candidate_detail][:phone] %></td></tr><% end %>

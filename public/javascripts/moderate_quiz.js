@@ -237,8 +237,8 @@ define([
           };
 
           $.ajaxJSON('candidate_reports/generate_pdf_in_background' , 'POST',  {data: data, student_ids: student_ids }, function(data) {
-              alert("Report is generated successfully");
-              location.reload();
+              $("#moderate_all_student_pdf_dialog").dialog('close');
+
           },function(data) {
               console.log(data);
           });

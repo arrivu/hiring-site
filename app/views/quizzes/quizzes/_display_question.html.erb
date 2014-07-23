@@ -26,10 +26,13 @@
 %>
 <div style="display: none;">
 <% if @context == nil %>
-<% if context != nil && quiz != nil %>
-    <%= @context = context %>
-    <%= @quiz = quiz %>
-<% end %>
+    <% if context != nil && quiz != nil %>
+        <%= @context = context %>
+        <%= @quiz = quiz %>
+        <%= @type = type %>
+    <% end %>
+<% else %>
+  <%= @type = nil %>
 <% end %>
 </div>
 
@@ -103,7 +106,7 @@
         <a href="<%= context_url(@context, :context_question_bank_assessment_question_url, question_bank_id, hash_get(question, :id, "{{ id }}")) %>" class="update_question_url">&nbsp;</a>
       <% else %>
           <!--arrivu changes-->
-          <% if type == nil %>
+          <% if @type == nil %>
         <a href="<%= context_url(@context, :context_quiz_quiz_question_url, @quiz.id, hash_get(question, :id, "{{ id }}")) %>" class="update_question_url">&nbsp;</a>
           <% end %>
           <!--arrivu changes-->
@@ -155,7 +158,7 @@
           <%= multiple_dropdowns_question :question => question, :answers => @stored_params, :answer_list => answer_list %>
         <% else %>
             <!--arrivu changes-->
-            <% if type == nil %>
+            <% if @type == nil %>
                  <%= user_content(hash_get(question, :question_text)) %>
             <% end %>
             <!--arrivu changes-->
@@ -400,6 +403,11 @@
         <a href="#" class="move_question_link"><%= t('links.move_copy_question', "move/copy question to another bank") %></a>
       </div>
     <% end %>
+    <!--arrivu changes-->
+    <% if @type != nil %>
+        <%= @context = nil %>
+    <% end %>
+    <!--arrivu changes-->
     <div class="clear"></div>
   </div>
 </div>
