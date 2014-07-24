@@ -15,16 +15,21 @@
 
 <% if @context.feature_enabled?(:draft_state) %>
 
- <%# if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
+
+    <% if @context_enrollment.course_section.start_at == nil && @context_enrollment.course_section.end_at == nil %>
+        <% jammit_css :quizzes %>
+        <% js_bundle :quizzes_index %>
+    <%else%>
+ <% if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
             <% jammit_css :quizzes %>
             <% js_bundle :quizzes_index %>
-            <%# else %>
+            <% else %>
 
-            <!--<div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">-->
-              <!--<h1>Assesments are unavaiable, please contact your administrator.</h1>-->
-            <!--</div>-->
-            <%# end %>
-
+            <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">
+              <h1>Assesments are unavaiable, please contact your administrator.</h1>
+            </div>
+            <% end %>
+ <% end %>
 
 <%
   @body_classes << 'with_item_groups'
@@ -48,8 +53,24 @@
   })
 %>
 <% else %>
-<% js_bundle :quizzes_index_legacy  %>
+    <% if !can_do(@context.quizzes.new, @current_user, :create)%>
+    <% if @context_enrollment.course_section.start_at == nil && @context_enrollment.course_section.end_at == nil%>
+        <% js_bundle :quizzes_index_legacy  %>
 
+    <%else%>
+        <% if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
+            <% js_bundle :quizzes_index_legacy  %>
+
+        <% else %>
+
+            <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">
+              <h1>Assesments are unavaiable, please contact your administrator.</h1>
+            </div>
+        <% end %>
+    <% end %>
+    <% else %>
+    <% js_bundle :quizzes_index_legacy  %>
+    <% end %>
 <% content_for :right_side do %>
   <% if can_do(@context.quizzes.scoped.new, @current_user, :create) %>
     <div class="rs-margin-lr rs-margin-top">

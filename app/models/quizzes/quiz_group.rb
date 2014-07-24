@@ -36,6 +36,10 @@ class Quizzes::QuizGroup < ActiveRecord::Base
 
   def actual_pick_count
     count = if self.assessment_question_bank
+              #arrivu changes
+                @find_tag_id = QuizGroup.find_by_id_and_assessment_question_bank_id_and_quiz_id(self.id,self.assessment_question_bank_id,self.quiz_id)
+                self.assessment_question_bank.tag_id = @find_tag_id.tag_id
+              #arrivu changes
               # don't do a valid question check because we don't want to instantiate all the bank's questions
               self.assessment_question_bank.assessment_question_count
             else
