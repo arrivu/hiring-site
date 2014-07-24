@@ -212,8 +212,8 @@ define([
           var ids = $(this).data('ids');
           if(ids.length == 0) { return; }
           var $form = $(this);
-          $(".save_button").attr('disabled', true);
-          $(".save_button").text("Generating pdf.....");
+          $(".generate_button").attr('disabled', true);
+          $(".generate_button").text("Generating pdf.....");
           var finished = 0, errors = 0;
           var formData = $(this).getFormData();
           var student_ids = [];

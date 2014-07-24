@@ -160,6 +160,8 @@
             <!--arrivu changes-->
             <% if @type == nil %>
                  <%= user_content(hash_get(question, :question_text)) %>
+            <% else %>
+                <%= hash_get(question, :question_text).html_safe %>
             <% end %>
             <!--arrivu changes-->
         <% end %>

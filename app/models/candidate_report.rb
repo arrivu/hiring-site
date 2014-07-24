@@ -25,8 +25,6 @@ class CandidateReport < ActiveRecord::Base
     @users_full_array = []
     @user_select_id.each do |user_id|
       @candidate_detail = User.find_by_id(user_id)
-
-      #@user_image_profile = Attachment.find_by_user_id_and_context_type_and_file_state(user_id,"User","available")
       @profile_pic = self.show_image_profile(user_id)
       @get_pseudonym = Pseudonym.find_by_user_id(user_id)
       @quiz = Quizzes::Quiz.find(quiz_id)
@@ -59,7 +57,9 @@ class CandidateReport < ActiveRecord::Base
           include SearchTermHelper
           include HtmlTextHelper
         end
-        pdf_html = av.render(:file => 'candidate_reports/generate_view', :locals => {:users => @users, :check_pdf_options => @check_pdf_options, :context => context})
+        pdf_html = av.render(:file => 'candidate_reports/generate_view',
+                :locals => {:users => @users, :check_pdf_options => @check_pdf_options, :context => context})
+
         logger.info("Success")
         pdf_file_name = "#{Time.now}_candidate_report.pdf"
         doc_pdf = WickedPdf.new.pdf_from_string(pdf_html)
@@ -72,7 +72,6 @@ class CandidateReport < ActiveRecord::Base
         logger.error("Error while running candidate_report:#{e.message}")
       end
   end
-  #handle_asynchronously :generate_view, :priority => Delayed::LOW_PRIORITY, :max_attempts => 1
 
 
   def self.report_attach(pdf_file_name,pdf_path,current_user,context)
