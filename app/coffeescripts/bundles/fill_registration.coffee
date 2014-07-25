@@ -133,8 +133,8 @@ require [
 
          <tr>
          <td><input type="text" name="link_organizations[]" value="#{htmlEscape organization}"></td>
-         <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}" class="from_date" style="width:80%;"></td>
-         <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}" class="to_date" style="width:80%;"></td>
+         <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}" placeholder="DD-MM-YYYY" style="width:80%;"></td>
+         <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}" placeholder="DD-MM-YYYY" style="width:80%;"></td>
          <td><input type="text" name="link_designations[]" value="#{htmlEscape designation}"></td>
          <td><input type="text" name="link_permanents[]" value="#{htmlEscape permanent}"></td>
          <td><input type="text" name="link_reason_for_leaving[]" value="#{htmlEscape reason_for_leaving}"></td>
