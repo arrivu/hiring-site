@@ -13,7 +13,7 @@ end
 
 # enforce the version of bundler itself, to avoid any surprises
 
-#gem 'bundler', '1.6.3'
+#gem 'bundler', '1.6.2'
 
 required_bundler_version = '1.5.1'..'1.5.3'
 gem 'bundler', [">=#{required_bundler_version.first}", "<=#{required_bundler_version.last}"]
