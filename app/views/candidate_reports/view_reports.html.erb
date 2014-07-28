@@ -1,5 +1,8 @@
 <% @body_classes << "gradebook2 full-width" %>
-<% jammit_css :quizzes %>
+<%
+   js_bundle :quizzes_bundle, :question_bank, :quiz_show, :quiz_history
+   jammit_css :quizzes, :learning_outcomes, :tinymce, :token_input
+%>
 <% @headers = false
    @show_left_side = false %>
 <% content_for :page_title do %><%= "Assessment Report" %><% end %>

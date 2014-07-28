@@ -595,13 +595,13 @@ module Canvas::AccountReports
       filename = Canvas::AccountReports.generate_file(@account_report)
       CSV.open(filename, "w") do |csv|
         if @sis_format
-          headers = ['question_bank_title', 'regrade_option', 'points_possible', 'correct_comments', 'incorrect_comments',
+          headers = ['question_bank_title', 'regrade_option', 'points_possible', 'question_tag', 'correct_comments', 'incorrect_comments',
                      'neutral_comments', 'question_type', 'name', 'question_name', 'question_text','status', 'ans1_comments',
                      'ans1_text', 'ans1_weight', 'ans2_comments', 'ans2_text', 'ans2_weight', 'ans3_comments',  'ans3_text',
                      'ans3_weight', 'ans4_comments', 'ans4_text', 'ans4_weight', 'ans5_comments', 'ans5_text', 'ans5_weight']
         else
           # arrivu changes
-          headers = ['question_bank_title', 'regrade_option', 'points_possible', 'correct_comments', 'incorrect_comments',
+          headers = ['question_bank_title', 'regrade_option', 'points_possible', 'question_tag', 'correct_comments', 'incorrect_comments',
                      'neutral_comments', 'question_type', 'name', 'question_name', 'question_text','status', 'ans1_comments',
                      'ans1_text', 'ans1_weight', 'ans2_comments', 'ans2_text', 'ans2_weight', 'ans3_comments',  'ans3_text',
                      'ans3_weight', 'ans4_comments', 'ans4_text', 'ans4_weight', 'ans5_comments', 'ans5_text', 'ans5_weight']
@@ -622,6 +622,13 @@ module Canvas::AccountReports
             row << question_bank_title
             row << ques.question_data[:regrade_option]
             row << ques.question_data[:points_possible]
+            @find_tag_id = ActsAsTaggableOn::Tagging.find_by_tagger_id_and_taggable_id(ques.assessment_question_bank_id,ques.id)
+            @tag_name = ActsAsTaggableOn::Tag.find_by_id(@find_tag_id.id) unless @find_tag_id.nil?
+            unless @tag_name.nil?
+              row << @tag_name.name
+            else
+              row << nil
+            end
             row << ques.question_data[:correct_comments]
             row << ques.question_data[:incorrect_comments]
             row << ques.question_data[:neutral_comments]

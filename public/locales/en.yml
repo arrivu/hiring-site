@@ -4872,11 +4872,11 @@ en:
         role_to_search: "Limit search to role"
         search_people: "Search people"
       invitations_view: 
-        accepted_invitation: "%{name} has already received and accepted the invitation to join the course, but you can still re-send the invitation if it is needed."
-        admin_invitation_unaccepted: "%{name} hasn't yet accepted the invitation to join the course. The invitation was sent: %{time}"
-        invitations_pending_publish: "Invitations aren't sent until the course is *published*"
-        student_invitation_unaccepted_available: "%{name} hasn't yet accepted the invitation to join the course. The invitation was sent: %{time}"
-        student_invitation_unaccepted_unavailable: "%{name} was added to the course: %{time}"
+        accepted_invitation: "%{name} has already received and accepted the invitation to join the project, but you can still re-send the invitation if it is needed."
+        admin_invitation_unaccepted: "%{name} hasn't yet accepted the invitation to join the project. The invitation was sent: %{time}"
+        invitations_pending_publish: "Invitations aren't sent until the project is *published*"
+        student_invitation_unaccepted_available: "%{name} hasn't yet accepted the invitation to join the project. The invitation was sent: %{time}"
+        student_invitation_unaccepted_unavailable: "%{name} was added to the project: %{time}"
       link_to_students_view: 
         link_student_action: "To link the course observer *%{name}* to a student, select the student's name from the list below."
         link_student_desc: "When an observer is linked to a student, they have access to that student's grades and course interactions."
@@ -10333,7 +10333,7 @@ en:
     account_group_description: "Account level outcomes group."
   outcomes: 
     account_standards: "Account Standards"
-    account_standards_description: "To the left you'll notice the standards your institution has created for you to use in your courses."
+    account_standards_description: "To the left you'll notice the standards your institution has created for you to use in your projects."
     blank_error: "Cannot be blank"
     browser: 
       links: 
@@ -10428,7 +10428,7 @@ en:
       no_aligned_items: "No aligned items"
       no_artifacts: "No artifacts"
     state_standards: "State Standards"
-    state_standards_description: "To the left you'll see a folder for each state with their updated state standards. This allows for you to painlessly include state standards for grading within your course."
+    state_standards_description: "To the left you'll see a folder for each state with their updated state standards. This allows for you to painlessly include state standards for grading within your project."
     successful_outcome_creation: "Outcome successfully created!"
     successful_outcome_delete: "Outcome successfully deleted"
     successful_outcome_removal: "Outcome successfully removed"

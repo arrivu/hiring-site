@@ -238,10 +238,12 @@ define([
 
           $.ajaxJSON('candidate_reports/generate_pdf_in_background' , 'POST',  {data: data, student_ids: student_ids }, function(data) {
               $("#moderate_all_student_pdf_dialog").dialog('close');
-              alert("Report is generated successfully");
-              location.reload();
+              $(".report_running").show();
+
+              //alert("Report is generated successfully");
+              //location.reload();
           },function(data) {
-              console.log(data);
+              //console.log(data);
           });
       });
 
