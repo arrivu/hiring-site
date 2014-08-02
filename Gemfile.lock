@@ -398,7 +398,6 @@ DEPENDENCIES
   bluecloth (= 2.0.10)
   builder (= 3.0.0)
   bullet (= 4.5.0)
-  bundler (= 1.6.3)
   canvas_breach_mitigation!
   canvas_cassandra!
   canvas_color!

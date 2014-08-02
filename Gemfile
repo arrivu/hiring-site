@@ -13,21 +13,21 @@ end
 
 # enforce the version of bundler itself, to avoid any surprises
 
-gem 'bundler', '1.6.3'
+#gem 'bundler', '1.6.2'
 
-#required_bundler_version = '1.5.1'..'1.5.3'
-#gem 'bundler', [">=#{required_bundler_version.first}", "<=#{required_bundler_version.last}"]
-#unless required_bundler_version.include?(Bundler::VERSION)
-#  if Bundler::VERSION < required_bundler_version.first
-#    bundle_command = "gem install bundler -v #{required_bundler_version.last}"
-#  else
-#    require 'shellwords'
-#    bundle_command = "bundle _#{required_bundler_version.last}_ #{ARGV.map { |a| Shellwords.escape(a) }.join(' ')}"
-#  end
-#
-#  warn "Bundler version #{required_bundler_version.first} is required; you're currently running #{Bundler::VERSION}. Maybe try `#{bundle_command}`."
-#  exit 1
-#end
+required_bundler_version = '1.5.1'..'1.5.3'
+gem 'bundler', [">=#{required_bundler_version.first}", "<=#{required_bundler_version.last}"]
+unless required_bundler_version.include?(Bundler::VERSION)
+  if Bundler::VERSION < required_bundler_version.first
+    bundle_command = "gem install bundler -v #{required_bundler_version.last}"
+  else
+    require 'shellwords'
+    bundle_command = "bundle _#{required_bundler_version.last}_ #{ARGV.map { |a| Shellwords.escape(a) }.join(' ')}"
+  end
+
+  warn "Bundler version #{required_bundler_version.first} is required; you're currently running #{Bundler::VERSION}. Maybe try `#{bundle_command}`."
+  exit 1
+end
 
 require File.expand_path("../config/canvas_rails3", __FILE__)
 
@@ -50,15 +50,15 @@ if CANVAS_RAILS3
 end
 
 #patch bundler to do github over https
-#unless Bundler::Dsl.private_instance_methods.include?(:_old_normalize_options)
-#  class Bundler::Dsl
-#    alias_method :_old_normalize_options, :_normalize_options
-#    def _normalize_options(name, version, opts)
-#      _old_normalize_options(name, version, opts)
-#      opts['git'].sub!('git://', 'https://') if opts['git'] && opts['git'] =~ %r{^git://github.com}
-#    end
-#  end
-#end
+unless Bundler::Dsl.private_instance_methods.include?(:_old_normalize_options)
+  class Bundler::Dsl
+    alias_method :_old_normalize_options, :_normalize_options
+    def _normalize_options(name, version, opts)
+      _old_normalize_options(name, version, opts)
+      opts['git'].sub!('git://', 'https://') if opts['git'] && opts['git'] =~ %r{^git://github.com}
+    end
+  end
+end
 
 
 platforms :ruby_20, :ruby_21 do
