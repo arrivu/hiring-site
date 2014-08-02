@@ -157,6 +157,23 @@ define([
       alert($(this).attr('title'));
       return false;
     });
+      $(".hide_tag").click(function(event){
+          $(".show_tag").hide();
+          $(".hide_tag").show();
+          $(this).hide();
+          $(this).nextAll('.show_tag:hidden:first').show();
+          $(".text_box").focus();
+
+      });
+
+      $(document).click(function (e) {
+          if (!$(e.target).hasClass("show_tag")
+              && $(e.target).parents(".hide_tag").length === 0)
+          {
+              $(".show_tag").hide();
+              $(".hide_tag").show();
+          }
+      });
     $edit_section_form.formSubmit({
 
       beforeSubmit: function(data) {

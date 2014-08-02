@@ -17,24 +17,24 @@
         .datetime_suggest{display: none;}
 </style>
 <div style="width: 97%;margin: 25px auto;border: 1px solid #0088cc;padding: 10px;border-radius: 10px;">
-  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register" } do |f| %>
+  <% form_for :candidate_detail, :url => { :controller => "invitations", :action => "optional_register"} do |f| %>
       <%= f.hidden_field :course_id ,:value => @course.id %>
       <div class="profile_links">
         <h2 class="h1 border border-b">Personal Information</h2>
         <div style="width: 100%;float: left;">
         <div  style="width: 75%;float: left;">
           <ul class="registration">
-            <% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><li class='alnright'><%= f.label :name, "Name*"%><br><%= f.text_field :name, :required=> true, :placeholder => "First Name"%></li><% end %>
-              <% if @candidate_filter.middle_name %><li class='alnright'><%= f.label :middle_name, "Middle Name*"%><br><%= f.text_field :middle_name, :required => true, :placeholder => "Middle Name"%></li><% end %>
-              <% if @candidate_filter.last_name == TRUE %><li class='alnright'><%= f.label :last_name, "Last Name*"%><br><%= f.text_field :last_name, :required => true, :placeholder => "Last Name" %></li><% end %>
+            <% if @candidate_filter.first_name == nil || @candidate_filter.first_name == TRUE %><li class='alnright'><%= f.label :name, "Name*"%><br><%= f.text_field :name, :placeholder => "First Name", :id => "first_name"%></li><% end %>
+              <% if @candidate_filter.middle_name %><li class='alnright'><%= f.label :middle_name, "Middle Name*"%><br><%= f.text_field :middle_name, :placeholder => "Middle Name", :id => "middle_name"%></li><% end %>
+              <% if @candidate_filter.last_name == TRUE %><li class='alnright'><%= f.label :last_name, "Last Name*"%><br><%= f.text_field :last_name, :placeholder => "Last Name", :id => "last_name" %></li><% end %>
 
               <% if @candidate_filter.email_id == TRUE %>
                   <li class='alnright'><%= f.label :unique_id, "E-mail Id*" %><br><input type="text" name="email" value=<%= @candidate_email %> readonly /><%#= f.text_field :unique_id, :value => @pseudonym[:unique_id] %></li>
               <% end %>
-              <li class='alnright'><%= f.label :gender, "Gender"%><br><%= f.radio_button(:gender, "male") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</li>
+              <li class='alnright'><%= f.label :gender, "Gender*"%><br><%= f.radio_button(:gender, "male", :id =>"gender") %>&nbsp;&nbsp;Male&nbsp;&nbsp;&nbsp;&nbsp;<%= f.radio_button(:gender, "female") %>&nbsp;&nbsp;Female</li>
               <% if @candidate_filter.dob == TRUE %>
                 <li class='alnright'><%= f.label :birthdate, "Date Of Birth*"%><br>
-                  <%= f.text_field :birthdate,:value => (@candidate_detail.birthdate ? @candidate_detail.birthdate.to_date() : ""), :required => true, :placeholder => "DD-MM-YYYY"%>
+                  <%= f.text_field :birthdate,:value => (@candidate_detail.birthdate ? @candidate_detail.birthdate.strftime("%d-%m-%Y")  : ""), :placeholder => "DD-MM-YYYY", :id => "date_of_birth"%>
                 </li>
 
               <% end %>
@@ -45,19 +45,19 @@
 
                 <% if @candidate_filter.contact_number == TRUE %>
 
-                  <li class='alnright'><%= f.label :phone, "Contact number*"%><br><%= f.text_field :phone, :required => true, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only."%></li>
+                  <li class='alnright'><%= f.label :phone, "Contact number*"%><br><%= f.text_field :phone, :id => "mobile"%></li>
 
                 <% end %>
 
 
             <% if @candidate_filter.address == TRUE %>
 
-                <li  class='alnright'><%= f.label :address, "Address*" %><br><%= f.text_field :address, :required => true %></li>
+                <li  class='alnright'><%= f.label :address, "Address*" %><br><%= f.text_field :address, :id => "address" %></li>
                   <li  class='alnright'><%= f.label :city, "City" %><br><%= f.text_field :city%></li>
 
 
                   <li  class='alnright'><%= f.label :state, "State" %><br><%= f.text_field :state%></li>
-                  <li  class='alnright'><%= f.label :zip_code, "Zip code" %><br><%= f.text_field :zip_code, :pattern => "[0-9]*", :title => "The contact number should consist of numbers only."%></li>
+                  <li  class='alnright'><%= f.label :zip_code, "Zip code" %><br><%= f.text_field :zip_code, :id => "zip_code"%></li>
 
 
             <% end %>

@@ -1,5 +1,5 @@
 <% js_bundle :proctoring %>
-<div class="rs-margin-lr rs-margin-top">
+<div class="rs-margin-lr rs-margin-top" style="width: 185px;">
   <% if @submission && params[:preview] %>
     <% keep_editing_title = @quiz.survey? ? t('links.keep_editing_survey', "Keep Editing This Survey") : t('links.keep_editing_quiz', "Keep Editing This Assessment") %>
     <a id="preview_mode_link" href="<%= context_url(@context, :edit_context_quiz_url, @quiz) %>" class="btn button-sidebar-wide"><i class="icon-edit"><span class="screenreader-only"><%= keep_editing_title %></span></i> <%= keep_editing_title %></a><br/>
