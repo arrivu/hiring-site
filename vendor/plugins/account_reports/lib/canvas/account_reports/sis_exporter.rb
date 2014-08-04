@@ -623,7 +623,7 @@ module Canvas::AccountReports
             row << ques.question_data[:regrade_option]
             row << ques.question_data[:points_possible]
             @find_tag_id = ActsAsTaggableOn::Tagging.find_by_tagger_id_and_taggable_id(ques.assessment_question_bank_id,ques.id)
-            @tag_name = ActsAsTaggableOn::Tag.find_by_id(@find_tag_id.id) unless @find_tag_id.nil?
+            @tag_name = ActsAsTaggableOn::Tag.find_by_id(@find_tag_id.tag_id) unless @find_tag_id.nil?
             unless @tag_name.nil?
               row << @tag_name.name
             else
