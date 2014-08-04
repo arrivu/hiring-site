@@ -15,6 +15,8 @@
 
 <% if @context.feature_enabled?(:draft_state) %>
 
+    <% if !can_do(@context, @current_user, :manage_assignments) %>
+
 
     <% if @context_enrollment.course_section.start_at == nil && @context_enrollment.course_section.end_at == nil %>
         <% jammit_css :quizzes %>
@@ -24,15 +26,23 @@
             <% jammit_css :quizzes %>
             <% js_bundle :quizzes_index %>
             <% else %>
+            <div id="unauthorized_holder">
+              <div id="unauthorized_message" class="">
+                <h2 class="ui-state-error">
 
-            <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">
-              <h1>Assesments are unavaiable, please contact your administrator.</h1>
+                  Unavailable
+                </h2>
+                <p>Assesments are unavaiable, please contact your administrator.</p>
+              </div>
             </div>
-            <% end %>
- <% end %>
-
-<%
-  @body_classes << 'with_item_groups'
+        <% end %>
+    <% end %>
+    <% else %>
+        <% jammit_css :quizzes %>
+        <% js_bundle :quizzes_index %>
+    <% end %>
+    <%
+       @body_classes << 'with_item_groups'
 
   js_env(:QUIZZES => {
     :assignment => @assignment_json,
@@ -61,11 +71,68 @@
         <% if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
             <% js_bundle :quizzes_index_legacy  %>
 
-        <% else %>
 
-            <div class="content-box pad-box-mini border border-trbl border-round" style="margin: 100px auto;width: 50%;background: aliceblue;">
-              <h1>Assesments are unavaiable, please contact your administrator.</h1>
-            </div>
+                <div class="item-group-container" style="padding-bottom: 70px;">
+                  <div class="item-group-condensed">
+                    <% if @assignment_quizzes.empty? && @open_quizzes.empty? %>
+                        <h2 class="ig-header">
+                          <!--<i class="icon-mini-arrow-down"></i>-->
+                          <%= t('headers.course_quizzes', "Project Assessments") %></h2>
+                        <ul class="ig-list">
+                          <li>
+                            <div class="ig-row ig-row-empty">
+                              <div class="ig-empty-msg">
+                                <%= t(:no_quizzes, "No assessments available") %>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+
+                    <% end %>
+                    <% if !@assignment_quizzes.empty? %>
+                        <h2 class="ig-header" style="text-align: center;">
+                          <!--<i class="icon-mini-arrow-down"></i>-->
+                          <%= t('headers.assignment_quizzes', "Project Assessments") %></h2>
+                        <ul class="ig-list">
+
+                          <%= render :partial => "quiz_summary", :collection => @assignment_quizzes %>
+                        </ul>
+                    <% end %>
+                    <% if !@open_quizzes.empty? %>
+                        <h2 class="ig-header"><i class="icon-mini-arrow-down"></i><%= t('headers.practice_quizzes', "Practice Assessments") %></h2>
+                        <ul class="ig-list">
+                          <%= render :partial => "quiz_summary", :collection => @open_quizzes %>
+                        </ul>
+                    <% end %>
+                    <% if !@surveys.empty? %>
+                        <h2 class="ig-header"><i class="icon-mini-arrow-down"></i><%= t('headers.surveys', "Surveys") %></h2>
+                        <ul class="ig-list">
+                          <%= render :partial => "quiz_summary", :collection => @surveys %>
+                        </ul>
+                    <% end %>
+
+                    <% if (@quizzes.any?{|q| q.lock_at || q.unlock_at} || @context.try_rescue(:module_based?)) && !can_do(@context, @current_user, :manage_content) %>
+                        <a href="<%= context_url(@context, :context_locks_url) %>" id="quiz_locks_url" style="display: none;">&nbsp;</a>
+                        <%= image_tag "lock_small.png", :style => "display: none;", :class => "content_lock_icon", :id => "quiz_lock_icon", :title => t('titles.this_quiz_is_locked', "This assessment is currently locked.  Click for more details."), :alt => "locked" %>
+                        <!--<a href="<%#= context_url(@context, :context_context_modules_url) %>" id="context_modules_url" style="display: none;">&nbsp;</a>-->
+                    <% end %>
+                    <div id="send_invitations">
+
+                    </div>
+                  </div>
+                </div>
+
+
+            <% else %>
+                <div id="unauthorized_holder">
+                  <div id="unauthorized_message" class="">
+                    <h2 class="ui-state-error">
+
+                      Unavailable
+                    </h2>
+                    <p>Assesments are unavaiable, please contact your administrator.</p>
+                  </div>
+                </div>
         <% end %>
     <% end %>
     <% else %>
@@ -149,6 +216,7 @@ ul.quiz_list li.quiz div.description {
               </div>
             </div>
 <% end %>
+   <%if can_do(@context, @current_user, :manage_assignments) %>
     <div class="item-group-container" style="padding-bottom: 70px;">
       <div class="item-group-condensed">
     <% if @assignment_quizzes.empty? && @open_quizzes.empty? %>
@@ -198,4 +266,5 @@ ul.quiz_list li.quiz div.description {
 </div>
     </div>
     </div>
+<% end %>
 <% end %>
