@@ -1,9 +1,9 @@
 SIS Import Format Documentation
 ===============================
 
-Instructure Canvas can integrate with an institution's Student Information Services (SIS) in
-several ways. The simplest way involves providing Canvas with several CSV files describing
-users, courses, and enrollments.
+Instructure Hiring can integrate with an institution's Candidate Information Services in
+several ways. The simplest way involves providing Hiring with several CSV files describing
+users, projects, and enrollments.
 These files can be zipped together and uploaded to the Account admin area.
 
 Standard CSV rules apply:
@@ -30,10 +30,10 @@ to be the new canonical set of data, and data from previous SIS imports that isn
 this import will be deleted. This can be useful if the source SIS software doesn't have a way
 to send delete records as part of the import. This deletion is scoped to a single term, which
 must be specified when uploading the SIS import. Use this option with caution, as it can delete
-large data sets without any prompting on the individual records. Currently, this affects courses,
-sections and enrollments.
+large data sets without any prompting on the individual records. Currently, this affects projects,
+batchs and enrollments.
 
-This option will only affect data created via previous SIS imports. Manually created courses, for
+This option will only affect data created via previous SIS imports. Manually created projects, for
 example, won't be deleted even if they don't appear in the new SIS import.
 
 users.csv
@@ -64,7 +64,7 @@ from the remote system.</td>
 <td>text</td>
 <td><p>If the account is configured to use LDAP or an SSO protocol then
 this isn't needed. Otherwise this is the password that will be used to
-login to Canvas along with the 'login_id' above.</p>
+login to Hiring along with the 'login_id' above.</p>
 <p>If the user already has a password (from previous SIS import or
 otherwise) it will <em>not</em> be overwritten</p></td>
 </tr>
@@ -91,9 +91,9 @@ still be provided.</td>
 </tr>
 </table>
 
-<p>When a student is 'deleted' all of its enrollments will also be deleted and
+<p>When a candidate is 'deleted' all of its enrollments will also be deleted and
 they won't be able to log in to the school's account. If you still want the
-student to be able to log in but just not participate, leave the student
+candidate to be able to log in but just not participate, leave the candidate
 'active' but set the enrollments to 'completed'.</p>
 
 Sample:
@@ -151,7 +151,7 @@ A002,A001,English,active
 A003,A001,Spanish,active
 </pre>
 
-terms.csv
+hiring_periods.csv
 ------------
 
 <table class="sis_csv">
@@ -161,9 +161,9 @@ terms.csv
 <th>Description</th>
 </tr>
 <tr>
-<td>term_id</td>
+<td>hiring_period_id</td>
 <td>text</td>
-<td><b>Required field</b>. A unique identifier used to reference terms in the enrollments data.
+<td><b>Required field</b>. A unique identifier used to reference hiring periods in the enrollments data.
 This identifier must not change for the account, and must be globally unique. In the user
 interface, this is called the SIS ID.</td>
 </tr>
@@ -195,13 +195,13 @@ references it.
 Sample:
 
 <pre>
-term_id,name,status,start_date,end_date
+hiring_period_id,name,status,start_date,end_date
 T001,Winter2011,active,,
 T002,Spring2011,active,2013-1-03 00:00:00,2013-05-03 00:00:00-06:00
 T003,Fall2011,active,,
 </pre>
 
-courses.csv
+projects.csv
 ------------
 
 <table class="sis_csv">
@@ -211,34 +211,34 @@ courses.csv
 <th>Description</th>
 </tr>
 <tr>
-<td>course_id</td>
+<td>project_id</td>
 <td>text</td>
-<td><b>Required field</b>. A unique identifier used to reference courses in the enrollments data.
+<td><b>Required field</b>. A unique identifier used to reference projects in the enrollments data.
 This identifier must not change for the account, and must be globally unique. In the user
 interface, this is called the SIS ID.</td>
 </tr>
 <tr>
 <td>short_name</td>
 <td>text</td>
-<td><b>Required field</b>. A short name for the course</td>
+<td><b>Required field</b>. A short name for the project</td>
 </tr>
 <tr>
 <td>long_name</td>
 <td>text</td>
-<td><b>Required field</b>. A long name for the course. (This can be the same as the short name,
+<td><b>Required field</b>. A long name for the project. (This can be the same as the short name,
 but if both are available, it will provide a better user experience to provide both.)</td>
 </tr>
 <tr>
 <td>account_id</td>
 <td>text</td>
-<td>The account identifier from accounts.csv, if none is specified the course will be attached to
+<td>The account identifier from accounts.csv, if none is specified the project will be attached to
 the root account</td>
 </tr>
 <tr>
-<td>term_id</td>
+<td>hiring_period_id</td>
 <td>text</td>
-<td>The term identifier from terms.csv, if no term_id is specified the
-default term for the account will be used</td>
+<td>The hiring period identifier from hiring_periods.csv, if no hiring_period_id is specified the
+default hiring period for the account will be used</td>
 </tr>
 <tr>
 <td>status</td>
@@ -248,28 +248,28 @@ default term for the account will be used</td>
 <tr>
 <td>start_date</td>
 <td>date</td>
-<td>The course start date. The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
+<td>The project start date. The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
 </tr>
 <tr>
 <td>end_date</td>
 <td>date</td>
-<td>The course end date. The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
+<td>The project end date. The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
 </tr>
 </table>
 
-<p>If the start_date is set, it will override the term start date. If the end_date is set, it will
-override the term end date.</p>
+<p>If the start_date is set, it will override the hiring period start date. If the end_date is set, it will
+override the hiring period end date.</p>
 
 Sample:
 
 <pre>
-course_id,short_name,long_name,account_id,term_id,status
+project_id,short_name,long_name,account_id,hiring_period_id,status
 E411208,ENG115,English 115: Intro to English,A002,,active
 R001104,BIO300,"Biology 300: Rocking it, Bio Style",A004,Fall2011,active
 A110035,ART105,"Art 105: ""Art as a Medium""",A001,,active
 </pre>
 
-sections.csv
+batchs.csv
 ------------
 
 <table class="sis_csv">
@@ -279,21 +279,21 @@ sections.csv
 <th>Description</th>
 </tr>
 <tr>
-<td>section_id</td>
+<td>batch_id</td>
 <td>text</td>
-<td><b>Required field</b>. A unique identifier used to reference sections in the enrollments data.
+<td><b>Required field</b>. A unique identifier used to reference batchs in the enrollments data.
 This identifier must not change for the account, and must be globally unique. In the user
 interface, this is called the SIS ID.</td>
 </tr>
 <tr>
-<td>course_id</td>
+<td>project_id</td>
 <td>text</td>
-<td><b>Required field</b>. The course identifier from courses.csv</td>
+<td><b>Required field</b>. The project identifier from projects.csv</td>
 </tr>
 <tr>
 <td>name</td>
 <td>text</td>
-<td><b>Required field</b>. The name of the section</td>
+<td><b>Required field</b>. The name of the batch</td>
 </tr>
 <tr>
 <td>status</td>
@@ -303,25 +303,25 @@ interface, this is called the SIS ID.</td>
 <tr>
 <td>start_date</td>
 <td>date</td>
-<td>The section start date. The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
+<td>The batch start date. The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
 </tr>
 <tr>
 <td>end_date</td>
 <td>date</td>
-<td>The section end date The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
+<td>The batch end date The format should be in ISO 8601: YYYY-MM-DDTHH:MM:SSZ</td>
 </tr>
 </table>
 
-<p>If the start_date is set, it will override the course and term start dates. If the end_date is
-set, it will override the course and term end dates.</p>
+<p>If the start_date is set, it will override the project and hiring period start dates. If the end_date is
+set, it will override the project and hiring period end dates.</p>
 
 Sample:
 
 <pre>
-section_id,course_id,name,status,start_date,end_date
-S001,E411208,Section 1,active,,
-S002,E411208,Section 2,active,,
-S003,R001104,Section 1,active,,
+batch_id,project_id,name,status,start_date,end_date
+S001,E411208,batch 1,active,,
+S002,E411208,batch 2,active,,
+S003,R001104,batch 1,active,,
 </pre>
 
 enrollments.csv
@@ -334,9 +334,9 @@ enrollments.csv
 <th>Description</th>
 </tr>
 <tr>
-<td>course_id</td>
+<td>project_id</td>
 <td>text</td>
-<td><b>Required field if section_id is missing</b>. The course identifier from courses.csv</td>
+<td><b>Required field if batch_id is missing</b>. The project identifier from projects.csv</td>
 </tr>
 <tr>
 <td>user_id</td>
@@ -346,14 +346,14 @@ enrollments.csv
 <tr>
 <td>role</td>
 <td>text</td>
-<td><b>Required field</b>. student, teacher, ta, observer, designer, or a custom role defined
+<td><b>Required field</b>. candidate, hiringmanager, ta, observer, designer, or a custom role defined
 by the account</td>
 </tr>
 <tr>
-<td>section_id</td>
+<td>batch_id</td>
 <td>text</td>
-<td><b>Required field if course_id missing</b>. The section identifier from sections.csv, if none
-is specified the default section for the course will be used</td>
+<td><b>Required field if project_id missing</b>. The batch identifier from batchs.csv, if none
+is specified the default batch for the project will be used</td>
 </tr>
 <tr>
 <td>status</td>
@@ -363,24 +363,24 @@ is specified the default section for the course will be used</td>
 <tr>
 <td>associated_user_id</td>
 <td>text</td>
-<td>For observers, the user identifier from users.csv of a student
-in the same course that this observer should be able to see grades for.
+<td>For observers, the user identifier from users.csv of a candidate
+in the same project that this observer should be able to see grades for.
 Ignored for any role other than observer</td>
 </tr>
 </table>
 
 
-When an enrollment is in a 'completed' state the student is limited to read-only access to the
-course.
+When an enrollment is in a 'completed' state the candidate is limited to read-only access to the
+project.
 
 
 Sample:
 
 <pre>
-course_id,user_id,role,section_id,status
-E411208,01103,student,1B,active
-E411208,13834,student,2A,active
-E411208,13aa3,teacher,2A,active
+project_id,user_id,role,batch_id,status
+E411208,01103,candidate,1B,active
+E411208,13834,candidate,2A,active
+E411208,13aa3,hiringmanager,2A,active
 </pre>
 
 groups.csv
@@ -470,14 +470,14 @@ xlists.csv
 <th>Description</th>
 </tr>
 <tr>
-<td>xlist_course_id</td>
+<td>xlist_project_id</td>
 <td>text</td>
-<td><b>Required field</b>. The course identifier from courses.csv</td>
+<td><b>Required field</b>. The project identifier from projects.csv</td>
 </tr>
 <tr>
-<td>section_id</td>
+<td>batch_id</td>
 <td>text</td>
-<td><b>Required field</b>. The section identifier from sections.csv</td>
+<td><b>Required field</b>. The batch identifier from batchs.csv</td>
 </tr>
 <tr>
 <td>status</td>
@@ -487,17 +487,17 @@ xlists.csv
 </table>
 
 xlists.csv is optional. The goal of xlists.csv is to provide a way to add cross-listing
-information to an existing course and section hierarchy. Section ids are expected to exist
-already and already reference other course ids. If a section id is provided in this file,
-it will be moved from its existing course id to a new course id, such that if that new course
-is removed or the cross-listing is removed, the section will revert to its previous course id.
-If xlist_course_id does not reference an existing course, it will be created. If you want to
-provide more information about the cross-listed course, please do so in courses.csv.
+information to an existing project and batch hierarchy. batch ids are expected to exist
+already and already reference other project ids. If a batch id is provided in this file,
+it will be moved from its existing project id to a new project id, such that if that new project
+is removed or the cross-listing is removed, the batch will revert to its previous project id.
+If xlist_project_id does not reference an existing project, it will be created. If you want to
+provide more information about the cross-listed project, please do so in projects.csv.
 
 Sample:
 
 <pre>
-xlist_course_id,section_id,status
+xlist_project_id,batch_id,status
 E411208,1B,active
 E411208,2A,active
 E411208,2A,active

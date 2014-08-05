@@ -17,12 +17,11 @@
 
     <% if !can_do(@context, @current_user, :manage_assignments) %>
 
-
     <% if @context_enrollment.course_section.start_at == nil && @context_enrollment.course_section.end_at == nil %>
         <% jammit_css :quizzes %>
         <% js_bundle :quizzes_index %>
     <%else%>
- <% if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
+ <% if Date.today.to_s.to_date.strftime('%Y%m%d') > @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') < @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
             <% jammit_css :quizzes %>
             <% js_bundle :quizzes_index %>
             <% else %>
@@ -64,13 +63,12 @@
 %>
 <% else %>
     <% if !can_do(@context.quizzes.new, @current_user, :create)%>
-    <% if @context_enrollment.course_section.start_at == nil && @context_enrollment.course_section.end_at == nil%>
+    <% if @context_enrollment.course_section.start_at.to_date == nil && @context_enrollment.course_section.end_at.to_date == nil%>
         <% js_bundle :quizzes_index_legacy  %>
 
     <%else%>
         <% if Date.today.to_s.to_date.strftime('%Y%m%d') >= @context_enrollment.course_section.start_at.to_s.to_date.strftime('%Y%m%d') && Date.today.to_s.to_date.strftime('%Y%m%d') <= @context_enrollment.course_section.end_at.to_s.to_date.strftime('%Y%m%d') %>
             <% js_bundle :quizzes_index_legacy  %>
-
 
                 <div class="item-group-container" style="padding-bottom: 70px;">
                   <div class="item-group-condensed">
@@ -127,7 +125,6 @@
                 <div id="unauthorized_holder">
                   <div id="unauthorized_message" class="">
                     <h2 class="ui-state-error">
-
                       Unavailable
                     </h2>
                     <p>Assesments are unavaiable, please contact your administrator.</p>

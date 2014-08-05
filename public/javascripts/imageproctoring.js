@@ -271,8 +271,6 @@ require([
                         $('#Edit').show();
                     }
                 });
-
-
             }
             else{
                 alert('No context was supplied to getSnapshot()');

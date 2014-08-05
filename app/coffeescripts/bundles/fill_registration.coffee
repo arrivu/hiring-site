@@ -35,6 +35,7 @@ require [
     events:
       'click [data-event]': 'handleDeclarativeClick'
       'submit #edit_profile_form': 'validateForm'
+      'click #submitbutton': 'formValidations'
 
     attemptedDependencyLoads: 0
 
@@ -55,7 +56,112 @@ require [
       method = $target.data 'event'
       @[method]? event, $target
 
-    ##
+    formValidations: (event) ->
+      first_name = $("#first_name").val()
+      middle_name = $("#middle_name").val()
+      last_name = $("#last_name").val()
+      date_of_birth = $("#date_of_birth").val()
+      address = $("#address").val()
+      zip_code = $("#zip_code").val()
+      mobile = $("#mobile").val()
+      if first_name == ""
+        offset_first_name = $("#first_name").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_first_name.top
+          left: 0
+        $("#first_name").focus()
+        return false
+      if middle_name == ""
+        offset_middle_name = $("#middle_name").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_middle_name.top
+          left: 0
+        $("#middle_name").focus()
+        return false
+      if last_name == ""
+        offset_last_name = $("#last_name").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_last_name.top
+          left: 0
+        $("#last_name").focus()
+        return false
+      chk = document.getElementsByName("candidate_detail[gender]")
+      len = chk.length
+      has_program = false
+      i = 0
+      while i < len
+        if chk[i].checked
+          has_program = true
+          break
+        i++
+      if(!has_program)
+        offset_gender = $("#gender").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_gender.top
+          left: 0
+        unless chk[0].checked
+          chk[0].focus()
+        return false
+      if date_of_birth == ""
+        offset_date_of_birth = $("#date_of_birth").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_date_of_birth.top
+          left: 0
+        $("#date_of_birth").focus()
+        return false
+      else
+        pattern = /^([0-9]{2})\-([0-9]{2})\-([0-9]{4})$/
+        if !pattern.test(date_of_birth)
+          offset_date_of_birth = $("#date_of_birth").errorBox("Please enter the date format as 'DD-MM-YYYY'.")
+          $("html,body").scrollTo
+            top: offset_date_of_birth.top
+            left: 0
+          $("#date_of_birth").val("")
+          $("#date_of_birth").focus()
+          return false
+      if mobile == ""
+        offset_mobile = $("#mobile").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_mobile.top
+          left: 0
+        $("#mobile").focus()
+        return false
+      else if mobile && mobile != "undefined"
+        pattern = /^[0-9]+$/
+        if !pattern.test(mobile)
+          offset_mobile = $("#mobile").errorBox("The contact number must have numeric characters only.")
+          $("html,body").scrollTo
+            top: offset_mobile.top
+            left: 0
+          $("#mobile").val("")
+          $("#mobile").focus()
+          return false
+      if address == ""
+        offset_address = $("#address").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_address.top
+          left: 0
+        $("#address").focus()
+        return false
+      if zip_code == ""
+        offset_zip_code = $("#zip_code").errorBox("This field is required")
+        $("html,body").scrollTo
+          top: offset_zip_code.top
+          left: 0
+        $("#zip_code").focus()
+        return false
+      else if zip_code != "undefined"
+        pattern = /^[0-9]+$/
+        if !pattern.test(zip_code)
+          offset_zip_code = $("#zip_code").errorBox("The zip code must have numeric characters only.")
+          $("html,body").scrollTo
+            top: offset_zip_code.top
+            left: 0
+          $("#zip_code").val("")
+          $("#zip_code").focus()
+          return false
+
+        ##
     # first run initializes some stuff, then is reassigned
     # to a showEditForm
     editProfile: ->
@@ -133,8 +239,8 @@ require [
 
          <tr>
          <td><input type="text" name="link_organizations[]" value="#{htmlEscape organization}"></td>
-         <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}" class="from_date" style="width:80%;"></td>
-         <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}" class="to_date" style="width:80%;"></td>
+         <td><input type="text" name="link_from_dates[]" value="#{htmlEscape from_date}" placeholder="DD-MM-YYYY" style="width:80%;"></td>
+         <td><input type="text" name="link_end_dates[]" value="#{htmlEscape end_date}" placeholder="DD-MM-YYYY" style="width:80%;"></td>
          <td><input type="text" name="link_designations[]" value="#{htmlEscape designation}"></td>
          <td><input type="text" name="link_permanents[]" value="#{htmlEscape permanent}"></td>
          <td><input type="text" name="link_reason_for_leaving[]" value="#{htmlEscape reason_for_leaving}"></td>

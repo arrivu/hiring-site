@@ -91,7 +91,7 @@
            <%= f.label :bio, :en => "Bio" %>
          </td>
          </tr>
-         <tr><td><%= f.submit "submit", class: "btn btn-primary" %></td></tr>
+         <tr><td><%= f.submit "Submit", class: "btn btn-primary" %></td></tr>
        </table>
          <% end %>
     </div>
@@ -429,7 +429,8 @@
             <% if can_do(section, @current_user, :update) %>
                    <% get_unique_access_code(@context,section)%>
 
-                <a style="text-decoration:none;color:black;" title="<%= root_url %>/accept/<%= @access_code.unique_access_code unless @access_code.nil? %>"><span style="font-size:16px;"><%= @access_code.unique_access_code unless @access_code.nil? %></span></a>
+                <a data-tooltip="top" style="text-decoration:none;color:black;" class="hide_tag" title="<%= root_url %>authenticateKey/<%= @access_code.unique_access_code unless @access_code.nil? %>"><span style="font-size:16px;" ><%= @access_code.unique_access_code unless @access_code.nil? %></span></a>
+                <label class="show_tag" style="display:none;"><input type="text" style="width: 189px;" class="text_box" value="<%= root_url %>authenticateKey/<%= @access_code.unique_access_code unless @access_code.nil? %>"/></label>
             <% end  %>
 
           </span>

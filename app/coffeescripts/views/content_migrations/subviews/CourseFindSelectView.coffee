@@ -125,7 +125,7 @@ define [
       unless settings?.source_course_id
         errors.courseSearchField = [
           type: "required"
-          message: "You must select a course to copy content from"
+          message: "You must select a project to copy content from"
         ]
 
       errors

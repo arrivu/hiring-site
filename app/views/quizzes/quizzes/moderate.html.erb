@@ -98,11 +98,13 @@
       <div class="button-container">
         <!--<button class="btn moderate_generate_pdf_button" style="display: none;"><%#= image_tag "edit.png" %>Generate Assessment Report</button>-->
         <button class="btn moderate_generate_pdf_button " style="display: none;"><%= t('', "Generate  Report for %{n} Selected Candidates", :n => raw('<span id="pdf_count">X</span>')) %></button>
+        <span class="report_running" style="display:none;">The report is running.</span>
       </div>
     </td>
   </tr>
   </tbody>
 </table>
+<br>
 <%= will_paginate(@students) %>
 
 <div id="extend_time_dialog" style="display: none;">
