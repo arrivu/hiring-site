@@ -1065,6 +1065,7 @@ class Account < ActiveRecord::Base
   TAB_JOBS = 15
   TAB_DEVELOPER_KEYS = 16
   TAB_ADMIN_TOOLS = 17
+  TAB_SUBSCRIPTION = 18
 
   def external_tool_tabs(opts)
     tools = ContextExternalTool.active.find_all_for(self, :account_navigation)
@@ -1111,6 +1112,7 @@ class Account < ActiveRecord::Base
     end
     tabs += external_tool_tabs(opts)
    # tabs << { :id => TAB_ADMIN_TOOLS, :label => t('#account.tab_admin_tools', "Admin Tools"), :css_class => 'admin_tools', :href => :account_admin_tools_path } if can_see_admin_tools_tab?(user)
+    tabs << { :id => TAB_SUBSCRIPTION, :label => t('#account.tab_subscriptions', "Subscriptions"), :css_class => 'subscriptions', :href => :account_subscriptions_path }
     tabs << { :id => TAB_SETTINGS, :label => t('#account.tab_settings', "Settings"), :css_class => 'settings', :href => :account_settings_path }
     tabs
   end

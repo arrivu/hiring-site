@@ -365,19 +365,19 @@ module ApplicationHelper
           hide = tab[:hidden] || tab[:hidden_unused]
           class_name = tab[:css_class].downcase.replace_whitespace("-")
           class_name += ' active' if @active_tab == tab[:css_class]
-          if (tab[:label] == "Sub-Accounts" and @domain_root_account.Sublime_show_lock_menu? and !!@domain_root_account.Sublime_sub_account_disable?)
+          if (tab[:label] == "Sub-Accounts"  and !!@domain_root_account.Sublime_sub_account_disable?)
             tab[:href] ="hide_menu"
           elsif (tab[:label] == "Sub-Accounts" and !!@domain_root_account.Sublime_sub_account_disable?)
             tab[:href] ="locked_by_admin"
           end
 
-          if (tab[:label] == "Grades"  and !!@domain_root_account.Sublime_grade_disable? and @domain_root_account.Sublime_show_lock_menu?) || (tab[:label] == "Outcomes" and !!@domain_root_account.Sublime_outcomes_disable? and @domain_root_account.Sublime_show_lock_menu?)
+          if (tab[:label] == "Grades"  and !!@domain_root_account.Sublime_grade_disable?) || (tab[:label] == "Outcomes" and !!@domain_root_account.Sublime_outcomes_disable?)
             tab[:href] ="hide_menu"
           elsif (tab[:label] == "Grades" and !!@domain_root_account.Sublime_grade_disable?) || (tab[:label] == "Outcomes" and !!@domain_root_account.Sublime_outcomes_disable?)
             tab[:href] ="locked_by_admin"
           end
 
-          if (tab[:label] == "Grading Schemes" and @domain_root_account.Sublime_show_lock_menu? and !!@domain_root_account.Sublime_grade_disable?)
+          if (tab[:label] == "Grading Schemes"  and !!@domain_root_account.Sublime_grade_disable?)
             tab[:href] ="hide_menu"
           elsif (tab[:label] == "Grading Schemes" and !!@domain_root_account.Sublime_grade_disable?)
             tab[:href] ="locked_by_admin"

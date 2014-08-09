@@ -1,0 +1,480 @@
+<style>
+    #content{
+        padding: 0px;
+        /*background-color: #eceef1;*/
+    }
+</style>
+<% jammit_css :plans, :new_pricings  %>
+<div class="subscription_top" style="border-top: #ccc;">
+<br/>
+<div style="margin-left: 20px">
+You Have a <%= @subscription.subscription_plan.name %> subscription.
+<% if @subscription.expire_on &&  @subscription.paid_through%>
+    It will expire on <b> <%= @subscription.expire_on %> </b>.
+    <% unless @subscription.expired?  %>
+        You have <%= @subscription.usage %> days usage.
+    <% end  %>
+<% end  %>
+<br/>
+
+<% if @subscription.expired?  %>
+    <div class="alert-error" style="width: 37%;
+            padding: 5px;">
+      Your subscription is expired so it will be automatically changed to free plan.
+    </div>
+    <br/>
+<% end  %>
+
+
+</div>
+</div>
+<!-- Arrivu Changes-->
+
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<div class="table_full_save" style="float: left;width: 100%;">
+<div class="table_price" style="float: left;width: 70%;">
+
+
+<table class="price-table desktop-pricing" style="margin-left: 70px;">
+
+<thead>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <th style="background: #ccc;">Start Free Pay as you go</th>
+      <% end %>
+
+      <th style="background: #ccc; width: 150px;" >
+        <div class="plan">
+          <div class="name"><%= plan.name %></div>
+        </div>
+      </th>
+      <% if @counts == 1 %>
+          <th style="background:#ccc; width: 150px;"> Enterprise</th>
+      <% end %>
+
+
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end%>
+</tr>
+</thead>
+
+
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+
+<tbody>
+
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Minimum recharge / Top-up
+          </td>
+      <% end %>
+      <td>
+     <span class="bold-font">
+        <div class="details">
+          <div class="price" >
+            <ul style="list-style: none;margin: 0;">
+              <li style="float: left">&#8377;&nbsp;</li>
+              <li style="float: left" class="amount" data-amount="<%= Money.new(plan.rate_cents.to_i, "INR") %>"><%= "#{Money.new(plan.rate_cents.to_i, "INR") }"%></li>            </ul>
+            &nbsp;<div class="per_month"> per month</div>
+          </div>
+        </div>
+     </span>
+      </td>
+      <% if @counts == 1 %>
+          <td>-</td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Permitted Use
+          </td>
+      <% end %>
+      <td>
+
+        <div class="kisses"><%= plan.feature_set.permitted_use%> Months </div>
+      </td>
+
+      <% if @counts == 1 %>
+          <td>-</td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Free Sign-Up Credit
+            <span class="floatright ques-icon " id="t0" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        <div class="kisses">&#8377;&nbsp; <%= plan.feature_set.free_sign_up_credit%></div>
+      </td>
+
+      <% if @counts == 1 %>
+          <td rowspan="3"> Contact Us<br><br>+91-04652-272613<br>sales@arrivusystems.com</td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Using Your Own Questions <span class="desc">(per candidate / test)</span>
+            <span class="floatright ques-icon " id="t3" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        <div class="kisses">&#8377;&nbsp; <%= plan.feature_set.own_question_price%></div>
+      </td>
+
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Using Arrivu's Pre-Built Tests <span class="desc">(per candidate / test)</span> <span class="floatright ques-icon " id="t4" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        <div class="kisses">&#8377;&nbsp; <%= plan.feature_set.pre_build_test_price%> </div>
+      </td>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Webcam Proctoring <span class="desc">(per candidate / test)</span>
+            <span class="floatright ques-icon" id="t5" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        <div class="kisses">&#8377;&nbsp; <%= plan.feature_set.web_cam_proctoring%> </div>
+      </td>
+      <% if @counts == 1 %>
+          <td>-</td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+
+</tr>
+
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Technical Support
+          </td>
+      <% end %>
+      <td>
+        24x7 Email
+      </td>
+
+      <% if @counts == 1 %>
+          <td>
+            24x7 Email, Phone
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Arrivu Question Banks
+            <span class="floatright ques-icon" id="t18" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        <img src="/images/Checkmark.png">
+      </td>
+
+      <% if @counts == 1 %>
+          <td>
+            <img src="/images/Checkmark.png">
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Create Unlimited Tests
+            <span class="floatright ques-icon" id="t19" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        <img src="/images/Checkmark.png">
+      </td>
+      <% if @counts == 1 %>
+          <td>
+            <img src="/images/Checkmark.png">
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Add Unlimited Questions per Test
+            <span class="floatright ques-icon" id="t20" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        <img src="/images/Checkmark.png">
+      </td>
+      <% if @counts == 1 %>
+          <td>
+            <img src="/images/Checkmark.png">
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Add Your Own (Basic type) Questions
+            <span class="floatright ques-icon" id="t9" title=""></span>
+          </td>
+      <% end %>
+      <td>
+        <img src="/images/Checkmark.png">
+      </td>
+      <% if @counts == 1 %>
+          <td>
+            <img src="/images/Checkmark.png">
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Customize Test Reports
+            <span class="floatright ques-icon" id="t11" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        -
+      </td>
+
+      <% if @counts == 1 %>
+          <td>
+            <img src="/images/Checkmark.png">
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+<tr>
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+          <td>
+            Multiple User Access
+            <span class="floatright ques-icon" id="t12" title=" "></span>
+          </td>
+      <% end %>
+      <td>
+        -
+      </td>
+
+      <% if @counts == 1 %>
+          <td>
+            <img src="/images/Checkmark.png">
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+</tr>
+<tr>
+<div id="plans">
+<a class="counts" style="display: none">
+  <%= @counts = 0 %>
+</a>
+
+  <% @plans.each do |plan| %>
+      <% if @counts == 0 %>
+         <td></td>
+      <% end %>
+      <td style="text-align: center;">
+<div class="signup">
+  <%= form_for :subscription, :html => {:class => "change_plan_form"}, :url => subscribe_account_subscription_plan_path(@account,plan,subscription_id: @subscription.id) do |f| %>
+      <%= f.hidden_field :billing ,:value => "",:class => "billing_type"%>
+      <% if @subscription.subscription_plan_id ==  plan.id %>
+          <% @found= true  %>
+          <%= f.submit  "Pay Now", :class => "btn btn-default"%>
+      <% else  %>
+          <% if @found  %>
+              <%= f.submit  "Upgrade Now", :class => "btn btn-default" %>
+          <% else  %>
+              <%= f.submit  "Degrade", :class => "btn btn-default"%>
+          <% end %>
+
+      <% end %>
+  <% end %>
+</div>
+      </td>
+      <% if @counts == 1 %>
+          <td>
+
+          </td>
+      <% end %>
+      <a class="counts" style="display: none">
+        <%= @counts = @counts+1 %>
+      </a>
+  <% end %>
+
+
+<a class="counts" style="display: none">
+  <%= @counts = @counts+1 %>
+</a>
+    </div>
+
+</tr>
+</tbody>
+
+</table>
+
+</div>
+
+<div class="save_price" style="float: left;margin-left: 9%;
+        margin-top: 1%;">
+
+  <div class="plan" style=" color: #676767;">
+    <% @domain_root_account.billing_types.each do |billing_type|%>
+
+        <div class="offer">Save <%= billing_type.discount_percentage.to_i%>%</div>
+        by paying <%= billing_type.billing_type %>.
+        <div>
+          <input  class="payment_payment_method_BILLING" name="payment[payment_method]" style="margin-top: 0px;"
+                  type="radio" data-percentage="<%= billing_type.discount_percentage%>"
+                  value="<%= billing_type.months %>" data-billing-type="<%= billing_type.id %>">&nbsp;Billing
+        </div>
+        <br/>
+
+    <% end%>
+
+  </div>
+</div>
+
+</div>
+
+<!-- Arrivu Changes-->
+<div id="plans">
+<div class="clear"></div>
+</div>
+<% js_block do %>
+    <script type="text/javascript">
+        require([
+            'jquery' /* $ */,
+            'compiled/tinymce',
+            'tinymce.editor_box',
+            'jquery.disableWhileLoading'
+        ], function($) {
+            $('.payment_payment_method_BILLING').click(function(event){
+                months = $(event.target).val();
+                discount_percentage = $(event.target).data('percentage');
+                $(".amount").each(function( index ) {
+                    total_amount = $( this ).data('amount') * discount_percentage;
+                    discount = total_amount/100;
+                    calculated_amount = $( this ).data('amount') -  discount;
+                    $( this ).text(calculated_amount.toFixed(2));
+                    $(".billing_type").val($(event.target).data('billing-type'));
+
+                });
+
+            });
+        });
+    </script>
+<% end %>

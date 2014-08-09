@@ -530,6 +530,37 @@ routes.draw do
 
 
   resources :accounts do
+    #arrivu changes
+    # Subscription
+    resources :subscriptions
+    resources :feature_sets
+    get "query/index"
+    get "refund/index"
+
+    get "response/response_display"
+    get "charging/charging_display"
+    post "charging/charging_display"
+    get "charging/show" ,:as => :charging
+    post "response/response_display"
+    post "query/index"
+    get "query/show"
+    get "refund/show"
+    post "refund/index"
+
+    resources :subscription_plans do
+      post 'subscribe', on: :member
+    end
+
+
+    match 'confirm/:subscription_id',:to => 'payments#payment_confirm', :as => :payment_confirm
+    resources :payments, only: [:show, :create, :destroy] do
+      collection do
+        post :success
+        get :cancel
+        post :notify
+      end
+    end
+    #arrivu changes
     match 'settings' => 'accounts#settings', :as => :settings
     match 'admin_tools' => 'accounts#admin_tools', :as => :admin_tools
     match 'account_users' => 'accounts#add_account_user', :as => :add_account_user, :via => :post
@@ -1544,13 +1575,14 @@ routes.draw do
     post "tools/:tool_id/grade_passback", :controller => :lti_api, :action => :grade_passback, :path_name => "lti_grade_passback_api"
     post "tools/:tool_id/ext_grade_passback", :controller => :lti_api, :action => :legacy_grade_passback, :path_name => "blti_legacy_grade_passback_api"
   end
-
+  #Arrivu changes(LmsCustomization start)
   map.resources :feature_wishs
-  map.resources :subscription #, :member => {:validate => :post}
-  map.subscription_expired '/subscription_expired', :controller => 'subscription', :action => 'subscription_expired'
-  map.subscription_expired_email '/subscription_expired_email', :controller => 'subscription', :action => 'subscription_expired_email',:conditions => { :method => :post }
-  map.subscription_validate '/subscription_validate', :controller => 'subscription', :action => 'validate',:conditions => { :method => :post }
-  map.authenticate '/authenticate', :controller => 'subscription', :action => 'authenticate'
+  map.resources :account_subscription #, :member => {:validate => :post}
+  map.subscription_expired '/subscription_expired', :controller => 'account_subscription', :action => 'subscription_expired'
+  map.subscription_expired_email '/subscription_expired_email', :controller => 'account_subscription', :action => 'subscription_expired_email',:conditions => { :method => :post }
+  map.subscription_validate '/subscription_validate', :controller => 'account_subscription', :action => 'validate',:conditions => { :method => :post }
+  map.authenticate '/authenticate', :controller => 'account_subscription', :action => 'authenticate'
+  #Arrivu changes(LmsCustomization end)
   # in rails 2 this was Jammit::Routes.draw(map)
   match '/assets/:package.:extension' => 'jammit#package', :as => :jammit if defined?(Jammit)
 

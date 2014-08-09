@@ -116,7 +116,7 @@
         <%- end -%>
       <% end %>
       </li>
-      <% if !!@domain_root_account.Sublime_grade_disable? && !@domain_root_account.Sublime_show_lock_menu?  %>
+      <% if !!@domain_root_account.Sublime_grade_disable?  %>
       <li id="grades_menu_item" class="menu-item">
         <%= link_to(t('menu.grades', 'Grades'), :grades, :class=>"menu-item-no-drop") %>
       </li>

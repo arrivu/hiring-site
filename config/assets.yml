@@ -199,3 +199,7 @@ stylesheets:
   <%= plugin_assets.anchors_yml %>
   token_input:
     - public/stylesheets/compiled/token_input.css
+  plans:
+    - public/stylesheets/compiled/plans.css
+  new_pricings:
+    - public/stylesheets/compiled/new_pricings.css
