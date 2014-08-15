@@ -425,9 +425,10 @@ module SIS
           @success_count += 1
 
           if question_tag.present?
-            @question_tag_split = question_tag.split(',')
-            @question_tag_split.each do  |splait_tag|
-            @question_tag = tag_tokens_new(splait_tag)
+            remove_quotes = question_tag.gsub(/\s|"|'/, '')
+            @question_tag_split = remove_quotes.split(',')
+            @question_tag_split.each do  |split_tag|
+            @question_tag = tag_tokens_new(split_tag)
             @question_tag.each do |tag|
               @question_tag_id = tag[:id].to_s
             end

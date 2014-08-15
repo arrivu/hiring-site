@@ -616,34 +616,49 @@ module Canvas::AccountReports
         Shackles.activate(:slave) do
           assessment_questions.each do |ques|
             bank_name = ques.assessment_question_bank_id
-            question_bank_title = AssessmentQuestionBank.find_by_id(bank_name).title
-            row = []
-            row << ques.id unless @sis_format
-            row << question_bank_title
-            row << ques.question_data[:regrade_option]
-            row << ques.question_data[:points_possible]
-            @find_tag_id = ActsAsTaggableOn::Tagging.find_by_tagger_id_and_taggable_id(ques.assessment_question_bank_id,ques.id)
-            @tag_name = ActsAsTaggableOn::Tag.find_by_id(@find_tag_id.id) unless @find_tag_id.nil?
-            unless @tag_name.nil?
-              row << @tag_name.name
-            else
-              row << nil
-            end
-            row << ques.question_data[:correct_comments]
-            row << ques.question_data[:incorrect_comments]
-            row << ques.question_data[:neutral_comments]
-            row << ques.question_data[:question_type]
-            row << ques.question_data[:name]
-            row << ques.question_data[:question_name]
-            row << ques.question_data[:question_text]
-            status = ques[:workflow_state]
-            row << status
-                ques.question_data[:answers].each do |question|
-                  row << question[:comments]
-                  row << question[:text]
-                  row << question[:weight]
+            bank_active = AssessmentQuestionBank.find_by_id(bank_name).workflow_state
+            if bank_active == "active"
+              question_bank_title = AssessmentQuestionBank.find_by_id(bank_name).title
+              row = []
+              row << ques.id unless @sis_format
+              row << question_bank_title
+              row << ques.question_data[:regrade_option]
+              row << ques.question_data[:points_possible]
+              @find_tag_id = ActsAsTaggableOn::Tagging.find_all_by_tagger_id_and_taggable_id(ques.assessment_question_bank_id,ques.id)
+              tags = ""
+              count = 0
+              total_length = @find_tag_id.size
+              @find_tag_id.each do |find_tag|
+                @tag_name = ActsAsTaggableOn::Tag.find_by_id(find_tag.tag_id)
+                if count == 0
+                  tags = tags + '"'
                 end
-            csv << row
+                tags = tags + @tag_name.name
+                if count == total_length - 1
+                  tags = tags + '"'
+                else
+                  tags = tags + ','
+                end
+                count += 1
+
+              end
+              row << tags
+              row << ques.question_data[:correct_comments]
+              row << ques.question_data[:incorrect_comments]
+              row << ques.question_data[:neutral_comments]
+              row << ques.question_data[:question_type]
+              row << ques.question_data[:name]
+              row << ques.question_data[:question_name]
+              row << ques.question_data[:question_text]
+              status = ques[:workflow_state]
+              row << status
+                  ques.question_data[:answers].each do |question|
+                    row << question[:comments]
+                    row << question[:text]
+                    row << question[:weight]
+                  end
+              csv << row
+            end
           end
         end
       end

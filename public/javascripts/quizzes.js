@@ -1875,8 +1875,19 @@ define([
             if(check_img_proctoring) {
 
                 if (quiz_time_limit.length == 0) {
+                    $("#quiz_time_limit").focus();
                     var offset_quiz_time_limit = $("#quiz_time_limit").errorBox("This field is required").offset(20);
                     $('html,body').scrollTo({top: offset_quiz_time_limit.top, left:0});
+                    return false;
+                }
+            }
+            var check_show_results = $("#show_result_id").is(":checked");
+            var percentage_of_marks = $("#percentage_of_marks").val();
+            if(check_show_results) {
+                if (percentage_of_marks.length == 0) {
+                    $("#percentage_of_marks").focus();
+                    var offset_percentage_of_marks = $("#percentage_of_marks").errorBox("This field is required").offset(25);
+                    $('html,body').scrollTo({top: offset_percentage_of_marks.top, left:0});
                     return false;
                 }
             }
