@@ -719,7 +719,62 @@ class Quizzes::QuizzesController < ApplicationController
     end
   end
 
+  def quiz_submit_balance_update
+
+    # arrivu changes
+    @account = @context.account
+    @subscription = Subscription.find_by_account_id_and_subscribable_id_and_subscribable_type(@domain_root_account.id,
+                     @account.id,Subscription::SUBSCRIBABLE_TYPE_ACCOUNT)
+    #account admin main balance
+    @get_subscription_balance = SubscriptionCredit.find_by_subscription_id(@subscription.id)
+    @subs_balance = @get_subscription_balance.amount unless @get_subscription_balance.nil?
+    #@subs_balance_convert = Money.new(@subs_balance.to_i, "INR")
+    #assessment rate
+    @get_subs_plan_id = SubscriptionPlan.find_by_id(@subscription.subscription_plan_id)
+    @get_feature_set = FeatureSet.find_by_id(@get_subs_plan_id.feature_set_id)
+    @assessment_price = @get_feature_set.own_question_price * 100
+    @count = 0
+    @quiz.quiz_questions.each do |get_bank|
+      @default_account_find = get_bank.assessment_question.assessment_question_bank.context
+
+      if @default_account_find.is_a?(Account)
+        if @default_account_find == Account.default
+          @count = 1
+        end
+      end
+    end
+    if @count != 0
+      @pre_bulid_test = @get_feature_set.pre_build_test_price * 100
+      @assessment_price = @assessment_price +  @pre_bulid_test
+    end
+    if @quiz.image_proctoring == TRUE
+      @webcam_value = @get_feature_set.web_cam_proctoring * 100
+      @assessment_price = @assessment_price +  @webcam_value
+    end
+
+    #@assessment_price_convert = Money.new(@assessment_price.to_i, "INR")
+    #calculate amount
+    @amount_calc = @subs_balance - @assessment_price
+    #update the account admin main_balance
+    @credit = SubscriptionCredit.find_by_subscription_id_and_account_id(@subscription.id,@account.id)
+    @credit.amount = @amount_calc
+    @credit.save!
+    #arrivu changes
+    @user_transaction = UserAssessmentTransaction.find_by_user_id_and_context_id_and_context_type_and_quiz_id_and_submission_id(
+                        @current_user.id,@context.id,@context.class.to_s,@quiz.id,@submission.id)
+    if @user_transaction.nil?
+      @user_transaction = UserAssessmentTransaction.new(user_id: @current_user.id,context_id: @context.id,
+                          context_type: @context.class.to_s,quiz_id: @quiz.id,submission_id: @submission.id,transaction_amount:  @assessment_price)
+    else
+      #@user_transaction.transaction_amount = @assessment_price
+      @user_transaction.transaction_amount = @user_transaction.transaction_amount + @assessment_price
+    end
+    @user_transaction.save!
+    #arrivu changes
+  end
+
   def take_quiz
+    quiz_submit_balance_update
     return unless quiz_submission_active?
     @show_embedded_chat = false
     js_env :IMAGE_PROCTORING => @quiz.image_proctoring

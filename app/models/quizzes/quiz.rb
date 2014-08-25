@@ -53,6 +53,7 @@ class Quizzes::Quiz < ActiveRecord::Base
   has_many :imageproctorings
   belongs_to :context, :polymorphic => true
   belongs_to :assignment
+  belongs_to :user_assessment_transaction
   belongs_to :assignment_group
   validates_length_of :description, :maximum => maximum_long_text_length, :allow_nil => true, :allow_blank => true
   validates_length_of :title, :maximum => maximum_string_length, :allow_nil => true

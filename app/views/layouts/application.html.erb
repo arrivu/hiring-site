@@ -146,6 +146,20 @@
             </div>
 
           </li>
+   <% if can_do(@domain_root_account,@current_user, :manage_account_settings) %>
+    <div class="balance" style="display: none;">
+        <%= @get_subs_balance = get_subscription_balance %>
+    </div>
+    <% if  @get_subs_balance != nil %>
+            <li class="menu-item" style="float: right;margin-right:7%;">
+              <div class="menu-item-balance" style="margin-top: 14px; color: #0088cc;text-shadow: 0px 0px 0px black;">
+                &#8377;   <%= Money.new(@get_subs_balance.to_i, "INR")  %>
+              </div>
+                <div class="balance" style="margin-left: 70px;
+                        margin-top: -20px;">Balance</div>
+            </li>
+    <% end %>
+  <% end %>
     </ul>
     <% end %>
   </div>

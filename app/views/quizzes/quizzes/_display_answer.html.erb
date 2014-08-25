@@ -31,6 +31,7 @@
     (hash_get(question, :question_type) == 'fill_in_multiple_blanks_question' &&
       answer.respond_to?(:[]) && answer['text'].blank? && answer['html'].blank?) ||
     (hash_get(question, :question_type) == 'multiple_dropdowns_question' && !correct_answer && !selected_answer)
+  type ||= nil
 %>
 <% unless question && [ "short_answer_question", "fill_in_multiple_blanks_question" ].include?(question[:question_type]) && !show_correct_answers %>
   <% if false %>
@@ -51,7 +52,11 @@
     <% if !user_answer || question_type.display_answers != "xsingle" %>
     <div class="select_answer answer_type" <%= hidden(true) unless answer_type == "select_answer" %>>
       <% if %w{radio checkbox}.include?(question_type.entry_type) %>
-        <input id="answer-<%= answer_id %>" name="question-<%= question_id %>" type="<%= question_type.entry_type %>" <%= 'checked' if selected_answer %> class="question_input" aria-hidden="true" />&nbsp;
+          <% if type != nil %>
+                <input id="answer-<%= answer_id %>"  type="<%= question_type.entry_type %>" <%= 'checked' if selected_answer %> class="question_input" aria-hidden="true" />&nbsp;
+          <% else %>
+                <input id="answer-<%= answer_id %>" name="question-<%= question_id %>" type="<%= question_type.entry_type %>" <%= 'checked' if selected_answer %> class="question_input" aria-hidden="true" />&nbsp;
+          <% end %>
       <% end %>
       <label for="answer-<%= answer_id %>">
         <div class="answer_text" <%= hidden(true) if hash_get(answer, :html).present? %>><%= hash_get(answer, :text) %></div>

@@ -70,9 +70,12 @@ define [
       ,
         silent: true
         success: (response) ->
-          $('.paginatedLoadingIndicator').hide()
-          $.flashMessage "Invitations send Successfully!"
-
+          if response.attributes.no_balance != true
+            $('.paginatedLoadingIndicator').hide()
+            $.flashMessage "Invitations send Successfully!"
+          else
+            $('.paginatedLoadingIndicator').hide();
+            return $.flashError("Can't send invitations, Insufficient balance in your account!");
         error: (response) ->
           $('.paginatedLoadingIndicator').hide()
           $.flashMessage "There is some error while sending invitations! "
@@ -86,8 +89,4 @@ define [
       else
         I18n.t('unknown_error', 'Something went wrong with your search, please try again.')
       @showErrors search_term: [{message}]
-
-
-
-
 

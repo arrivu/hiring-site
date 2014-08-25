@@ -9,20 +9,20 @@
   <li style="float: left;width: 45%;margin-left: 2%;">
     <div id="subscription">
       <div >
-        <h3  class="panel_h3">You have selected "<%= @subscription_plan.name%>"</h3>
+        <h3  class="panel_h3" style="color: black; background: #ccc;">You have selected "<%= @subscription_plan.name%>"</h3>
       </div>
-      <div class="subscription_attr"><%#= @subscription_plan.feature_set.no_courses%>&nbsp;Courses</div>
-      <div class="subscription_attr"><%#= @subscription_plan.feature_set.no_students%>&nbsp;Students</div>
-      <div class="subscription_attr"><%#= @subscription_plan.feature_set.no_teachers%>&nbsp;Teachers </div>
-      <div class="subscription_attr"><%#= @subscription_plan.feature_set.no_admins%>&nbsp;Admins</div>
-      <div class="subscription_attr" > <%#= @subscription_plan.feature_set.storage%>&nbsp;MB Storage</div>
+      <div class="subscription_attr">&#8377; &nbsp;<%= @subscription_plan.feature_set.permitted_use%>&nbsp; Permitted Use</div>
+      <div class="subscription_attr">&#8377; &nbsp;<%= @subscription_plan.feature_set.free_sign_up_credit%>&nbsp; Free Sign-Up Credit</div>
+      <div class="subscription_attr">&#8377; &nbsp;<%= @subscription_plan.feature_set.own_question_price%>&nbsp; Using Your Own Questions </div>
+      <div class="subscription_attr">&#8377; &nbsp;<%= @subscription_plan.feature_set.pre_build_test_price%>&nbsp; Using Arrivu's Pre-Built Tests </div>
+      <div class="subscription_attr">&#8377; &nbsp;<%= @subscription_plan.feature_set.web_cam_proctoring%>&nbsp; Webcam Proctoring </div>
     </div>
 
   </li>
   <li style="float: left;width: 45%;">
     <div id="subscription">
       <div >
-        <h3  class="panel_h3">Your total </h3>
+        <h3  class="panel_h3" style="color: black; background: #ccc;">Your total </h3>
       </div>
       <% @domain_root_account.billing_types.each do |billing_type|%>
           <div class="subscription_attr">
@@ -36,20 +36,22 @@
 
             <%= billing_type.billing_type.camelize%>&nbsp;Billing&nbsp;
             (<%=billing_type.discount_percentage.to_i %>% Discount)&nbsp; Save
-            <% total_amount = (Money.new(@subscription_plan.rate_cents.to_i, "INR") * billing_type.discount_percentage)
+                 &#8377;  <% total_amount = (Money.new(@subscription_plan.rate_cents.to_i, "INR") * billing_type.discount_percentage)
                discount = total_amount/100;
             %>
-            <%= discount * billing_type.months %>&nbsp; &#8377;
+            <%= discount * billing_type.months %>&nbsp;
 
           </div>
       <% end%>
       <div class="subscription_attr" style="text-align: right">
         <% if @final_amount %>
-         Total Price &nbsp;
+         Total Price &nbsp; &#8377;
               <span class="amount" data-amount="<%= Money.new(@subscription_plan.rate_cents.to_i, "INR") %>">
                 <%=@final_amount%></span>
-              &nbsp; &#8377;
-        <% else %>
+            &nbsp;  X  &nbsp; <input type="text" style="width: 30px;
+              margin-top: 7px;" id="multiplier"/>
+
+      <% else %>
 
               Total Price &nbsp; &#8377;
               <span class="amount"  data-amount="<%= Money.new(@subscription_plan.rate_cents.to_i, "INR") %>">
@@ -68,7 +70,7 @@
   <li style="float: left;width: 92%;">
     <div id="subscription">
       <div >
-        <h3  class="panel_h3">Payment Options</h3>
+        <h3  class="panel_h3" style="color: black; background: #ccc;">Payment Options</h3>
       </div>
       <% @grouped_payments.each do |payments| %>
           <% payment = payments.first %>
@@ -103,6 +105,15 @@
             calculated_amount = $( this ).data('amount') -  discount;
             $( this ).text((calculated_amount* months).toFixed(2));
             $("#payment_billing_type_id").val( $(event.target).data('billing-type'));
+
+            if ($("#multiplier").val() == ""){
+
+            }else {
+                a =  $( this ).text((calculated_amount* months).toFixed(2));
+                b = $("#multiplier").val();
+                c = a.text() * b;
+                $('.amount').text(c.toFixed(2));
+            }
         });
 
     });
@@ -112,21 +123,25 @@
         final_amount = amount * 100;
         $("#payment_transaction_amount").val(final_amount);
         $("#payment_multiplier").val( $("#multiplier").val());
-
     });
 
     $('#multiplier').keyup(function(event){
-        amount =  $(".amount").data('amount');
-        final_amount = amount * $(event.target).val();
+        amount =  $(".amount").text();
+        final_amount = parseFloat(amount * $(event.target).val());
+        final_amount =  final_amount.toFixed(2);
         if ($("#multiplier").val() == "") {
-            console.log(final_amount);
-            $('.amount').text($(".amount").data('amount'));
+                months = $('.payment_payment_method_BILLING:checked').val();
+                discount_percentage = $('.payment_payment_method_BILLING:checked').data('percentage');
+                total_amount = $(".amount").data('amount') * discount_percentage;
+                discount = total_amount/100;
+                calculated_amount = $(".amount").data('amount') -  discount;
+                a =  $('.amount').text((calculated_amount* months).toFixed(2));
+                b = a.text();
+                $("#payment_billing_type_id").val( $(event.target).data('billing-type'));
         }else {
             $('.amount').text(final_amount);
-            console.log("else" + final_amount);
         }
     });
-
         });
     </script>
 <% end %>

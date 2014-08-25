@@ -351,9 +351,15 @@
             <% if question && (user_answer || assessment_results || !@quiz || display_correct_answers || (!assessment_results && !user_answer)) %>
               <% show_headers = @quiz && display_correct_answers && user_answer && question_type.display_answers == "single" && hash_get(question, :question_type) != "essay_question" %>
               <% if editing || show_headers || !question_type.entry_type.match(/text_box/) %>
-                <div class="answers_wrapper">
-                  <%= render :partial => "quizzes/quizzes/display_answer", :collection => hash_get(question, :answers), :locals => {:assessment_results => assessment_results, :question_type => question_type, :user_answer => user_answer, :question => question} %>
-                </div>
+               <% if @type !=nil  %>
+                    <div class="answers_wrapper">
+                      <%= render :partial => "quizzes/quizzes/display_answer", :collection => hash_get(question, :answers), :locals => {:assessment_results => assessment_results, :question_type => question_type, :user_answer => user_answer, :question => question, :type => "report"} %>
+                    </div>
+               <% else %>
+                    <div class="answers_wrapper">
+                      <%= render :partial => "quizzes/quizzes/display_answer", :collection => hash_get(question, :answers), :locals => {:assessment_results => assessment_results, :question_type => question_type, :user_answer => user_answer, :question => question} %>
+                    </div>
+               <% end %>
               <% end %>
             <% end %>
           <% end %>

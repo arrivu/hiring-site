@@ -78,6 +78,11 @@ class UserList
       user = User.new(:name => a[:name] || a[:address])
       cc = user.communication_channels.build(:path => a[:address], :path_type => 'email')
       cc.user = user
+      if @options[:direct_enrollment]
+        cc.workflow_state = 'active'
+      else
+        cc.workflow_state = 'creation_pending'
+      end
       user.workflow_state = 'creation_pending'
       user.initial_enrollment_type = User.initial_enrollment_type_from_text(@options[:initial_type])
       user.save!

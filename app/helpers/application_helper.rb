@@ -951,4 +951,69 @@ module ApplicationHelper
   #  image_tag "#{img}", options
   #end
 
+  def get_subscription_balance
+    #get_subscription
+      unless @current_user.nil?
+        accounts = @current_user.common_account_chain(@domain_root_account)
+        if  accounts.size == 1
+          @account= accounts.first
+        else
+          @account = account_context(@context)
+        end
+      end
+      unless @account
+        @account = @domain_root_account
+      end
+
+      if @account.name == "Manually-Created Projects"
+        @account.id = @account.root_account_id
+      end
+
+      if @account.name != "Site Admin"
+
+        @subscription = Subscription.find_by_account_id_and_subscribable_id_and_subscribable_type(@domain_root_account.id,
+                                                                  @account.id,Subscription::SUBSCRIBABLE_TYPE_ACCOUNT)
+        if @subscription.nil?
+          @subscription_plan = @domain_root_account.subscription_plans.default.first
+          @subscription = Subscription.create!(account_id: @domain_root_account.id,
+                                               subscription_plan_id: @subscription_plan.id,
+                                               subscribable_id: @account.id,
+                                               subscribable_type: Subscription::SUBSCRIBABLE_TYPE_ACCOUNT)
+        else
+          @get_subscription_balance = SubscriptionCredit.find_by_subscription_id(@subscription.id)
+          @subs_balance = @get_subscription_balance.amount unless @get_subscription_balance.nil?
+          if @subs_balance == nil
+            @subs_balance = 0;
+          end
+
+        end
+      end
+    return @subs_balance
+  end
+
+  def get_subscription_plan
+    unless @current_user.nil?
+      accounts = @current_user.common_account_chain(@domain_root_account)
+      if  accounts.size == 1
+        @account= accounts.first
+      else
+        @account = account_context(@context)
+      end
+    end
+    unless @account
+      @account = @domain_root_account
+    end
+
+    if @account.name == "Manually-Created Projects"
+      @account.id = @account.root_account_id
+    end
+
+    if @account.name != "Site Admin"
+
+      @subscription = Subscription.find_by_account_id_and_subscribable_id_and_subscribable_type(@domain_root_account.id,
+                                                                    @account.id,Subscription::SUBSCRIBABLE_TYPE_ACCOUNT)
+      @get_subs_plan_id = SubscriptionPlan.find_by_id(@subscription.subscription_plan_id)
+      @get_feature_set = FeatureSet.find_by_id(@get_subs_plan_id.feature_set_id)
+    end
+  end
 end

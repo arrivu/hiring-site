@@ -43,7 +43,14 @@ class PaymentsController < ApplicationController
         discount = amount/100
         monthly_amount_with_discount = Money.new(@subscription_plan.rate_cents.to_i, "INR") - discount
         final_amount = monthly_amount_with_discount * payment.billing_type.months
-        payment.transaction_amount = final_amount * 100
+        #payment.transaction_amount = final_amount * 100
+        #arrivu changes
+        if payment.multiplier.nil?
+          payment.transaction_amount = final_amount * 100
+        else
+          payment.transaction_amount = final_amount * 100 * payment.multiplier
+        end
+        #arrivu changes
       else
         if payment.multiplier.nil?
           payment.transaction_amount = @subscription_plan.rate_cents.to_i
@@ -136,6 +143,7 @@ class PaymentsController < ApplicationController
             end
           end
           payment.subscription.update_attributes(subscription_plan_id: payment.subscription_plan_id)
+          #arrivu changes
           @credit = SubscriptionCredit.find_by_subscription_id_and_account_id(payment.subscription_id,payment.account_id)
           if @credit.nil?
             @subscription_credit = SubscriptionCredit.new(subscription_id: payment.subscription_id,account_id: payment.account_id, amount: payment.transaction_amount)
@@ -144,6 +152,7 @@ class PaymentsController < ApplicationController
             @credit.amount = @credit.amount + payment.transaction_amount
             @credit.save!
           end
+          #arrivu changes
           update_lms_account(payment.account,payment.subscription_plan)
           payment.save!
           flash[:notice] = "Payment Transaction Completed & Your Plan has been changed"

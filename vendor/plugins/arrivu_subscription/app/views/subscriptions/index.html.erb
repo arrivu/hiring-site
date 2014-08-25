@@ -16,7 +16,15 @@ You Have a <%= @subscription.subscription_plan.name %> subscription.
     <% end  %>
 <% end  %>
 <br/>
+  <div class="balance" style="display: none;">
+    <%= @get_subs_balance = get_subscription_balance %>
+  </div>
+  <% if  @get_subs_balance != nil %>
 
+        <div class="menu-item-balance" style="margin-top: 14px; text-shadow: 0px 0px 0px black;">
+          Your Balance is  <b>  &#8377; <%= Money.new(@get_subs_balance.to_i, "INR")  %> </b>
+        </div>
+  <% end %>
 <% if @subscription.expired?  %>
     <div class="alert-error" style="width: 37%;
             padding: 5px;">

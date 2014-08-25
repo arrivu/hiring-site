@@ -42,7 +42,7 @@ class InvitationsController < ApplicationController
         @invitation_send_json = api_json(user, session, API_USER_JSON_OPTS).tap do |json|
           json[:id] = user.id
           json[:name] = user.name
-          json[:login_id] = user.pseudonym.unique_id
+          json[:login_id] = get_student_login_id(user)
           json[:email_send] = params[:send]
         end
         @students << @invitation_send_json
@@ -57,22 +57,51 @@ class InvitationsController < ApplicationController
     end
   end
 
-  def create
-    if authorized_action(@context, @current_user, :read_roster)
-      @quiz = Quizzes::Quiz.find(params[:quiz_id])
-      params[:login_ids].each do |login_id|
-        candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
-        @section = @context.course_sections.find(params[:course_section_id])
-        get_unique_access_code(@context,@section,@quiz.id)
-        @invitation = Invitation.find_by_quiz_id_and_pseudonym_id_and_workflow_status(@quiz.id,candidate_pseudonym.id,'active')
-        unless @invitation
-          @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
+  def get_student_login_id(user)
+    if user.pseudonyms.active.empty?
+      user.communication_channels.active.email.first.path rescue nil
+    else
+      user.pseudonyms.active.first.unique_id
 
+    end
+
+  end
+
+  def create
+    @get_subscription_balance = get_subscription_balance
+    @get_subscription_balance_convert = Money.new(@get_subscription_balance.to_i, "INR")
+    @get_subscription_plan = get_subscription_plan
+    @quiz_price = @get_subscription_plan.own_question_price
+    @get_quiz = Quizzes::Quiz.find(params[:quiz_id])
+    if @get_quiz.image_proctoring == TRUE
+      @quiz_price = @quiz_price + @get_subscription_plan.web_cam_proctoring
+    end
+    @people_count = params[:login_ids].count
+    @price_calc = @quiz_price * @people_count
+    @price_calc = @price_calc * 100
+    @price_calc_convert = Money.new(@price_calc.to_i,"INR")
+    if @get_subscription_balance_convert >= @price_calc_convert
+
+      if authorized_action(@context, @current_user, :read_roster)
+        @quiz = Quizzes::Quiz.find(params[:quiz_id])
+        params[:login_ids].each do |login_id|
+          candidate_pseudonym = Pseudonym.find_by_unique_id(login_id)
+          @section = @context.course_sections.find(params[:course_section_id])
+          get_unique_access_code(@context,@section,@quiz.id)
+          @invitation = Invitation.find_by_quiz_id_and_pseudonym_id_and_workflow_status(@quiz.id,candidate_pseudonym.id,'active')
+          unless @invitation
+            @invitation = Invitation.find_or_create_by_quiz_id_and_pseudonym_id(@quiz.id,candidate_pseudonym.id,workflow_status: 'active')
+
+          end
+          send_invitation_email(@context,candidate_pseudonym,candidate_pseudonym.user,@quiz)
         end
-        send_invitation_email(@context,candidate_pseudonym,candidate_pseudonym.user,@quiz)
+        respond_to do |format|
+          format.json  { render :json => @invitation }
+        end
       end
+    else
       respond_to do |format|
-        format.json  { render :json => @invitation }
+        format.json  { render :json => {:no_balance => true} }
       end
     end
   end
@@ -252,6 +281,7 @@ class InvitationsController < ApplicationController
     m.subject = "Assessment Invitation"
     m.html_body = "You have been invited by #{@current_user.name} to take the assessment #{quiz.title}"
     m.body = @domain_url+"#{@access_code.unique_access_code}"
+    m.save!
     Mailer.send_later(:deliver_invitation_email,m,user)
   end
 

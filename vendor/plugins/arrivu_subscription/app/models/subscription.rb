@@ -1,6 +1,7 @@
 class Subscription < ActiveRecord::Base
   include SubscriptionHelper
   belongs_to :account
+  has_many :subscription_credits
   has_many :payments
   has_many :subscription_expiry_notifications
   attr_accessible :account_id,:subscription_plan_id,:subscribable_id,:subscribable_type,:expire_on,:started_on
